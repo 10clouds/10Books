@@ -20,6 +20,7 @@ defmodule LibTenWeb.Router do
     get "/library", LibraryController, :index
 
     scope "/auth" do
+      get "/sign_out", AuthController, :sign_out
       get "/:provider", AuthController, :request
       get "/:provider/callback", AuthController, :callback
     end
