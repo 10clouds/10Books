@@ -9,17 +9,16 @@ defmodule LibTen.AccountsTest do
       {:ok, user} =
         attrs
         |> Enum.into(@valid_attrs)
-      #  |> Accounts.create_user()
+        |> Accounts.create_user()
 
       user
     end
 
-    test "get_user_by_email!/1 returns user with given email or Ecto.NoResultsError" do
+    test "get_by!/1 returns user with given email or Ecto.NoResultsError" do
       assert_raise Ecto.NoResultsError,
-        fn -> Accounts.get_user_by_email!(@valid_attrs.email) end
+        fn -> Accounts.get_by!(%{email: @valid_attrs.email}) end
       user = user_fixture()
-      assert {:ok, found_user} = Accounts.get_user_by_email!(user.email)
-      assert found_user == user
+      assert user == Accounts.get_by!(%{email: user.email})
     end
   end
 end
