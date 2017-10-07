@@ -17,6 +17,7 @@ defmodule LibTenWeb.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    get "/library", LibraryController, :index
   end
 
   # Other scopes may use custom stacks.
