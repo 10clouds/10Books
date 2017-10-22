@@ -2,27 +2,24 @@ defmodule LibTen.AccountsTest do
   use LibTen.DataCase
   alias LibTen.Accounts
 
-  describe "users" do
-    @valid_attrs %{name: "Ruslan Savenok", email: "ruslan@10clouds.com"}
+  @valid_attrs %{name: "Ruslan Savenok", email: "ruslan@10clouds.com"}
 
-    def user_fixture(attrs \\ %{}) do
-      {:ok, user} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Accounts.create_user()
-
-      user
-    end
-
-    test "get_by!/1 returns user with given email or Ecto.NoResultsError" do
-      assert_raise Ecto.NoResultsError,
-        fn -> Accounts.get_by!(%{email: @valid_attrs.email}) end
-      user = user_fixture()
-      assert user == Accounts.get_by!(%{email: user.email})
-    end
+  def user_fixture(attrs \\ %{}) do
+    {:ok, user} =
+      attrs
+      |> Enum.into(@valid_attrs)
+      |> Accounts.create_user()
+    user
   end
 
-  describe "users -> find_or_create_user/1" do
+  test "get_by!/1 returns user with given email or Ecto.NoResultsError" do
+    assert_raise Ecto.NoResultsError,
+      fn -> Accounts.get_by!(%{email: @valid_attrs.email}) end
+    user = user_fixture()
+    assert user == Accounts.get_by!(%{email: user.email})
+  end
+
+  describe "accounts -> find_or_create_user/1" do
     test "returns an error if email is not @10clouds.com" do
       user = %{email: "test@test.com"}
       assert {:error, :invalid_email_domain} = Accounts.find_or_create_user(user)
