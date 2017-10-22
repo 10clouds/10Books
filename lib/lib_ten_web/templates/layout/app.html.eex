@@ -16,7 +16,7 @@
       <header class="header">
         <nav role="navigation">
           <ul class="nav nav-pills pull-right">
-            <%= if get_current_user(@conn) do %>
+            <%= if signed_in?(@conn) do %>
               <li><%= link("Sign out", to: auth_path(@conn, :sign_out)) %></li>
             <% end %>
           </ul>

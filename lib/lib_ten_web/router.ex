@@ -17,7 +17,11 @@ defmodule LibTenWeb.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
-    get "/library", LibraryController, :index
+
+    scope "/" do
+      pipe_through :authenticate_user
+      get "/library", LibraryController, :index
+    end
 
     scope "/auth" do
       get "/sign_out", AuthController, :sign_out
@@ -30,4 +34,16 @@ defmodule LibTenWeb.Router do
   # scope "/api", LibTenWeb do
   #   pipe_through :api
   # end
+
+  defp authenticate_user(conn, _) do
+    case get_session(conn, :user_id) do
+      nil ->
+        conn
+        |> Phoenix.Controller.put_flash(:error, "Login required")
+        |> Phoenix.Controller.redirect(to: "/")
+        |> halt()
+      user_id ->
+        assign(conn, :current_user, LibTen.Accounts.get_by!(%{id: user_id}))
+    end
+  end
 end
