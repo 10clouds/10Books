@@ -23,6 +23,14 @@ defmodule LibTenWeb.ConnCase do
 
       # The default endpoint for testing
       @endpoint LibTenWeb.Endpoint
+
+      def sign_in(conn, user) do
+        conn
+          |> bypass_through(LibTenWeb.Router, :browser)
+          |> get("/")
+          |> put_session(:user_id, user.id)
+          |> send_resp(:ok, "")
+      end
     end
   end
 
