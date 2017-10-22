@@ -7,6 +7,7 @@ defmodule LibTen.Accounts.User do
   schema "users" do
     field :email, :string
     field :name, :string
+    field :is_admin, :boolean
 
     timestamps()
   end
@@ -14,7 +15,7 @@ defmodule LibTen.Accounts.User do
   @doc false
   def changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:name, :email])
+    |> cast(attrs, [:name, :email, :is_admin])
     |> validate_required([:name, :email])
     |> unique_constraint(:email)
   end
