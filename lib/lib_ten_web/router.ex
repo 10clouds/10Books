@@ -21,6 +21,11 @@ defmodule LibTenWeb.Router do
     scope "/" do
       pipe_through :authenticate_user
       get "/library", LibraryController, :index
+
+      scope "/admin", Admin, as: :admin do
+        pipe_through :is_admin
+        resources "/users", UserController, only: [:index, :edit, :update]
+      end
     end
 
     scope "/auth" do
@@ -44,6 +49,17 @@ defmodule LibTenWeb.Router do
         |> halt()
       user_id ->
         assign(conn, :current_user, LibTen.Accounts.get_by!(%{id: user_id}))
+    end
+  end
+
+  defp is_admin(conn, _) do
+    if conn.assigns[:current_user].is_admin do
+      conn
+    else
+      conn
+      |> put_status(:not_found)
+      |> Phoenix.Controller.render(LibTenWeb.ErrorView, :"404")
+      |> halt()
     end
   end
 end
