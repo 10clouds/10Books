@@ -25,6 +25,7 @@ defmodule LibTenWeb.UserControllerTest do
     }}
   end
 
+
   describe "index" do
     test "renders 404 unless admin",
       %{conn: conn, current_user: current_user}
@@ -39,6 +40,7 @@ defmodule LibTenWeb.UserControllerTest do
       assert html_response(conn, 200) =~ "Listing Users"
     end
   end
+
 
   describe "edit user" do
     setup [:create_user]
@@ -84,6 +86,7 @@ defmodule LibTenWeb.UserControllerTest do
       assert html_response(conn, 200) =~ "Edit User"
     end
   end
+
 
   defp create_user(_) do
     user = fixture(:user)

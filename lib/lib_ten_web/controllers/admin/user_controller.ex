@@ -18,7 +18,7 @@ defmodule LibTenWeb.Admin.UserController do
     user = Users.get!(id)
 
     case Users.update(user, user_params) do
-      {:ok, user} ->
+      {:ok, _} ->
         conn
         |> put_flash(:info, "User updated successfully.")
         |> redirect(to: admin_user_path(conn, :index))

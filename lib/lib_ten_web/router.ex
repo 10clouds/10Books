@@ -25,6 +25,7 @@ defmodule LibTenWeb.Router do
       scope "/admin", Admin, as: :admin do
         pipe_through :is_admin
         resources "/users", UserController, only: [:index, :edit, :update]
+        resources "/categories", CategoryController
       end
     end
 
