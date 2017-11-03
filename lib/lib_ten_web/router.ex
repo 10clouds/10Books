@@ -21,6 +21,7 @@ defmodule LibTenWeb.Router do
     scope "/" do
       pipe_through :authenticate_user
       get "/library", LibraryController, :index
+      resources "/products", ProductController
 
       scope "/admin", Admin, as: :admin do
         pipe_through :is_admin

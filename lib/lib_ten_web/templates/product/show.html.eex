@@ -1,0 +1,28 @@
+<h2>Show Product</h2>
+
+<ul>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @product.title %>
+  </li>
+
+  <li>
+    <strong>Url:</strong>
+    <%= @product.url %>
+  </li>
+
+  <li>
+    <strong>Author:</strong>
+    <%= @product.author %>
+  </li>
+
+  <li>
+    <strong>Status:</strong>
+    <%= @product.status %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: product_path(@conn, :edit, @product) %></span>
+<span><%= link "Back", to: product_path(@conn, :index) %></span>
