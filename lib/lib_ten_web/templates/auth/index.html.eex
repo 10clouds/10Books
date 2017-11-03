@@ -1,0 +1,22 @@
+<div class="auth-form">
+  <div class="auth-form__title">
+    <i class="fa fa-book" aria-hidden="true"></i>
+    <%= Application.get_env(:lib_ten, :title) %>
+  </div>
+
+  <%= link(
+    to: auth_path(@conn, :request, :google),
+    class: 'btn btn-success btn-lg'
+  ) do %>
+    <i class="fa fa-google" aria-hidden="true"></i>
+    Login with google
+  <% end %>
+</div>
+
+<%= if get_flash(@conn, :error) do %>
+  <script>
+    setTimeout(function () {
+      alert("<%= get_flash(@conn, :error) %>");
+    });
+  </script>
+<% end %>

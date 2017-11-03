@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title><%= Application.get_env(:lib_ten, :title) %></title>
+  <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+</head>
+<body>
+
+  <%= render @view_module, @view_template, assigns %>
+
+  <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+</body>
+</html>

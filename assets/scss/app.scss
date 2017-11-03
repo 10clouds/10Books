@@ -1,5 +1,20 @@
+$fa-font-path: "/fonts/font-awesome";
+@import "~font-awesome/scss/font-awesome";
 @import '~bootstrap/scss/bootstrap';
 
-body {
-  background: red;
+html, body {
+  height: 100%;
+}
+
+.auth-form {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  &__title {
+    font-size: 48px;
+    margin: 0 0 15px 0;
+  }
 }

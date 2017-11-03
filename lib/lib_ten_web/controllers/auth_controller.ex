@@ -4,6 +4,16 @@ defmodule LibTenWeb.AuthController do
 
   alias LibTen.Accounts
 
+  def index(conn, _params) do
+    if get_session(conn, :user_id) do
+      redirect(conn, to: library_path(conn, :index))
+    else
+      conn
+      |> put_layout("empty.html")
+      |> render("index.html")
+    end
+  end
+
   def callback(%{assigns: %{ueberauth_failure: _fails}} = conn, _params) do
     conn
     |> put_flash(:error, "Failed to authenticate.")
@@ -15,9 +25,8 @@ defmodule LibTenWeb.AuthController do
     case Accounts.find_or_create_user(user_params) do
       {:ok, user} ->
         conn
-        |> put_flash(:info, "Successfully authenticated.")
         |> put_session(:user_id, user.id)
-        |> redirect(to: "/")
+        |> redirect(to: library_path(conn, :index))
       {:error, reason} ->
         conn
         |> put_flash(:error, reason)
@@ -27,7 +36,6 @@ defmodule LibTenWeb.AuthController do
 
   def sign_out(conn, _params) do
     conn
-    |> put_flash(:info, "You have been logged out!")
     |> clear_session()
     |> redirect(to: "/")
   end

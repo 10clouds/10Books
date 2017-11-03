@@ -16,7 +16,7 @@ defmodule LibTenWeb.Router do
   scope "/", LibTenWeb do
     pipe_through :browser # Use the default browser stack
 
-    get "/", PageController, :index
+    get "/", AuthController, :index
 
     scope "/" do
       pipe_through :authenticate_user
