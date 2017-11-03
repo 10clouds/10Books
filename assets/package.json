@@ -12,8 +12,10 @@
     "bootstrap": "4.0.0-beta.2",
     "copy-webpack-plugin": "^4.2.0",
     "font-awesome": "^4.7.0",
+    "jquery": "^3.2.1",
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",
+    "popper.js": "^1.12.6",
     "webpack": "^3.8.1"
   },
   "devDependencies": {

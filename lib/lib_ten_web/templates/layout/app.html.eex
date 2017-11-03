@@ -12,11 +12,49 @@
   </head>
 
   <body>
-    <div class="container">
-      <%= if signed_in?(@conn) do %>
-        <li><%= link("Sign out", to: auth_path(@conn, :sign_out)) %></li>
-      <% end %>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="navbar-brand">
+        <i class="fa fa-book" aria-hidden="true"></i>
+        <%= Application.get_env(:lib_ten, :title) %>
+      </div>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Library</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Orders</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">All</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Users</a>
+          </li>
+        </ul>
+        <%= if signed_in?(@conn) do %>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <%= link("Sign out", to: auth_path(@conn, :sign_out), class: "nav-link") %>
+            </li>
+          </ul>
+        <% end %>
+      </div>
+    </nav>
+
+    <div class="container">
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 
