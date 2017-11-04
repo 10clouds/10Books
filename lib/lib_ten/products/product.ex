@@ -26,6 +26,7 @@ defmodule LibTen.Products.Product do
     field :status, :string
     field :title, :string
     field :url, :string
+    belongs_to :category, LibTen.Categories.Category
 
     timestamps()
   end
@@ -33,7 +34,7 @@ defmodule LibTen.Products.Product do
   @doc false
   def changeset(%Product{} = product, attrs) do
     product
-    |> cast(attrs, [:title, :url, :author, :status])
+    |> cast(attrs, [:title, :url, :author, :status, :category_id])
     |> validate_required([:title, :url, :author, :status])
     |> validate_url(:url, %{message: "Invalid url"})
     |> validate_inclusion(:status, @valid_statuses)
