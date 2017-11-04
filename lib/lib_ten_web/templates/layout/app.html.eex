@@ -9,6 +9,7 @@
 
     <title><%= Application.get_env(:lib_ten, :title) %></title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <script>window.currentUserToken = "<%= @conn.assigns[:current_user_token] %>";</script>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </head>
 
@@ -45,13 +46,11 @@
             <a class="nav-link" href="#">Users</a>
           </li>
         </ul>
-        <%= if signed_in?(@conn) do %>
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <%= link("Sign out", to: auth_path(@conn, :sign_out), class: "nav-link") %>
-            </li>
-          </ul>
-        <% end %>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <%= link("Sign out", to: auth_path(@conn, :sign_out), class: "nav-link") %>
+          </li>
+        </ul>
       </div>
     </nav>
 

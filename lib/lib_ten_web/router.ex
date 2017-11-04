@@ -49,7 +49,11 @@ defmodule LibTenWeb.Router do
         |> Phoenix.Controller.redirect(to: "/")
         |> halt()
       user_id ->
-        assign(conn, :current_user, LibTen.Accounts.get_by!(%{id: user_id}))
+        user = LibTen.Accounts.get_by!(%{id: user_id})
+        token = Phoenix.Token.sign(conn, "current_user_token", user_id)
+        conn
+        |> assign(:current_user_token, token)
+        |> assign(:current_user, user)
     end
   end
 

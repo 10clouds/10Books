@@ -3,11 +3,10 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import products from './reducers/products';
 
-if (!window.store) {
-  const rootReducer = combineReducers({
-    products
-  });
-  window.store = createStore(rootReducer, composeWithDevTools());
-}
+const rootReducer = combineReducers({
+  products
+});
 
-export default window.store;
+const store = createStore(rootReducer, composeWithDevTools());
+
+export default store;

@@ -13,6 +13,12 @@ module.exports = {
     filename: "[name]"
   },
   devtool: 'eval-source-map', // TODO: Update for production
+  resolve: {
+    modules: [
+      path.resolve(__dirname, 'js'),
+      'node_modules'
+    ]
+  },
   module: {
     rules: [
       {

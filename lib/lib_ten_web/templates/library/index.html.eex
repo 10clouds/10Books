@@ -3,7 +3,7 @@ library
 <div id="products-table"></div>
 
 <script>
-  window.ReactComponents.renderProductsTable(
+  window.LibTen.ReactComponents.renderProductsTable(
     document.getElementById('products-table')
   );
 </script>

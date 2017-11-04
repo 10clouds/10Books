@@ -7,7 +7,6 @@ import * as productActions from '../store/actions/products';
 class ProductsTable extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
   }
 
   render() {
