@@ -2,14 +2,20 @@ import * as actions from '../actionTypes/products';
 import { makeReducer } from '../utils';
 
 const defaultState = {
-  list: [],
+  all: [],
+  categories: [],
   searchString: ''
 };
 
 const reducers = {
-  [actions.LIST_CHANGED]: (state, {newList}) => ({
+  [actions.PRODUCTS_CHANGED]: (state, {products}) => ({
     ...state,
-    list: newList
+    all: products
+  }),
+
+  [actions.CATEGORIES_CHANGED]: (state, {categories}) => ({
+    ...state,
+    categories
   }),
 
   [actions.SEARCH_CHANGED]: (state, {newSearchString}) => ({

@@ -5,8 +5,6 @@ import ReactDOM from 'react-dom';
 import store from 'react/store';
 import ProductsTable from 'react/containers/ProductsTable';
 
-import socket from 'socket';
-
 window.LibTen = {
   ReactComponents: {
     renderProductsTable(domNode) {

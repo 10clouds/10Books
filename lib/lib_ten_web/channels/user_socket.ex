@@ -1,9 +1,7 @@
 defmodule LibTenWeb.UserSocket do
   use Phoenix.Socket
 
-  ## Channels
-  # channel "room:*", LibTenWeb.RoomChannel
-
+  channel "products:*", LibTenWeb.ProductsChannel
   transport :websocket, Phoenix.Transports.WebSocket
 
   def connect(%{"token" => token}, socket) do

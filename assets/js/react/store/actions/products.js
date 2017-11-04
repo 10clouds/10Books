@@ -1,8 +1,13 @@
 import * as actions from '../actionTypes/products';
 
-export const updateList = (newList) => ({
-  type: actions.LIST_CHANGED,
-  newList
+export const updateProducts = (products) => ({
+  type: actions.PRODUCTS_CHANGED,
+  products
+});
+
+export const updateCategories = (categories) => ({
+  type: actions.CATEGORIES_CHANGED,
+  categories
 });
 
 export const updateSearchString = (newSearchString) => ({

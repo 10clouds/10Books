@@ -7,6 +7,5 @@ const socket = new Socket('/socket', {
 });
 
 socket.connect();
-console.log('connect');
 
 export default socket;
