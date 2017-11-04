@@ -1,4 +1,13 @@
-import "phoenix_html"
-import "bootstrap" // TODO: Import only stuff we actually need
+import 'phoenix_html'
+import 'bootstrap' // TODO: Import only stuff we actually need
+import React from 'react';
+import ReactDOM from 'react-dom';
+import ProductsTable from './react/containers/ProductsTable';
+
+window.ReactComponents = {
+  renderProductsTable(domNode) {
+    ReactDOM.render(<ProductsTable />, domNode);
+  }
+};
 
 // import socket from "./socket"
