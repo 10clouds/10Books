@@ -14,7 +14,7 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark header-navbar">
       <div class="navbar-brand">
         <i class="fa fa-book" aria-hidden="true"></i>
         <%= Application.get_env(:lib_ten, :title) %>
@@ -54,9 +54,7 @@
       </div>
     </nav>
 
-    <div class="container">
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+    <div class="container-fluid">
 
       <main role="main">
         <%= render @view_module, @view_template, assigns %>

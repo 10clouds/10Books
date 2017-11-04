@@ -9,6 +9,18 @@ defmodule LibTenWeb.ProductsChannel do
         fn (category) ->
           %{id: category.id, name: category.name}
         end
+      ),
+      products: Enum.map(
+        LibTen.Products.list_products(),
+        fn (product) ->
+          %{
+            id: product.id,
+            title: product.title,
+            url: product.url,
+            author: product.author,
+            status: product.status
+          }
+        end
       )
     }
     {:ok, initial_data, socket}

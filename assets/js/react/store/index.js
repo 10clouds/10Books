@@ -20,6 +20,7 @@ channel
   .join()
   .receive('ok', (data) => {
     store.dispatch(productsActions.updateCategories(data.categories))
+    store.dispatch(productsActions.updateProducts(data.products))
   })
 
 export default store;
