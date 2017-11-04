@@ -10,7 +10,21 @@ const defaultState = {
 const reducers = {
   [actions.PRODUCTS_CHANGED]: (state, {products}) => ({
     ...state,
-    all: products
+    all: products.reduce((map, product) => {
+      map[product.id] = product;
+      return map;
+    }, {})
+  }),
+
+  [actions.PRODUCT_CHANGED]: (state, {productId, attrs}) => ({
+    ...state,
+    all: {
+      ...state.all,
+      [productId]: {
+        ...state.all[productId],
+        ...attrs
+      }
+    }
   }),
 
   [actions.CATEGORIES_CHANGED]: (state, {categories}) => ({

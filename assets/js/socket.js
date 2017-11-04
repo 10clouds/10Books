@@ -8,4 +8,4 @@ const socket = new Socket('/socket', {
 
 socket.connect();
 
-export default socket;
+export const productsChannel = socket.channel('products:all');

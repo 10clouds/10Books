@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import socket from 'socket';
+import { productsChannel } from 'socket';
 import socketMiddleware from './middlewares/socket';
 import products from './reducers/products';
 import * as productsActions from './actions/products';
@@ -14,9 +14,11 @@ const store = createStore(
   )
 );
 
-// TODO: Move to separate file
-const channel = socket.channel('products:all');
-channel
+productsChannel.on('product:updated', (data) => {
+  store.dispatch(productsActions.updateProduct(data.id, data, false))
+});
+
+productsChannel
   .join()
   .receive('ok', (data) => {
     store.dispatch(productsActions.updateCategories(data.categories))

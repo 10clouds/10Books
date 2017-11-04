@@ -5,6 +5,13 @@ export const updateProducts = (products) => ({
   products
 });
 
+export const updateProduct = (productId, attrs, notifySocket = true) => ({
+  type: actions.PRODUCT_CHANGED,
+  notifySocket,
+  productId,
+  attrs
+});
+
 export const updateCategories = (categories) => ({
   type: actions.CATEGORIES_CHANGED,
   categories

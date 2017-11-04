@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Search from '../components/Search';
 import * as productActions from '../store/actions/products';
+import Search from '../components/Search';
+import CategoriesSelect from '../components/CategoriesSelect';
 
 class ProductsTable extends Component {
   render() {
     const searchString = this.props.searchString.toLowerCase();
-    const filteredProducts = this.props.all.filter(product => (
+    const filteredProducts = Object.values(this.props.all).filter(product => (
       product.title.includes(searchString) ||
       product.author.includes(searchString)
     ));
@@ -36,7 +37,17 @@ class ProductsTable extends Component {
                     <a href={product.url} target="_blank">{product.title}</a>
                   </td>
                   <td>{product.author}</td>
-                  <td></td>
+                  <td>
+                    <CategoriesSelect
+                      values={this.props.categories}
+                      value={product.category_id}
+                      onChange={(val) => (
+                        this.props.updateProduct(product.id, {
+                          category_id: val
+                        })
+                      )}
+                    />
+                  </td>
                   <td>{product.status}</td>
                 </tr>
               ))}
