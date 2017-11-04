@@ -1,9 +1,31 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import Store from '../store';
+import * as productActions from '../store/actions/products';
 
-export default class ProductsTable extends Component {
+class ProductsTable extends Component {
+  constructor(props) {
+    super(props);
+    console.log(props);
+  }
+
   render() {
     return (
-      <div>Products table</div>
+      <div>
+        <input
+          onChange={(e) => this.props.updateSearchString(e.target.value)}
+          value={this.props.searchString}
+        />
+      </div>
     );
   }
 }
+
+const mapStateToProps = (state) => (state.products);
+
+const mapDispatchToProps = (dispatch) => (
+  bindActionCreators(productActions, dispatch)
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductsTable);

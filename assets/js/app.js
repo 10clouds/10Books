@@ -6,7 +6,7 @@ import ProductsTable from './react/containers/ProductsTable';
 
 window.ReactComponents = {
   renderProductsTable(domNode) {
-    ReactDOM.render(<ProductsTable />, domNode);
+    ReactDOM.render(<ProductsTable store={window.store} />, domNode);
   }
 };
 

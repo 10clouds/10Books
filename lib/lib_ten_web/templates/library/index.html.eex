@@ -3,7 +3,6 @@ library
 <div id="products-table"></div>
 
 <script>
-  console.log(document.getElementById('products-table'))
   window.ReactComponents.renderProductsTable(
     document.getElementById('products-table')
   );
