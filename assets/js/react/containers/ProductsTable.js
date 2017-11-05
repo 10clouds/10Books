@@ -1,23 +1,26 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as productActions from '../store/actions/products';
+import * as searchActions from '../store/actions/search';
+import * as productsActions from '../store/actions/products';
 import Search from '../components/Search';
 import CategoriesSelect from '../components/CategoriesSelect';
 
 class ProductsTable extends Component {
   render() {
-    const searchString = this.props.searchString.toLowerCase();
-    const filteredProducts = Object.values(this.props.all).filter(product => (
-      product.title.includes(searchString) ||
-      product.author.includes(searchString)
-    ));
+    const searchString = this.props.search.queryString.toLowerCase();
+    const filteredProducts = Object
+      .values(this.props.products.byId)
+      .filter(product => (
+        product.title.includes(searchString) ||
+        product.author.includes(searchString)
+      ));
 
     return (
       <div>
         <Search
-          onChange={(e) => this.props.updateSearchString(e.target.value)}
-          value={this.props.searchString}
+          onChange={(e) => this.props.searchActions.updateQuery(e.target.value)}
+          value={this.props.search.queryString}
         />
 
         {filteredProducts.length !== 0 && (
@@ -39,13 +42,13 @@ class ProductsTable extends Component {
                   <td>{product.author}</td>
                   <td>
                     <CategoriesSelect
-                      values={this.props.categories}
+                      values={Object.values(this.props.categories.byId)}
                       value={product.category_id}
-                      onChange={(val) => (
-                        this.props.updateProduct(product.id, {
+                      onChange={(val) => {
+                        this.props.productsActions.update(product.id, {
                           category_id: val
-                        })
-                      )}
+                        });
+                      }}
                     />
                   </td>
                   <td>{product.status}</td>
@@ -59,10 +62,11 @@ class ProductsTable extends Component {
   }
 }
 
-const mapStateToProps = (state) => (state.products);
+const mapStateToProps = state => state;
 
-const mapDispatchToProps = (dispatch) => (
-  bindActionCreators(productActions, dispatch)
-);
+const mapDispatchToProps = (dispatch) => ({
+  searchActions: bindActionCreators(searchActions, dispatch),
+  productsActions: bindActionCreators(productsActions, dispatch)
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductsTable);

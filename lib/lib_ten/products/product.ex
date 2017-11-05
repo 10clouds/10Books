@@ -48,4 +48,16 @@ defmodule LibTen.Products.Product do
       end
     end
   end
+
+  # TODO: 100% the's a helper for this
+  def to_map(%Product{} = product) do
+    %{
+      id: product.id,
+      title: product.title,
+      url: product.url,
+      author: product.author,
+      status: product.status,
+      category_id: product.category_id
+    }
+  end
 end

@@ -12,6 +12,6 @@ defmodule LibTenWeb.LibraryControllerTest do
 
   test "GET /library", %{conn: conn} do
     conn = get conn, "/library"
-    assert html_response(conn, 200) =~ "library"
+    assert html_response(conn, 200)
   end
 end

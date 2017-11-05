@@ -1,28 +1,22 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { productsChannel } from 'socket';
-import socketMiddleware from './middlewares/socket';
+import { bindSocketEvents } from './socketEvents';
+import socketSyncMiddleware from './middlewares/socket_sync';
+import search from './reducers/search';
+import categories from './reducers/categories';
 import products from './reducers/products';
-import * as productsActions from './actions/products';
 
 const store = createStore(
   combineReducers({
+    search,
+    categories,
     products
   }),
   composeWithDevTools(
-    applyMiddleware(socketMiddleware)
+    applyMiddleware(socketSyncMiddleware)
   )
 );
 
-productsChannel.on('product:updated', (data) => {
-  store.dispatch(productsActions.updateProduct(data.id, data, false))
-});
-
-productsChannel
-  .join()
-  .receive('ok', (data) => {
-    store.dispatch(productsActions.updateCategories(data.categories))
-    store.dispatch(productsActions.updateProducts(data.products))
-  })
+bindSocketEvents(store);
 
 export default store;

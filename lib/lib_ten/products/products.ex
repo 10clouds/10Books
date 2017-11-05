@@ -50,9 +50,13 @@ defmodule LibTen.Products do
 
   """
   def create_product(attrs \\ %{}) do
-    %Product{}
-    |> Product.changeset(attrs)
-    |> Repo.insert()
+    case %Product{}
+         |> Product.changeset(attrs)
+         |> Repo.insert()
+    do
+      {:ok, product} -> broadcast_change("created", product)
+      error -> error
+    end
   end
 
   @doc """
@@ -68,9 +72,13 @@ defmodule LibTen.Products do
 
   """
   def update_product(%Product{} = product, attrs) do
-    product
-    |> Product.changeset(attrs)
-    |> Repo.update()
+    case product
+         |> Product.changeset(attrs)
+         |> Repo.update()
+    do
+      {:ok, product} -> broadcast_change("updated", product)
+      error -> error
+    end
   end
 
   @doc """
@@ -86,7 +94,10 @@ defmodule LibTen.Products do
 
   """
   def delete_product(%Product{} = product) do
-    Repo.delete(product)
+    case Repo.delete(product) do
+      {:ok, product} -> broadcast_change("deleted", product)
+      error -> error
+    end
   end
 
   @doc """
@@ -100,5 +111,10 @@ defmodule LibTen.Products do
   """
   def change_product(%Product{} = product) do
     Product.changeset(product, %{})
+  end
+
+  defp broadcast_change(type, %Product{} = product) do
+    LibTenWeb.Endpoint.broadcast!("products", type, Product.to_map(product))
+    {:ok, product}
   end
 end

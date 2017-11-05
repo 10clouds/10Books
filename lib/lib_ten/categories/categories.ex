@@ -50,9 +50,13 @@ defmodule LibTen.Categories do
 
   """
   def create_category(attrs \\ %{}) do
-    %Category{}
-    |> Category.changeset(attrs)
-    |> Repo.insert()
+    case %Category{}
+         |> Category.changeset(attrs)
+         |> Repo.insert()
+    do
+      {:ok, category} -> broadcast_change("created", category)
+      error -> error
+    end
   end
 
   @doc """
@@ -68,9 +72,13 @@ defmodule LibTen.Categories do
 
   """
   def update_category(%Category{} = category, attrs) do
-    category
-    |> Category.changeset(attrs)
-    |> Repo.update()
+    case category
+         |> Category.changeset(attrs)
+         |> Repo.update()
+    do
+      {:ok, category} -> broadcast_change("updated", category)
+      error -> error
+    end
   end
 
   @doc """
@@ -86,7 +94,10 @@ defmodule LibTen.Categories do
 
   """
   def delete_category(%Category{} = category) do
-    Repo.delete(category)
+    case Repo.delete(category) do
+      {:ok, category} -> broadcast_change("deleted", category)
+      error -> error
+    end
   end
 
   @doc """
@@ -100,5 +111,10 @@ defmodule LibTen.Categories do
   """
   def change_category(%Category{} = category) do
     Category.changeset(category, %{})
+  end
+
+  defp broadcast_change(type, %Category{} = category) do
+    LibTenWeb.Endpoint.broadcast!("categories", type, Category.to_map(category))
+    {:ok, category}
   end
 end

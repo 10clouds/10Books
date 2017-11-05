@@ -6,6 +6,7 @@ defmodule LibTen.Categories.Category do
 
   schema "categories" do
     field :name, :string
+    has_many :products, LibTen.Products.Product, on_delete: :nilify_all
 
     timestamps()
   end
@@ -16,5 +17,9 @@ defmodule LibTen.Categories.Category do
     |> cast(attrs, [:name])
     |> validate_required([:name])
     |> unique_constraint(:name)
+  end
+
+  def to_map(%Category{} = category) do
+    %{id: category.id, name: category.name}
   end
 end

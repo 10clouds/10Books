@@ -3,45 +3,35 @@ defmodule LibTenWeb.ProductsChannel do
 
   alias LibTen.Products
   alias LibTen.Products.Product
-  alias LibTen.Categories
 
-  def join("products:all", _message, socket) do
-    initial_data = %{
-      categories: Enum.map(
-        LibTen.Categories.list_categories(),
-        &(category_to_map(&1))
-      ),
-      products: Enum.map(
-        LibTen.Products.list_products(),
-        &(product_to_map(&1))
-      )
-    }
-    {:ok, initial_data, socket}
+  def join("products", _message, socket) do
+    products = Enum.map(Products.list_products(), &(Product.to_map(&1)))
+    {:ok, %{payload: products}, socket}
   end
 
-  def handle_in("product:updated", %{"id" => id, "attrs" => attrs}, socket) do
-    case Products.update_product(Products.get_product!(id), attrs) do
+  def handle_in("create", %{"attrs" => attrs}, socket) do
+    build_response(socket, Products.create_product(attrs))
+  end
+
+  def handle_in("update", %{"id" => id, "attrs" => attrs}, socket) do
+    product = Products.get_product!(id)
+    build_response(socket, Products.update_product(product, attrs))
+  end
+
+  def handle_in("delete", %{"id" => id}, socket) do
+    build_response(socket, Products.delete_product(id))
+  end
+
+  defp build_response(socket, context_result) do
+    case context_result do
       {:ok, product} ->
-        broadcast! socket, "product:updated", product_to_map(product)
-        {:noreply, socket}
-      {:error, _} -> {:noreply, socket}
+        response = Product.to_map(product)
+        {:reply, {:ok, response}, socket}
+      {:error, changeset} ->
+        response = LibTenWeb.ChangesetView.render("errors.json", %{
+          changeset: changeset
+        })
+        {:reply, {:error, response}, socket}
     end
-  end
-
-  defp category_to_map(category) do
-    IO.inspect(category)
-    %{id: category.id, name: category.name}
-  end
-
-  defp product_to_map(product) do
-    IO.inspect(product)
-    %{
-      id: product.id,
-      title: product.title,
-      url: product.url,
-      author: product.author,
-      status: product.status,
-      category_id: product.category_id
-    }
   end
 end

@@ -1,4 +1,4 @@
-import * as actionTypes from '../actionTypes/products';
+import * as actionTypes from '../actionTypes/categories';
 
 export const updateAll = (items) => ({
   type: actionTypes.ALL_UPDATED,

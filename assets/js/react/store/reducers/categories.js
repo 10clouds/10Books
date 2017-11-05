@@ -1,4 +1,4 @@
-import * as actionTypes from '../actionTypes/products';
+import * as actionTypes from '../actionTypes/categories';
 import { makeReducer } from '../utils';
 
 const defaultState = {
