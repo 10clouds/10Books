@@ -50,7 +50,13 @@ html, body {
 }
 
 .products-table {
-  &.table thead th {
-    border-top: none;
+  &.table {
+    thead th {
+      border-top: none;
+    }
+
+    th, td {
+      vertical-align: middle;
+    }
   }
 }
