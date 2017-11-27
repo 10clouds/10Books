@@ -5,7 +5,7 @@ defmodule LibTenWeb.CategoriesChannel do
   alias LibTen.Categories.Category
 
   def join("categories", _message, socket) do
-    categories = Enum.map(Categories.list_categories(), &(Category.to_map(&1)))
+    categories = Categories.list_categories() |> Categories.to_json_map
     {:ok, %{payload: categories}, socket}
   end
 end

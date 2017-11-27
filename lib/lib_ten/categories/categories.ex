@@ -113,8 +113,19 @@ defmodule LibTen.Categories do
     Category.changeset(category, %{})
   end
 
+
+  def to_json_map(%Category{} = category) do
+    %{id: category.id, name: category.name}
+  end
+
+
+  def to_json_map(categories) do
+    Enum.map(categories, &to_json_map/1)
+  end
+
+
   defp broadcast_change(type, %Category{} = category) do
-    LibTenWeb.Endpoint.broadcast!("categories", type, Category.to_map(category))
+    LibTenWeb.Endpoint.broadcast!("categories", type, to_json_map(category))
     {:ok, category}
   end
 end

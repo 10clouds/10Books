@@ -18,8 +18,4 @@ defmodule LibTen.Categories.Category do
     |> validate_required([:name])
     |> unique_constraint(:name)
   end
-
-  def to_map(%Category{} = category) do
-    %{id: category.id, name: category.name}
-  end
 end

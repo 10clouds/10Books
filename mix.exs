@@ -41,7 +41,11 @@ defmodule LibTen.Mixfile do
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
-      {:ueberauth_google, "~> 0.5"}
+      {:ueberauth_google, "~> 0.5"},
+      {:ex_machina, "~> 2.1", only: :test},
+      {:mock, "~> 0.2.0", only: :test},
+      # TODO: Doesn't work with elixir 1.5.2, check later
+      #{:credo, "~> 0.8", only: [:dev, :test], runtime: false}
     ]
   end
 
