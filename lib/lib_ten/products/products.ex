@@ -118,6 +118,45 @@ defmodule LibTen.Products do
   end
 
 
+  def take_product(product_id, user_id) do
+    product = get_product!(product_id)
+    product_use_attrs = %{product_id: product_id, user_id: user_id}
+
+    case product
+         |> Product.changeset(%{product_use: product_use_attrs})
+         |> Repo.update()
+    do
+      {:ok, product} -> broadcast_change("updated", product)
+      error -> error
+    end
+  end
+
+
+  def return_product(product_id, user_id) do
+    query = from product in Product,
+      left_join: product_use in ProductUse,
+        on: product_use.product_id == product.id,
+        on: product_use.user_id == ^user_id,
+        on: is_nil(product_use.ended_at),
+      where: product.id == ^product_id,
+      preload: [product_use: {product_use, :user}]
+
+    product = Repo.one!(query)
+    product_use_attrs = %{
+      id: product.product_use.id,
+      ended_at: DateTime.utc_now
+    }
+
+    case product
+         |> Product.changeset(%{product_use: product_use_attrs})
+         |> Repo.update()
+    do
+      {:ok, product} -> broadcast_change("updated", product)
+      error -> error
+    end
+  end
+
+
   def to_json_map(%Product{} = product) do
     %{
       id: product.id,

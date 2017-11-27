@@ -8,7 +8,7 @@ defmodule LibTenWeb.UserSocket do
   def connect(%{"token" => token}, socket) do
     case Phoenix.Token.verify(socket, "current_user_token", token, max_age: 1209600) do
       {:ok, user_id} -> {:ok, assign(socket, :user_id, user_id)}
-      {:error, reason} -> :error
+      error -> error
     end
   end
 

@@ -30,7 +30,7 @@ defmodule LibTen.Products.Product do
     field :title, :string
     field :url, :string
     belongs_to :category, Category
-    has_one :product_use, ProductUse
+    has_one :product_use, ProductUse, on_replace: :delete
 
     timestamps()
   end
@@ -39,6 +39,7 @@ defmodule LibTen.Products.Product do
   def changeset(%Product{} = product, attrs) do
     product
     |> cast(attrs, [:title, :url, :author, :status, :category_id])
+    |> cast_assoc(:product_use)
     |> validate_required([:title, :url, :author, :status])
     |> validate_url(:url, %{message: "Invalid url"})
     |> validate_inclusion(:status, @valid_statuses)
@@ -46,7 +47,7 @@ defmodule LibTen.Products.Product do
 
   def validate_url(changeset, field, options \\ []) do
     validate_change changeset, field, fn _, url ->
-      case url |> String.to_char_list |> :http_uri.parse do
+      case url |> String.to_charlist |> :http_uri.parse do
         {:ok, _} -> []
         {:error, _} -> [{field, options[:message]}]
       end
