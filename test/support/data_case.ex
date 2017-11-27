@@ -16,12 +16,16 @@ defmodule LibTen.DataCase do
 
   using do
     quote do
+      use Phoenix.ChannelTest
+
       alias LibTen.Repo
 
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
       import LibTen.DataCase
+
+      @endpoint LibTenWeb.Endpoint
     end
   end
 

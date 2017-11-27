@@ -24,6 +24,6 @@ defmodule LibTen.Factory do
   end
 
   def product_use_factory do
-    %LibTen.ProductUses.ProductUse{}
+    %LibTen.Products.ProductUse{}
   end
 end

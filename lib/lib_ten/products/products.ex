@@ -6,7 +6,7 @@ defmodule LibTen.Products do
   import Ecto.Query, warn: false
   alias LibTen.Repo
 
-  alias LibTen.Products.Product
+  alias LibTen.Products.{Product, ProductUse}
 
   @doc """
   Returns the list of products.
@@ -18,7 +18,7 @@ defmodule LibTen.Products do
 
   """
   def list_products do
-    Repo.all(Product)
+    Repo.all(products_query())
   end
 
   @doc """
@@ -35,7 +35,11 @@ defmodule LibTen.Products do
       ** (Ecto.NoResultsError)
 
   """
-  def get_product!(id), do: Repo.get!(Product, id)
+  def get_product!(id) do
+    query = from product in products_query(),
+      where: product.id == ^id
+    Repo.one!(query)
+  end
 
   @doc """
   Creates a product.
@@ -113,8 +117,44 @@ defmodule LibTen.Products do
     Product.changeset(product, %{})
   end
 
+
+  def to_json_map(%Product{} = product) do
+    %{
+      id: product.id,
+      title: product.title,
+      url: product.url,
+      author: product.author,
+      status: product.status,
+      category_id: product.category_id,
+      product_use:
+        case product.product_use do
+          {id, inserted_at, user} ->
+            %{
+              id: id,
+              started_at: inserted_at,
+              user_name: user.name
+            }
+          _ -> nil
+        end
+    }
+  end
+
+
+  def to_json_map(products) do
+    Enum.map(products, &to_json_map/1)
+  end
+
+
+  defp products_query do
+    from product in Product,
+      left_join: product_use in ProductUse,
+        on: product_use.product_id == product.id and is_nil(product_use.ended_at),
+      preload: [product_use: {product_use, :user}]
+  end
+
+
   defp broadcast_change(type, %Product{} = product) do
-    LibTenWeb.Endpoint.broadcast!("products", type, Product.to_map(product))
+    LibTenWeb.Endpoint.broadcast!("products", type, to_json_map(product))
     {:ok, product}
   end
 end

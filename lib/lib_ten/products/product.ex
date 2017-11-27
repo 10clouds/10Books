@@ -1,7 +1,10 @@
 defmodule LibTen.Products.Product do
   use Ecto.Schema
+
   import Ecto.Changeset
-  alias LibTen.Products.Product
+
+  alias LibTen.Products.{Product, ProductUse}
+  alias LibTen.Categories.Category
 
   @library_statuses [
     in_library: "IN_LIBRARY",
@@ -26,7 +29,8 @@ defmodule LibTen.Products.Product do
     field :status, :string
     field :title, :string
     field :url, :string
-    belongs_to :category, LibTen.Categories.Category
+    belongs_to :category, Category
+    has_one :product_use, ProductUse
 
     timestamps()
   end
@@ -47,17 +51,5 @@ defmodule LibTen.Products.Product do
         {:error, _} -> [{field, options[:message]}]
       end
     end
-  end
-
-  # TODO: 100% the's a helper for this
-  def to_map(%Product{} = product) do
-    %{
-      id: product.id,
-      title: product.title,
-      url: product.url,
-      author: product.author,
-      status: product.status,
-      category_id: product.category_id
-    }
   end
 end
