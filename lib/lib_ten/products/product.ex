@@ -30,7 +30,8 @@ defmodule LibTen.Products.Product do
     field :title, :string
     field :url, :string
     belongs_to :category, Category
-    has_one :product_use, ProductUse, on_replace: :delete
+    has_one :product_use, ProductUse, on_replace: :delete # TODO: re-check this
+    field :rating, :float, virtual: true
 
     timestamps()
   end

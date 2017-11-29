@@ -6,7 +6,7 @@ defmodule LibTen.Products do
   import Ecto.Query, warn: false
   alias LibTen.Repo
 
-  alias LibTen.Products.{Product, ProductUse}
+  alias LibTen.Products.{Product, ProductUse, ProductRating}
 
   @doc """
   Returns the list of products.
@@ -157,6 +157,25 @@ defmodule LibTen.Products do
   end
 
 
+  def rate_product(product_id, user_id, rating) do
+    changeset = %{
+      product_id: product_id,
+      user_id: user_id,
+      rating: rating
+    }
+
+    case %ProductRating{}
+         |> ProductRating.changeset(changeset)
+         |> Repo.insert()
+    do
+      {:ok, _} ->
+        product = get_product!(product_id)
+        broadcast_change("updated", product)
+      error -> error
+    end
+  end
+
+
   def to_json_map(%Product{} = product) do
     %{
       id: product.id,
@@ -165,6 +184,7 @@ defmodule LibTen.Products do
       author: product.author,
       status: product.status,
       category_id: product.category_id,
+      rating: product.rating,
       product_use:
         case product.product_use do
           {id, inserted_at, user} ->
@@ -187,8 +207,15 @@ defmodule LibTen.Products do
   defp products_query do
     from product in Product,
       left_join: product_use in ProductUse,
-        on: product_use.product_id == product.id and is_nil(product_use.ended_at),
-      preload: [product_use: {product_use, :user}]
+        on: product_use.product_id == product.id,
+        on: is_nil(product_use.ended_at),
+      preload: [product_use: {product_use, :user}],
+      select_merge: %{
+        rating: fragment(
+          "(SELECT AVG(rating) FROM product_ratings WHERE product_ratings.product_id = ?)",
+          product.id
+        )
+      }
   end
 
 

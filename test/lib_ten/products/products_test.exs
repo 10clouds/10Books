@@ -145,4 +145,30 @@ defmodule LibTen.ProductsTest do
     Products.return_product(product.id, user.id)
     assert {:ok, _} = Products.take_product(product.id, user2.id)
   end
+
+  describe "rate product" do
+    test "rate_product/3 updates average rating and notifies channel" do
+      LibTenWeb.Endpoint.subscribe("products")
+      user = insert(:user)
+      user2 = insert(:user)
+      product = insert(:product)
+      product = Products.get_product!(product.id)
+      assert product.rating == nil
+      {:ok, product} = Products.rate_product(product.id, user.id, 4.5)
+      assert product.rating == 4.5
+      {:ok, product} = Products.rate_product(product.id, user2.id, 2.5)
+      assert product.rating == 3.5
+      product_json = Products.to_json_map(product)
+      assert_broadcast "updated", ^product_json
+    end
+
+    test "rate_product/3 returns an error if user tries to rate more then once" do
+      user = insert(:user)
+      product = insert(:product)
+      assert {:ok, _} = Products.rate_product(product.id, user.id, 4.5)
+      assert {:error, %Ecto.Changeset{}} = Products.rate_product(product.id, user.id, 2)
+      product = Products.get_product!(product.id)
+      assert product.rating == 4.5
+    end
+  end
 end
