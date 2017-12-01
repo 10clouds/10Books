@@ -171,4 +171,25 @@ defmodule LibTen.ProductsTest do
       assert product.rating == 4.5
     end
   end
+
+  describe "vote for product" do
+    test "vote_for_product/3 sets user vote, updates product totals and updates channel" do
+      LibTenWeb.Endpoint.subscribe("products")
+      user = insert(:user)
+      user2 = insert(:user)
+      user3 = insert(:user)
+      product = insert(:product)
+      assert {:ok, product} = Products.vote_for_product(product.id, user.id, true)
+      assert product.upvotes == 1
+      assert product.downvotes == 0
+      assert {:ok, product} = Products.vote_for_product(product.id, user2.id, true)
+      assert product.upvotes == 2
+      assert product.downvotes == 0
+      assert {:ok, product} = Products.vote_for_product(product.id, user3.id, false)
+      product_json = Products.to_json_map(product)
+      assert product.upvotes == 2
+      assert product.downvotes == 1
+      assert_broadcast "updated", ^product_json
+    end
+  end
 end

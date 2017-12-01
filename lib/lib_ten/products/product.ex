@@ -32,6 +32,8 @@ defmodule LibTen.Products.Product do
     belongs_to :category, Category
     has_one :product_use, ProductUse, on_replace: :delete # TODO: re-check this
     field :rating, :float, virtual: true
+    field :upvotes, :integer, virtual: true, default: 0
+    field :downvotes, :integer, virtual: true, default: 0
 
     timestamps()
   end

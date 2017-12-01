@@ -6,7 +6,7 @@ defmodule LibTen.Products do
   import Ecto.Query, warn: false
   alias LibTen.Repo
 
-  alias LibTen.Products.{Product, ProductUse, ProductRating}
+  alias LibTen.Products.{Product, ProductUse, ProductRating, ProductVote}
 
   @doc """
   Returns the list of products.
@@ -176,6 +176,36 @@ defmodule LibTen.Products do
   end
 
 
+  def vote_for_product(product_id, user_id, is_upvote) do
+    changeset = %{
+      product_id: product_id,
+      user_id: user_id,
+      is_upvote: is_upvote
+    }
+
+    existing_vote = Repo.get_by(ProductVote,
+      user_id: user_id, product_id: product_id
+    )
+
+    result = if existing_vote do
+      existing_vote
+      |> ProductVote.changeset(changeset)
+      |> Repo.update()
+    else
+      %ProductVote{}
+       |> ProductVote.changeset(changeset)
+       |> Repo.insert()
+    end
+
+    case result do
+      {:ok, _} ->
+        product = get_product!(product_id)
+        broadcast_change("updated", product)
+      error -> error
+    end
+  end
+
+
   def to_json_map(%Product{} = product) do
     %{
       id: product.id,
@@ -185,6 +215,8 @@ defmodule LibTen.Products do
       status: product.status,
       category_id: product.category_id,
       rating: product.rating,
+      upvotes: product.upvotes,
+      downvotes: product.downvotes,
       product_use:
         case product.product_use do
           {id, inserted_at, user} ->
@@ -205,6 +237,7 @@ defmodule LibTen.Products do
 
 
   defp products_query do
+    # TODO: optimize query, so we won't have subqueries
     from product in Product,
       left_join: product_use in ProductUse,
         on: product_use.product_id == product.id,
@@ -213,6 +246,14 @@ defmodule LibTen.Products do
       select_merge: %{
         rating: fragment(
           "(SELECT AVG(rating) FROM product_ratings WHERE product_ratings.product_id = ?)",
+          product.id
+        ),
+        upvotes: fragment(
+          "(SELECT count(id) from product_votes WHERE product_votes.product_id = ? AND is_upvote = true)",
+          product.id
+        ),
+        downvotes: fragment(
+          "(SELECT count(id) from product_votes WHERE product_votes.product_id = ? AND is_upvote = false)",
           product.id
         )
       }

@@ -4,8 +4,8 @@ defmodule LibTen.Repo.Migrations.CreateProductUses do
   def change do
     create table(:product_uses) do
       add :ended_at, :naive_datetime
-      add :user_id, references(:users, on_delete: :nothing), null: false
-      add :product_id, references(:products, on_delete: :nothing), null: false
+      add :user_id, references(:users), null: false
+      add :product_id, references(:products), null: false
 
       timestamps()
     end

@@ -3,8 +3,8 @@ defmodule LibTen.Repo.Migrations.CreateProductRatings do
 
   def change do
     create table(:product_ratings) do
-      add :product_id, references(:products, on_delete: :nothing), null: false
-      add :user_id, references(:users, on_delete: :nothing), null: false
+      add :product_id, references(:products), null: false
+      add :user_id, references(:users), null: false
       add :rating, :float
 
       timestamps()
