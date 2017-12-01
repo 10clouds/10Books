@@ -20,7 +20,7 @@ defmodule LibTen.Mixfile do
   def application do
     [
       mod: {LibTen.Application, []},
-      extra_applications: [:logger, :runtime_tools, :ueberauth_google]
+      extra_applications: [:logger, :runtime_tools, :ueberauth_google, :mongodb],
     ]
   end
 
@@ -46,6 +46,9 @@ defmodule LibTen.Mixfile do
       {:mock, "~> 0.2.0", only: :test},
       # TODO: Doesn't work with elixir 1.5.2, check later
       #{:credo, "~> 0.8", only: [:dev, :test], runtime: false}
+      #
+      # temporary
+      {:mongodb, ">= 0.0.0"}
     ]
   end
 
