@@ -3,6 +3,7 @@ defmodule LibTen.Products.Product do
 
   import Ecto.Changeset
 
+  alias LibTen.Accounts.User
   alias LibTen.Products.{Product, ProductUse}
   alias LibTen.Categories.Category
 
@@ -30,6 +31,7 @@ defmodule LibTen.Products.Product do
     field :title, :string
     field :url, :string
     belongs_to :category, Category
+    belongs_to :user, User
     has_one :product_use, ProductUse, on_replace: :delete # TODO: re-check this
     field :rating, :float, virtual: true
     field :upvotes, :integer, virtual: true, default: 0
@@ -41,7 +43,7 @@ defmodule LibTen.Products.Product do
   @doc false
   def changeset(%Product{} = product, attrs) do
     product
-    |> cast(attrs, [:title, :url, :author, :status, :category_id])
+    |> cast(attrs, [:title, :url, :author, :status, :category_id, :user_id])
     |> cast_assoc(:product_use)
     |> validate_required([:title, :url, :author, :status])
     |> validate_url(:url, %{message: "Invalid url"})
