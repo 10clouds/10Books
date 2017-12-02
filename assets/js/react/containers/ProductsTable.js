@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
+import debounce from 'lodash.debounce';
 import { connect } from 'react-redux';
 import * as searchActions from '../store/actions/search';
 import * as productsActions from '../store/actions/products';
@@ -7,19 +8,27 @@ import Search from '../components/Search';
 import CategoriesSelect from '../components/CategoriesSelect';
 
 class ProductsTable extends Component {
+  handleSearchUpdate = debounce((e) => {
+    this.props.searchActions.updateQuery(e.target.value)
+  }, 50)
+
   render() {
     const searchString = this.props.search.queryString.toLowerCase();
-    const filteredProducts = Object
-      .values(this.props.products.byId)
+
+    const filteredProducts = this.props.products.all
       .filter(product => (
-        product.title.includes(searchString) ||
-        product.author.includes(searchString)
+        product.title.toLowerCase().includes(searchString) ||
+        (product.author && product.author.toLowerCase().includes(searchString)) ||
+        (product.category_id && this.props.categories.byId[product.category_id].name.toLowerCase().includes(searchString))
       ));
 
     return (
       <div>
         <Search
-          onChange={(e) => this.props.searchActions.updateQuery(e.target.value)}
+          onChange={(e) => {
+            e.persist();
+            this.handleSearchUpdate(e);
+          }}
           value={this.props.search.queryString}
         />
 

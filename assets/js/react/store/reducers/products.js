@@ -2,12 +2,14 @@ import * as actionTypes from '../actionTypes/products';
 import { makeReducer } from '../utils';
 
 const defaultState = {
-  byId: {}
+  byId: {},
+  all: []
 };
 
 const reducers = {
   [actionTypes.ALL_UPDATED]: (state, {items}) => ({
     ...state,
+    all: items,
     byId: items.reduce((all, item) => {
       all[item.id] = item;
       return all;
