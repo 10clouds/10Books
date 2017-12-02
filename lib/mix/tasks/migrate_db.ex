@@ -100,6 +100,10 @@ defmodule Mix.Tasks.MigrateDb do
     end)
 
     products = Enum.map(products, fn (product) ->
+      if product["subscribers"] != nil and Enum.count(product["subscribers"]) > 0 do
+        # TODO: Build subscribers
+      end
+
       category = Enum.find(categories, fn (category) ->
         category.ecto.name == product["category"]
       end)
@@ -165,8 +169,6 @@ defmodule Mix.Tasks.MigrateDb do
         |> Changeset.cast_assoc(:product_use)
         |> Changeset.validate_required([:title, :status])
         |> Repo.insert()
-
-      :timer.sleep(100)
 
       %{
         mongo_id: product["_id"],

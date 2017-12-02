@@ -256,7 +256,8 @@ defmodule LibTen.Products do
           "(SELECT count(id) from product_votes WHERE product_votes.product_id = ? AND is_upvote = false)",
           product.id
         )
-      }
+      },
+      order_by: [desc: product.inserted_at]
   end
 
 

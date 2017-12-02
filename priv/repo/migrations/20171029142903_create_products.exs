@@ -11,5 +11,6 @@ defmodule LibTen.Repo.Migrations.CreateProducts do
       timestamps()
     end
 
+    create index(:products, ["inserted_at DESC NULLS LAST"])
   end
 end
