@@ -20,6 +20,27 @@ defmodule LibTen.ProductsTest do
     {:ok, socket: socket("user_socket", %{user_id: user.id})}
   end
 
+  test "to_json_map/1 build valid JSON" do
+    product = insert(:product)
+    user = insert(:user)
+    product_use = insert(:product_use, product_id: product.id, user_id: user.id)
+    product = Products.get_product!(product.id)
+    #IO.inspect(product)
+    # TODO: json schema
+    json = Products.to_json_map(product)
+    assert json.id == product.id
+    assert json.title == product.title
+    assert json.url == product.url
+    assert json.author == product.author
+    assert json.status == product.status
+    assert json.category_id == product.category_id
+    assert json.rating == nil
+    assert json.upvotes == 0
+    assert json.downvotes == 0
+    assert json.in_use.started_at == product_use.inserted_at
+    assert json.in_use.user_name == user.name
+  end
+
   test "list_products/0 returns all products" do
     product1 = insert(:product)
     product2 = insert(:product)

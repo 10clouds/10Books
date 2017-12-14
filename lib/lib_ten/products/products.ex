@@ -217,15 +217,14 @@ defmodule LibTen.Products do
       rating: product.rating,
       upvotes: product.upvotes,
       downvotes: product.downvotes,
-      product_use:
+      in_use:
         case product.product_use do
-          {id, inserted_at, user} ->
+          nil -> nil
+          product_use ->
             %{
-              id: id,
-              started_at: inserted_at,
-              user_name: user.name
+              started_at: product_use.inserted_at,
+              user_name: product_use.user.name
             }
-          _ -> nil
         end
     }
   end
