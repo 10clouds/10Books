@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import debounce from 'lodash.debounce';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import * as searchActions from '../store/actions/search';
 import * as productsActions from '../store/actions/products';
 import Search from '../components/Search';
@@ -61,6 +62,20 @@ class ProductsTable extends Component {
                     />
                   </td>
                   <td>{product.status}</td>
+                  <td>
+                    {product.in_use ? (
+                      <div>
+                        Take by <b>{product.in_use.user_name}</b> <br />
+                        { moment(product.in_use.started_at).fromNow() }
+                        <br />
+                        <button className="btn btn-warning">
+                          Return book
+                        </button>
+                      </div>
+                    ) : (
+                      <button className="btn btn-default">Take book</button>
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>
