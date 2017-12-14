@@ -166,7 +166,7 @@ defmodule Mix.Tasks.MigrateDb do
 
       {:ok, ecto_product} = %Product{}
         |> Changeset.cast(changeset, [:title, :url, :author, :status, :category_id, :user_id, :inserted_at, :updated_at])
-        |> Changeset.cast_assoc(:product_use)
+        |> Changeset.put_assoc(:product_use, product_use)
         |> Changeset.validate_required([:title, :status])
         |> Repo.insert()
 
