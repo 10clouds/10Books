@@ -193,6 +193,13 @@ defmodule LibTen.ProductsTest do
       product = Products.get_product!(product.id)
       assert product.rating == 4.5
     end
+
+    test "rate_product/3 returns changeset if rating out of range" do
+      user = insert(:user)
+      product = insert(:product)
+      assert {:error, _} = Products.rate_product(product.id, user.id, 5.1)
+      assert {:error, _} = Products.rate_product(product.id, user.id, 0.9)
+    end
   end
 
   describe "vote for product" do

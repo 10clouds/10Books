@@ -18,6 +18,9 @@ defmodule LibTen.Products.ProductRating do
   def changeset(%ProductRating{} = product_rating, attrs) do
     product_rating
     |> cast(attrs, [:user_id, :product_id, :rating])
+    |> validate_number(:rating,
+        greater_than_or_equal_to: 1,
+        less_than_or_equal_to: 5)
     |> unique_constraint(:product_id,
       name: :product_ratings_product_id_user_id_index,
       message: "Already rated"
