@@ -14,3 +14,13 @@ export const remove = (id) => ({
   type: actionTypes.DELETED,
   id
 });
+
+export const take = (id) => ({
+  type: actionTypes.TAKEN,
+  id
+});
+
+export const returnProduct = (id) => ({
+  type: actionTypes.RETURNED,
+  id
+});

@@ -3,6 +3,7 @@ import { productsChannel } from 'socket';
 
 export default function(store) {
   return next => action => {
+    // TODO: Remove this middleware and have logic in actions
     if (!action.skipSocketMiddleware) {
       switch (action.type) {
         case productActions.CREATED:
@@ -16,7 +17,13 @@ export default function(store) {
           });
           break;
         case productActions.DELETED:
-          productActions.push('delete', action.id);
+          productsChannel.push('delete', {id: action.id});
+          break;
+        case productActions.TAKEN:
+          productsChannel.push('take', {id: action.id});
+          break;
+        case productActions.RETURNED:
+          productsChannel.push('return', {id: action.id})
           break;
       }
     }

@@ -17,11 +17,14 @@ const reducers = {
   }),
 
   [actionTypes.UPDATED]: (state, {id, attrs}) => {
+    const updatedItem = {...state.byId[id], ...attrs}
+
     return {
       ...state,
+      all: state.all.map(item => item.id === id ? updatedItem : item),
       byId: {
         ...state.byId,
-        [id]: {...state.byId[id], ...attrs}
+        [id]: updatedItem
       }
     };
   },

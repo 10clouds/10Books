@@ -68,12 +68,24 @@ class ProductsTable extends Component {
                         Take by <b>{product.in_use.user_name}</b> <br />
                         { moment(product.in_use.started_at).fromNow() }
                         <br />
-                        <button className="btn btn-warning">
+                        <button
+                          className="btn btn-warning"
+                          onClick={() => {
+                            this.props.productsActions.returnProduct(product.id)
+                          }}
+                        >
                           Return book
                         </button>
                       </div>
                     ) : (
-                      <button className="btn btn-default">Take book</button>
+                      <button
+                        className="btn btn-default"
+                        onClick={() => {
+                          this.props.productsActions.take(product.id)
+                        }}
+                      >
+                        Take book
+                      </button>
                     )}
                   </td>
                 </tr>
