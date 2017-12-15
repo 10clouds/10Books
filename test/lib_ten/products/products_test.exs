@@ -6,6 +6,7 @@ defmodule LibTen.ProductsTest do
 
   alias LibTen.Products
   alias LibTen.Products.Product
+  alias LibTen.Products.ProductUse
 
   @update_attrs %{
     author: "some updated author",
@@ -58,11 +59,11 @@ defmodule LibTen.ProductsTest do
     expected_product2 = Map.merge(product2, %{
       product_use: Map.merge(product_use2, %{user: user2})
     })
-    expected_product3 =  Map.merge(product3, %{product_use: nil})
+    expected_product3 = Map.merge(product3, %{product_use: nil})
 
-    assert Enum.at(products, 0) == expected_product1
+    assert Enum.at(products, 0) == expected_product3
     assert Enum.at(products, 1) == expected_product2
-    assert Enum.at(products, 2) == expected_product3
+    assert Enum.at(products, 2) == expected_product1
   end
 
   test "get_product!/1 returns the product with given id" do
@@ -150,9 +151,10 @@ defmodule LibTen.ProductsTest do
       Products.take_product(product.id, user.id)
       with_mock DateTime, [utc_now: fn -> date_now end] do
         assert {:ok, %Product{} = product} = Products.return_product(product.id, user.id)
+        product_use = Repo.get_by(ProductUse, %{product_id: product.id})
         product_json = Products.to_json_map(product)
         assert_broadcast "updated", ^product_json
-        assert naive_date_now == product.product_use.ended_at
+        assert naive_date_now == product_use.ended_at
       end
     end
   end

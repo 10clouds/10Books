@@ -14,7 +14,7 @@ defmodule LibTenWeb.ProductsChannelTest do
     {:ok, reply, socket} =
       socket("user_socket", %{user_id: user.id})
       |> subscribe_and_join(ProductsChannel, "products")
-    {:ok, socket_reply: reply, socket: socket}
+    {:ok, socket_reply: reply, socket: socket, socket_user: user}
   end
 
   test "replies with products on join", %{socket_reply: socket_reply} do
@@ -29,7 +29,8 @@ defmodule LibTenWeb.ProductsChannelTest do
       product_params = params_for(:product)
       ref = push socket, "create", %{"attrs" => product_params}
       reply = assert_reply ref, :ok
-      product = Repo.get_by!(Product, title: product_params.title)
+      %Product{id: product_id} = Repo.get_by!(Product, title: product_params.title)
+      product = Products.get_product!(product_id)
       assert reply.payload == Products.to_json_map(product)
     end
 
@@ -44,7 +45,7 @@ defmodule LibTenWeb.ProductsChannelTest do
       product = insert(:product)
       ref = push socket, "update", %{"id" => product.id, "attrs" => %{"title" => "test"}}
       reply = assert_reply ref, :ok
-      updated_product = Repo.get!(Product, product.id)
+      updated_product = Products.get_product!(product.id)
       assert updated_product.title == "test"
       assert reply.payload == Products.to_json_map(updated_product)
     end
@@ -74,4 +75,43 @@ defmodule LibTenWeb.ProductsChannelTest do
       assert_reply ref, :error, %{type: "NOT_FOUND"}
     end
   end
+
+  describe "take" do
+    test "replies with product on :ok", %{socket: socket} do
+      product = insert(:product)
+      ref = push socket, "take", %{"id" => product.id}
+      reply = assert_reply ref, :ok
+      product = Products.get_product!(product.id)
+      assert reply.payload == Products.to_json_map(product)
+    end
+
+    test "replies with changeset on :error", %{socket: socket} do
+      product = insert(:product)
+      user = insert(:user)
+      insert(:product_use, product_id: product.id, user_id: user.id)
+      ref = push socket, "take", %{"id" => product.id}
+      assert_reply ref, :error, %{type: "RECORD_INVALID"}
+    end
+  end
+
+
+  describe "return" do
+    test "replies with product on :ok", %{socket: socket, socket_user: user} do
+      product = insert(:product)
+      insert(:product_use, product_id: product.id, user_id: user.id)
+      ref = push socket, "return", %{"id" => product.id}
+      reply = assert_reply ref, :ok
+      product = Products.get_product!(product.id)
+      assert reply.payload == Products.to_json_map(product)
+    end
+
+    test "replies with :error if user didn't take the book", %{socket: socket} do
+      product = insert(:product)
+      user = insert(:user)
+      insert(:product_use, product_id: product.id, user_id: user.id)
+      ref = push socket, "return", %{"id" => product.id}
+      assert_reply ref, :error, %{type: "NOT_FOUND"}
+    end
+  end
+
 end

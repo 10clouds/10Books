@@ -119,39 +119,34 @@ defmodule LibTen.Products do
 
 
   def take_product(product_id, user_id) do
-    product = get_product!(product_id)
-    product_use_attrs = %{product_id: product_id, user_id: user_id}
+    changeset = %{product_id: product_id, user_id: user_id}
 
-    case product
-         |> Product.changeset(%{product_use: product_use_attrs})
-         |> Repo.update()
+    case %ProductUse{}
+         |> ProductUse.changeset(changeset)
+         |> Repo.insert()
     do
-      {:ok, product} -> broadcast_change("updated", product)
+      {:ok, _} ->
+        product = get_product!(product_id)
+        broadcast_change("updated", product)
       error -> error
     end
   end
 
 
   def return_product(product_id, user_id) do
-    query = from product in Product,
-      left_join: product_use in ProductUse,
-        on: product_use.product_id == product.id,
-        on: product_use.user_id == ^user_id,
-        on: is_nil(product_use.ended_at),
-      where: product.id == ^product_id,
-      preload: [product_use: {product_use, :user}]
+    query = from product_use in ProductUse,
+      where: product_use.product_id == ^product_id,
+      where: product_use.user_id == ^user_id,
+      where: is_nil(product_use.ended_at)
+    product_use = Repo.one!(query)
 
-    product = Repo.one!(query)
-    product_use_attrs = %{
-      id: product.product_use.id,
-      ended_at: DateTime.utc_now
-    }
-
-    case product
-         |> Product.changeset(%{product_use: product_use_attrs})
+    case product_use
+         |> ProductUse.changeset(%{ended_at: DateTime.utc_now})
          |> Repo.update()
     do
-      {:ok, product} -> broadcast_change("updated", product)
+      {:ok, _} ->
+        product = get_product!(product_id)
+        broadcast_change("updated", product)
       error -> error
     end
   end
@@ -219,12 +214,12 @@ defmodule LibTen.Products do
       downvotes: product.downvotes,
       in_use:
         case product.product_use do
-          nil -> nil
-          product_use ->
+          %ProductUse{} ->
             %{
-              started_at: product_use.inserted_at,
-              user_name: product_use.user.name
+              started_at: product.product_use.inserted_at,
+              user_name: product.product_use.user.name
             }
+          _ -> nil
         end
     }
   end
