@@ -4,6 +4,9 @@ defmodule LibTenWeb.ProductsChannel do
   alias LibTen.Products
   alias LibTenWeb.ErrorView
 
+  # TODO:
+  # Think on refactoring data structures returned from context to have less
+  # SQL queries
 
   def join("products", _message, socket) do
     products = Products.list_products() |> Products.to_json_map
