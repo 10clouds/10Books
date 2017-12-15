@@ -232,6 +232,8 @@ defmodule LibTen.Products do
 
   defp products_query do
     # TODO: optimize query, so we won't have subqueries
+    # TODO: learn how to extend queries, so we won't need to insert directyly to
+    # association records
     from product in Product,
       left_join: product_use in ProductUse,
         on: product_use.product_id == product.id,
