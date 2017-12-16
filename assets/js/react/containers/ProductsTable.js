@@ -111,6 +111,17 @@ class ProductsTable extends Component {
             </button>
           )}
         </td>
+        <td>
+          <button
+            onClick={() => {
+              if (confirm('Are you sure?')) {
+                this.props.productsActions.remove(product.id)
+              }
+            }}
+          >
+            Delete
+          </button>
+        </td>
       </tr>
     );
   }
@@ -166,6 +177,7 @@ class ProductsTable extends Component {
                   <th>Category</th>
                   <th></th>
                   <th>Status</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>

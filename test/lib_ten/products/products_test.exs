@@ -57,7 +57,7 @@ defmodule LibTen.ProductsTest do
     assert json.in_use.user_name == user.name
   end
 
-  test "list_products/0 returns all products" do
+  test "list_products/0 returns all products except deleted" do
     user1 = insert(:user)
     user2 = insert(:user)
     product1 = insert(:product,
@@ -83,6 +83,7 @@ defmodule LibTen.ProductsTest do
       ]
     )
     product3 = insert(:product, product_use: nil, product_votes: [])
+    insert(:product, deleted: true)
     products = Products.list_products()
     assert Enum.at(products, 0) == product3
     assert Enum.at(products, 1) == product2
@@ -142,13 +143,14 @@ defmodule LibTen.ProductsTest do
     assert product == Products.get_product!(product.id)
   end
 
-  test "delete_product/1 deletes the product and notifies channel" do
+  test "delete_product/1 marks product as deleted and notifies channel" do
     LibTenWeb.Endpoint.subscribe("products")
     product = insert(:product)
-    assert {:ok, %Product{} = product} = Products.delete_product(product)
+    assert {:ok, product} = Products.delete_product(product)
     product_json = Products.to_json_map(product)
     assert_broadcast "deleted", ^product_json
-    assert_raise Ecto.NoResultsError, fn -> Products.get_product!(product.id) end
+    assert product.deleted == true
+    assert Repo.get_by(Product, deleted: true, id: product.id)
   end
 
   test "change_product/1 returns a product changeset" do

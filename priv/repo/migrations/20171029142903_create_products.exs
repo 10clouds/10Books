@@ -7,6 +7,7 @@ defmodule LibTen.Repo.Migrations.CreateProducts do
       add :url, :text
       add :author, :text
       add :status, :string
+      add :deleted, :boolean, null: false
 
       timestamps()
     end

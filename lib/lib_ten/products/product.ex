@@ -30,6 +30,7 @@ defmodule LibTen.Products.Product do
     field :status, :string
     field :title, :string
     field :url, :string
+    field :deleted, :boolean, default: false
     belongs_to :category, Category
     belongs_to :user, User
     has_one :product_use, ProductUse, on_replace: :delete # TODO: re-check this
@@ -42,7 +43,14 @@ defmodule LibTen.Products.Product do
   @doc false
   def changeset(%Product{} = product, attrs) do
     product
-    |> cast(attrs, [:title, :url, :author, :status, :category_id, :user_id])
+    |> cast(attrs, [
+        :title,
+        :url,
+        :author,
+        :status,
+        :category_id,
+        :user_id,
+        :deleted])
     |> cast_assoc(:product_use)
     |> validate_required([:title, :url, :author, :status])
     |> validate_url(:url, %{message: "Invalid url"})

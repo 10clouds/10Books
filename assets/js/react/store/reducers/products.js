@@ -36,7 +36,11 @@ const reducers = {
   [actionTypes.DELETED]: (state, {id}) => {
     const newById = {...state.byId};
     delete newById[id];
-    return {...state, byId: newById};
+    return {
+      ...state,
+      all: state.all.filter(item => item.id !== id),
+      byId: newById}
+    ;
   }
 };
 

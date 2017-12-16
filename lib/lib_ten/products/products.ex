@@ -98,7 +98,10 @@ defmodule LibTen.Products do
 
   """
   def delete_product(%Product{} = product) do
-    case Repo.delete(product) do
+    case product
+         |> Product.changeset(%{deleted: true})
+         |> Repo.update()
+    do
       {:ok, product} -> broadcast_change("deleted", product)
       error -> error
     end
@@ -252,6 +255,7 @@ defmodule LibTen.Products do
         on: is_nil(product_use.ended_at),
       preload: [product_use: {product_use, :user}],
       preload: [product_votes: :user],
+      where: product.deleted != true,
       select_merge: %{
         rating: fragment(
           "(SELECT AVG(rating) FROM product_ratings WHERE product_ratings.product_id = ?)",
