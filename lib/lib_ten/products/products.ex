@@ -159,7 +159,7 @@ defmodule LibTen.Products do
     changeset = %{
       product_id: product_id,
       user_id: user_id,
-      rating: rating
+      value: rating
     }
 
     case %ProductRating{}
@@ -212,7 +212,20 @@ defmodule LibTen.Products do
       author: product.author,
       status: product.status,
       category_id: product.category_id,
-      rating: product.rating,
+      ratings:
+        if is_list(product.product_ratings) do
+          Enum.map(product.product_ratings, fn(rating) ->
+            %{
+              user: %{
+                id: rating.user.id,
+                name: rating.user.name
+              },
+              value: rating.value
+            }
+          end)
+        else
+          []
+        end,
       votes:
         if is_list(product.product_votes) do
           Enum.map(product.product_votes, fn(vote) ->
@@ -246,7 +259,6 @@ defmodule LibTen.Products do
 
 
   defp products_query do
-    # TODO: optimize query, so we won't have subqueries
     # TODO: learn how to extend queries, so we won't need to insert directyly to
     # association records
     from product in Product,
@@ -255,13 +267,8 @@ defmodule LibTen.Products do
         on: is_nil(product_use.ended_at),
       preload: [product_use: {product_use, :user}],
       preload: [product_votes: :user],
+      preload: [product_ratings: :user],
       where: product.deleted != true,
-      select_merge: %{
-        rating: fragment(
-          "(SELECT AVG(rating) FROM product_ratings WHERE product_ratings.product_id = ?)",
-          product.id
-        )
-      },
       order_by: [desc: product.inserted_at]
   end
 

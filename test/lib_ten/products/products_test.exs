@@ -36,13 +36,27 @@ defmodule LibTen.ProductsTest do
           user: user2,
           is_upvote: false
         },
+      ],
+      product_ratings: [
+        %{
+          user: user,
+          value: 4
+        },
+        %{
+          user: user2,
+          value: 5
+        },
       ]
     )
 
     json = Products.to_json_map(product)
     expected_votes = [
       %{is_upvote: true, user: %{id: user.id, name: user.name}},
-      %{ is_upvote: false, user: %{id: user2.id, name: user2.name}}
+      %{is_upvote: false, user: %{id: user2.id, name: user2.name}}
+    ]
+    expected_ratings = [
+      %{value: 4, user: %{id: user.id, name: user.name}},
+      %{value: 5, user: %{id: user2.id, name: user2.name}}
     ]
 
     assert json.id == product.id
@@ -51,9 +65,9 @@ defmodule LibTen.ProductsTest do
     assert json.author == product.author
     assert json.status == product.status
     assert json.category_id == product.category_id
-    assert json.rating == nil
     assert json.in_use.started_at == product.product_use.inserted_at
     assert json.votes == expected_votes
+    assert json.ratings == expected_ratings
     assert json.in_use.user_name == user.name
   end
 
@@ -69,6 +83,12 @@ defmodule LibTen.ProductsTest do
           user: user1,
           is_upvote: true
         }
+      ],
+      product_ratings: [
+        %{
+          user: user1,
+          value: 5
+        }
       ]
     )
     product2 = insert(:product,
@@ -80,9 +100,15 @@ defmodule LibTen.ProductsTest do
           user: user2,
           is_upvote: true
         }
+      ],
+      product_ratings: [
+        %{
+          user: user2,
+          value: 5
+        }
       ]
     )
-    product3 = insert(:product, product_use: nil, product_votes: [])
+    product3 = insert(:product, product_use: nil, product_votes: [], product_ratings: [])
     insert(:product, deleted: true)
     products = Products.list_products()
     assert Enum.at(products, 0) == product3
@@ -100,6 +126,12 @@ defmodule LibTen.ProductsTest do
         %{
           user: user,
           is_upvote: true
+        }
+      ],
+      product_ratings: [
+        %{
+          user: user,
+          value: 5
         }
       ]
     )
@@ -138,7 +170,7 @@ defmodule LibTen.ProductsTest do
   end
 
   test "update_product/2 with invalid data returns error changeset" do
-    product = insert(:product, product_use: nil, product_votes: [])
+    product = insert(:product, product_use: nil, product_votes: [], product_ratings: [])
     assert {:error, %Ecto.Changeset{}} = Products.update_product(product, @invalid_attrs)
     assert product == Products.get_product!(product.id)
   end
@@ -203,19 +235,26 @@ defmodule LibTen.ProductsTest do
   end
 
   describe "rate product" do
-    test "rate_product/3 updates average rating and notifies channel" do
+    test "rate_product/3 adds user rating and notifies channel" do
       LibTenWeb.Endpoint.subscribe("products")
       user = insert(:user)
       user2 = insert(:user)
       product = insert(:product)
-      product = Products.get_product!(product.id)
-      assert product.rating == nil
+
       {:ok, product} = Products.rate_product(product.id, user.id, 4.5)
-      assert product.rating == 4.5
-      {:ok, product} = Products.rate_product(product.id, user2.id, 2.5)
-      assert product.rating == 3.5
       product_json = Products.to_json_map(product)
       assert_broadcast "updated", ^product_json
+
+      {:ok, product} = Products.rate_product(product.id, user2.id, 2.5)
+      product_json = Products.to_json_map(product)
+      assert_broadcast "updated", ^product_json
+
+      rating0 = Enum.at(product.product_ratings, 0)
+      rating1 = Enum.at(product.product_ratings, 1)
+      assert rating0.user_id == user.id
+      assert rating0.value == 4.5
+      assert rating1.user_id == user2.id
+      assert rating1.value == 2.5
     end
 
     test "rate_product/3 returns an error if user tries to rate more then once" do
@@ -224,7 +263,7 @@ defmodule LibTen.ProductsTest do
       assert {:ok, _} = Products.rate_product(product.id, user.id, 4.5)
       assert {:error, %Ecto.Changeset{}} = Products.rate_product(product.id, user.id, 2)
       product = Products.get_product!(product.id)
-      assert product.rating == 4.5
+      assert Enum.at(product.product_ratings, 0).value == 4.5
     end
 
     test "rate_product/3 returns changeset if rating out of range" do
@@ -232,6 +271,15 @@ defmodule LibTen.ProductsTest do
       product = insert(:product)
       assert {:error, _} = Products.rate_product(product.id, user.id, 5.1)
       assert {:error, _} = Products.rate_product(product.id, user.id, 0.9)
+    end
+
+    test "rate_product/3 returns changeset if product/user is not present" do
+      user = insert(:user)
+      product = insert(:product)
+      assert {:error, changeset} = Products.rate_product(-1, user.id, 4)
+      assert {"does not exist", _} = changeset.errors[:product_id]
+      assert {:error, changeset} = Products.rate_product(product.id, -1, 4)
+      assert {"does not exist", _} = changeset.errors[:user_id]
     end
   end
 

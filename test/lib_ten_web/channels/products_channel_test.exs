@@ -149,4 +149,21 @@ defmodule LibTenWeb.ProductsChannelTest do
     end
   end
 
+
+  describe "rate" do
+    test "replies with product on :ok", %{socket: socket} do
+      product = insert(:product)
+      ref = push socket, "rate", %{"id" => product.id, "rating" => 3}
+      reply = assert_reply ref, :ok
+      product = Products.get_product!(product.id)
+      assert Enum.at(product.product_ratings, 0).value == 3
+      assert reply.payload == Products.to_json_map(product)
+    end
+
+    test "replies with :error if no product_id", %{socket: socket} do
+      ref = push socket, "rate", %{"id" => -1, "rating" => 3}
+      assert_reply ref, :error, %{type: "RECORD_INVALID"}
+    end
+  end
+
 end

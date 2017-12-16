@@ -79,6 +79,13 @@ defmodule LibTenWeb.ProductsChannel do
   end
 
 
+  def handle_in("rate", %{"id" => id, "rating" => rating}, socket) do
+    product = Products.rate_product(id, socket.assigns[:user_id], rating)
+    build_response(socket, product)
+  end
+
+
+  # TODO: Core Review :not_found
   defp reply_with_error(socket, error) do
     response = ErrorView.render("error.json", error)
     {:reply, {:error, response}, socket}

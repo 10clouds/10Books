@@ -4,7 +4,7 @@ defmodule LibTen.Products.Product do
   import Ecto.Changeset
 
   alias LibTen.Accounts.User
-  alias LibTen.Products.{Product, ProductUse, ProductVote}
+  alias LibTen.Products.{Product, ProductUse, ProductVote, ProductRating}
   alias LibTen.Categories.Category
 
   @library_statuses [
@@ -35,6 +35,7 @@ defmodule LibTen.Products.Product do
     belongs_to :user, User
     has_one :product_use, ProductUse, on_replace: :delete # TODO: re-check this
     has_many :product_votes, ProductVote
+    has_many :product_ratings, ProductRating
     field :rating, :float, virtual: true
 
     timestamps()

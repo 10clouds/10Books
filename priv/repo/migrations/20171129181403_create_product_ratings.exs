@@ -5,7 +5,7 @@ defmodule LibTen.Repo.Migrations.CreateProductRatings do
     create table(:product_ratings) do
       add :product_id, references(:products), null: false
       add :user_id, references(:users), null: false
-      add :rating, :float
+      add :value, :float
 
       timestamps()
     end
