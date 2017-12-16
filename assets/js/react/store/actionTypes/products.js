@@ -7,3 +7,4 @@ export const TAKEN = 'products/TAKEN';
 export const RETURNED = 'products/RETURNED';
 export const UPVOTE = 'products/UPVOTE';
 export const DOWNVOTE = 'products/DOWNVOTE';
+export const RATE = 'products/RATE';

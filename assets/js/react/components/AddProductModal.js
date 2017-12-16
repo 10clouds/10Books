@@ -1,12 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import $ from 'jquery';
+import Modal from './Modal';
 import CategoriesSelect from './CategoriesSelect';
 
-export default class AddProductModal extends Component {
+export default class AddProductModal extends PureComponent {
   static propTypes = {
-    show: PropTypes.bool.isRequired,
-    onHide: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired
   };
 
@@ -15,18 +13,6 @@ export default class AddProductModal extends Component {
     author: null,
     url: null,
     category_id: null
-  }
-
-  componentDidMount() {
-    $(this.modalEl).on('hide.bs.modal', this.props.onHide);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.show && !this.props.show) {
-      $(this.modalEl).modal('show');
-    } else if (!nextProps.show && this.props.show) {
-      $(this.modalEl).modal('hide');
-    }
   }
 
   handleInputChange = (e) => {
@@ -40,62 +26,52 @@ export default class AddProductModal extends Component {
   }
 
   render() {
+    const { onSubmit, ...modalProps } = this.props;
+
     return (
-      <div
-        className="modal fade"
-        tabIndex="-1"
-        role="dialog"
-        aria-hidden="true"
-        ref={el => this.modalEl = el}
-      >
-        <div className="modal-dialog modal-lg">
-          <div className="modal-content">
-
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                this.props.onSubmit(this.state);
-              }}
-            >
-              <input
-                type="text"
-                name="title"
-                placeholder="Title"
-                required
-                onChange={this.handleInputChange}
-              />
-              <br />
-              <br />
-              <input
-                type="text"
-                name="author"
-                placeholder="Author"
-                required
-                onChange={this.handleInputChange}
-              />
-              <br />
-              <br />
-              <input
-                type="url"
-                name="url"
-                placeholder="url"
-                required
-                onChange={this.handleInputChange}
-              />
-              <br />
-              <br />
-              <CategoriesSelect
-                onChange={(val) => this.handleFieldChange('category_id', val)}
-                value={this.state.category_id}
-              />
-              <br />
-              <br />
-              <button type="submit">Add</button>
-            </form>
-
-          </div>
-        </div>
-      </div>
+      <Modal {...modalProps}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            onSubmit(this.state);
+          }}
+        >
+          <input
+            type="text"
+            name="title"
+            placeholder="Title"
+            required
+            onChange={this.handleInputChange}
+          />
+          <br />
+          <br />
+          <input
+            type="text"
+            name="author"
+            placeholder="Author"
+            required
+            onChange={this.handleInputChange}
+          />
+          <br />
+          <br />
+          <input
+            type="url"
+            name="url"
+            placeholder="url"
+            required
+            onChange={this.handleInputChange}
+          />
+          <br />
+          <br />
+          <CategoriesSelect
+            onChange={(val) => this.handleFieldChange('category_id', val)}
+            value={this.state.category_id}
+          />
+          <br />
+          <br />
+          <button type="submit">Add</button>
+        </form>
+      </Modal>
     );
   }
 }

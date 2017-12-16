@@ -8,6 +8,7 @@ import moment from 'moment';
 import * as searchActions from '../store/actions/search';
 import * as productsActions from '../store/actions/products';
 import AddProductModal from '../components/AddProductModal';
+import RateProductModal from '../components/RateProductModal';
 import Search from '../components/Search';
 import CategoriesSelect from '../components/CategoriesSelect';
 
@@ -18,7 +19,8 @@ class ProductsTable extends Component {
   }
 
   state = {
-    addProductModalOpened: false
+    addProductModalOpened: false,
+    rateProductModalProductId: false
   }
 
   handleSearchUpdate = debounce((e) => {
@@ -29,14 +31,18 @@ class ProductsTable extends Component {
     this.setState({ addProductModalOpened: isOpened });
   }
 
+  toggleRateProductModal = (productIdOrFalse) => {
+    this.setState({ rateProductModalProductId: productIdOrFalse });
+  }
+
   renderProductRow = (product) => {
-    let currentUserHasUpvote = null;
+    let currentUserVote = 0;
     const upvotes = [];
     const downvotes = [];
 
     product.votes.forEach(vote => {
       if (vote.user.id == this.props.currentUserId) {
-        currentUserHasUpvote = vote.is_upvote;
+        currentUserVote = vote.is_upvote ? 1 : -1;
       }
       if (vote.is_upvote) {
         upvotes.push(vote);
@@ -44,6 +50,14 @@ class ProductsTable extends Component {
         downvotes.push(vote);
       }
     });
+
+    let currentUserRating = null;
+    const averageRating = product.ratings.reduce((acc, rating) => {
+      if (rating.user.id === this.props.currentUserId) {
+        currentUserRating = rating;
+      }
+      return acc + rating.value;
+    }, 0) / product.ratings.length;
 
     return (
       <tr key={product.id}>
@@ -66,20 +80,20 @@ class ProductsTable extends Component {
           {upvotes.length} / {downvotes.length}
           <button
             className={classnames('btn btn-sm', {
-              'btn-default': !currentUserHasUpvote,
-              'btn-success active': currentUserHasUpvote
+              'btn-default': [0, -1].includes(currentUserVote),
+              'btn-success active': currentUserVote === 1
             })}
-            disabled={currentUserHasUpvote}
+            disabled={currentUserVote === 1}
             onClick={() => this.props.productsActions.upvote(product.id)}
           >
             upvote
           </button>
           <button
             className={classnames('btn btn-sm', {
-              'btn-default': currentUserHasUpvote || currentUserHasUpvote === null,
-              'btn-success active': currentUserHasUpvote === false
+              'btn-default': [0, 1].includes(currentUserVote),
+              'btn-success active': currentUserVote === -1
             })}
-            disabled={currentUserHasUpvote === false}
+            disabled={currentUserVote === -1}
             onClick={() => this.props.productsActions.downvote(product.id)}
           >
             downvote
@@ -121,6 +135,15 @@ class ProductsTable extends Component {
           >
             Delete
           </button>
+          {currentUserRating ? (
+            averageRating
+          ) : (
+            <button
+              onClick={() => this.toggleRateProductModal(product.id)}
+            >
+              Rate
+            </button>
+          )}
         </td>
       </tr>
     );
@@ -161,6 +184,17 @@ class ProductsTable extends Component {
             onSubmit={(data) => {
               this.props.productsActions.create(data)
               this.toggleAddProductModal(false)
+            }}
+          />
+          <RateProductModal
+            show={this.state.rateProductModalProductId !== false}
+            onHide={() => this.toggleRateProductModal(false)}
+            onSubmit={(rating) => {
+              this.props.productsActions.rate(
+                this.state.rateProductModalProductId,
+                rating
+              );
+              this.toggleRateProductModal(false)
             }}
           />
 

@@ -39,3 +39,8 @@ export const downvote = (id) => ({
   type: actionTypes.DOWNVOTE,
   id
 });
+
+export const rate = (id, rating) => ({
+  type: actionTypes.RATE,
+  id, rating
+});

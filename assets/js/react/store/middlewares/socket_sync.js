@@ -31,6 +31,12 @@ export default function(store) {
         case productActions.DOWNVOTE:
           productsChannel.push('downvote', {id: action.id})
           break;
+        case productActions.RATE:
+          productsChannel.push('rate', {
+            id: action.id,
+            rating: action.rating
+          });
+          break;
       }
     }
 
