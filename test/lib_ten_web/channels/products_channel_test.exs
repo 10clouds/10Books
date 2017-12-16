@@ -86,9 +86,10 @@ defmodule LibTenWeb.ProductsChannelTest do
     end
 
     test "replies with changeset on :error", %{socket: socket} do
-      product = insert(:product)
       user = insert(:user)
-      insert(:product_use, product_id: product.id, user_id: user.id)
+      product = insert(:product,
+        product_use: %{user: user}
+      )
       ref = push socket, "take", %{"id" => product.id}
       assert_reply ref, :error, %{type: "RECORD_INVALID"}
     end
@@ -97,8 +98,9 @@ defmodule LibTenWeb.ProductsChannelTest do
 
   describe "return" do
     test "replies with product on :ok", %{socket: socket, socket_user: user} do
-      product = insert(:product)
-      insert(:product_use, product_id: product.id, user_id: user.id)
+      product = insert(:product,
+        product_use: %{user: user}
+      )
       ref = push socket, "return", %{"id" => product.id}
       reply = assert_reply ref, :ok
       product = Products.get_product!(product.id)
@@ -106,9 +108,10 @@ defmodule LibTenWeb.ProductsChannelTest do
     end
 
     test "replies with :error if user didn't take the book", %{socket: socket} do
-      product = insert(:product)
       user = insert(:user)
-      insert(:product_use, product_id: product.id, user_id: user.id)
+      product = insert(:product,
+        product_use: %{user: user}
+      )
       ref = push socket, "return", %{"id" => product.id}
       assert_reply ref, :error, %{type: "NOT_FOUND"}
     end

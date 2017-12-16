@@ -210,8 +210,20 @@ defmodule LibTen.Products do
       status: product.status,
       category_id: product.category_id,
       rating: product.rating,
-      upvotes: product.upvotes,
-      downvotes: product.downvotes,
+      votes:
+        if is_list(product.product_votes) do
+          Enum.map(product.product_votes, fn(vote) ->
+            %{
+              user: %{
+                id: vote.user.id,
+                name: vote.user.name
+              },
+              is_upvote: vote.is_upvote
+            }
+          end)
+        else
+          []
+        end,
       in_use:
         case product.product_use do
           %ProductUse{} ->
@@ -239,17 +251,10 @@ defmodule LibTen.Products do
         on: product_use.product_id == product.id,
         on: is_nil(product_use.ended_at),
       preload: [product_use: {product_use, :user}],
+      preload: [product_votes: :user],
       select_merge: %{
         rating: fragment(
           "(SELECT AVG(rating) FROM product_ratings WHERE product_ratings.product_id = ?)",
-          product.id
-        ),
-        upvotes: fragment(
-          "(SELECT count(id) from product_votes WHERE product_votes.product_id = ? AND is_upvote = true)",
-          product.id
-        ),
-        downvotes: fragment(
-          "(SELECT count(id) from product_votes WHERE product_votes.product_id = ? AND is_upvote = false)",
           product.id
         )
       },

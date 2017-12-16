@@ -22,8 +22,4 @@ defmodule LibTen.Factory do
       name: sequence(:name, &"category-#{&1}")
     }
   end
-
-  def product_use_factory do
-    %LibTen.Products.ProductUse{}
-  end
 end

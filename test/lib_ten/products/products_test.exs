@@ -5,8 +5,7 @@ defmodule LibTen.ProductsTest do
   import Mock
 
   alias LibTen.Products
-  alias LibTen.Products.Product
-  alias LibTen.Products.ProductUse
+  alias LibTen.Products.{Product, ProductUse}
 
   @update_attrs %{
     author: "some updated author",
@@ -22,13 +21,30 @@ defmodule LibTen.ProductsTest do
   end
 
   test "to_json_map/1 build valid JSON" do
-    product = insert(:product)
     user = insert(:user)
-    product_use = insert(:product_use, product_id: product.id, user_id: user.id)
-    product = Products.get_product!(product.id)
-    #IO.inspect(product)
-    # TODO: json schema
+    user2 = insert(:user)
+    product = insert(:product,
+      product_use: %{
+        user: user
+      },
+      product_votes: [
+        %{
+          user: user,
+          is_upvote: true
+        },
+        %{
+          user: user2,
+          is_upvote: false
+        },
+      ]
+    )
+
     json = Products.to_json_map(product)
+    expected_votes = [
+      %{is_upvote: true, user: %{id: user.id, name: user.name}},
+      %{ is_upvote: false, user: %{id: user2.id, name: user2.name}}
+    ]
+
     assert json.id == product.id
     assert json.title == product.title
     assert json.url == product.url
@@ -36,43 +52,58 @@ defmodule LibTen.ProductsTest do
     assert json.status == product.status
     assert json.category_id == product.category_id
     assert json.rating == nil
-    assert json.upvotes == 0
-    assert json.downvotes == 0
-    assert json.in_use.started_at == product_use.inserted_at
+    assert json.in_use.started_at == product.product_use.inserted_at
+    assert json.votes == expected_votes
     assert json.in_use.user_name == user.name
   end
 
   test "list_products/0 returns all products" do
-    product1 = insert(:product)
-    product2 = insert(:product)
-    product3 = insert(:product)
     user1 = insert(:user)
     user2 = insert(:user)
-    product_use1 = insert(:product_use, product_id: product1.id, user_id: user1.id)
-    product_use2 = insert(:product_use, product_id: product2.id, user_id: user2.id)
-    insert(:product_use, product_id: product3.id, user_id: user1.id, ended_at: DateTime.utc_now)
-
+    product1 = insert(:product,
+      product_use: %{
+        user: user1
+      },
+      product_votes: [
+        %{
+          user: user1,
+          is_upvote: true
+        }
+      ]
+    )
+    product2 = insert(:product,
+      product_use: %{
+        user: user2
+      },
+      product_votes: [
+        %{
+          user: user2,
+          is_upvote: true
+        }
+      ]
+    )
+    product3 = insert(:product, product_use: nil, product_votes: [])
     products = Products.list_products()
-    expected_product1 = Map.merge(product1, %{
-      product_use: Map.merge(product_use1, %{user: user1})
-    })
-    expected_product2 = Map.merge(product2, %{
-      product_use: Map.merge(product_use2, %{user: user2})
-    })
-    expected_product3 = Map.merge(product3, %{product_use: nil})
-
-    assert Enum.at(products, 0) == expected_product3
-    assert Enum.at(products, 1) == expected_product2
-    assert Enum.at(products, 2) == expected_product1
+    assert Enum.at(products, 0) == product3
+    assert Enum.at(products, 1) == product2
+    assert Enum.at(products, 2) == product1
   end
 
   test "get_product!/1 returns the product with given id" do
-    product = insert(:product)
     user = insert(:user)
-    product_use = insert(:product_use, product_id: product.id, user_id: user.id)
-    assert Products.get_product!(product.id) == Map.merge(product, %{
-      product_use: Map.merge(product_use, %{user: user})
-    })
+    inserted_product = insert(:product,
+      product_use: %{
+        user: user
+      },
+      product_votes: [
+        %{
+          user: user,
+          is_upvote: true
+        }
+      ]
+    )
+    product = Products.get_product!(inserted_product.id)
+    assert product == inserted_product
   end
 
   test "create_product/1 with valid data creates a product and notifies channel" do
@@ -106,7 +137,7 @@ defmodule LibTen.ProductsTest do
   end
 
   test "update_product/2 with invalid data returns error changeset" do
-    product = insert(:product, product_use: nil)
+    product = insert(:product, product_use: nil, product_votes: [])
     assert {:error, %Ecto.Changeset{}} = Products.update_product(product, @invalid_attrs)
     assert product == Products.get_product!(product.id)
   end
@@ -209,17 +240,28 @@ defmodule LibTen.ProductsTest do
       user2 = insert(:user)
       user3 = insert(:user)
       product = insert(:product)
+
       assert {:ok, product} = Products.vote_for_product(product.id, user.id, true)
-      assert product.upvotes == 1
-      assert product.downvotes == 0
+      product_json = Products.to_json_map(product)
+      assert_broadcast "updated", ^product_json
+
       assert {:ok, product} = Products.vote_for_product(product.id, user2.id, true)
-      assert product.upvotes == 2
-      assert product.downvotes == 0
+      product_json = Products.to_json_map(product)
+      assert_broadcast "updated", ^product_json
+
       assert {:ok, product} = Products.vote_for_product(product.id, user3.id, false)
       product_json = Products.to_json_map(product)
-      assert product.upvotes == 2
-      assert product.downvotes == 1
       assert_broadcast "updated", ^product_json
+
+      vote0 = Enum.at(product.product_votes, 0)
+      vote1 = Enum.at(product.product_votes, 1)
+      vote2 = Enum.at(product.product_votes, 2)
+      assert vote0.user_id == user.id
+      assert vote0.is_upvote == true
+      assert vote1.user_id == user2.id
+      assert vote1.is_upvote == true
+      assert vote2.user_id == user3.id
+      assert vote2.is_upvote == false
     end
   end
 end
