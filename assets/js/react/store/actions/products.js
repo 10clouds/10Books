@@ -5,6 +5,11 @@ export const updateAll = (items) => ({
   items
 });
 
+export const create = (attrs) => ({
+  type: actionTypes.CREATE,
+  attrs
+})
+
 export const update = (id, attrs) => ({
   type: actionTypes.UPDATED,
   id, attrs

@@ -3,10 +3,11 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import debounce from 'lodash.debounce';
-import { connect } from 'react-redux';
+import { connect, Provider } from 'react-redux';
 import moment from 'moment';
 import * as searchActions from '../store/actions/search';
 import * as productsActions from '../store/actions/products';
+import AddProductModal from '../components/AddProductModal';
 import Search from '../components/Search';
 import CategoriesSelect from '../components/CategoriesSelect';
 
@@ -16,9 +17,17 @@ class ProductsTable extends Component {
     currentUserId: PropTypes.number.isRequired
   }
 
+  state = {
+    addProductModalOpened: false
+  }
+
   handleSearchUpdate = debounce((e) => {
     this.props.searchActions.updateQuery(e.target.value)
   }, 50)
+
+  toggleAddProductModal = (isOpened) => {
+    this.setState({ addProductModalOpened: isOpened });
+  }
 
   renderProductRow = (product) => {
     let currentUserHasUpvote = null;
@@ -44,7 +53,6 @@ class ProductsTable extends Component {
         <td>{product.author}</td>
         <td>
           <CategoriesSelect
-            values={Object.values(this.props.categories.byId)}
             value={product.category_id}
             onChange={(val) => {
               this.props.productsActions.update(product.id, {
@@ -118,32 +126,55 @@ class ProductsTable extends Component {
       ));
 
     return (
-      <div>
-        <Search
-          onChange={(e) => {
-            e.persist();
-            this.handleSearchUpdate(e);
-          }}
-          value={this.props.search.queryString}
-        />
+      <Provider store={this.props.store}>
+        <div>
+          <Search
+            onChange={(e) => {
+              e.persist();
+              this.handleSearchUpdate(e);
+            }}
+            value={this.props.search.queryString}
+          />
 
-        {filteredProducts.length !== 0 && (
-          <table className="products-table table table-striped">
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Category</th>
-                <th></th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredProducts.map(this.renderProductRow)}
-            </tbody>
-          </table>
-        )}
-      </div>
+          <br />
+          <br />
+          <br />
+
+          <button onClick={() => this.toggleAddProductModal(true)}>
+            Add Product {this.state.addProductModalOpened ? 'true' : 'false'}
+          </button>
+
+          <AddProductModal
+            show={this.state.addProductModalOpened}
+            onHide={() => this.toggleAddProductModal(false)}
+            onSubmit={(data) => {
+              this.props.productsActions.create(data)
+              this.toggleAddProductModal(false)
+            }}
+          />
+
+          <br />
+          <br />
+          <br />
+
+          {filteredProducts.length !== 0 && (
+            <table className="products-table table table-striped">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Author</th>
+                  <th>Category</th>
+                  <th></th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredProducts.map(this.renderProductRow)}
+              </tbody>
+            </table>
+          )}
+        </div>
+      </Provider>
     );
   }
 }

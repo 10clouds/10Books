@@ -21,7 +21,11 @@ const reducers = {
 
     return {
       ...state,
-      all: state.all.map(item => item.id === id ? updatedItem : item),
+      all: (
+        state.byId[id]
+          ? state.all.map(item => item.id === id ? updatedItem : item)
+          : [updatedItem, ...state.all]
+      ),
       byId: {
         ...state.byId,
         [id]: updatedItem

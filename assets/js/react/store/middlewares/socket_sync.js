@@ -6,8 +6,8 @@ export default function(store) {
     // TODO: Remove this middleware and have logic in actions
     if (!action.skipSocketMiddleware) {
       switch (action.type) {
-        case productActions.CREATED:
-          productsChannel.push('create', action.attrs);
+        case productActions.CREATE:
+          productsChannel.push('create', {attrs: action.attrs});
           break;
         case productActions.UPDATED:
           const { id, attrs } = action;

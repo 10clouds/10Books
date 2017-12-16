@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 const CategoriesSelect = (props) => (
   <select
@@ -8,6 +9,7 @@ const CategoriesSelect = (props) => (
       props.onChange(parseInt(e.target.value, 10) || null)
     }}
     value={props.value || ""}
+    required
   >
     <option value="">--select category--</option>
     {props.values.map(option => (
@@ -32,4 +34,8 @@ CategoriesSelect.propTypes = {
   value: PropTypes.number
 };
 
-export default CategoriesSelect;
+const mapStateToProps = state => ({
+  values: Object.values(state.categories.byId)
+})
+
+export default connect(mapStateToProps)(CategoriesSelect);

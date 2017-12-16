@@ -11,7 +11,7 @@ defmodule LibTen.Factory do
   def product_factory do
     %LibTen.Products.Product{
       author: "some author",
-      status: "REQUESTED",
+      status: "IN_LIBRARY",
       title: sequence(:title, &"some title #{&1}"),
       url: "http://google.com"
     }

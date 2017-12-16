@@ -2,6 +2,7 @@ defmodule LibTenWeb.ProductsChannel do
   use Phoenix.Channel
 
   alias LibTen.Products
+  alias LibTen.Products.Product
   alias LibTenWeb.ErrorView
 
   # TODO:
@@ -15,7 +16,10 @@ defmodule LibTenWeb.ProductsChannel do
 
 
   def handle_in("create", %{"attrs" => attrs}, socket) do
-    build_response(socket, Products.create_product(attrs))
+    result = attrs
+      |> Map.merge(%{"status" => Product.order_statuses[:requested]})
+      |> Products.create_product()
+    build_response(socket, result)
   end
 
 
