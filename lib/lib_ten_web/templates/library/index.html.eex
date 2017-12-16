@@ -2,6 +2,8 @@
 
 <script>
   window.LibTen.ReactComponents.renderProductsTable(
-    document.getElementById('products-table')
+    document.getElementById('products-table'), {
+      currentUserId: <%= @conn.assigns[:current_user].id %>
+    }
   );
 </script>

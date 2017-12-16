@@ -7,8 +7,8 @@ import ProductsTable from 'react/containers/ProductsTable';
 
 window.LibTen = {
   ReactComponents: {
-    renderProductsTable(domNode) {
-      ReactDOM.render(<ProductsTable store={store} />, domNode);
+    renderProductsTable(domNode, props) {
+      ReactDOM.render(<ProductsTable {...props} store={store} />, domNode);
     }
   }
 };
