@@ -24,3 +24,13 @@ export const returnProduct = (id) => ({
   type: actionTypes.RETURNED,
   id
 });
+
+export const upvote = (id) => ({
+  type: actionTypes.UPVOTE,
+  id
+});
+
+export const downvote = (id) => ({
+  type: actionTypes.DOWNVOTE,
+  id
+});

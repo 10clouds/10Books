@@ -55,6 +55,26 @@ defmodule LibTenWeb.ProductsChannel do
   end
 
 
+  def handle_in("upvote", %{"id" => id}, socket) do
+    try do
+      product = Products.vote_for_product(id, socket.assigns[:user_id], true)
+      build_response(socket, product)
+    rescue
+      Ecto.NoResultsError -> reply_with_error(socket, %{type: :not_found})
+    end
+  end
+
+
+  def handle_in("downvote", %{"id" => id}, socket) do
+    try do
+      product = Products.vote_for_product(id, socket.assigns[:user_id], false)
+      build_response(socket, product)
+    rescue
+      Ecto.NoResultsError -> reply_with_error(socket, %{type: :not_found})
+    end
+  end
+
+
   defp reply_with_error(socket, error) do
     response = ErrorView.render("error.json", error)
     {:reply, {:error, response}, socket}

@@ -11,6 +11,5 @@ defmodule LibTen.Repo.Migrations.CreateProductVotes do
     end
 
     create unique_index(:product_votes, [:product_id, :user_id])
-    create index(:product_votes, [:product_id, :is_upvote])
   end
 end

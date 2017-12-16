@@ -25,6 +25,12 @@ export default function(store) {
         case productActions.RETURNED:
           productsChannel.push('return', {id: action.id})
           break;
+        case productActions.UPVOTE:
+          productsChannel.push('upvote', {id: action.id})
+          break;
+        case productActions.DOWNVOTE:
+          productsChannel.push('downvote', {id: action.id})
+          break;
       }
     }
 

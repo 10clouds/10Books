@@ -263,5 +263,14 @@ defmodule LibTen.ProductsTest do
       assert vote2.user_id == user3.id
       assert vote2.is_upvote == false
     end
+
+    test "vote_for_product/3 returns :error if product/user doesnt exist" do
+      user = insert(:user)
+      product = insert(:product)
+      assert {:error, changeset} = Products.vote_for_product(-1, user.id, true)
+      assert {"does not exist", _} = changeset.errors[:product_id]
+      assert {:error, changeset} = Products.vote_for_product(product.id, -1, true)
+      assert {"does not exist", _} = changeset.errors[:user_id]
+    end
   end
 end

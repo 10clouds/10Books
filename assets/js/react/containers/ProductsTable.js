@@ -10,6 +10,7 @@ import * as productsActions from '../store/actions/products';
 import Search from '../components/Search';
 import CategoriesSelect from '../components/CategoriesSelect';
 
+// TODO: Split into Smart/Dumb components
 class ProductsTable extends Component {
   static propTypes = {
     currentUserId: PropTypes.number.isRequired
@@ -61,6 +62,7 @@ class ProductsTable extends Component {
               'btn-success active': currentUserHasUpvote
             })}
             disabled={currentUserHasUpvote}
+            onClick={() => this.props.productsActions.upvote(product.id)}
           >
             upvote
           </button>
@@ -70,6 +72,7 @@ class ProductsTable extends Component {
               'btn-success active': currentUserHasUpvote === false
             })}
             disabled={currentUserHasUpvote === false}
+            onClick={() => this.props.productsActions.downvote(product.id)}
           >
             downvote
           </button>

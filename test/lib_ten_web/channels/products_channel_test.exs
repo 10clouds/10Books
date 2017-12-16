@@ -107,13 +107,45 @@ defmodule LibTenWeb.ProductsChannelTest do
       assert reply.payload == Products.to_json_map(product)
     end
 
-    test "replies with :error if user didn't take the book", %{socket: socket} do
+    test "replies with :error if user didn't take the product", %{socket: socket} do
       user = insert(:user)
       product = insert(:product,
         product_use: %{user: user}
       )
       ref = push socket, "return", %{"id" => product.id}
       assert_reply ref, :error, %{type: "NOT_FOUND"}
+    end
+  end
+
+
+  describe "upvote" do
+    test "replies with product on :ok", %{socket: socket} do
+      product = insert(:product)
+      ref = push socket, "upvote", %{"id" => product.id}
+      reply = assert_reply ref, :ok
+      product = Products.get_product!(product.id)
+      assert reply.payload == Products.to_json_map(product)
+    end
+
+    test "replies with :error if no product_id", %{socket: socket} do
+      ref = push socket, "upvote", %{"id" => -1}
+      assert_reply ref, :error, %{type: "RECORD_INVALID"}
+    end
+  end
+
+
+  describe "downvote" do
+    test "replies with product on :ok", %{socket: socket} do
+      product = insert(:product)
+      ref = push socket, "downvote", %{"id" => product.id}
+      reply = assert_reply ref, :ok
+      product = Products.get_product!(product.id)
+      assert reply.payload == Products.to_json_map(product)
+    end
+
+    test "replies with :error if no product_id", %{socket: socket} do
+      ref = push socket, "downvote", %{"id" => -1}
+      assert_reply ref, :error, %{type: "RECORD_INVALID"}
     end
   end
 
