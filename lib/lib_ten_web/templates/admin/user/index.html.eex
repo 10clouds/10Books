@@ -1,12 +1,11 @@
 <h2>Listing Users</h2>
 
-<table class="table">
+<table class="table table-striped">
   <thead>
     <tr>
       <th>Title</th>
       <th>Body</th>
-      <th>Views</th>
-
+      <th>Admin ?</th>
       <th></th>
     </tr>
   </thead>

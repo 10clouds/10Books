@@ -20,13 +20,14 @@ defmodule LibTenWeb.Router do
 
     scope "/" do
       pipe_through :authenticate_user
-      get "/library", LibraryController, :index
-      resources "/products", ProductController
+      get "/library", ProductsController, :library
+      get "/orders", ProductsController, :orders
 
-      scope "/admin", Admin, as: :admin do
+      scope "/admin", as: :admin do
         pipe_through :is_admin
-        resources "/users", UserController, only: [:index, :edit, :update]
-        resources "/categories", CategoryController
+        get "/products", ProductsController, :all
+        resources "/users", Admin.UserController, only: [:index, :edit, :update]
+        resources "/categories", Admin.CategoryController
       end
     end
 

@@ -6,7 +6,7 @@ defmodule LibTenWeb.AuthController do
 
   def index(conn, _params) do
     if get_session(conn, :user_id) do
-      redirect(conn, to: library_path(conn, :index))
+      #redirect(conn, to: products_path(conn, :library))
     else
       conn
       |> put_layout("empty.html")
@@ -26,7 +26,7 @@ defmodule LibTenWeb.AuthController do
       {:ok, user} ->
         conn
         |> put_session(:user_id, user.id)
-        |> redirect(to: library_path(conn, :index))
+        #|> redirect(to: products_path(conn, :library))
       {:error, reason} ->
         conn
         |> put_flash(:error, reason)

@@ -40,6 +40,7 @@ defmodule LibTenWeb do
       import LibTenWeb.Router.Helpers
       import LibTenWeb.ErrorHelpers
       import LibTenWeb.Gettext
+      import PhoenixActiveLink
     end
   end
 
