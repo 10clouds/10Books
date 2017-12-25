@@ -20,7 +20,15 @@ defmodule LibTen.Mixfile do
   def application do
     [
       mod: {LibTen.Application, []},
-      extra_applications: [:logger, :runtime_tools, :ueberauth_google, :mongodb],
+      extra_applications: [
+        :logger,
+        :runtime_tools,
+        :ueberauth_google,
+        :bamboo,
+        :bamboo_smtp,
+        # TODO: remove 👇 after prod release
+        :mongodb
+      ],
     ]
   end
 
@@ -45,10 +53,12 @@ defmodule LibTen.Mixfile do
       {:ueberauth_google, "~> 0.5"},
       {:ex_machina, "~> 2.1", only: :test},
       {:mock, "~> 0.2.0", only: :test},
+      {:bamboo, "~> 0.8"},
+      {:bamboo_smtp, "~> 1.4.0"},
       # TODO: Doesn't work with elixir 1.5.2, check later
       #{:credo, "~> 0.8", only: [:dev, :test], runtime: false}
       #
-      # temporary
+      # TODO: remove 👇 after prod release
       {:mongodb, ">= 0.0.0"}
     ]
   end

@@ -20,6 +20,18 @@ config :lib_ten, LibTenWeb.Endpoint,
   pubsub: [name: LibTen.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+config :lib_ten, MyApp.Mailer,
+  adapter: Bamboo.SMTPAdapter,
+  server: "smtp-relay.sendinblue.com",
+  hostname: "smtp-relay.sendinblue.com",
+  port: 587,
+  username: {:system, "LIBTEN_SMTP_USERNAME"},
+  password: {:system, "LIBTEN_SMTP_PASSWORD"},
+  tls: :if_available,
+  allowed_tls_versions: [:"tlsv1.2"],
+  ssl: true,
+  retries: 1
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
