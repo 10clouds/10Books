@@ -185,11 +185,6 @@ defmodule LibTen.ProductsTest do
     assert Repo.get_by(Product, deleted: true, id: product.id)
   end
 
-  test "change_product/1 returns a product changeset" do
-    product = insert(:product)
-    assert %Ecto.Changeset{} = Products.change_product(product)
-  end
-
   describe "take_product/2" do
     test "creates new record and notifies channel unless same product_id & ended_at=nil present" do
       LibTenWeb.Endpoint.subscribe("products")
