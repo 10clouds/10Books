@@ -10,10 +10,15 @@ config :lib_ten, LibTenWeb.Endpoint,
 config :logger, level: :warn
 
 # Configure your database
-config :lib_ten, LibTen.Repo,
-  adapter: Ecto.Adapters.Postgres,
+postgres_credentials = [
   username: "postgres",
   password: "postgres",
   database: "lib_ten_test",
   hostname: "localhost",
-  pool: Ecto.Adapters.SQL.Sandbox
+]
+config :lib_ten, LibTen.Repo,
+  postgres_credentials ++ [
+    adapter: Ecto.Adapters.Postgres,
+    pool: Ecto.Adapters.SQL.Sandbox
+  ]
+config :lib_ten, LibTenWeb.PostgresListener, postgres_credentials

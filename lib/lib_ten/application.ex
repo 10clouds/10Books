@@ -12,6 +12,7 @@ defmodule LibTen.Application do
       supervisor(LibTen.Repo, []),
       # Start the endpoint when the application starts
       supervisor(LibTenWeb.Endpoint, []),
+      supervisor(LibTenWeb.PostgresListener, []),
       # Start your own worker by calling: LibTen.Worker.start_link(arg1, arg2, arg3)
       # worker(LibTen.Worker, [arg1, arg2, arg3]),
     ]

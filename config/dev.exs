@@ -50,10 +50,15 @@ config :logger, :console, format: "[$level] $message\n"
 config :phoenix, :stacktrace_depth, 20
 
 # Configure your database
-config :lib_ten, LibTen.Repo,
-  adapter: Ecto.Adapters.Postgres,
+postgres_credentials = [
   username: "postgres",
   password: "postgres",
   database: "lib_ten_dev",
-  hostname: "localhost",
-  pool_size: 10
+  hostname: "localhost"
+]
+config :lib_ten, LibTen.Repo,
+  postgres_credentials ++ [
+    adapter: Ecto.Adapters.Postgres,
+    pool_size: 10
+  ]
+config :lib_ten, LibTenWeb.PostgresListener, postgres_credentials

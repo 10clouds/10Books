@@ -55,6 +55,7 @@ defmodule LibTen.Mixfile do
       {:mock, "~> 0.2.0", only: :test},
       {:bamboo, "~> 0.8"},
       {:bamboo_smtp, "~> 1.4.0"},
+      {:boltun, "~> 1.0.2"},
       # TODO: Doesn't work with elixir 1.5.2, check later
       #{:credo, "~> 0.8", only: [:dev, :test], runtime: false}
       #
