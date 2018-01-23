@@ -20,7 +20,8 @@ defmodule LibTen.Products.ProductVote do
     |> cast(attrs, [:user_id, :product_id, :is_upvote])
     |> foreign_key_constraint(:product_id)
     |> foreign_key_constraint(:user_id)
-    |> unique_constraint(:product_id,
+    |> unique_constraint(
+      :product_id,
       name: :product_ratings_product_id_user_id_index,
       message: "Can't vote with same value"
     )

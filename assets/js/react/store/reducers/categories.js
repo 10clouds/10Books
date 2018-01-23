@@ -2,11 +2,17 @@ import * as actionTypes from '../actionTypes/categories';
 import { makeReducer } from '../utils';
 
 const defaultState = {
+  channel: null,
   byId: {}
 };
 
 const reducers = {
-  [actionTypes.ALL_UPDATED]: (state, {items}) => ({
+  [actionTypes.JOIN_CHANNEL_SUCCESS]: (state, { channel }) => ({
+    ...state,
+    channel
+  }),
+
+  [actionTypes.ALL_UPDATED]: (state, { items }) => ({
     ...state,
     byId: items.reduce((all, item) => {
       all[item.id] = item;
@@ -14,17 +20,17 @@ const reducers = {
     }, {})
   }),
 
-  [actionTypes.UPDATED]: (state, {id, attrs}) => {
+  [actionTypes.UPDATED]: (state, { attrs }) => {
     return {
       ...state,
       byId: {
         ...state.byId,
-        [id]: {...state.byId[id], ...attrs}
+        [attrs.id]: {...state.byId[attrs.id], ...attrs}
       }
     };
   },
 
-  [actionTypes.DELETED]: (state, {id}) => {
+  [actionTypes.DELETED]: (state, { id }) => {
     const newById = {...state.byId};
     delete newById[id];
     return {...state, byId: newById};

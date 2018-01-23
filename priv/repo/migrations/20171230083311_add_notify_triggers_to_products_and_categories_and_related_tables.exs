@@ -17,7 +17,8 @@ defmodule LibTen.Repo.Migrations.AddNotifyTriggersToProductsAndCategoriesAndRela
           END
         INTO product_id;
 
-        PERFORM pg_notify(TG_ARGV[0], product_id::char);
+        PERFORM pg_notify(TG_ARGV[0], product_id);
+
         RETURN NULL;
       END;
       $$ LANGUAGE plpgsql;

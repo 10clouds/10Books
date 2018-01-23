@@ -43,16 +43,28 @@
             wrap_tag: :li,
             class: "nav-link")
           %>
-          <%= active_link(@conn, "All",
-            to: admin_products_path(@conn, :all),
-            wrap_tag: :li,
-            class: "nav-link")
-          %>
-          <%= active_link(@conn, "Users",
-            to: admin_user_path(@conn, :index),
-            wrap_tag: :li,
-            class: "nav-link")
-          %>
+          <%= if @conn.assigns.current_user.is_admin do %>
+            <%= active_link(@conn, "All",
+              to: admin_products_path(@conn, :all),
+              wrap_tag: :li,
+              class: "nav-link")
+            %>
+            <li class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                Admin
+              </a>
+              <div class="dropdown-menu">
+                <%= link "Categories",
+                  to: admin_category_path(@conn, :index),
+                  class: "dropdown-item"
+                %>
+                <%= link "Users",
+                  to: admin_user_path(@conn, :index),
+                  class: "dropdown-item"
+                %>
+              </div>
+            </li>
+          <% end %>
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item">

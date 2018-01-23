@@ -6,6 +6,10 @@ $table-dark-bg: $gray-700;
 $table-dark-border-color: $gray-700;
 @import '~bootstrap/scss/bootstrap';
 
+html {
+  font-size: 14px;
+}
+
 html, body {
   height: 100%;
 }
@@ -29,7 +33,7 @@ html, body {
 
 .search-form {
   position: relative;
-  margin: 0 auto 30px;
+  margin: 40px auto;
 
   @include media-breakpoint-up(lg) {
     width: 60%;
@@ -58,5 +62,9 @@ html, body {
     th, td {
       vertical-align: middle;
     }
+  }
+
+  &__category-col {
+    min-width: 200px;
   }
 }

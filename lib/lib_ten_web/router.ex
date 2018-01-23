@@ -51,7 +51,10 @@ defmodule LibTenWeb.Router do
         |> halt()
       user_id ->
         user = LibTen.Accounts.get_by!(%{id: user_id})
-        token = Phoenix.Token.sign(conn, "current_user_token", user_id)
+        token = Phoenix.Token.sign(conn, "current_user_token", %{
+          id: user_id,
+          is_admin: user.is_admin
+        })
         conn
         |> assign(:current_user_token, token)
         |> assign(:current_user, user)

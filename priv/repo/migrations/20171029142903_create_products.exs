@@ -7,11 +7,11 @@ defmodule LibTen.Repo.Migrations.CreateProducts do
       add :url, :text
       add :author, :text
       add :status, :string
-      add :deleted, :boolean, null: false
 
       timestamps()
     end
 
     create index(:products, ["inserted_at DESC NULLS LAST"])
+    create index(:products, [:status])
   end
 end

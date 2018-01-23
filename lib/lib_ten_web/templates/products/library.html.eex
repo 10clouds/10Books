@@ -1,9 +1,10 @@
 <div id="products-table"></div>
 
 <script>
-  window.LibTen.ReactComponents.renderProductsTable(
+  window.LibTen.ReactComponents.renderLibrary(
     document.getElementById('products-table'), {
-      currentUserId: <%= @conn.assigns[:current_user].id %>
+      id: <%= @conn.assigns[:current_user].id %>,
+      is_admin: <%= @conn.assigns[:current_user].is_admin %>
     }
   );
 </script>

@@ -1,9 +1,6 @@
 defmodule LibTenWeb.CategoriesChannelTest do
   use LibTenWeb.ChannelCase
-
   import LibTen.Factory
-
-  alias LibTen.Categories
   alias LibTenWeb.CategoriesChannel
 
   setup do
@@ -12,8 +9,8 @@ defmodule LibTenWeb.CategoriesChannelTest do
   end
 
   test "replies with categories on join", %{socket: socket} do
-    categories = insert_pair(:category)
+    insert_pair(:category)
     {:ok, reply, _socket} = subscribe_and_join(socket, CategoriesChannel, "categories")
-    assert reply == %{payload: Categories.to_json_map(categories)}
+    assert %{payload: [%{id: _, name: _}, %{id: _, name: _}]} = reply
   end
 end

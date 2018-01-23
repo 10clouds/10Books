@@ -1,6 +1,5 @@
 defmodule LibTenWeb.CategoriesChannel do
   use Phoenix.Channel
-
   alias LibTen.Categories
   alias LibTen.Categories.Category
 
@@ -10,7 +9,9 @@ defmodule LibTenWeb.CategoriesChannel do
       LibTenWeb.Endpoint.broadcast!("categories", "updated", to_json_map(category))
     rescue
       Ecto.NoResultsError ->
-        LibTenWeb.Endpoint.broadcast!("categories", "deleted", %{id: category_id})
+        LibTenWeb.Endpoint.broadcast!("categories", "deleted", %{
+          id: category_id
+        })
     end
   end
 

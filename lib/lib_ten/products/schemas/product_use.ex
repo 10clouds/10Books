@@ -19,7 +19,8 @@ defmodule LibTen.Products.ProductUse do
   def changeset(%ProductUse{} = product_use, attrs) do
     product_use
     |> cast(attrs, [:ended_at, :user_id, :product_id, :return_subscribers])
-    |> unique_constraint(:product_id,
+    |> unique_constraint(
+      :product_id,
       name: :product_uses_product_id_index,
       message: "Already in use"
     )

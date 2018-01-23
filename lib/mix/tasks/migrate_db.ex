@@ -26,147 +26,133 @@ defmodule Mix.Tasks.MigrateDb do
     categories_cursor = Mongo.find(conn, "categories", %{})
 
     # Migrate Categories
+    Repo.delete_all(ProductRating)
     Repo.delete_all(ProductUse)
     Repo.delete_all(ProductVote)
     Repo.delete_all(Product)
     Repo.delete_all(Category)
     Repo.delete_all(User)
 
+    # Migrate Categories
     categories = Enum.to_list(categories_cursor)
-    categories = Enum.map(categories, fn (category) ->
-      {:ok, ecto_category} = %Category{}
-        |> Category.changeset(%{name: category["name"]})
-        |> Repo.insert()
-
-      %{
-        mongo_id: category["_id"],
-        ecto: ecto_category
-      }
-    end)
+      |> Enum.map(fn category ->
+        {:ok, ecto_category} =
+          %Category{}
+          |> Category.changeset(%{name: category["name"]})
+          |> Repo.insert()
+        %{
+          mongo_id: category["_id"],
+          ecto: ecto_category
+        }
+      end)
 
     # Migrate Users
     users = Enum.to_list(users_cursor)
-    users = Enum.map(users, fn (user) ->
-      if user["createdAt"] do
-        is_admin = if user["roles"] do
-          cond do
-            user["roles"] == ["admin"] ->
-              true
-            user["roles"]["__global_roles__"] == ["admin"] ->
-              true
-            true ->
-              nil
+      |> Enum.map(fn user ->
+        if user["createdAt"] do
+          is_admin = cond do
+            user["roles"] == ["admin"] -> true
+            user["roles"]["__global_roles__"] == ["admin"] -> true
+            true -> nil
           end
+
+          changeset = %{
+            inserted_at: user["createdAt"],
+            updated_at:  user["createdAt"],
+            email:       Enum.at(user["emails"], 0)["address"],
+            name:        user["profile"]["name"],
+            is_admin:    is_admin
+          }
+
+          {:ok, ecto_user} =
+            %User{}
+            |> Changeset.cast(changeset, [
+              :inserted_at, :updated_at, :name, :email, :is_admin
+            ])
+            |> Changeset.validate_required([:name, :email])
+            |> Changeset.unique_constraint(:email)
+            |> Repo.insert
+
+          %{
+            mongo_id: user["_id"],
+            ecto: ecto_user
+          }
         else
-          nil
+          false
         end
-
-        changeset = %{
-          inserted_at: user["createdAt"],
-          updated_at:  user["createdAt"],
-          email:       Enum.at(user["emails"], 0)["address"],
-          name:        user["profile"]["name"],
-          is_admin:    is_admin
-        }
-
-        {:ok, ecto_user} = %User{}
-          |> Changeset.cast(changeset, [:name, :email, :is_admin])
-          |> Changeset.validate_required([:name, :email])
-          |> Changeset.unique_constraint(:email)
-          |> Repo.insert
-
-        %{
-          mongo_id: user["_id"],
-          ecto: ecto_user
-        }
-      else
-        nil
-      end
-    end)
+      end)
+      |> Enum.filter(fn user -> user end)
 
     # Migrate Products
     product_statuses_map = %{
-      "taken"      => Product.library_statuses[:in_library],
-      "in_library" => Product.library_statuses[:in_library],
-      "requested"  => Product.order_statuses[:requested],
-      "accepted"   => Product.order_statuses[:accepted],
-      "rejected"   => Product.order_statuses[:rejected],
-      "ordered"    => Product.order_statuses[:ordered],
-      "lost"       => Product.library_statuses[:lost]
+      "taken"      => "IN_LIBRARY",
+      "in_library" => "IN_LIBRARY",
+      "requested"  => "REQUESTED",
+      "accepted"   => "ACCEPTED",
+      "rejected"   => "REJECTED",
+      "ordered"    => "ORDERED",
+      "lost"       => "LOST"
     }
+
     products = Enum.to_list(books_cursor)
-    products = Enum.sort(products, fn (prev, next) ->
+    |> Enum.sort(fn prev, next ->
       round(prev["created_at"]) < round(next["created_at"])
     end)
-
-    products = Enum.map(products, fn (product) ->
-      if product["subscribers"] != nil and Enum.count(product["subscribers"]) > 0 do
-        # TODO: Build subscribers
+    |> Enum.map(fn product ->
+      return_subscribers = if product["subscribers"] != nil and Enum.count(product["subscribers"]) > 0 do
+        Enum.map(product["subscribers"], fn id ->
+          case Enum.find(users, fn user -> user.mongo_id == id end) do
+            nil -> nil
+            user -> user.ecto.id
+          end
+        end)
+      else
+        []
       end
 
       category = Enum.find(categories, fn (category) ->
         category.ecto.name == product["category"]
       end)
 
-      category_id = if category do
-        category.ecto.id
-      else
-        nil
-      end
-
-      product_use = if product["taken_by"] do
-        user = Enum.find(users, fn (user) ->
-          if user do
-            user.mongo_id == product["taken_by"]
-          else
-            false
-          end
-        end)
-
-        unless user == nil do
-          %{
-            user_id: user.ecto.id,
-            inserted_at: from_timestamp(product["taken_date"]),
-            updated_at: from_timestamp(product["taken_date"])
-          }
-        else
-          nil
-        end
+      used_by = if product["taken_by"] do
+        user = Enum.find(users, fn user -> user.mongo_id == product["taken_by"] end)
+        %{
+          user_id: user.ecto.id,
+          inserted_at: from_timestamp(product["taken_date"]),
+          updated_at: from_timestamp(product["taken_date"]),
+          return_subscribers: return_subscribers
+        }
       else
         nil
       end
 
       user_id = if product["requested_by"] do
-        user = Enum.find(users, fn (user) ->
-          if user do
-            user.mongo_id == product["requested_by"]
-          else
-            false
-          end
-        end)
+        user = Enum.find(users, fn user -> user.mongo_id == product["requested_by"] end)
 
         if user do
           user.ecto.id
         else
-          nil
+          Repo.get_by(User, email: "ruslan.savenok@10clouds.com").id
         end
       end
 
       changeset = %{
-        inserted_at:   from_timestamp(product["created_at"]),
-        updated_at:    from_timestamp(product["created_at"]),
-        author:        product["author"],
-        status:        product_statuses_map[product["status"]],
-        title:         product["name"],
-        url:           product["url"],
-        category_id:   category_id,
-        user_id:       user_id,
-        product_use:   product_use
+        inserted_at:          from_timestamp(product["created_at"]),
+        updated_at:           from_timestamp(product["created_at"]),
+        author:               product["author"],
+        status:               product_statuses_map[product["status"]],
+        title:                product["name"],
+        url:                  product["url"],
+        category_id:          (if category, do: category.ecto.id, else: nil),
+        requested_by_user_id: user_id
       }
 
-      {:ok, ecto_product} = %Product{}
-        |> Changeset.cast(changeset, [:title, :url, :author, :status, :category_id, :user_id, :inserted_at, :updated_at])
-        |> Changeset.put_assoc(:product_use, product_use)
+      {:ok, ecto_product} =
+        %Product{}
+        |> Changeset.cast(changeset, [
+          :title, :url, :author, :status, :category_id, :requested_by_user_id, :inserted_at, :updated_at
+        ])
+        |> Changeset.put_assoc(:used_by, used_by)
         |> Changeset.validate_required([:title, :status])
         |> Repo.insert()
 
@@ -177,42 +163,24 @@ defmodule Mix.Tasks.MigrateDb do
     end)
 
     # Migrate Product Votes
-    product_votes = Enum.to_list(book_votes_cursor)
-    product_votes = Enum.map(product_votes, fn (product_vote) ->
-      product = Enum.find(products, fn (product) ->
-        product.mongo_id == product_vote["book_id"]
+    Enum.to_list(book_votes_cursor)
+    |> Enum.map(fn vote ->
+      product = Enum.find(products, fn product ->
+        product.mongo_id == vote["book_id"]
       end)
-      user = Enum.find(users, fn (user) ->
-        if user do
-          user.mongo_id == product_vote["user_id"]
-        else
-          nil
-        end
-      end)
-      user_id = if user do
-        user.ecto.id
-      else
-        nil
-      end
-      is_upvote = if product_vote["vote"] == 1 do
-        true
-      else
-        false
-      end
+      user = Enum.find(users, fn user -> user.mongo_id == vote["user_id"] end)
 
-      unless user_id == nil or product == nil do
+      if product && user do
         changeset = %{
           product_id: product.ecto.id,
-          user_id: user_id,
-          is_upvote: is_upvote
+          user_id: user.ecto.id,
+          is_upvote: vote["vote"] == 1
         }
 
         %ProductVote{}
         |> ProductVote.changeset(changeset)
         |> Repo.insert()
       end
-
-      product
     end)
   end
 end

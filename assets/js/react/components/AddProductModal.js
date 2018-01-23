@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import Modal from './Modal';
 import CategoriesSelect from './CategoriesSelect';
@@ -8,11 +9,35 @@ export default class AddProductModal extends PureComponent {
     onSubmit: PropTypes.func.isRequired
   };
 
-  state = {
-    title: null,
-    author: null,
-    url: null,
+  defaultFields = {
+    title: '',
+    author: '',
+    url: '',
     category_id: null
+  };
+
+  state = {
+    fields: this.defaultFields,
+    errors: {}
+  };
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.show && nextProps.show !== this.props.show) {
+      this.setState({
+        fields: this.defaultFields
+      });
+    }
+  }
+
+  setErrors(errors) {
+    const newErrors = {};
+
+    errors.forEach(error => {
+      const fieldName = error.source.pointer.replace('/data/attributes/', '');
+      newErrors[fieldName] = error.detail;
+    });
+
+    this.setState({ errors: newErrors });
   }
 
   handleInputChange = (e) => {
@@ -20,9 +45,37 @@ export default class AddProductModal extends PureComponent {
   }
 
   handleFieldChange = (name, value) => {
-    this.setState({
-      [name]: value
-    });
+    this.setState(prevState => ({
+      fields: {...prevState.fields, [name]: value}
+    }));
+  }
+
+  renderFormGroup(props = {type: 'text'}) {
+    const { label, name, inputComponent, ...inputProps } = props;
+
+    return (
+      <div className="form-group">
+        <label className="form-control-label">
+          {label}
+        </label>
+        {inputComponent ? inputComponent : (
+          <input
+            className={classnames('form-control', {
+              'is-invalid': this.state.errors[name]
+            })}
+            {...inputProps}
+            name={name}
+            onChange={this.handleInputChange}
+            value={this.state.fields[name]}
+          />
+        )}
+        {this.state.errors[name] && (
+          <div className="invalid-feedback">
+            {this.state.errors[name]}
+          </div>
+        )}
+      </div>
+    );
   }
 
   render() {
@@ -33,40 +86,45 @@ export default class AddProductModal extends PureComponent {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            onSubmit(this.state);
+            onSubmit(this.state.fields)
+              .then(() => {
+                this.props.onHide();
+              })
+              .catch(data => {
+                this.setErrors(data.errors);
+              });
           }}
         >
-          <input
-            type="text"
-            name="title"
-            placeholder="Title"
-            required
-            onChange={this.handleInputChange}
-          />
-          <br />
-          <br />
-          <input
-            type="text"
-            name="author"
-            placeholder="Author"
-            required
-            onChange={this.handleInputChange}
-          />
-          <br />
-          <br />
-          <input
-            type="url"
-            name="url"
-            placeholder="url"
-            required
-            onChange={this.handleInputChange}
-          />
-          <br />
-          <br />
-          <CategoriesSelect
-            onChange={(val) => this.handleFieldChange('category_id', val)}
-            value={this.state.category_id}
-          />
+          {this.renderFormGroup({
+            label: 'Title',
+            placeholder: 'Title',
+            name: 'title'
+          })}
+          {this.renderFormGroup({
+            label: 'Author',
+            placeholder: 'Author',
+            name: 'author'
+          })}
+          {this.renderFormGroup({
+            label: 'Url',
+            placeholder: 'Url',
+            name: 'url',
+            type: 'url'
+          })}
+          {this.renderFormGroup({
+            label: 'Category',
+            name: 'category_id',
+            inputComponent: (
+              <CategoriesSelect
+                className={classnames('form-control', {
+                  'is-invalid': this.state.errors['category_id']
+                })}
+                onChange={val => this.handleFieldChange('category_id', val)}
+                value={this.state.fields.category_id}
+              />
+            )
+          })}
+
           <br />
           <br />
           <button type="submit">Add</button>
