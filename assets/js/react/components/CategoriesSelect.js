@@ -8,7 +8,7 @@ const CategoriesSelect = props => {
   return (
     <select
       {...selectProps}
-      onChange={(e) => {
+      onChange={e => {
         onChange(parseInt(e.target.value, 10) || null)
       }}
       value={value || ""}

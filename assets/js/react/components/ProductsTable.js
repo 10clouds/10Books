@@ -1,6 +1,39 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import CategoriesSelect from './CategoriesSelect';
+
+class ProductsTableRow extends PureComponent {
+  render() {
+    const {
+      product,
+      onChange,
+      appendColumns
+    } = this.props;
+
+    return (
+      <tr>
+        <td>
+          <a href={product.url} target="_blank">{product.title}</a>
+        </td>
+        <td className="text-center">{product.author}</td>
+        <td className="products-table__category-col">
+          <CategoriesSelect
+            className="form-control"
+            value={product.category_id}
+            onChange={val => (
+              onChange(product.id, { category_id: val })
+            )}
+          />
+        </td>
+        {appendColumns.map((col, i) => (
+          <td key={i} {...col.tdProps}>
+            {col.render(product, this.props)}
+          </td>
+        ))}
+      </tr>
+    );
+  }
+}
 
 function ProductsTable(props) {
   return (
@@ -17,26 +50,12 @@ function ProductsTable(props) {
       </thead>
       <tbody>
         {props.products.map(product => (
-          <tr key={product.id}>
-            <td>
-              <a href={product.url} target="_blank">{product.title}</a>
-            </td>
-            <td className="text-center">{product.author}</td>
-            <td className="products-table__category-col">
-              <CategoriesSelect
-                className="form-control"
-                value={product.category_id}
-                onChange={val => (
-                  props.onChange(product.id, { category_id: val })
-                )}
-              />
-            </td>
-            {props.appendColumns.map((col, i) => (
-              <td key={i} {...col.tdProps}>
-                {col.render(product, props)}
-              </td>
-            ))}
-          </tr>
+          <ProductsTableRow
+            key={product.id}
+            product={product}
+            onChange={props.onChange}
+            appendColumns={props.appendColumns}
+          />
         ))}
       </tbody>
     </table>

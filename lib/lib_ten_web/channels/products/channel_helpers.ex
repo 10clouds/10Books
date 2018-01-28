@@ -29,6 +29,7 @@ defmodule LibTenWeb.Products.ChannelHelpers do
   # TODO: This can be written with less code
   def to_json_map(%Product{} = product) do
     %{
+      inserted_at: DateTime.to_unix(product.inserted_at, :millisecond),
       id: product.id,
       title: product.title,
       url: product.url,

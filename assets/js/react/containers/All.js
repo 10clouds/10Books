@@ -18,33 +18,31 @@ class All extends Component {
 
   render() {
     return (
-      <Provider store={this.props.store}>
-        <div>
-          <SearchContainer />
+      <div>
+        <SearchContainer />
 
-          <ProductsTableContainer
-            appendColumns={[
-              {
-                title: "Status",
-                thProps: {
-                  className: 'text-center'
-                },
-                tdProps: {
-                  className: 'text-center'
-                },
-                render: (product, props) => (
-                  <StatusSelect
-                    value={product.status}
-                    onChange={val => (
-                      props.onChange(product.id, { status: val })
-                    )}
-                  />
-                )
-              }
-            ]}
-          />
-        </div>
-      </Provider>
+        <ProductsTableContainer
+          appendColumns={[
+            {
+              title: "Status",
+              thProps: {
+                className: 'text-center'
+              },
+              tdProps: {
+                className: 'text-center'
+              },
+              render: (product, props) => (
+                <StatusSelect
+                  value={product.status}
+                  onChange={val => (
+                    props.onChange(product.id, { status: val })
+                  )}
+                />
+              )
+            }
+          ]}
+        />
+      </div>
     );
   }
 }

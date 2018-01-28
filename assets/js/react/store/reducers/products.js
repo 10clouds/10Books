@@ -3,11 +3,16 @@ import { makeReducer } from '../utils';
 
 const defaultState = {
   channel: null,
-  byId: {},
-  all: []
+  idsByInsertedAt: [],
+  byId: {}
 };
 
-// TODO: Sorting by date on redux level
+const getSortedIds = items => {
+  return items
+    .sort((a, b) => b.inserted_at - a.inserted_at)
+    .map(({ id, inserted_at }) => ({ id, inserted_at }))
+};
+
 const reducers = {
   [actionTypes.JOIN_CHANNEL_SUCCESS]: (state, { channel }) => ({
     ...state,
@@ -16,7 +21,7 @@ const reducers = {
 
   [actionTypes.ALL_UPDATED]: (state, { items }) => ({
     ...state,
-    all: items,
+    idsByInsertedAt: getSortedIds(items),
     byId: items.reduce((all, item) => {
       all[item.id] = item;
       return all;
@@ -25,13 +30,16 @@ const reducers = {
 
   [actionTypes.UPDATED]: (state, { attrs }) => {
     const updatedItem = {...state.byId[attrs.id], ...attrs}
+    const idsByInsertedAt = state.byId[attrs.id]
+      ? state.idsByInsertedAt
+      : getSortedIds([updatedItem, ...state.idsByInsertedAt])
 
     return {
       ...state,
-      all: (
+      idsByInsertedAt: (
         state.byId[attrs.id]
-          ? state.all.map(item => item.id === attrs.id ? updatedItem : item)
-          : [updatedItem, ...state.all]
+          ? state.idsByInsertedAt
+          : getSortedIds([updatedItem, ...state.idsByInsertedAt])
       ),
       byId: {
         ...state.byId,
@@ -45,7 +53,7 @@ const reducers = {
     delete newById[id];
     return {
       ...state,
-      all: state.all.filter(item => item.id !== id),
+      idsByInsertedAt: state.idsByInsertedAt.filter(item => item.id !== id),
       byId: newById
     };
   }

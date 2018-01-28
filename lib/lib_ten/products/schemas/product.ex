@@ -45,7 +45,7 @@ defmodule LibTen.Products.Product do
     has_many :votes, ProductVote
     has_many :ratings, ProductRating
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   def changeset_for_role(%Product{} = product, attrs, "user") do

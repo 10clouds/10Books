@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
-import { Provider } from 'react-redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import socket from 'socket';
@@ -11,7 +11,79 @@ import SearchContainer from './common/SearchContainer';
 import ProductsTableContainer from './common/ProductsTableContainer';
 import RateProductModal from '../components/RateProductModal';
 
-class Library extends Component {
+class LibraryProductsTable extends PureComponent {
+  render() {
+    return (
+      <ProductsTableContainer
+        appendColumns={[
+          {
+            title: 'Ratings',
+            render: (product) => (
+              <div>{JSON.stringify(product.ratings)}</div>
+            )
+          },
+          {
+            title: 'Status',
+            thProps: {
+              className: 'text-center'
+            },
+            tdProps: {
+              className: 'text-center text-nowrap'
+            },
+            render: (product) => (
+              product.used_by ? (
+                <div>
+                  {product.used_by.user.id !== this.props.user.id && (
+                    <div>
+                      Taken by <b>{product.used_by.user.name}</b>
+                      <br />
+                      { moment(product.used_by.started_at).fromNow() }
+                      <br />
+                    </div>
+                  )}
+                  {product.used_by.user.id === this.props.user.id && (
+                    <button
+                      className="btn btn-warning"
+                      onClick={() => {
+                        const isUserRated = product.ratings
+                          .find(item => item.user.id === this.props.user.id);
+
+                        if (!isUserRated) {
+                          this.props.openRateProduct(product.id);
+                        }
+
+                        this.props.libraryActions.returnProduct(product.id);
+                      }}
+                    >
+                      Return book
+                    </button>
+                  )}
+                </div>
+              ) : (
+                <button
+                  className="btn btn-primary"
+                  onClick={() => {
+                    this.props.libraryActions.takeProduct(product.id)
+                  }}
+                >
+                  Take book
+                </button>
+              )
+            )
+          }
+        ]}
+      />
+    );
+  }
+}
+
+LibraryProductsTable.propTypes = {
+  openRateProduct: PropTypes.func.isRequired,
+  libraryActions: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired
+};
+
+class Library extends PureComponent {
   constructor(props) {
     super(props);
     socket.connect();
@@ -33,80 +105,24 @@ class Library extends Component {
 
   render() {
     return (
-      <Provider store={this.props.store}>
-        <div>
-          <SearchContainer />
+      <div>
+        <SearchContainer />
 
-          <RateProductModal
-            show={this.state.rateProductWithId !== null}
-            onHide={this.hideRateProduct}
-            onSubmit={(value) => {
-              this.props.libraryActions.rateProduct(this.state.rateProductWithId, value);
-              this.hideRateProduct();
-            }}
-          />
+        <RateProductModal
+          show={this.state.rateProductWithId !== null}
+          onHide={this.hideRateProduct}
+          onSubmit={(value) => {
+            this.props.libraryActions.rateProduct(this.state.rateProductWithId, value);
+            this.hideRateProduct();
+          }}
+        />
 
-          <ProductsTableContainer
-            appendColumns={[
-              {
-                title: 'Ratings',
-                render: (product) => (
-                  <div>{JSON.stringify(product.ratings)}</div>
-                )
-              },
-              {
-                title: 'Status',
-                thProps: {
-                  className: 'text-center'
-                },
-                tdProps: {
-                  className: 'text-center text-nowrap'
-                },
-                render: (product) => (
-                  product.used_by ? (
-                    <div>
-                      {product.used_by.user.id !== this.props.user.id && (
-                        <div>
-                          Taken by <b>{product.used_by.user.name}</b>
-                          <br />
-                          { moment(product.used_by.started_at).fromNow() }
-                          <br />
-                        </div>
-                      )}
-                      {product.used_by.user.id === this.props.user.id && (
-                        <button
-                          className="btn btn-warning"
-                          onClick={() => {
-                            const isUserRated = product.ratings
-                              .find(item => item.user.id === this.props.user.id);
+        <LibraryProductsTable
+          {...this.props}
+          openRateProduct={this.openRateProduct}
+        />
 
-                            if (!isUserRated) {
-                              this.openRateProduct(product.id);
-                            }
-
-                            this.props.libraryActions.returnProduct(product.id);
-                          }}
-                        >
-                          Return book
-                        </button>
-                      )}
-                    </div>
-                  ) : (
-                    <button
-                      className="btn btn-primary"
-                      onClick={() => {
-                        this.props.libraryActions.takeProduct(product.id)
-                      }}
-                    >
-                      Take book
-                    </button>
-                  )
-                )
-              }
-            ]}
-          />
-        </div>
-      </Provider>
+      </div>
     );
   }
 }

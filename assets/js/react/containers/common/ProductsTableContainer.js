@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import ProductsTable from '../../components/ProductsTable';
 import { update } from '../../store/actions/products';
@@ -13,16 +13,23 @@ function ProductsTableContainer(props) {
   } = props;
 
   const searchString = search.queryString.toLowerCase();
-  const filteredProducts = products.all.filter(product => (
-    product.title.toLowerCase().includes(searchString) ||
-    (product.author && product.author.toLowerCase().includes(searchString)) ||
-    (product.category_id && categories.byId[product.category_id].name.toLowerCase().includes(searchString))
-  ));
+  const filteredProducts = Object
+    .values(props.products.idsByInsertedAt)
+    .map(({ id }) => props.products.byId[id])
+    .filter(product => (
+      product.title.toLowerCase().includes(searchString) || (
+        product.author &&
+        product.author.toLowerCase().includes(searchString)
+      ) || (
+        product.category_id &&
+        categories.byId[product.category_id].name.toLowerCase().includes(searchString)
+      )
+    ));
 
   return filteredProducts.length > 0 ? (
     <ProductsTable
       products={filteredProducts}
-      onChange={(productId, attrs) => props.update(productId, attrs)}
+      onChange={props.update}
       {...componentProps}
     />
   ) : renderNoResults ? renderNoResults() : null;
