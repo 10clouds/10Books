@@ -38,7 +38,7 @@ CategoriesSelect.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  values: Object.values(state.categories.byId)
+  values: state.categories.all
 })
 
 export default connect(mapStateToProps)(CategoriesSelect);

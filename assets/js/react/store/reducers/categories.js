@@ -3,7 +3,8 @@ import { makeReducer } from '../utils';
 
 const defaultState = {
   channel: null,
-  byId: {}
+  byId: {},
+  all: []
 };
 
 const reducers = {
@@ -14,6 +15,7 @@ const reducers = {
 
   [actionTypes.ALL_UPDATED]: (state, { items }) => ({
     ...state,
+    all: items,
     byId: items.reduce((all, item) => {
       all[item.id] = item;
       return all;
@@ -21,11 +23,18 @@ const reducers = {
   }),
 
   [actionTypes.UPDATED]: (state, { attrs }) => {
+    const updatedItem = {...state.byId[attrs.id], ...attrs}
+
     return {
       ...state,
+      all: (
+        state.byId[attrs.id]
+          ? state.all.map(item => item.id === attrs.id ? updatedItem : item)
+          : [updatedItem, ...state.all]
+      ),
       byId: {
         ...state.byId,
-        [attrs.id]: {...state.byId[attrs.id], ...attrs}
+        [attrs.id]: updatedItem
       }
     };
   },
