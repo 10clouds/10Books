@@ -4,28 +4,26 @@ defmodule LibTenWeb.Products.LibraryChannelTest do
   alias LibTen.Products.Library
   alias LibTenWeb.Products.LibraryChannel
 
-  # TODO: No need to create 2 products for each test
   setup do
     user = insert(:user)
-    insert_pair(:product, status: "IN_LIBRARY")
-    {:ok, reply, socket} =
-      socket("user_socket", %{user: user})
-      |> subscribe_and_join(LibraryChannel, "products:library")
-    {:ok, socket_reply: reply, socket: socket, socket_user: user}
+    socket = socket("user_socket", %{user: user})
+    {:ok, socket: socket}
   end
 
 
-  test "returns list of products on join", %{socket_reply: socket_reply} do
+  test "returns list of products on join", %{socket: socket} do
+    [p1, p2] = insert_pair(:product, status: "IN_LIBRARY")
+    {:ok, reply, _} = join(socket, LibraryChannel, "products:library")
     # TODO: json schema
-    products_json = LibTenWeb.ProductsView.render("index.json",
-      products: LibTen.Products.Library.list()
-    )
-    assert %{payload: ^products_json} = socket_reply
+    p1_json = LibTenWeb.ProductsView.render("show.json", product: p1)
+    p2_json = LibTenWeb.ProductsView.render("show.json", product: p2)
+    assert %{payload: [^p2_json, ^p1_json]} = reply
   end
 
 
   describe "handle_in/update" do
     test "replies with :error if no such record in library", %{socket: socket} do
+      {:ok, _, socket} = join(socket, LibraryChannel, "products:library")
       product = insert(:product)
       ref = push socket, "update", %{"id" => product.id, "attrs" => %{"category_id": 1}}
       reply = assert_reply ref, :error
@@ -33,6 +31,7 @@ defmodule LibTenWeb.Products.LibraryChannelTest do
     end
 
     test "replices with :ok if record present in library", %{socket: socket} do
+      {:ok, _, socket} = join(socket, LibraryChannel, "products:library")
       product = insert(:product, status: "IN_LIBRARY")
       category = insert(:category)
       ref = push socket, "update", %{"id" => product.id, "attrs" => %{"category_id": category.id}}
@@ -42,20 +41,22 @@ defmodule LibTenWeb.Products.LibraryChannelTest do
   end
 
 
-  test "handle_in/take", %{socket: socket, socket_user: socket_user} do
+  test "handle_in/take", %{socket: socket} do
+    {:ok, _, socket} = join(socket, LibraryChannel, "products:library")
     product = insert(:product, status: "IN_LIBRARY")
     ref = push socket, "take", %{"id" => product.id}
     assert_reply ref, :ok
     product = Library.get(product.id)
-    assert product.used_by.user == socket_user
+    assert product.used_by.user == socket.assigns.user
     assert product.used_by.ended_at == nil
   end
 
 
-  test "handle_in/return", %{socket: socket, socket_user: socket_user} do
+  test "handle_in/return", %{socket: socket} do
+    {:ok, _, socket} = join(socket, LibraryChannel, "products:library")
     product = insert(:product,
       status: "IN_LIBRARY",
-      used_by: %{user: socket_user}
+      used_by: %{user: socket.assigns.user}
     )
     ref = push socket, "return", %{"id" => product.id}
     assert_reply ref, :ok
@@ -65,6 +66,7 @@ defmodule LibTenWeb.Products.LibraryChannelTest do
 
 
   test "handle_in/rate", %{socket: socket} do
+    {:ok, _, socket} = join(socket, LibraryChannel, "products:library")
     product = insert(:product, status: "IN_LIBRARY")
     ref = push socket, "rate", %{"id" => product.id, "value" => 2.5}
     assert_reply ref, :ok
@@ -73,5 +75,4 @@ defmodule LibTenWeb.Products.LibraryChannelTest do
     assert rating.user_id == socket.assigns.user.id
     assert rating.value == 2.5
   end
-
 end
