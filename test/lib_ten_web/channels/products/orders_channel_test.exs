@@ -2,7 +2,7 @@ defmodule LibTenWeb.Products.OrdersChannelTest do
   use LibTenWeb.ChannelCase
   import LibTen.Factory
   alias LibTen.Products.Orders
-  alias LibTenWeb.Products.{OrdersChannel, ChannelHelpers}
+  alias LibTenWeb.Products.OrdersChannel
 
 
   setup do
@@ -16,7 +16,10 @@ defmodule LibTenWeb.Products.OrdersChannelTest do
 
 
   test "returns list of orders on join", %{socket_reply: socket_reply} do
-    products_json = Orders.list() |> ChannelHelpers.to_json_map
+    # TODO: json schema
+    products_json = LibTenWeb.ProductsView.render("index.json",
+      products: Orders.list()
+    )
     assert %{payload: ^products_json} = socket_reply
   end
 

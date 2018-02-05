@@ -4,7 +4,7 @@ defmodule LibTenWeb.Products.LibraryChannel do
   alias LibTen.Products.Library
 
   def join("products:library", _message, socket) do
-    products = Library.list() |> to_json_map
+    products = LibTenWeb.ProductsView.render("index.json", products: Library.list())
     {:ok, %{payload: products}, socket}
   end
 

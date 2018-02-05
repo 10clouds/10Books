@@ -1,7 +1,7 @@
 defmodule LibTenWeb.Products.AllChannelTest do
   use LibTenWeb.ChannelCase
   import LibTen.Factory
-  alias LibTenWeb.Products.{AllChannel, ChannelHelpers}
+  alias LibTenWeb.Products.AllChannel
 
 
   describe "User is not an admin" do
@@ -26,7 +26,10 @@ defmodule LibTenWeb.Products.AllChannelTest do
     end
 
     test "returns list of products on join", %{socket_reply: socket_reply} do
-      products_json = LibTen.Products.All.list() |> ChannelHelpers.to_json_map
+      # TODO: json schema
+      products_json = LibTenWeb.ProductsView.render("index.json",
+        products: LibTen.Products.All.list()
+      )
       assert %{payload: ^products_json} = socket_reply
     end
 

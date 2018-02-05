@@ -5,7 +5,7 @@ defmodule LibTenWeb.Products.AllChannel do
 
   def join("products:all", _message, socket) do
     if socket.assigns.user.is_admin do
-      products = All.list() |> to_json_map
+      products = LibTenWeb.ProductsView.render("index.json", products: All.list())
       {:ok, %{payload: products}, socket}
     else
       {:error, %{reason: :unauthorized}}
