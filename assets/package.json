@@ -2,7 +2,8 @@
   "repository": {},
   "license": "MIT",
   "scripts": {
-    "deploy": "TODO",
+    "TODO": "Write separate config with uglify and react prod mode",
+    "deploy": "webpack",
     "watch": "webpack --watch-stdin --progress --color"
   },
   "dependencies": {

@@ -26,6 +26,7 @@ defmodule LibTen.Mixfile do
         :ueberauth_google,
         :bamboo,
         :bamboo_smtp,
+        :edeliver,
         # TODO: remove 👇 after prod release
         :mongodb
       ],
@@ -56,6 +57,8 @@ defmodule LibTen.Mixfile do
       {:bamboo, "~> 0.8"},
       {:bamboo_smtp, "~> 1.4.0"},
       {:boltun, "~> 1.0.2"},
+      {:edeliver, "~> 1.4.5"},
+      {:distillery, "~> 1.0.0", warn_missing: false},
       # TODO: Doesn't work with elixir 1.5.2, check later
       #{:credo, "~> 0.8", only: [:dev, :test], runtime: false}
       #

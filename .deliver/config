@@ -1,0 +1,42 @@
+APP="lib_ten"
+
+RELEASE_STORE_TYPE="local"
+GIT_CLEAN_PATHS="_build rel priv/static"
+
+BUILD_HOST="94.130.226.14"
+BUILD_USER="root"
+BUILD_AT="/tmp/edeliver/$APP/builds"
+
+PRODUCTION_HOSTS="94.130.226.14"
+PRODUCTION_USER="root"
+DELIVER_TO="/root/lib_ten/release"
+
+#RELEASE_DIR="/tmp/edeliver/$APP/builds/_build/prod/rel/$APP"
+#USING_DISTILLERY=true
+
+pre_erlang_get_and_update_deps() {
+  local _prod_secret_path="/root/lib_ten/prod.secret.exs"
+  if [ "$TARGET_MIX_ENV" = "prod" ]; then
+    __sync_remote "
+      ln -sfn '$_prod_secret_path' '$BUILD_AT/config/prod.secret.exs'
+    "
+  fi
+}
+
+pre_erlang_clean_compile() {
+  status "Running phoenix.digest"
+  __sync_remote "
+    source ~/.profile
+    set -e
+
+    cd '$BUILD_AT'
+    mkdir -p priv/static
+
+    cd assets
+    npm install
+    npm run deploy
+    cd ../
+
+    APP='$APP' MIX_ENV='$TARGET_MIX_ENV' $MIX_CMD phoenix.digest $SILENCE
+  "
+}
