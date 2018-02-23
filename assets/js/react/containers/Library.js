@@ -41,7 +41,7 @@ class LibraryProductsTable extends PureComponent {
                       <br />
                     </div>
                   )}
-                  {product.used_by.user.id === this.props.user.id && (
+                  {product.used_by.user.id === this.props.user.id ? (
                     <button
                       className="btn btn-warning"
                       onClick={() => {
@@ -57,6 +57,28 @@ class LibraryProductsTable extends PureComponent {
                     >
                       Return book
                     </button>
+                  ) : (
+                    product.used_by.return_subscribers.includes(this.props.user.id) ? (
+                      <button
+                        type="button"
+                        className="btn btn-danger"
+                        onClick={() => {
+                          this.props.libraryActions.unsubscribeFromReturnNotification(product.id);
+                        }}
+                      >
+                        Cancel Notification
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        className="btn btn-info"
+                        onClick={() => {
+                          this.props.libraryActions.subscribeToReturnNotification(product.id);
+                        }}
+                      >
+                        Notify when returned
+                      </button>
+                    )
                   )}
                 </div>
               ) : (

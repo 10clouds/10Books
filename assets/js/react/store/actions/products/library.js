@@ -30,6 +30,36 @@ export const returnProduct = id => (dispatch, getState) => {
 };
 
 
+export const subscribeToReturnNotification = (id) => (dispatch, getState) => {
+  dispatch({
+    type: actionTypes.SUBSCRIBE_TO_RETURN_NOTIFICATION,
+    id
+  });
+
+  return new Promise((resolve, reject) => {
+    getState().products.channel
+      .push('subscribe_to_return_notification', {id})
+      .receive('ok', resolve)
+      .receive('error', reject)
+  });
+};
+
+
+export const unsubscribeFromReturnNotification = (id) => (dispatch, getState) => {
+  dispatch({
+    type: actionTypes.UNSUBSCRIBE_FROM_RETURN_NOTIFICATION,
+    id
+  });
+
+  return new Promise((resolve, reject) => {
+    getState().products.channel
+      .push('unsubscribe_from_return_notification', {id})
+      .receive('ok', resolve)
+      .receive('error', reject)
+  });
+};
+
+
 export const rateProduct = (id, value) => (dispatch, getState) => {
   dispatch({
     type: actionTypes.RATE,
