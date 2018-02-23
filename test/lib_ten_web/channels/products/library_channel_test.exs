@@ -75,4 +75,33 @@ defmodule LibTenWeb.Products.LibraryChannelTest do
     assert rating.user_id == socket.assigns.user.id
     assert rating.value == 2.5
   end
+
+
+  test "handle_in/subscribe_to_return_notification", %{socket: socket} do
+    {:ok, _, socket} = join(socket, LibraryChannel, "products:library")
+    product = insert(:product,
+      status: "IN_LIBRARY",
+      used_by: %{user: insert(:user)}
+    )
+    ref = push socket, "subscribe_to_return_notification", %{"id" => product.id}
+    assert_reply ref, :ok
+    product = Library.get(product.id)
+    assert product.used_by.return_subscribers == [socket.assigns.user.id]
+  end
+
+
+  test "handle_in/unsubscribe_from_return_notification", %{socket: socket} do
+    {:ok, _, socket} = join(socket, LibraryChannel, "products:library")
+    product = insert(:product,
+      status: "IN_LIBRARY",
+      used_by: %{
+        user: insert(:user),
+        return_subscribers: [socket.assigns.user.id]
+      }
+    )
+    ref = push socket, "unsubscribe_from_return_notification", %{"id" => product.id}
+    assert_reply ref, :ok
+    product = Library.get(product.id)
+    assert product.used_by.return_subscribers == []
+  end
 end

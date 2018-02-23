@@ -23,6 +23,16 @@ defmodule LibTenWeb.Products.LibraryChannel do
     |> make_reply(socket)
   end
 
+  def handle_in("subscribe_to_return_notification", %{"id" => product_id}, socket) do
+    Library.subscribe_user_to_return_notification(product_id, socket.assigns.user.id)
+    |> make_reply(socket)
+  end
+
+  def handle_in("unsubscribe_from_return_notification", %{"id" => product_id}, socket) do
+    Library.unsubscribe_user_from_return_notification(product_id, socket.assigns.user.id)
+    |> make_reply(socket)
+  end
+
   def handle_in("rate", %{"id" => product_id, "value" => value}, socket) do
     Library.rate(product_id, socket.assigns.user.id, value)
     |> make_reply(socket)
