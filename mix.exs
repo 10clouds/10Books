@@ -27,6 +27,7 @@ defmodule LibTen.Mixfile do
         :bamboo,
         :bamboo_smtp,
         :edeliver,
+        :timex,
         # TODO: remove 👇 after prod release
         :mongodb
       ],
@@ -59,6 +60,7 @@ defmodule LibTen.Mixfile do
       {:boltun, "~> 1.0.2"},
       {:edeliver, "~> 1.4.5"},
       {:distillery, "~> 1.0.0", warn_missing: false},
+      {:timex, "~> 3.1"},
       # TODO: Doesn't work with elixir 1.5.2, check later
       #{:credo, "~> 0.8", only: [:dev, :test], runtime: false}
       #
