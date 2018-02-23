@@ -2,7 +2,7 @@ defmodule LibTen.Products.Library do
   import Ecto.Query, warn: false
   alias Ecto.Changeset
   alias LibTen.Repo
-  alias LibTen.Products.{Product, ProductUse, ProductRating}
+  alias LibTen.Products.{Emails, Product, ProductUse, ProductRating}
   alias LibTen.Accounts
 
   def list do
@@ -58,7 +58,7 @@ defmodule LibTen.Products.Library do
 
       with {:ok, curr_use} <- curr_use do
         for user <- Accounts.list_users(curr_use.return_subscribers) do
-          LibTenWeb.LibraryMailer.product_has_been_returned(product, user)
+          Emails.product_has_been_returned(product, user)
           |> LibTen.Mailer.deliver_later
         end
       end

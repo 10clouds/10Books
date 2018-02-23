@@ -103,7 +103,7 @@ defmodule LibTen.Products.LibraryTest do
         assert {:ok, _} = Library.return(product.id, user.id)
         product = Library.get(product.id)
         product_use = Repo.get_by(ProductUse, product_id: product.id)
-        assert_delivered_email LibTenWeb.LibraryMailer.product_has_been_returned(product, subscribe_user)
+        assert_delivered_email LibTen.Products.Emails.product_has_been_returned(product, subscribe_user)
         assert product.used_by == nil
         assert product_use.user_id == user.id
         assert product_use.ended_at == naive_date_now
@@ -120,8 +120,8 @@ defmodule LibTen.Products.LibraryTest do
         }
       )
       Library.return(product.id, user.id)
-      assert_delivered_email LibTenWeb.LibraryMailer.product_has_been_returned(product, subscriber1)
-      assert_delivered_email LibTenWeb.LibraryMailer.product_has_been_returned(product, subscriber2)
+      assert_delivered_email LibTen.Products.Emails.product_has_been_returned(product, subscriber1)
+      assert_delivered_email LibTen.Products.Emails.product_has_been_returned(product, subscriber2)
     end
   end
 
