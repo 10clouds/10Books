@@ -3,6 +3,12 @@ defmodule LibTen.Accounts do
   alias LibTen.Repo
   alias LibTen.Accounts.User
 
+  def list_users(ids) do
+    User
+    |> where([q], q.id in ^ids)
+    |> Repo.all()
+  end
+
   def get_by!(attrs \\ %{}) do
     User
     |> Repo.get_by!(attrs)

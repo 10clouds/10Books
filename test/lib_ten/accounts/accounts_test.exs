@@ -1,21 +1,17 @@
 defmodule LibTen.AccountsTest do
   use LibTen.DataCase
+  import LibTen.Factory
   alias LibTen.Accounts
 
-  @valid_attrs %{name: "Ruslan Savenok", email: "ruslan@10clouds.com"}
-
-  def user_fixture(attrs \\ %{}) do
-    {:ok, user} =
-      attrs
-      |> Enum.into(@valid_attrs)
-      |> Accounts.create_user()
-    user
+  test "list_users/1 returns only users with passed ids" do
+    [user1, user2, _] = insert_list(3, :user)
+    assert Accounts.list_users([user2.id, user1.id]) == [user1, user2]
   end
 
   test "get_by!/1 returns user with given email or Ecto.NoResultsError" do
     assert_raise Ecto.NoResultsError,
-      fn -> Accounts.get_by!(%{email: @valid_attrs.email}) end
-    user = user_fixture()
+      fn -> Accounts.get_by!(%{email: params_for(:user)[:email]}) end
+    user = insert(:user)
     assert user == Accounts.get_by!(%{email: user.email})
   end
 
@@ -27,14 +23,15 @@ defmodule LibTen.AccountsTest do
 
     test "creates user if it is not present" do
       assert_raise Ecto.NoResultsError,
-        fn -> Accounts.get_by!(%{email: @valid_attrs.email}) end
-      assert {:ok, user} = Accounts.find_or_create_user(@valid_attrs)
-      assert user.email == @valid_attrs.email
-      assert user.name == @valid_attrs.name
+        fn -> Accounts.get_by!(%{email: "test@test.com"}) end
+      user_params = params_for(:user)
+      assert {:ok, user} = Accounts.find_or_create_user(user_params)
+      assert user.email == user_params.email
+      assert user.name == user_params.name
     end
 
     test "returns exising user if it is present" do
-      exising_user = user_fixture(%{email: "exising-user@10clouds.com"})
+      exising_user = insert(:user)
       assert {:ok, user} = Accounts.find_or_create_user(exising_user)
       assert user == exising_user
     end
