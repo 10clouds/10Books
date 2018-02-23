@@ -13,6 +13,10 @@ defmodule LibTenWeb.Router do
     plug :accepts, ["json"]
   end
 
+  if Mix.env == :dev do
+    forward "/sent_emails", Bamboo.EmailPreviewPlug
+  end
+
   scope "/", LibTenWeb do
     pipe_through :browser # Use the default browser stack
 

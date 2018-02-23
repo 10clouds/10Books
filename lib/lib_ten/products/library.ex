@@ -3,6 +3,7 @@ defmodule LibTen.Products.Library do
   alias Ecto.Changeset
   alias LibTen.Repo
   alias LibTen.Products.{Product, ProductUse, ProductRating}
+  alias LibTen.Accounts
 
   def list do
     library_query()
@@ -43,18 +44,26 @@ defmodule LibTen.Products.Library do
     product = get(product_id, false)
 
     if product do
-      case ProductUse
-           |> where(product_id: ^product_id, user_id: ^user_id)
-           |> where([p], is_nil(p.ended_at))
-           |> Repo.one() do
-        nil ->
-          nil
+      curr_use =
+        ProductUse
+        |> where(product_id: ^product_id, user_id: ^user_id)
+        |> where([p], is_nil(p.ended_at))
+        |> Repo.one()
 
-        product_use ->
-          product_use
-          |> ProductUse.changeset(%{ended_at: DateTime.utc_now()})
-          |> Repo.update()
+      curr_use = if curr_use do
+        curr_use
+        |> ProductUse.changeset(%{ended_at: DateTime.utc_now()})
+        |> Repo.update()
       end
+
+      with {:ok, curr_use} <- curr_use do
+        for user <- Accounts.list_users(curr_use.return_subscribers) do
+          LibTenWeb.LibraryMailer.product_has_been_returned(product, user)
+          |> LibTen.Mailer.deliver_later
+        end
+      end
+
+      curr_use
     else
       nil
     end
@@ -113,6 +122,7 @@ defmodule LibTen.Products.Library do
       nil
     end
   end
+
 
   defp library_query(with_preloads \\ true) do
     query = where(Product, [p], p.status in ^Product.library_statuses())

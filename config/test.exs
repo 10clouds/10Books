@@ -9,6 +9,9 @@ config :lib_ten, LibTenWeb.Endpoint,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
+config :lib_ten, LibTen.Mailer,
+  adapter: Bamboo.TestAdapter
+
 # Configure your database
 postgres_credentials = [
   username: "postgres",

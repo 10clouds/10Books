@@ -49,6 +49,9 @@ config :logger, :console, format: "[$level] $message\n"
 # in production as building large stacktraces may be expensive.
 config :phoenix, :stacktrace_depth, 20
 
+config :lib_ten, LibTen.Mailer,
+  adapter: Bamboo.LocalAdapter
+
 # Configure your database
 postgres_credentials = [
   username: "postgres",

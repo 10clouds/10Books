@@ -20,10 +20,10 @@ config :lib_ten, LibTenWeb.Endpoint,
   pubsub: [name: LibTen.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
-config :lib_ten, MyApp.Mailer,
+config :lib_ten, LibTen.Mailer,
   adapter: Bamboo.SMTPAdapter,
-  server: "smtp-relay.sendinblue.com",
-  hostname: "smtp-relay.sendinblue.com",
+  server: {:system, "LIBTEN_SMTP_SERVER"},
+  hostname: {:system, "LIBTEN_SMTP_HOST"},
   port: 587,
   username: {:system, "LIBTEN_SMTP_USERNAME"},
   password: {:system, "LIBTEN_SMTP_PASSWORD"},

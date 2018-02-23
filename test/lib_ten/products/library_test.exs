@@ -1,9 +1,13 @@
 defmodule LibTen.Products.LibraryTest do
   use LibTen.DataCase
+  use Bamboo.Test
+
   import LibTen.Factory
   import Mock
+
   alias LibTen.Products.ProductUse
   alias LibTen.Products.Library
+
 
   test "list/0 returns only products with library status sorted by inserted_at" do
     product1 = insert(:product,
@@ -89,16 +93,35 @@ defmodule LibTen.Products.LibraryTest do
       date_now = DateTime.utc_now
       naive_date_now = DateTime.to_naive(date_now)
       user = insert(:user)
-      product = insert(:product, status: "IN_LIBRARY", used_by: %{user: user})
+      subscribe_user = insert(:user)
+      product = insert(:product,
+        status: "IN_LIBRARY",
+        used_by: %{user: user, return_subscribers: [subscribe_user.id]}
+      )
 
       with_mock DateTime, [utc_now: fn -> date_now end] do
         assert {:ok, _} = Library.return(product.id, user.id)
         product = Library.get(product.id)
         product_use = Repo.get_by(ProductUse, product_id: product.id)
+        assert_delivered_email LibTenWeb.LibraryMailer.product_has_been_returned(product, subscribe_user)
         assert product.used_by == nil
         assert product_use.user_id == user.id
         assert product_use.ended_at == naive_date_now
       end
+    end
+
+    test "send product_has_been_returned email to return subscribers" do
+      [user, subscriber1, subscriber2] = insert_list(3, :user)
+      product = insert(:product,
+        status: "IN_LIBRARY",
+        used_by: %{
+          user: user,
+          return_subscribers: [subscriber1.id, subscriber2.id]
+        }
+      )
+      Library.return(product.id, user.id)
+      assert_delivered_email LibTenWeb.LibraryMailer.product_has_been_returned(product, subscriber1)
+      assert_delivered_email LibTenWeb.LibraryMailer.product_has_been_returned(product, subscriber2)
     end
   end
 

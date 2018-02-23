@@ -4,7 +4,7 @@ defmodule LibTen.Factory do
   def user_factory do
     %LibTen.Accounts.User{
       name: "Ruslan Savenok",
-      email: sequence(:email, &"email-#{&1}@example.com")
+      email: sequence(:email, &"email-#{&1}@10clouds.com")
     }
   end
 
