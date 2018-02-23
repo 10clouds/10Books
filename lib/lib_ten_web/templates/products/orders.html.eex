@@ -2,9 +2,11 @@
 
 <script>
   window.LibTen.ReactComponents.renderOrders(
-    document.getElementById('products-table'), {
-      id: <%= @conn.assigns[:current_user].id %>,
-      is_admin: <%= @conn.assigns[:current_user].is_admin %>
-    }
+    document.getElementById('products-table'),
+    <%=
+      {:safe, Poison.encode_to_iodata!(
+        Map.take(@conn.assigns[:current_user], [:id, :is_admin])
+      )}
+    %>
   );
 </script>
