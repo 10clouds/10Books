@@ -33,8 +33,10 @@ pre_erlang_clean_compile() {
     mkdir -p priv/static
 
     cd assets
+    nvm use stable
+    npm rebuild node-sass
     npm install
-    npm run deploy
+    npm run build
     cd ../
 
     APP='$APP' MIX_ENV='$TARGET_MIX_ENV' $MIX_CMD phoenix.digest $SILENCE

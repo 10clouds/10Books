@@ -12,7 +12,6 @@ module.exports = {
     path: path.resolve(__dirname, '../priv/static'),
     filename: "[name]"
   },
-  devtool: 'eval-source-map', // TODO: Update for production
   resolve: {
     modules: [
       path.resolve(__dirname, 'js'),
@@ -27,9 +26,11 @@ module.exports = {
         use: [{
           loader: 'babel-loader',
           options: {
-            presets: ['es2015', 'stage-2'],
-            plugins: [
-              'transform-react-jsx'
+            babelrc: false,
+            presets: [
+              "@babel/preset-env",
+              "@babel/preset-stage-2",
+              "@babel/preset-react"
             ]
           },
         }],

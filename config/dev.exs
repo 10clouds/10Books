@@ -12,7 +12,7 @@ config :lib_ten, LibTenWeb.Endpoint,
   code_reloader: true,
   check_origin: false,
   watchers: [
-    npm: ["run", "watch", cd: Path.expand("../assets", __DIR__)]
+    npm: ["start", cd: Path.expand("../assets", __DIR__)]
   ]
 
 # ## SSL Support
