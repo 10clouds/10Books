@@ -249,4 +249,26 @@ defmodule LibTen.Products.LibraryTest do
       assert product.used_by.return_subscribers == []
     end
   end
+
+
+  describe "remind_users_to_return_products" do
+    test "sends email to use if product was taken > 60 days ago" do
+      product1 = insert(:product,
+        status: "IN_LIBRARY",
+        used_by: %{
+          user: insert(:user),
+          inserted_at: ~N[2000-01-01 00:00:00.000000]
+        }
+      )
+      product2 = insert(:product,
+        status: "IN_LIBRARY",
+        used_by: %{
+          user: insert(:user)
+        }
+      )
+      Library.remind_users_to_return_products()
+      assert_delivered_email LibTen.Products.Emails.request_product_return(product1)
+      refute_delivered_email LibTen.Products.Emails.request_product_return(product2)
+    end
+  end
 end

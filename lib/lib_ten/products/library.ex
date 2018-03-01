@@ -123,6 +123,22 @@ defmodule LibTen.Products.Library do
     end
   end
 
+  def remind_users_to_return_products do
+    max_date =
+      Timex.today
+      |> Timex.shift(days: -60)
+      |> Timex.to_naive_datetime
+
+    products =
+      library_query()
+      |> where([_, used_by], used_by.inserted_at < ^max_date)
+      |> Repo.all()
+
+    for product <- products do
+      Emails.request_product_return(product)
+      |> LibTen.Mailer.deliver_later
+    end
+  end
 
   defp library_query(with_preloads \\ true) do
     query = where(Product, [p], p.status in ^Product.library_statuses())
