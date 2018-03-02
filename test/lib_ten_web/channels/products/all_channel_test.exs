@@ -1,6 +1,7 @@
 defmodule LibTenWeb.Products.AllChannelTest do
   use LibTenWeb.ChannelCase
   import LibTen.Factory
+  alias LibTen.Products.All
   alias LibTenWeb.Products.AllChannel
 
 
@@ -28,11 +29,27 @@ defmodule LibTenWeb.Products.AllChannelTest do
     test "returns list of products on join", %{socket_reply: socket_reply} do
       # TODO: json schema
       products_json = LibTenWeb.ProductsView.render("index.json",
-        products: LibTen.Products.All.list()
+        products: All.list()
       )
       assert %{payload: ^products_json} = socket_reply
     end
 
+    test "handle_in/create creates a record", %{socket: socket} do
+      category = insert(:category)
+      attrs = string_params_for(:product,
+        category_id: category.id,
+        status: "IN_LIBRARY"
+      )
+      ref = push socket, "create", %{"attrs" => attrs}
+      reply = assert_reply ref, :ok
+      product = All.get(reply.payload.id)
+      assert product.requested_by_user_id == socket.assigns.user.id
+      assert product.category_id == attrs["category_id"]
+      assert product.author == attrs["author"]
+      assert product.title == attrs["title"]
+      assert product.url == attrs["url"]
+      assert product.status == attrs["status"]
+    end
 
     test "handle_in/update replies with :error if no such record", %{socket: socket} do
       ref = push socket, "update", %{"id" => -1, "attrs" => %{"category_id": 1}}
@@ -46,7 +63,7 @@ defmodule LibTenWeb.Products.AllChannelTest do
       category = insert(:category)
       ref = push socket, "update", %{"id" => product.id, "attrs" => %{"category_id": category.id}}
       assert_reply ref, :ok
-      assert LibTen.Products.All.get(product.id).category_id == category.id
+      assert All.get(product.id).category_id == category.id
     end
   end
 

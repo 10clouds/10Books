@@ -12,6 +12,11 @@ defmodule LibTenWeb.Products.AllChannel do
     end
   end
 
+  def handle_in("create", %{"attrs" => attrs}, socket) do
+    All.create(attrs, socket.assigns.user.id)
+    |> make_reply(socket)
+  end
+
   def handle_in("update", %{"id" => product_id, "attrs" => attrs}, socket) do
     All.update(product_id, attrs)
     |> make_reply(socket)
