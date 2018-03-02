@@ -18,7 +18,6 @@ defmodule LibTen.Products.Orders do
   def create(attrs, requested_by_user_id) do
     %Product{}
     |> Product.changeset_for_role(attrs, "user")
-    |> Changeset.validate_required([:category_id])
     |> Changeset.put_change(:status, "REQUESTED")
     |> Changeset.put_change(:requested_by_user_id, requested_by_user_id)
     |> Repo.insert()
