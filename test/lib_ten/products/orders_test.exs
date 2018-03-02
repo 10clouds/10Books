@@ -76,8 +76,13 @@ defmodule LibTen.Products.OrdersTest do
 
     test "with user role, will update status to DELETED if it's a user order" do
       user = insert(:user)
-      product = insert(:product, status: "ORDERED")
-      product2 = insert(:product, status: "ORDERED", requested_by_user_id: user.id)
+      category = insert(:category)
+      product = insert(:product, status: "ORDERED", category: category)
+      product2 = insert(:product,
+        status: "ORDERED",
+        requested_by_user_id: user.id,
+        category: category
+      )
 
       {:ok, updated_product} = Orders.update(product.id, %{"status" => "REQUESTED"}, "user", user.id)
       assert updated_product.status == "ORDERED"

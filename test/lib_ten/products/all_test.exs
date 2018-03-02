@@ -15,6 +15,19 @@ defmodule LibTen.Products.AllTest do
   end
 
 
+  test "create/2 creates record" do
+    user = insert(:user)
+    category = insert(:category)
+    attrs = params_for(:product, category_id: category.id, status: "IN_LIBRARY")
+    {:ok, product} = All.create(attrs, user.id)
+    assert product.requested_by_user_id == user.id
+    assert product.author == attrs.author
+    assert product.title == attrs.title
+    assert product.url == attrs.url
+    assert product.status == attrs.status
+  end
+
+
   describe "update" do
     test "update/3 returns nil in no product with given id" do
       assert All.update(-1, %{category_id: 1}) == nil
