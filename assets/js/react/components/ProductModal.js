@@ -4,29 +4,42 @@ import PropTypes from 'prop-types';
 import Modal from './Modal';
 import CategoriesSelect from './CategoriesSelect';
 
-export default class AddProductModal extends PureComponent {
+export default class ProductModal extends PureComponent {
   static propTypes = {
-    onSubmit: PropTypes.func.isRequired
+    onSubmit: PropTypes.func.isRequired,
+    submitLabel: PropTypes.string.isRequired,
+    forAdmin: PropTypes.bool.isRequired,
+    product: PropTypes.object
   };
 
-  defaultFields = {
-    title: '',
-    author: '',
-    url: '',
-    category_id: null
-  };
+  static defaultProps = {
+    forAdmin: false
+  }
 
-  state = {
-    fields: this.defaultFields,
-    errors: {}
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      fields: this.getProductFields(props.product),
+      errors: {}
+    }
+  }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.show && nextProps.show !== this.props.show) {
+    if (nextProps.product !== this.props.product) {
       this.setState({
-        fields: this.defaultFields
+        fields: this.getProductFields(nextProps.product)
       });
     }
+  }
+
+  getProductFields(product = {}) {
+    return {
+      title: product.title || '',
+      author: product.author || '',
+      url: product.url || '',
+      status: product.status || '',
+      category_id: product.category_id || null
+    };
   }
 
   setErrors(errors) {
@@ -40,13 +53,14 @@ export default class AddProductModal extends PureComponent {
     this.setState({ errors: newErrors });
   }
 
-  handleInputChange = (e) => {
+  handleInputChange = e => {
     this.handleFieldChange(e.target.name, e.target.value);
   }
 
   handleFieldChange = (name, value) => {
     this.setState(prevState => ({
-      fields: {...prevState.fields, [name]: value}
+      fields: {...prevState.fields, [name]: value},
+      errors: {...prevState.errors, [name]: null}
     }));
   }
 
@@ -79,7 +93,7 @@ export default class AddProductModal extends PureComponent {
   }
 
   render() {
-    const { onSubmit, ...modalProps } = this.props;
+    const { onSubmit, attrs, ...modalProps } = this.props;
 
     return (
       <Modal {...modalProps}>
@@ -87,9 +101,7 @@ export default class AddProductModal extends PureComponent {
           onSubmit={(e) => {
             e.preventDefault();
             onSubmit(this.state.fields)
-              .then(() => {
-                this.props.onHide();
-              })
+              .then(this.props.onHide)
               .catch(data => {
                 this.setErrors(data.errors);
               });
@@ -111,6 +123,31 @@ export default class AddProductModal extends PureComponent {
             name: 'url',
             type: 'url'
           })}
+
+          {this.props.forAdmin && this.renderFormGroup({
+            label: 'Status',
+            name: 'status',
+            inputComponent: (
+              <select
+                name="status"
+                className={classnames('form-control', {
+                  'is-invalid': this.state.errors['status']
+                })}
+                onChange={this.handleInputChange}
+                value={this.state.fields.status}
+              >
+                <option value="">-- select --</option>
+                <option value="IN_LIBRARY">In Library</option>
+                <option value="REQUESTED">In Orders</option>
+                <option value="ACCEPTED">Accepted</option>
+                <option value="REJECTED">Rejected</option>
+                <option value="ORDERED">Ordered</option>
+                <option value="LOST">Lost</option>
+                <option value="DELETED">Deleted</option>
+              </select>
+            )
+          })}
+
           {this.renderFormGroup({
             label: 'Category',
             name: 'category_id',
@@ -127,7 +164,7 @@ export default class AddProductModal extends PureComponent {
 
           <br />
           <br />
-          <button type="submit">Add</button>
+          <button type="submit">{this.props.submitLabel}</button>
         </form>
       </Modal>
     );

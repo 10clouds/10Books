@@ -9,7 +9,7 @@ export const STATUSES_LIST = {
   ORDERED:    'Ordered',
   LOST:       'Lost',
   DIVIDER:    true,
-  DELETED:    'Delete'
+  DELETED:    'Deleted'
 };
 
 const StatusSelect = props => (

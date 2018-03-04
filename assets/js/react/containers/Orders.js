@@ -9,9 +9,10 @@ import { joinChannel as joinProductsChannel } from '../store/actions/products';
 import * as orderActions from '../store/actions/products/orders';
 import SearchContainer from './common/SearchContainer';
 import ProductsTableContainer from './common/ProductsTableContainer';
-import AddProductModal from '../components/AddProductModal';
+import ProductModal from '../components/ProductModal';
 import StatusSelect, { STATUSES_LIST } from '../components/StatusSelect';
 
+// TODO: Refactor me
 class OrdersProductTable extends PureComponent {
   render() {
     return (
@@ -166,7 +167,8 @@ class Orders extends PureComponent {
           Add
         </button>
 
-        <AddProductModal
+        <ProductModal
+          submitLabel="Add"
           onSubmit={this.props.orderActions.create}
           show={this.state.isAddModalVisible}
           onHide={() => this.setState({ isAddModalVisible: false })}

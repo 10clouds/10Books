@@ -58,7 +58,7 @@ defmodule LibTen.Products.Product do
   def changeset_for_role(%Product{} = product, attrs, "admin") do
     product
     |> cast(attrs, [:title, :url, :author, :status, :category_id])
-    |> validate_required([:title, :url, :author, :category_id])
+    |> validate_required([:title, :url, :author, :status, :category_id])
     |> validate_url
     |> validate_inclusion(:status, valid_statuses())
   end

@@ -44,7 +44,9 @@ export const updateAll = items => ({
   items
 });
 
-
+// TODO:
+// This will be removed once we'll get rid from category
+// select on every table
 export const update = (id, attrs) => (dispatch, getState) => {
   dispatch({
     type: actionTypes.UPDATE,
