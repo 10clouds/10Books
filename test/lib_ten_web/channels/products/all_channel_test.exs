@@ -59,7 +59,7 @@ defmodule LibTenWeb.Products.AllChannelTest do
 
 
     test "handle_in/update replices with :ok if record present", %{socket: socket} do
-      product = insert(:product)
+      product = insert(:product, status: "IN_LIBRARY")
       category = insert(:category)
       ref = push socket, "update", %{"id" => product.id, "attrs" => %{"category_id": category.id}}
       assert_reply ref, :ok
