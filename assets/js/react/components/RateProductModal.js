@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import Modal from './Modal';
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
+import Modal from './Modal'
 
 export default class RateProductModal extends PureComponent {
   static propTypes = {
@@ -12,19 +12,19 @@ export default class RateProductModal extends PureComponent {
   }
 
   handleRatingChange = (e) => {
-    this.setState({ rating: parseInt(e.target.value, 10) });
+    this.setState({ rating: parseInt(e.target.value, 10) })
   }
 
   render() {
-    const { onSubmit, ...modalProps } = this.props;
+    const { onSubmit, ...modalProps } = this.props
 
     return (
       <Modal {...modalProps}>
         <form
           onSubmit={(e) => {
-            e.preventDefault();
-            onSubmit(this.state.rating);
-            this.setState({ rating: null });
+            e.preventDefault()
+            onSubmit(this.state.rating)
+            this.setState({ rating: null })
           }}
         >
           <input

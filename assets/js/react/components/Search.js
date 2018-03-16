@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
 const Search = (props) => (
   <div className="search-form">
@@ -12,11 +12,11 @@ const Search = (props) => (
     />
     <i className="fa fa-search" aria-hidden="true" />
   </div>
-);
+)
 
 Search.propTypes = {
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string
-};
+}
 
-export default Search;
+export default Search

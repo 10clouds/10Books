@@ -1,14 +1,32 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import CategoriesSelect from './CategoriesSelect';
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
+import CategoriesSelect from './CategoriesSelect'
 
 class ProductsTableRow extends PureComponent {
+  static propTypes = {
+    product: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      url: PropTypes.string,
+      author: PropTypes.string,
+      category_id: PropTypes.number,
+    }),
+    onChange: PropTypes.func.isRequired,
+    appendColumns: PropTypes.arrayOf(
+      PropTypes.shape({
+       title: PropTypes.string,
+       tdProps: PropTypes.object,
+       render: PropTypes.func.isRequired,
+      })
+    )
+  }
+
   render() {
     const {
       product,
       onChange,
       appendColumns
-    } = this.props;
+    } = this.props
 
     return (
       <tr>
@@ -31,7 +49,7 @@ class ProductsTableRow extends PureComponent {
           </td>
         ))}
       </tr>
-    );
+    )
   }
 }
 
@@ -54,11 +72,11 @@ export default class ProductsTable extends PureComponent {
        render: PropTypes.func.isRequired,
       })
     )
-  };
+  }
 
   static defaultProps = {
     appendColumns: []
-  };
+  }
 
   renderRow = product => {
     return (
@@ -82,7 +100,7 @@ export default class ProductsTable extends PureComponent {
           </td>
         ))}
       </tr>
-    );
+    )
   }
 
   render() {
@@ -109,6 +127,6 @@ export default class ProductsTable extends PureComponent {
           ))}
         </tbody>
       </table>
-    );
+    )
   }
 }

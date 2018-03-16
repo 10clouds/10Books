@@ -1,9 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 const CategoriesSelect = props => {
-  const { values, onChange, value, dispatch, ...selectProps } = props;
+  const { 
+    values, onChange, value, 
+    // eslint-disable-next-line react/prop-types
+    dispatch,
+    ...selectProps 
+  } = props
 
   return (
     <select
@@ -23,8 +28,8 @@ const CategoriesSelect = props => {
         </option>
       ))}
     </select>
-  );
-};
+  )
+}
 
 CategoriesSelect.propTypes = {
   values: PropTypes.arrayOf(
@@ -35,10 +40,10 @@ CategoriesSelect.propTypes = {
   ).isRequired,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.number
-};
+}
 
 const mapStateToProps = state => ({
   values: state.categories.all
 })
 
-export default connect(mapStateToProps)(CategoriesSelect);
+export default connect(mapStateToProps)(CategoriesSelect)

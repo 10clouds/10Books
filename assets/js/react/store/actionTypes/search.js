@@ -1,1 +1,1 @@
-export const QUERY_CHANGED = 'search/QUERY_CHANGED';
+export const QUERY_CHANGED = 'search/QUERY_CHANGED'

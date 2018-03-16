@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
 export const STATUSES_LIST = {
   IN_LIBRARY: 'In Library',
@@ -10,7 +10,7 @@ export const STATUSES_LIST = {
   LOST:       'Lost',
   DIVIDER:    true,
   DELETED:    'Deleted'
-};
+}
 
 const StatusSelect = props => (
   <div className="btn-group">
@@ -31,8 +31,8 @@ const StatusSelect = props => (
             className="dropdown-item"
             href="#"
             onClick={e => {
-              e.preventDefault();
-              props.onChange(type);
+              e.preventDefault()
+              props.onChange(type)
             }}
           >
             {STATUSES_LIST[type]}
@@ -41,11 +41,11 @@ const StatusSelect = props => (
       ))}
     </div>
   </div>
-);
+)
 
 StatusSelect.propTypes = {
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired
-};
+}
 
-export default StatusSelect;
+export default StatusSelect

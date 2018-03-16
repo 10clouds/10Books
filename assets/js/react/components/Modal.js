@@ -1,23 +1,23 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import $ from 'jquery';
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
+import $ from 'jquery'
 
 export default class Modal extends PureComponent {
   static propTypes = {
     show: PropTypes.bool.isRequired,
     onHide: PropTypes.func.isRequired,
     children: PropTypes.node
-  };
+  }
 
   componentDidMount() {
-    $(this.modalEl).on('hide.bs.modal', this.props.onHide);
+    $(this.modalEl).on('hide.bs.modal', this.props.onHide)
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.show && !this.props.show) {
-      $(this.modalEl).modal('show');
+      $(this.modalEl).modal('show')
     } else if (!nextProps.show && this.props.show) {
-      $(this.modalEl).modal('hide');
+      $(this.modalEl).modal('hide')
     }
   }
 
@@ -36,6 +36,6 @@ export default class Modal extends PureComponent {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }

@@ -1,16 +1,16 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import classnames from 'classnames';
-import socket from 'socket';
-import { joinChannel as joinCategoriesChannel } from '../store/actions/categories';
-import { joinChannel as joinProductsChannel } from '../store/actions/products';
-import * as orderActions from '../store/actions/products/orders';
-import SearchContainer from './common/SearchContainer';
-import ProductsTableContainer from './common/ProductsTableContainer';
-import ProductModal from '../components/ProductModal';
-import StatusSelect, { STATUSES_LIST } from '../components/StatusSelect';
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import classnames from 'classnames'
+import socket from 'socket'
+import { joinChannel as joinCategoriesChannel } from '../store/actions/categories'
+import { joinChannel as joinProductsChannel } from '../store/actions/products'
+import * as orderActions from '../store/actions/products/orders'
+import SearchContainer from './common/SearchContainer'
+import ProductsTableContainer from './common/ProductsTableContainer'
+import ProductModal from '../components/ProductModal'
+import StatusSelect, { STATUSES_LIST } from '../components/StatusSelect'
 
 // TODO: Refactor me
 class OrdersProductTable extends PureComponent {
@@ -46,21 +46,21 @@ class OrdersProductTable extends PureComponent {
               className: 'text-center'
             },
             render: (product) => {
-              let upvotesCount = 0;
-              let downvotesCount = 0;
-              let userIsUpvote = null;
+              let upvotesCount = 0
+              let downvotesCount = 0
+              let userIsUpvote = null
 
               product.votes.forEach(vote => {
                 if (vote.user.id === this.props.user.id) {
-                  userIsUpvote = vote.is_upvote;
+                  userIsUpvote = vote.is_upvote
                 }
 
                 if (vote.is_upvote) {
-                  upvotesCount++;
+                  upvotesCount++
                 } else {
-                  downvotesCount++;
+                  downvotesCount++
                 }
-              });
+              })
 
               return (
                 <div>
@@ -94,7 +94,7 @@ class OrdersProductTable extends PureComponent {
                     </div>
                   )}
                 </div>
-              );
+              )
             }
           },
           {
@@ -136,24 +136,24 @@ class OrdersProductTable extends PureComponent {
           }
         ]}
       />
-    );
+    )
   }
-};
+}
 
 OrdersProductTable.propTypes = {
   orderActions: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired
-};
+}
 
 class Orders extends PureComponent {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       isAddModalVisible: false
-    };
-    socket.connect();
-    props.joinCategoriesChannel();
-    props.joinProductsChannel('orders');
+    }
+    socket.connect()
+    props.joinCategoriesChannel()
+    props.joinProductsChannel('orders')
   }
 
   render() {
@@ -176,19 +176,19 @@ class Orders extends PureComponent {
 
         <OrdersProductTable {...this.props} />
       </div>
-    );
+    )
   }
 }
 
 const mapStateToProps = state => ({
   user: state.user
-});
+})
 
 const mapDispatchToProps = dispatch => {
   return {
     ...bindActionCreators({ joinProductsChannel, joinCategoriesChannel }, dispatch),
     orderActions: bindActionCreators(orderActions, dispatch)
-  };
-};
+  }
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Orders);
+export default connect(mapStateToProps, mapDispatchToProps)(Orders)

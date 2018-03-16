@@ -1,15 +1,15 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import moment from 'moment';
-import socket from 'socket';
-import { joinChannel as joinCategoriesChannel } from '../store/actions/categories';
-import { joinChannel as joinProductsChannel } from '../store/actions/products';
-import * as libraryActions from '../store/actions/products/library';
-import SearchContainer from './common/SearchContainer';
-import ProductsTableContainer from './common/ProductsTableContainer';
-import RateProductModal from '../components/RateProductModal';
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import moment from 'moment'
+import socket from 'socket'
+import { joinChannel as joinCategoriesChannel } from '../store/actions/categories'
+import { joinChannel as joinProductsChannel } from '../store/actions/products'
+import * as libraryActions from '../store/actions/products/library'
+import SearchContainer from './common/SearchContainer'
+import ProductsTableContainer from './common/ProductsTableContainer'
+import RateProductModal from '../components/RateProductModal'
 
 class LibraryProductsTable extends PureComponent {
   render() {
@@ -46,13 +46,13 @@ class LibraryProductsTable extends PureComponent {
                       className="btn btn-warning"
                       onClick={() => {
                         const isUserRated = product.ratings
-                          .find(item => item.user.id === this.props.user.id);
+                          .find(item => item.user.id === this.props.user.id)
 
                         if (!isUserRated) {
-                          this.props.openRateProduct(product.id);
+                          this.props.openRateProduct(product.id)
                         }
 
-                        this.props.libraryActions.returnProduct(product.id);
+                        this.props.libraryActions.returnProduct(product.id)
                       }}
                     >
                       Return book
@@ -63,7 +63,7 @@ class LibraryProductsTable extends PureComponent {
                         type="button"
                         className="btn btn-danger"
                         onClick={() => {
-                          this.props.libraryActions.unsubscribeFromReturnNotification(product.id);
+                          this.props.libraryActions.unsubscribeFromReturnNotification(product.id)
                         }}
                       >
                         Cancel Notification
@@ -73,7 +73,7 @@ class LibraryProductsTable extends PureComponent {
                         type="button"
                         className="btn btn-info"
                         onClick={() => {
-                          this.props.libraryActions.subscribeToReturnNotification(product.id);
+                          this.props.libraryActions.subscribeToReturnNotification(product.id)
                         }}
                       >
                         Notify when returned
@@ -95,7 +95,7 @@ class LibraryProductsTable extends PureComponent {
           }
         ]}
       />
-    );
+    )
   }
 }
 
@@ -103,27 +103,27 @@ LibraryProductsTable.propTypes = {
   openRateProduct: PropTypes.func.isRequired,
   libraryActions: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired
-};
+}
 
 class Library extends PureComponent {
   constructor(props) {
-    super(props);
-    socket.connect();
-    props.joinCategoriesChannel();
-    props.joinProductsChannel('library');
+    super(props)
+    socket.connect()
+    props.joinCategoriesChannel()
+    props.joinProductsChannel('library')
   }
 
   state = {
     rateProductWithId: null
-  };
+  }
 
   openRateProduct = (productId) => {
-    this.setState({ rateProductWithId: productId });
-  };
+    this.setState({ rateProductWithId: productId })
+  }
 
   hideRateProduct = () => {
-    this.setState({ rateProductWithId: null });
-  };
+    this.setState({ rateProductWithId: null })
+  }
 
   render() {
     return (
@@ -134,8 +134,8 @@ class Library extends PureComponent {
           show={this.state.rateProductWithId !== null}
           onHide={this.hideRateProduct}
           onSubmit={(value) => {
-            this.props.libraryActions.rateProduct(this.state.rateProductWithId, value);
-            this.hideRateProduct();
+            this.props.libraryActions.rateProduct(this.state.rateProductWithId, value)
+            this.hideRateProduct()
           }}
         />
 
@@ -145,19 +145,19 @@ class Library extends PureComponent {
         />
 
       </div>
-    );
+    )
   }
 }
 
 const mapStateToProps = state => ({
   user: state.user
-});
+})
 
 const mapDispatchToProps = dispatch => {
   return {
     ...bindActionCreators({ joinProductsChannel, joinCategoriesChannel }, dispatch),
     libraryActions: bindActionCreators(libraryActions, dispatch)
-  };
-};
+  }
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Library);
+export default connect(mapStateToProps, mapDispatchToProps)(Library)

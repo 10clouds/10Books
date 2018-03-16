@@ -1,0 +1,25 @@
+parser: babel-eslint
+extends: 
+  - eslint:recommended
+  - plugin:react/recommended
+rules:
+  semi: 
+    - 2
+    - never
+  react/no-children-prop: 0
+  no-console:
+    - 2
+    - allow: 
+      - warn
+      - error
+  no-unused-vars: 
+    - 2
+    - ignoreRestSiblings: true
+overrides: 
+  - files: 
+    - '**/containers/**/*.js'
+    rules: 
+      react/prop-types: false
+env: 
+  browser: true
+  es6: true

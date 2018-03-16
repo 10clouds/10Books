@@ -5,12 +5,12 @@ export const makeReducer = (actionReducers, defaultState) => (
   if (Object.keys(actionReducers).includes('undefined')) {
     throw new TypeError(
       'Undefined action name! Check your imports/property names in reducer file.'
-    );
+    )
   }
-  const subReducer = actionReducers[action.type];
+  const subReducer = actionReducers[action.type]
 
   if (subReducer) {
-    return subReducer(state, action);
+    return subReducer(state, action)
   }
-  return state;
-};
+  return state
+}

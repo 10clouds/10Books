@@ -1,23 +1,24 @@
-import React, { PureComponent } from 'react';
-import classnames from 'classnames';
-import PropTypes from 'prop-types';
-import Modal from './Modal';
-import CategoriesSelect from './CategoriesSelect';
+import React, { PureComponent } from 'react'
+import classnames from 'classnames'
+import PropTypes from 'prop-types'
+import Modal from './Modal'
+import CategoriesSelect from './CategoriesSelect'
 
 export default class ProductModal extends PureComponent {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
+    onHide: PropTypes.func.isRequired,
     submitLabel: PropTypes.string.isRequired,
     forAdmin: PropTypes.bool.isRequired,
     product: PropTypes.object
-  };
+  }
 
   static defaultProps = {
     forAdmin: false
   }
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       fields: this.getProductFields(props.product),
       errors: {}
@@ -28,7 +29,7 @@ export default class ProductModal extends PureComponent {
     if (nextProps.product !== this.props.product) {
       this.setState({
         fields: this.getProductFields(nextProps.product)
-      });
+      })
     }
   }
 
@@ -39,33 +40,33 @@ export default class ProductModal extends PureComponent {
       url: product.url || '',
       status: product.status || '',
       category_id: product.category_id || null
-    };
+    }
   }
 
   setErrors(errors) {
-    const newErrors = {};
+    const newErrors = {}
 
     errors.forEach(error => {
-      const fieldName = error.source.pointer.replace('/data/attributes/', '');
-      newErrors[fieldName] = error.detail;
-    });
+      const fieldName = error.source.pointer.replace('/data/attributes/', '')
+      newErrors[fieldName] = error.detail
+    })
 
-    this.setState({ errors: newErrors });
+    this.setState({ errors: newErrors })
   }
 
   handleInputChange = e => {
-    this.handleFieldChange(e.target.name, e.target.value);
+    this.handleFieldChange(e.target.name, e.target.value)
   }
 
   handleFieldChange = (name, value) => {
     this.setState(prevState => ({
       fields: {...prevState.fields, [name]: value},
       errors: {...prevState.errors, [name]: null}
-    }));
+    }))
   }
 
   renderFormGroup(props = {type: 'text'}) {
-    const { label, name, inputComponent, ...inputProps } = props;
+    const { label, name, inputComponent, ...inputProps } = props
 
     return (
       <div className="form-group">
@@ -89,22 +90,22 @@ export default class ProductModal extends PureComponent {
           </div>
         )}
       </div>
-    );
+    )
   }
 
   render() {
-    const { onSubmit, attrs, ...modalProps } = this.props;
+    const { onSubmit, ...modalProps } = this.props
 
     return (
       <Modal {...modalProps}>
         <form
           onSubmit={(e) => {
-            e.preventDefault();
+            e.preventDefault()
             onSubmit(this.state.fields)
               .then(this.props.onHide)
               .catch(data => {
-                this.setErrors(data.errors);
-              });
+                this.setErrors(data.errors)
+              })
           }}
         >
           {this.renderFormGroup({
@@ -167,6 +168,6 @@ export default class ProductModal extends PureComponent {
           <button type="submit">{this.props.submitLabel}</button>
         </form>
       </Modal>
-    );
+    )
   }
 }

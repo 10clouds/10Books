@@ -1,24 +1,23 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import socket from 'socket';
-import { joinChannel as joinCategoriesChannel } from '../store/actions/categories';
-import { joinChannel as joinProductsChannel } from '../store/actions/products';
-import * as allActions from '../store/actions/products/all';
-import SearchContainer from './common/SearchContainer';
-import ProductsTableContainer from './common/ProductsTableContainer';
-import ProductModal from '../components/ProductModal';
-import StatusSelect from '../components/StatusSelect';
+import React, { PureComponent } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import socket from 'socket'
+import { joinChannel as joinCategoriesChannel } from '../store/actions/categories'
+import { joinChannel as joinProductsChannel } from '../store/actions/products'
+import * as allActions from '../store/actions/products/all'
+import SearchContainer from './common/SearchContainer'
+import ProductsTableContainer from './common/ProductsTableContainer'
+import ProductModal from '../components/ProductModal'
+import StatusSelect from '../components/StatusSelect'
 
 const MODAL_PRODUCT_NEW = 'true'
 
 class All extends PureComponent {
   constructor(props) {
-    super(props);
-    socket.connect();
-    props.joinCategoriesChannel();
-    props.joinProductsChannel('all');
+    super(props)
+    socket.connect()
+    props.joinCategoriesChannel()
+    props.joinProductsChannel('all')
   }
 
   state = {
