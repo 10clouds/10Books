@@ -41,7 +41,7 @@ defmodule LibTen.Products.Product do
     belongs_to :category, Category
     belongs_to :requested_by_user, User
     # TODO: re-check this
-    has_one :used_by, ProductUse, on_replace: :delete
+    has_one :used_by, ProductUse
     has_many :votes, ProductVote
     has_many :ratings, ProductRating
 
