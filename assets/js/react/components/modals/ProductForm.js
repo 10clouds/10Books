@@ -1,15 +1,21 @@
 import React, { PureComponent } from 'react'
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import Modal from './Modal'
-import CategoriesSelect from './CategoriesSelect'
 
-export default class ProductModal extends PureComponent {
+class ProductForm extends PureComponent {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
     onHide: PropTypes.func.isRequired,
     submitLabel: PropTypes.string.isRequired,
     forAdmin: PropTypes.bool.isRequired,
+    categories: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired
+      })
+    ).isRequired,
     product: PropTypes.object
   }
 
@@ -99,7 +105,7 @@ export default class ProductModal extends PureComponent {
     return (
       <Modal {...modalProps}>
         <form
-          onSubmit={(e) => {
+          onSubmit={e => {
             e.preventDefault()
             onSubmit(this.state.fields)
               .then(this.props.onHide)
@@ -153,13 +159,27 @@ export default class ProductModal extends PureComponent {
             label: 'Category',
             name: 'category_id',
             inputComponent: (
-              <CategoriesSelect
+              <select
                 className={classnames('form-control', {
                   'is-invalid': this.state.errors['category_id']
                 })}
-                onChange={val => this.handleFieldChange('category_id', val)}
-                value={this.state.fields.category_id}
-              />
+                value={this.state.fields.category_id || ''}
+                onChange={e => {
+                  this.handleFieldChange('category_id',
+                    parseInt(e.target.value, 10) || null
+                  )
+                }}
+              >
+                <option value="">--select category--</option>
+                {this.props.categories.map(option => (
+                  <option
+                    key={option.id}
+                    value={option.id}
+                  >
+                    {option.name}
+                  </option>
+                ))}
+              </select>
             )
           })}
 
@@ -171,3 +191,9 @@ export default class ProductModal extends PureComponent {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  values: state.categories.all
+})
+
+export default connect(mapStateToProps)(ProductForm)

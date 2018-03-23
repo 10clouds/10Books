@@ -2,13 +2,12 @@ import React, { PureComponent } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import socket from 'socket'
-import { joinChannel as joinCategoriesChannel } from '../store/actions/categories'
-import { joinChannel as joinProductsChannel } from '../store/actions/products'
-import * as allActions from '../store/actions/products/all'
-import SearchContainer from './common/SearchContainer'
-import ProductsTableContainer from './common/ProductsTableContainer'
-import ProductModal from '../components/ProductModal'
-import StatusSelect from '../components/StatusSelect'
+import { joinChannel as joinCategoriesChannel } from '~/store/actions/categories'
+import { joinChannel as joinProductsChannel } from '~/store/actions/products'
+import * as allActions from '~/store/actions/products/all'
+import { ProductFormModal } from '~/components/modals'
+import SearchContainer from '../common/SearchContainer'
+import ProductsTableContainer from '../common/ProductsTableContainer'
 
 const MODAL_PRODUCT_NEW = 'true'
 
@@ -33,7 +32,17 @@ class All extends PureComponent {
       tdProps: {
         className: 'text-center'
       },
-      render: (product, props) => (
+      render: product => product.status
+    },
+    {
+      title: 'Status',
+      thProps: {
+        className: 'text-center'
+      },
+      tdProps: {
+        className: 'text-center'
+      },
+      render: product => (
         <div className="nowrap">
           <button
             onClick={() => this.handleEdit(product)}
@@ -41,13 +50,6 @@ class All extends PureComponent {
           >
             <i className="fa fa-pencil" />
           </button>
-          {' '}
-          <StatusSelect
-            value={product.status}
-            onChange={val => (
-              props.onChange(product.id, { status: val })
-            )}
-          />
         </div>
       )
     }
@@ -72,8 +74,9 @@ class All extends PureComponent {
           Add {JSON.stringify(this.state.modalProduct)}
         </button>
 
-        <ProductModal
+        <ProductFormModal
           forAdmin
+          categories={this.props.categories}
           submitLabel={
             this.state.modalProduct === MODAL_PRODUCT_NEW ? 'Add' : 'Update'
           }
@@ -100,6 +103,10 @@ class All extends PureComponent {
   }
 }
 
+const mapStateToProps = state => ({
+  categories: state.categories.all
+})
+
 const mapDispatchToProps = dispatch => {
   return {
     ...bindActionCreators({ joinProductsChannel, joinCategoriesChannel }, dispatch),
@@ -107,4 +114,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(All)
+export default connect(mapStateToProps, mapDispatchToProps)(All)

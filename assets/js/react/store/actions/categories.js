@@ -26,7 +26,7 @@ export const joinChannel = () => (dispatch, getState) => {
       dispatch(updateAll(res.payload))
     })
     .receive('error', resp => {
-      console.error("Unable to join categories", resp)
+      console.error('Unable to join categories', resp)
     })
   }
 }
@@ -36,17 +36,17 @@ export const joinChannelSuccess = channel => ({
   channel
 })
 
-export const updateAll = (items) => ({
+export const updateAll = items => ({
   type: actionTypes.ALL_UPDATED,
   items
 })
 
-export const updated = (attrs) => ({
+export const updated = attrs => ({
   type: actionTypes.UPDATED,
   attrs
 })
 
-export const deleted = (id) => ({
+export const deleted = id => ({
   type: actionTypes.DELETED,
   id
 })

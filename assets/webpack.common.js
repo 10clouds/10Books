@@ -16,7 +16,10 @@ module.exports = {
     modules: [
       path.resolve(__dirname, 'js'),
       'node_modules'
-    ]
+    ],
+    alias: {
+      '~': path.resolve(__dirname, 'js/react')
+    }
   },
   module: {
     rules: [

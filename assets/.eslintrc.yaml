@@ -3,6 +3,9 @@ extends:
   - eslint:recommended
   - plugin:react/recommended
 rules:
+  quotes:
+    - 2
+    - single
   semi: 
     - 2
     - never
@@ -15,6 +18,9 @@ rules:
   no-unused-vars: 
     - 2
     - ignoreRestSiblings: true
+  arrow-parens:
+    - 2
+    - as-needed
 overrides: 
   - files: 
     - '**/containers/**/*.js'

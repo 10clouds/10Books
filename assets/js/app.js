@@ -4,10 +4,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import store from 'react/store'
 import { Provider } from 'react-redux'
-import { setUser } from 'react/store/actions/user'
-import Library from 'react/containers/Library'
-import Orders from 'react/containers/Orders'
-import All from 'react/containers/All'
+import { setUser } from '~/store/actions/user'
+import { Library, Orders, All } from '~/containers/pages'
 
 function render(component, domNode) {
   ReactDOM.render(

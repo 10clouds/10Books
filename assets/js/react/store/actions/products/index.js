@@ -27,7 +27,7 @@ export const joinChannel = room => (dispatch, getState) => {
       dispatch(updateAll(res.payload))
     })
     .receive('error', resp => {
-      console.error("Unable to join products:all", resp)
+      console.error('Unable to join products:all', resp)
     })
   }
 }

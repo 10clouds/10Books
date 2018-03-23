@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import ProductsTable from '../../components/ProductsTable'
-import { update } from '../../store/actions/products'
+import { Table } from '~/components/productsTable'
 
 function ProductsTableContainer(props) {
   const {
@@ -27,9 +26,9 @@ function ProductsTableContainer(props) {
     ))
 
   return filteredProducts.length > 0 ? (
-    <ProductsTable
+    <Table
       products={filteredProducts}
-      onChange={props.update}
+      categories={categories.byId}
       {...componentProps}
     />
   ) : renderNoResults ? renderNoResults() : null
@@ -41,8 +40,4 @@ const mapStateToProps = state => ({
   categories: state.categories
 })
 
-const mapDispatchToProps = {
-  update
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProductsTableContainer)
+export default connect(mapStateToProps)(ProductsTableContainer)

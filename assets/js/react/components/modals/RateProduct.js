@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import Modal from './Modal'
 
-export default class RateProductModal extends PureComponent {
+export default class RateProduct extends PureComponent {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired
   }
@@ -11,7 +11,7 @@ export default class RateProductModal extends PureComponent {
     rating: null
   }
 
-  handleRatingChange = (e) => {
+  handleRatingChange = e => {
     this.setState({ rating: parseInt(e.target.value, 10) })
   }
 
@@ -21,7 +21,7 @@ export default class RateProductModal extends PureComponent {
     return (
       <Modal {...modalProps}>
         <form
-          onSubmit={(e) => {
+          onSubmit={e => {
             e.preventDefault()
             onSubmit(this.state.rating)
             this.setState({ rating: null })

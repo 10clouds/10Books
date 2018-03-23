@@ -30,7 +30,7 @@ export const returnProduct = id => (dispatch, getState) => {
 }
 
 
-export const subscribeToReturnNotification = (id) => (dispatch, getState) => {
+export const subscribeToReturnNotification = id => (dispatch, getState) => {
   dispatch({
     type: actionTypes.SUBSCRIBE_TO_RETURN_NOTIFICATION,
     id
@@ -45,7 +45,7 @@ export const subscribeToReturnNotification = (id) => (dispatch, getState) => {
 }
 
 
-export const unsubscribeFromReturnNotification = (id) => (dispatch, getState) => {
+export const unsubscribeFromReturnNotification = id => (dispatch, getState) => {
   dispatch({
     type: actionTypes.UNSUBSCRIBE_FROM_RETURN_NOTIFICATION,
     id

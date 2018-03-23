@@ -27,3 +27,5 @@ yarn-error.log
 # variables.
 /config/*.secret.exs
 .deliver/releases/
+
+.DS_Store

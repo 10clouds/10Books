@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Search = (props) => (
+const Search = props => (
   <div className="search-form">
     <input
       className="form-control form-control-lg search-form__input"
