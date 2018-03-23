@@ -10,6 +10,8 @@ import * as orderActions from '~/store/actions/products/orders'
 import SearchContainer from '../common/SearchContainer'
 import ProductsTableContainer from '../common/ProductsTableContainer'
 
+const MODAL_PRODUCT_NEW = 'true'
+
 class Orders extends PureComponent {
   constructor(props) {
     super(props)
@@ -19,7 +21,7 @@ class Orders extends PureComponent {
   }
 
   state = {
-    isAddModalVisible: false
+    modalProduct: false
   }
 
   appendColumns = [
@@ -61,12 +63,32 @@ class Orders extends PureComponent {
         <OrderStatusCell 
           product={product}
           currUser={this.props.user}
-          onEdit={productId => console.log('onEdit', productId)}
-          onChange={(productId, attrs) => console.log('onChange', productId, attrs)}
+          onEdit={() => this.handleEdit(product)}
+          onChange={this.props.orderActions.update}
         />
       )
     }
   ]
+
+  handleAdd = () => {
+    this.setState({
+      modalProduct: MODAL_PRODUCT_NEW
+    })
+  }
+
+  handleEdit = product => {
+    this.setState({ modalProduct: product })
+  }
+
+  handleSubmit = attrs => {
+    return this.state.modalProduct === MODAL_PRODUCT_NEW
+      ? this.props.orderActions.create(attrs)
+      : this.props.orderActions.update(this.state.modalProduct.id, attrs)
+  }
+
+  handleHide = () => {
+    this.setState({ modalProduct: false })
+  }
 
   render() {
     return (
@@ -74,17 +96,25 @@ class Orders extends PureComponent {
         <SearchContainer />
 
         <button
-          onClick={() => this.setState({ isAddModalVisible: true })}
+          onClick={this.handleAdd}
         >
           Add
         </button>
 
         <ProductFormModal
-          submitLabel="Add"
+          submitLabel={
+            this.state.modalProduct === MODAL_PRODUCT_NEW ? 'Add' : 'Update'
+          }
+          product={
+            this.state.modalProduct &&
+            this.state.modalProduct.id
+              ? this.state.modalProduct
+              : undefined
+          }
           categories={this.props.categories}
-          onSubmit={this.props.orderActions.create}
-          show={this.state.isAddModalVisible}
-          onHide={() => this.setState({ isAddModalVisible: false })}
+          onSubmit={this.handleSubmit}
+          show={this.state.modalProduct !== false}
+          onHide={this.handleHide}
         />
 
         <ProductsTableContainer appendColumns={this.appendColumns} />

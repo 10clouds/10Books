@@ -26,35 +26,37 @@ export default class OrderStatusCell extends PureComponent {
       onChange
     } = this.props
 
-    return currUser.is_admin ? (
-      <StatusSelect
-        value={product.status}
-        onChange={val => onChange(product.id, { status: val })}
-      />
-    ) : (
-      product.status === 'REQUESTED' &&
-      product.requested_by.id === currUser.id ? (
-        <Fragment>
-          <button
-            className="btn btn-primary"
-            onClick={() => onEdit(product.id)}
-          >
-            <i className="fa fa-pencil" />
-          </button>
-          <button
-            className="btn btn-danger"
-            onClick={() => onChange(product.id, { status: 'DELETED' })}
-          >
-            <i className="fa fa-trash-o" />
-          </button>
-        </Fragment>
-      ) : (
-        <div>
-          {product.status === 'REQUESTED' ?
-            '-' :
-            STATUSES_LIST[product.status]}
-        </div>
-      )
+    return (
+      <Fragment>
+        {currUser.is_admin && (
+          <StatusSelect
+            value={product.status}
+            onChange={val => onChange(product.id, { status: val })}
+          />
+        )}
+        {product.status === 'REQUESTED' && product.requested_by.id === currUser.id ? (
+          <Fragment>
+            <button
+              className="btn btn-primary"
+              onClick={onEdit}
+            >
+              <i className="fa fa-pencil" />
+            </button>
+            <button
+              className="btn btn-danger"
+              onClick={() => onChange(product.id, { status: 'DELETED' })}
+            >
+              <i className="fa fa-trash-o" />
+            </button>
+          </Fragment>
+        ) : (
+          <div>
+            {product.status === 'REQUESTED' ?
+              '-' :
+              STATUSES_LIST[product.status]}
+          </div>
+        )}
+      </Fragment>
     )
   }
 }

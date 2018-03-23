@@ -40,17 +40,15 @@ class All extends PureComponent {
         className: 'text-center'
       },
       tdProps: {
-        className: 'text-center'
+        className: 'text-center nowrap-col'
       },
       render: product => (
-        <div className="nowrap">
-          <button
-            onClick={() => this.handleEdit(product)}
-            className="btn btn-secondary"
-          >
-            <i className="fa fa-pencil" />
-          </button>
-        </div>
+        <button
+          onClick={() => this.handleEdit(product)}
+          className="btn btn-secondary"
+        >
+          <i className="fa fa-pencil" />
+        </button>
       )
     }
   ]
@@ -86,11 +84,11 @@ class All extends PureComponent {
               ? this.state.modalProduct
               : undefined
           }
-          onSubmit={attrs => {
-            return this.state.modalProduct === MODAL_PRODUCT_NEW
+          onSubmit={attrs => (
+            this.state.modalProduct === MODAL_PRODUCT_NEW
               ? this.props.allActions.create(attrs)
               : this.props.allActions.update(this.state.modalProduct.id, attrs)
-          }}
+          )}
           show={this.state.modalProduct !== false}
           onHide={() => {
             this.setState({ modalProduct: false })
