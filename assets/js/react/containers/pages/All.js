@@ -3,8 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import socket from 'socket'
 import { joinChannel as joinCategoriesChannel } from '~/store/actions/categories'
-import { joinChannel as joinProductsChannel } from '~/store/actions/products'
-import * as allActions from '~/store/actions/products/all'
+import * as productActions from '~/store/actions/products'
 import { ProductFormModal } from '~/components/modals'
 import SearchContainer from '../common/SearchContainer'
 import ProductsTableContainer from '../common/ProductsTableContainer'
@@ -16,7 +15,7 @@ class All extends PureComponent {
     super(props)
     socket.connect()
     props.joinCategoriesChannel()
-    props.joinProductsChannel('all')
+    props.productActions.joinChannel('all')
   }
 
   state = {
@@ -86,8 +85,8 @@ class All extends PureComponent {
           }
           onSubmit={attrs => (
             this.state.modalProduct === MODAL_PRODUCT_NEW
-              ? this.props.allActions.create(attrs)
-              : this.props.allActions.update(this.state.modalProduct.id, attrs)
+              ? this.props.productActions.create(attrs)
+              : this.props.productActions.update(this.state.modalProduct.id, attrs)
           )}
           show={this.state.modalProduct !== false}
           onHide={() => {
@@ -107,8 +106,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    ...bindActionCreators({ joinProductsChannel, joinCategoriesChannel }, dispatch),
-    allActions: bindActionCreators(allActions, dispatch)
+    ...bindActionCreators({ joinCategoriesChannel }, dispatch),
+    productActions: bindActionCreators(productActions, dispatch)
   }
 }
 

@@ -44,9 +44,22 @@ export const updateAll = items => ({
   items
 })
 
-// TODO:
-// This will be removed once we'll get rid from category
-// select on every table
+
+export const create = attrs => (dispatch, getState) => {
+  dispatch({
+    type: actionTypes.CREATE,
+    attrs
+  })
+
+  return new Promise((resolve, reject) => {
+    getState().products.channel
+      .push('create', { attrs })
+      .receive('ok', resolve)
+      .receive('error', reject)
+  })
+}
+
+
 export const update = (id, attrs) => (dispatch, getState) => {
   dispatch({
     type: actionTypes.UPDATE,

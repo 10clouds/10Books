@@ -3,10 +3,10 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import socket from 'socket'
 import { joinChannel as joinCategoriesChannel } from '~/store/actions/categories'
-import { joinChannel as joinProductsChannel } from '~/store/actions/products'
+import * as productActions from '~/store/actions/products'
+import * as orderActions from '~/store/actions/products/orders'
 import { ProductFormModal } from '~/components/modals'
 import { VotesCell, OrderStatusCell } from '~/components/productsTable'
-import * as orderActions from '~/store/actions/products/orders'
 import SearchContainer from '../common/SearchContainer'
 import ProductsTableContainer from '../common/ProductsTableContainer'
 
@@ -17,7 +17,7 @@ class Orders extends PureComponent {
     super(props)
     socket.connect()
     props.joinCategoriesChannel()
-    props.joinProductsChannel('orders')
+    props.productActions.joinChannel('orders')
   }
 
   state = {
@@ -64,7 +64,7 @@ class Orders extends PureComponent {
           product={product}
           currUser={this.props.user}
           onEdit={() => this.handleEdit(product)}
-          onChange={this.props.orderActions.update}
+          onChange={this.props.productActions.update}
         />
       )
     }
@@ -82,8 +82,8 @@ class Orders extends PureComponent {
 
   handleSubmit = attrs => {
     return this.state.modalProduct === MODAL_PRODUCT_NEW
-      ? this.props.orderActions.create(attrs)
-      : this.props.orderActions.update(this.state.modalProduct.id, attrs)
+      ? this.props.productActions.create(attrs)
+      : this.props.productActions.update(this.state.modalProduct.id, attrs)
   }
 
   handleHide = () => {
@@ -130,7 +130,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    ...bindActionCreators({ joinProductsChannel, joinCategoriesChannel }, dispatch),
+    ...bindActionCreators({ joinCategoriesChannel }, dispatch),
+    productActions: bindActionCreators(productActions, dispatch),
     orderActions: bindActionCreators(orderActions, dispatch)
   }
 }
