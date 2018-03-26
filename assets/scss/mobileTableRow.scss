@@ -1,0 +1,59 @@
+.mobile-table {
+  $module: &;
+
+  font-size: 16px;
+  padding: 0 10px;
+
+  &__row {
+    background-color: $white;
+    border-radius: 5px;
+    border-left: 5px solid $accent;
+    padding: 15px;
+    width: 100%;
+    margin: 0 0 10px 0;
+    line-height: normal;
+    height: auto;
+    transition: height 2s;
+  }
+
+  &__main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__author {
+    font-weight: bold;
+    margin: 15px 0 0 0;
+  }
+
+  &__arrow-wrapper {
+    width: 20px;
+    margin: 0 0 0 15px;
+  }
+
+  &__category-name {
+    font-weight: 600;
+    color: $gray;
+  }
+
+  &__details {
+
+  }
+
+  &__details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+  }
+
+  &__rating {
+    font-weight: bold;
+  }
+
+  &__button {
+    width: 100%;
+  }
+
+}

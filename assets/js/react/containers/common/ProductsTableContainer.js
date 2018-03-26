@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Table } from '~/components/productsTable'
+import { MobileTable, Table } from '~/components/productsTable'
 
 function ProductsTableContainer(props) {
   const {
@@ -26,12 +26,18 @@ function ProductsTableContainer(props) {
     ))
 
   return filteredProducts.length > 0 ? (
+    ( window.innerWidth > 900 ?
     <Table
       products={filteredProducts}
       categories={categories.byId}
       {...componentProps}
+    /> :
+    <MobileTable
+      products={filteredProducts}
+      categories={categories.byId}
+      {...componentProps}
     />
-  ) : renderNoResults ? renderNoResults() : null
+  )) : renderNoResults ? renderNoResults() : null
 }
 
 const mapStateToProps = state => ({
