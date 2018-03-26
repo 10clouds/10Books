@@ -8,6 +8,7 @@ function ProductsTableContainer(props) {
     products,
     categories,
     renderNoResults,
+    windowWidth,
     ...componentProps
   } = props
 
@@ -26,7 +27,7 @@ function ProductsTableContainer(props) {
     ))
 
   return filteredProducts.length > 0 ? (
-    ( window.innerWidth > 900 ?
+    ( windowWidth > 900 ?
     <Table
       products={filteredProducts}
       categories={categories.byId}
