@@ -25,20 +25,18 @@ export default class TableRow extends PureComponent {
     } = this.props
 
     return (
-      <tr className="table__row">
-        <td>
+      <div className="row table__row">
+        <div className="table__data col-3">
           <a href={product.url} target="_blank">{product.title}</a>
-        </td>
-        <td className="text-center">{product.author}</td>
-        <td className="products-table__category-col">
-          {categoryName}
-        </td>
+        </div>
+        <div className="table__data col-2">{product.author}</div>
+        <div className="table__data col-3">{categoryName}</div>
         {appendColumns.map((col, i) => (
-          <td key={i} {...col.tdProps}>
+          <div key={i} {...col.tdProps}>
             {col.render(product)}
-          </td>
+          </div>
         ))}
-      </tr>
+      </div>
     )
   }
 }

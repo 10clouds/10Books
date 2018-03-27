@@ -27,6 +27,12 @@ class Library extends PureComponent {
   appendColumns = [
     {
       title: 'Ratings',
+      thProps: {
+        className: 'table__heading col-1'
+      },
+      tdProps: {
+        className: 'table__data col-1'
+      },
       render: product => (
         <div>{JSON.stringify(product.ratings)}</div>
       )
@@ -34,10 +40,10 @@ class Library extends PureComponent {
     {
       title: 'Status',
       thProps: {
-        className: 'table__title'
+        className: 'table__heading col-3'
       },
       tdProps: {
-        className: 'text-center text-nowrap'
+        className: 'table__data col-3'
       },
       render: product => (
         <UsageCell

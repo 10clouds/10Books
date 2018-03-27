@@ -15,27 +15,24 @@ export default class Table extends PureComponent {
 
   render() {
     return (
-      <table className="table">
-        <thead>
-          <tr className="table__row">
-            <th className="table__title">Title</th>
-            <th className="table__title">Author</th>
-            {this.props.appendColumns.map((col, i) => (
-              <th className="table__title" key={i} {...col.thProps}>{col.title}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {this.props.products.map(product => (
-            <TableRow
-              key={product.id}
-              product={product}
-              categoryName={this.props.categories[product.category_id].name}
-              appendColumns={this.props.appendColumns}
-            />
+      <div className="table grid-container">
+        <div className="row table__row table__row--transparent">
+          <div className="table__heading col-3">Title</div>
+          <div className="table__heading col-2">Author</div>
+          <div className="table__heading col-3">Category</div>
+          {this.props.appendColumns.map((col, i) => (
+            <div className="table__heading" key={i} {...col.thProps}>{col.title}</div>
           ))}
-        </tbody>
-      </table>
+        </div>
+        {this.props.products.map(product => (
+          <TableRow
+            key={product.id}
+            product={product}
+            categoryName={this.props.categories[product.category_id].name}
+            appendColumns={this.props.appendColumns}
+          />
+        ))}
+      </div>
     )
   }
 }
