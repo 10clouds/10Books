@@ -1,10 +1,12 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import cn from 'classnames'
+// import UsageCell from './UsageCell'
+// import * as libraryActions from '~/store/actions/products/library'
 
 export default class MobileTableRow extends PureComponent {
   state = {
-    detailsVisible: false
+    detailsVisible: true // CHANGE to false
   }
 
   static propTypes = {
@@ -41,11 +43,15 @@ export default class MobileTableRow extends PureComponent {
       'category-icon',
       'category-icon--design',
     )
+    const rowClassNames = cn({
+      'mobile-table__row': true,
+      'mobile-table__row--available': product.status === 'IN_LIBRARY',
+    })
 
     const buttonText = product.status === 'IN_LIBRARY' ? 'Take a book' : 'Return'
 
     return (
-      <div className="mobile-table__row">
+      <div className={ rowClassNames }>
         <div className="mobile-table__main">
           <div className="mobile-table__title-wrapper">
             <p className="mobile-table__title">{ product.title }</p>
@@ -63,6 +69,10 @@ export default class MobileTableRow extends PureComponent {
               <div className="mobile-table__rating">4.5</div>
             </div>
             <button className={ buttonClassNames } role="button">{ buttonText }</button>
+            {/* <UsageCell 
+              {...this.props.libraryActions}
+
+            /> */}
           </div>
         }
       </div>

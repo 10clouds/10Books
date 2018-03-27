@@ -1,0 +1,24 @@
+.search-form {
+  &__input {
+    border-radius: 5px;
+    border: none;
+    box-shadow: 4px 57px 67px 0 rgba(75, 82, 113, 0.09);
+    height: 65px;
+    width: 100%;
+    padding: 0 40px 0 15px;
+    font-size: 16px;
+
+    &::placeholder {
+      font-size: 16px;
+      color: $lightGray;
+    }
+  }
+
+  &__loupe {
+    //light version is available for PRO users only :(
+    color: $lightGray;
+    font-size: 24px;
+    display: inline-block;
+    margin-left: -40px;
+  }
+}

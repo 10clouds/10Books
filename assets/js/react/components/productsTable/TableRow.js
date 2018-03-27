@@ -25,7 +25,7 @@ export default class TableRow extends PureComponent {
     } = this.props
 
     return (
-      <tr>
+      <tr className="table__row">
         <td>
           <a href={product.url} target="_blank">{product.title}</a>
         </td>

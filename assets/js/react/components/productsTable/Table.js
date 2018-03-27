@@ -15,13 +15,13 @@ export default class Table extends PureComponent {
 
   render() {
     return (
-      <table className="products-table table table-striped">
+      <table className="table">
         <thead>
-          <tr>
-            <th>Title</th>
-            <th className="text-center">Author</th>
+          <tr className="table__row">
+            <th className="table__title">Title</th>
+            <th className="table__title">Author</th>
             {this.props.appendColumns.map((col, i) => (
-              <th key={i} {...col.thProps}>{col.title}</th>
+              <th className="table__title" key={i} {...col.thProps}>{col.title}</th>
             ))}
           </tr>
         </thead>
