@@ -14,44 +14,8 @@ $fa-font-path: "/fonts/font-awesome";
 @import './variables.scss';
 @import './mixins.scss';
 @import './elements.scss';
-@import './table.scss';
 @import './grid.scss';
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  font-size: 14px;
-}
-
-html, body {
-  background-color: $background;
-  box-sizing: border-box;
-  height: 100%;
-}
-
-a {
-  text-decoration: none;
-  
-  &:link,
-  &:visited,
-  &:focus,
-  &:hover,
-  &:active {
-    color: $text;
-  }
-}
-
-body {
-  background-color: $background;
-  color: $text;
-  font-family: 'Open Sans', sans-serif;
-}
-
-
-
-
+@import './table.scss';
 
 // .nowrap-col {
 //   white-space: nowrap;

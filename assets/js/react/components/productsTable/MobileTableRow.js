@@ -6,7 +6,7 @@ import cn from 'classnames'
 
 export default class MobileTableRow extends PureComponent {
   state = {
-    detailsVisible: true // CHANGE to false
+    detailsVisible: false // CHANGE to false
   }
 
   static propTypes = {

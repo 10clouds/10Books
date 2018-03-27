@@ -4,7 +4,7 @@
   //padding: 0 80px;
 
   .row {
-    border: 1px dotted magenta;
+    //border: 1px dotted magenta;
     // border-radius: 5px;
     // margin-bottom: 8px;
     // padding: 0 20px;
@@ -29,7 +29,9 @@
     @for $i from 1 through $colsNumber {
       .col-#{$i}{
         width: 100% / $colsNumber * $i;
-        border: 1px dotted magenta;
+        //border: 1px dotted magenta;
+        padding: 0 0 0 15px;
+        
       }
     }
   }

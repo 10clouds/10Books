@@ -6,7 +6,10 @@ export default class Table extends PureComponent {
   static propTypes = {
     products: PropTypes.array.isRequired,
     categories: PropTypes.object.isRequired,
-    appendColumns: PropTypes.array.isRequired
+    appendColumns: PropTypes.array.isRequired,
+    currentUser: PropTypes.shape({
+      id: PropTypes.number.isRequired
+    }),
   }
 
   static defaultProps = {
@@ -30,6 +33,7 @@ export default class Table extends PureComponent {
             product={product}
             categoryName={this.props.categories[product.category_id].name}
             appendColumns={this.props.appendColumns}
+            currentUser={this.props.currentUser}
           />
         ))}
       </div>

@@ -1,22 +1,73 @@
 .table {
-  font-size: 16px;
+  //$module: &;
+
+  font-size: 14px;
   width: 100%;
+  overflow: hidden;
+
+  * {
+    overflow: hidden;
+  }
 
   &__row {
-    height: 60px;
+    height: 65px; // set fixed height and shorten title, or min-height?
     border-radius: 5px;
     background-color: $white;
     margin: 0 0 10px 0;
     display: flex;
+    border-left: 5px solid transparent; // :(
 
     &:first-of-type {
       background-color: transparent;
     }
+
+    &:hover {
+      box-shadow: 5px 40px 40px 10px rgba(75, 82, 113, 0.08);
+      position: relative;
+      z-index: 2;
+    }
+
+    &--highlight {
+      border-left: 5px solid $accent;
+
+    }
+
+    [class*='col-'] {
+      &:last-of-type {
+        padding-right: 20px;
+      }
+    }
+
   }
 
   &__heading {
     font-weight: bold;
     color: $gray;
     text-align: left;
+  }
+
+  &__data {
+    &-title a {
+      color: $gray;
+    }
+
+    &-category {
+      color: $gray;
+    }
+
+    &-status {
+      display: flex;
+      justify-content: space-between;
+      text-align: center;
+      * {
+        //border: 1px dotted magenta;
+      }
+    }
+
+    &-span {
+      font-size: 12px;
+      color: $gray;
+      line-height: 26px;
+    }
   }
 }

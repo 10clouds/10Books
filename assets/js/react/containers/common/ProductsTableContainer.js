@@ -9,6 +9,7 @@ function ProductsTableContainer(props) {
     categories,
     renderNoResults,
     windowWidth,
+    currentUser,
     ...componentProps
   } = props
 
@@ -27,11 +28,12 @@ function ProductsTableContainer(props) {
     ))
 
   return filteredProducts.length > 0 ? (
-    ( windowWidth > 900 ?
+    ( windowWidth > 700 ?
     <Table
       products={filteredProducts}
       categories={categories.byId}
       {...componentProps}
+      currentUser={ currentUser }
     /> :
     <MobileTable
       products={filteredProducts}

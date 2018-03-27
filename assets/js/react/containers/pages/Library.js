@@ -43,7 +43,7 @@ class Library extends PureComponent {
         className: 'table__heading col-3'
       },
       tdProps: {
-        className: 'table__data col-3'
+        className: 'table__data table__data-status col-3'
       },
       render: product => (
         <UsageCell
@@ -88,7 +88,7 @@ class Library extends PureComponent {
           }}
         />
 
-        <ProductsTableContainer appendColumns={this.appendColumns} windowWidth={ this.state.windowWidth } />
+        <ProductsTableContainer appendColumns={this.appendColumns} windowWidth={ this.state.windowWidth } currentUser={ this.props.currentUser } />
       </div>
     )
   }
