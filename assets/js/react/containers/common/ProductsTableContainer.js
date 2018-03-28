@@ -28,19 +28,13 @@ function ProductsTableContainer(props) {
     ))
 
   return filteredProducts.length > 0 ? (
-    ( windowWidth > 700 ?
     <Table
       products={filteredProducts}
       categories={categories.byId}
       {...componentProps}
       currentUser={ currentUser }
-    /> :
-    <MobileTable
-      products={filteredProducts}
-      categories={categories.byId}
-      {...componentProps}
-    />
-  )) : renderNoResults ? renderNoResults() : null
+    /> 
+  ) : renderNoResults ? renderNoResults() : null
 }
 
 const mapStateToProps = state => ({
@@ -50,3 +44,18 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps)(ProductsTableContainer)
+
+
+// ( windowWidth > 700 ?
+//   <Table
+//     products={filteredProducts}
+//     categories={categories.byId}
+//     {...componentProps}
+//     currentUser={ currentUser }
+//   /> :
+//   <MobileTable
+//     products={filteredProducts}
+//     categories={categories.byId}
+//     {...componentProps}
+//   />
+// )) : renderNoResults ? renderNoResults() : null

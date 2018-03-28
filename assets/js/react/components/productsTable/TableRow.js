@@ -3,6 +3,11 @@ import PropTypes from 'prop-types'
 import cn from 'classnames'
 
 export default class TableRow extends PureComponent {
+
+  state = {
+    detailsVisible: true
+  } 
+
   static propTypes = {
     product: PropTypes.shape({
       title: PropTypes.string.isRequired,
@@ -21,6 +26,12 @@ export default class TableRow extends PureComponent {
     }),
   }
 
+  handleArrowClick = () => {
+    this.setState({
+      detailsVisible: !this.state.detailsVisible
+    })
+  }
+
   render() {
     const {
       product,
@@ -28,29 +39,70 @@ export default class TableRow extends PureComponent {
       appendColumns,
       currentUser
     } = this.props
+    const { detailsVisible } = this.state
 
-    const ownedBook = product.used_by ? product.used_by.user.id === currentUser.id : false
+    //TDO: add isMobile or something like that, then isMobile && status === 'IN__LIBRARY'
+
+    const ownedBook =  product.used_by ? product.used_by.user.id === currentUser.id : false
     const rowClassNames = cn({
-      'row': true,
       'table__row': true,
       'table__row--highlight': ownedBook,
     })
-    
-    //console.log(product.used_by.user.id === currentUser.id)
+    const arrowClassNames = cn({
+      'table__arrow': true,
+      'arrow': true,
+      'arrow--down': !detailsVisible,
+      'arrow--up': detailsVisible 
+    })
+    const titleClassNames = cn ({
+      'table__data': true,
+      'table__data--truncate': !detailsVisible,
+      'table__data-title': true
+    })
+    const authorClassNames = cn ({
+      'table__data': true,
+      'table__data--truncate': !detailsVisible,
+      'table__data-author': true
+    })
+
+
+    //TODO: emove truncate onClick
 
     return (
       <div className={ rowClassNames }>
-        <div className="table__data table__data-title col-3">
+        <div className={ titleClassNames }>
           <a href={product.url} target="_blank">{product.title}</a>
         </div>
-        <div className="table__data col-2">{product.author}</div>
-        <div className="table__data table__data-category col-3">{categoryName}</div>
-        {appendColumns.map((col, i) => (
-          <div key={i} {...col.tdProps}>
-            {col.render(product)}
+        <div className={ authorClassNames }>{product.author}</div>
+        <button className={ arrowClassNames } onClick={ this.handleArrowClick }></button>
+
+        { detailsVisible &&
+          <div className="table__details">
+            <div className="table__data table__data-category">
+              <div className="table__data table__category-wrapper">
+                <div className="category-icon category-icon--design"></div>
+                <div className="table__data table__category-name ">
+                  {categoryName}
+                </div>
+              </div>  
+              {appendColumns.map((col, i) => (
+                col.title === 'Ratings' ?
+                  <div className="table__data table__rating" key={i} {...col.tdProps}>
+                    {col.render(product)}
+                  </div>
+                : null
+              ))}
+            </div>
+            {appendColumns.map((col, i) => (
+              col.title === 'Status' ?
+              <div key={i} {...col.tdProps}>
+                {col.render(product)}
+              </div>
+              : null
+            ))}
           </div>
-        ))}
-      </div>
+        }
+      </div>  
     )
   }
 }

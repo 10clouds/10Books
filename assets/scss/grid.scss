@@ -3,6 +3,8 @@
   margin: 0 auto;
   //padding: 0 80px;
 
+  
+
   .row {
     //border: 1px dotted magenta;
     // border-radius: 5px;
@@ -18,7 +20,8 @@
 
     [class*='col-'] {
       float: left;
-      min-height: 60px;
+      //min-height: 60px;
+      min-height: 1px;
       display: flex;
       align-items: center;
       //padding-left: 20px;

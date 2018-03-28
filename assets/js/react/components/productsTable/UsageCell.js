@@ -31,7 +31,7 @@ export default class UsageCell extends PureComponent {
       <Fragment>
         <img src={product.used_by.user.avatar_url} />
         <p>
-          <span className="table__data-span">
+          <span className="table__data table__data-status-date">
             Taken { moment(product.used_by.started_at).fromNow() }
           </span>
           <br/>
