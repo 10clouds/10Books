@@ -54,6 +54,10 @@ module.exports = {
         to: path.resolve(__dirname, '../priv/static/fonts/font-awesome')
       }
     ]),
+    new CopyWebpackPlugin([{
+      from: "./static",
+      to: path.resolve(__dirname, "../priv/static")
+    }]),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
