@@ -94,15 +94,15 @@ defmodule LibTen.Products.OrdersTest do
 
     test "with admin role, updates order if it's present" do
       user = insert(:user)
-      product = insert(:product, status: "ORDERED")
+      product = insert(:product, status: "REQUESTED")
       category = insert(:category)
-      attrs = params_for(:product, category_id: category.id, status: "ACCEPTED")
+      attrs = params_for(:product, category_id: category.id, status: "ORDERED")
       {:ok, updated_product} = Orders.update(product.id, attrs, "admin", user.id)
       assert updated_product.author == attrs.author
       assert updated_product.title == attrs.title
       assert updated_product.url == attrs.url
       assert updated_product.category_id == category.id
-      assert updated_product.status == "ACCEPTED"
+      assert updated_product.status == "ORDERED"
     end
   end
 
