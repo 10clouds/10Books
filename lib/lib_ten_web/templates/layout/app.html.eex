@@ -68,6 +68,7 @@
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item">
+            <%= img_tag(@conn.assigns.current_user.avatar_url) %>
             <%= link("Sign out", to: auth_path(@conn, :sign_out), class: "nav-link") %>
           </li>
         </ul>

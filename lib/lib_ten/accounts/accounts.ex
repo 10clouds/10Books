@@ -1,5 +1,6 @@
 defmodule LibTen.Accounts do
   import Ecto.Query, warn: false
+  alias Ecto.Changeset
   alias LibTen.Repo
   alias LibTen.Accounts.User
 
@@ -21,10 +22,17 @@ defmodule LibTen.Accounts do
   end
 
   def find_or_create_user(attrs \\ %{}) do
-    if String.ends_with?(attrs.email, "@10clouds.com") do
+    allowed_domains =
+      Application.fetch_env!(:lib_ten, :allowed_google_auth_domains)
+      |> Enum.map(fn str -> "@" <> str end)
+
+    if String.ends_with?(attrs.email, allowed_domains) do
       user = Repo.get_by(User, %{email: attrs.email})
+
       if user do
-        {:ok, user}
+        user
+        |> Changeset.cast(attrs, [:name, :avatar_url])
+        |> Repo.update()
       else
         create_user(attrs)
       end

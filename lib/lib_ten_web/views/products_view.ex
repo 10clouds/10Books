@@ -22,7 +22,7 @@ defmodule LibTenWeb.ProductsView do
       category_id: product.category_id,
       requested_by:
         case product.requested_by_user do
-          %User{} = user -> %{id: user.id, name: user.name}
+          %User{} = user -> Map.take(user, [:id, :name, :avatar_url])
           _ -> nil
         end,
       ratings:
@@ -58,10 +58,7 @@ defmodule LibTenWeb.ProductsView do
           %ProductUse{} = used_by ->
             %{
               started_at: used_by.inserted_at,
-              user: %{
-                id: used_by.user.id,
-                name: used_by.user.name
-              },
+              user: Map.take(used_by.user, [:id, :name, :avatar_url]),
               return_subscribers: used_by.return_subscribers
             }
           _ -> nil

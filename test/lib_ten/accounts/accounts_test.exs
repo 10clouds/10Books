@@ -31,8 +31,9 @@ defmodule LibTen.AccountsTest do
     end
 
     test "returns exising user if it is present" do
-      exising_user = insert(:user)
-      assert {:ok, user} = Accounts.find_or_create_user(exising_user)
+      exising_user_params = params_for(:user)
+      exising_user = insert(:user, exising_user_params)
+      assert {:ok, user} = Accounts.find_or_create_user(exising_user_params)
       assert user == exising_user
     end
   end

@@ -29,7 +29,8 @@ export default class UsageCell extends PureComponent {
 
     return product.used_by.user.id !== currentUser.id && (
       <Fragment>
-        Taken by <b>{product.used_by.user.name}</b>
+        Taken by <b>{product.used_by.user.name}</b> <br />
+        {product.used_by.user.avatar_url}
         <br />
         { moment(product.used_by.started_at).fromNow() }
         <br />
@@ -38,8 +39,8 @@ export default class UsageCell extends PureComponent {
   }
 
   renderUsedByActions() {
-    const { 
-      product, 
+    const {
+      product,
       currentUser,
       openRateProduct,
       returnProduct,
@@ -82,8 +83,8 @@ export default class UsageCell extends PureComponent {
   }
 
   render() {
-    const { 
-      product, 
+    const {
+      product,
       takeProduct
     } = this.props
 

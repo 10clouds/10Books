@@ -10,7 +10,9 @@ config :lib_ten,
   ecto_repos: [LibTen.Repo]
 
 # TODO: Ideally we want to have separate i18n overwrites for different apps
-config :lib_ten, :title, "10Books"
+config :lib_ten,
+  allowed_google_auth_domains: ["10clouds.com"],
+  title: "10Books"
 
 # Configures the endpoint
 config :lib_ten, LibTenWeb.Endpoint,

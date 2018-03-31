@@ -21,7 +21,12 @@ defmodule LibTenWeb.AuthController do
   end
 
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
-    user_params = %{email: auth.info.email, name: auth.info.name}
+    user_params = %{
+      email: auth.info.email,
+      name: auth.info.name,
+      avatar_url: auth.info.image
+    }
+
     case Accounts.find_or_create_user(user_params) do
       {:ok, user} ->
         conn
