@@ -16,8 +16,6 @@ defmodule LibTen.Products.Product do
   def order_statuses,
     do: [
       "REQUESTED",
-      "ACCEPTED",
-      "REJECTED",
       "ORDERED"
     ]
 

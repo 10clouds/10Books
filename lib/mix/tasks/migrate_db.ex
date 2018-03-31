@@ -60,6 +60,7 @@ defmodule Mix.Tasks.MigrateDb do
             inserted_at: user["createdAt"],
             updated_at:  user["createdAt"],
             email:       Enum.at(user["emails"], 0)["address"],
+            avatar_url:  user["services"]["google"]["picture"],
             name:        user["profile"]["name"],
             is_admin:    is_admin
           }
@@ -67,7 +68,7 @@ defmodule Mix.Tasks.MigrateDb do
           {:ok, ecto_user} =
             %User{}
             |> Changeset.cast(changeset, [
-              :inserted_at, :updated_at, :name, :email, :is_admin
+              :inserted_at, :updated_at, :name, :email, :is_admin, :avatar_url
             ])
             |> Changeset.validate_required([:name, :email])
             |> Changeset.unique_constraint(:email)
@@ -88,8 +89,8 @@ defmodule Mix.Tasks.MigrateDb do
       "taken"      => "IN_LIBRARY",
       "in_library" => "IN_LIBRARY",
       "requested"  => "REQUESTED",
-      "accepted"   => "ACCEPTED",
-      "rejected"   => "REJECTED",
+      "accepted"   => "ORDERED",
+      "rejected"   => "DELETED",
       "ordered"    => "ORDERED",
       "lost"       => "LOST"
     }

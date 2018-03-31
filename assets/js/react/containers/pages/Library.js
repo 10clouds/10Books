@@ -32,7 +32,8 @@ class Library extends PureComponent {
     {
       title: 'Status',
       thProps: {
-        className: 'text-center'
+        className: 'text-center',
+        colSpan: 2
       },
       tdProps: {
         className: 'text-center text-nowrap'

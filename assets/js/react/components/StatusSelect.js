@@ -4,8 +4,6 @@ import PropTypes from 'prop-types'
 export const STATUSES_LIST = {
   IN_LIBRARY: 'In Library',
   REQUESTED:  'In Orders',
-  ACCEPTED:   'Accepted',
-  REJECTED:   'Rejected',
   ORDERED:    'Ordered',
   LOST:       'Lost',
   DIVIDER:    true,
