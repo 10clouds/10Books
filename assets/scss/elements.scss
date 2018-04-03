@@ -105,11 +105,11 @@
   //   margin-top: 40px;
   // }
 
-  // &--transparent {
-  //   background-color: transparent;
-  //   border: 1px solid $accent;
-  //   color: $accent;
-  // }
+  &--transparent {
+    background-color: transparent;
+    border: 1px solid $accent;
+    color: $accent;
+  }
 }
 
 * {
@@ -142,4 +142,15 @@ body {
   background-color: $background;
   color: $text;
   font-family: 'Open Sans', sans-serif;
+  height: 100vh;
+
+  &.scroll-disabled {
+    overflow: hidden;
+  }
+}
+
+.user-avatar {
+  height: 45px;
+  width: 45px;
+  margin-right: 5px;
 }

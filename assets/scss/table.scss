@@ -7,12 +7,7 @@
   overflow: hidden;
   width: 100%;
 
-  * {
-    border: 1px dotted magenta;
-  }
-
   &__row {
-    //height: 70px; // set fixed height and shorten title, or min-height?
     background-color: $white;
     border-left: 5px solid transparent; // :(
     border-radius: 5px;
@@ -22,13 +17,27 @@
     padding: 20px 10px;
     position: relative;
 
+    &:nth-of-type(2) {
+      margin: 40px 0 10px 0;
+
+      @include m-up {
+        margin: 0 0 10px 0;
+      }
+    }
+
     @include m-up {
       flex-direction: row;
+      align-items: center;
+      padding: 10px;
     }
 
     &--transparent {
       background-color: transparent;
       display: none;
+
+      @include m-up {
+        display: flex;
+      }
     }
 
     &:hover {
@@ -51,6 +60,7 @@
       position: absolute;
       right: 20px;
       top: 44px;
+      outline: none;
 
       @include m-up {
         display: none;
@@ -65,8 +75,71 @@
     text-align: left;
   }
 
+  &__heading-title {
+    width: calc(0.7 * (100% - 375px));
+    order: 1;
+
+    @include l-up {
+      width: calc(0.7 * (100% - 525px));
+    }
+
+    @include xl-up {
+      width: calc(0.7 * (100% - 575px));
+    }
+  }
+
+  &__heading-author {
+    width: calc(0.3 * (100% - 375px));
+    order: 2;
+
+    @include l-up {
+      width: calc(0.3 * (100% - 525px));
+    }
+
+    @include xl-up {
+      width: calc(0.3 * (100% - 575px));
+    }
+  }
+
+  &__heading-category {
+    width: 70px;
+    order: 4;
+    overflow: hidden;
+
+    @include l-up {
+      width: 210px;
+    }
+
+    @include xl-up {
+      width: 230px;
+    }
+  }
+
+  &__heading-rating {
+    width: 40px;
+    order: 3;
+    overflow: hidden;
+
+    @include l-up {
+      
+    }
+
+    @include xl-up {
+      width: 70px;
+    }
+  }
+
+  &__heading-status {
+    width: 275px;
+    order: 5;
+
+    @include l-up {
+      
+    }
+  }
+
   &__data {
-    line-height: 26px;
+    line-height: normal;
 
     &--truncate {
       overflow: hidden;
@@ -77,17 +150,24 @@
 
   &__data-title {
     width: 90%;
+
+    @include m-up {
+      width: calc(0.7 * (100% - 375px));
+      padding-right: 20px;
+    }
   }
 
   &__data-author {
     font-weight: bold;
     width: 90%;
-  }
+    margin-top: 10px;
 
-  &__data-status {
-    display: flex;
-    justify-content: space-between;
-    text-align: center;
+    @include m-up {
+      margin-top: 0;
+      width: auto;
+      width: calc(0.3 * (100% - 375px));
+      padding-right: 20px;
+    }
   }
 
   &__details {
@@ -95,6 +175,7 @@
 
     @include m-up {
       display: flex;
+      margin-top: 0;
     }
   }
 
@@ -103,31 +184,86 @@
     color: $gray;
     display: flex;
     justify-content: space-between;
+
+    @include m-up {
+      width: 100px;
+      justify-content: flex-start;
+    }
+
+    @include l-up {
+      width: 250px;
+      padding-right: 20px;
+    }
+
+    @include xl-up {
+      width: 300px;
+    }
   }
 
   &__category-wrapper {
     align-items: center;
     display: flex;
+
+    @include m-up {
+      order: 2;
+      margin-left: 20px;
+    }
+
+    @include xl-up {
+      width: 210px;
+    }
   }
 
   &__category-name {
     margin-left: 15px;
-    font-weight: bold;
+    font-weight: 600;
+
+    @include m-up {
+      display: none;
+    }
+
+    @include l-up {
+      display: block;
+    }
   }
 
   &__rating {
     color: $text;
     font-weight: bold;
+
+    @include m-up {
+      order: 1;
+    }
+
+    @include xl-up {
+      width: 50px;
+    }
   }
 
   &__data-status {
     font-weight: bold;
     margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+    
+    @include m-up {
+      margin-top: 0;
+      width: 275px;
+    }
   }
 
   &__data-status-date {
     color: $gray;
     font-size: 12px;
     font-weight: 600;
+  }
+
+  &__bell-button {
+    background-color: transparent;
+    padding-right: 0px;
+    outline: none;
+    border: none;
   }
 }

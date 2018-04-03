@@ -17,71 +17,47 @@ export default class RateProduct extends PureComponent {
 
   render() {
     const { onSubmit, ...modalProps } = this.props
+    const radioInputs = Array.from({ length: 5 }, (element, index) => index + 1)
 
     return (
+      modalProps.show ? (
       <Modal {...modalProps}>
         <form
+          className="rating"
           onSubmit={e => {
             e.preventDefault()
             onSubmit(this.state.rating)
             this.setState({ rating: null })
           }}
         >
-          <input
-            type="radio"
-            name="rating"
-            value="1"
-            checked={this.state.rating === 1}
-            onChange={this.handleRatingChange}
-          />
-          1
-          <br />
-
-          <input
-            type="radio"
-            name="rating"
-            value="2"
-            checked={this.state.rating === 2}
-            onChange={this.handleRatingChange}
-          />
-          2
-          <br />
-
-          <input
-            type="radio"
-            name="rating"
-            value="3"
-            checked={this.state.rating === 3}
-            onChange={this.handleRatingChange}
-          />
-          3
-          <br />
-
-          <input
-            type="radio"
-            name="rating"
-            value="4"
-            checked={this.state.rating === 4}
-            onChange={this.handleRatingChange}
-          />
-          4
-          <br />
-
-          <input
-            type="radio"
-            name="rating"
-            value="5"
-            checked={this.state.rating === 5}
-            onChange={this.handleRatingChange}
-          />
-          5
-
-          <br />
-          <br />
-
-          <button type="submit">Submit</button>
+          <div className="rating__radios-wrapper">
+            {
+              radioInputs.map(element => (
+                <div className="rating__radio-option" key={`radio${element}`}>
+                  <label className="rating__radio-label" htmlFor={`opt${element}`}>
+                    { element }
+                  </label>
+                  <input
+                    className="rating__radio-input"
+                    id={`opt${element}`}
+                    type="radio"
+                    name="rating"
+                    value={ element }
+                    checked={ this.state.rating === element }
+                    onChange={ this.handleRatingChange }
+                  />
+                  <div className="rating__radiobutton"></div>
+                </div>
+              ))
+            }
+          </div>
+          <div className="rating__buttons-wrapper">
+            <button className="button button--transparent" type="submit">Cancel</button>
+            <button className="button button--dark" type="submit">Save</button>
+          </div>
         </form>
       </Modal>
+      ) : null
     )
   }
 }

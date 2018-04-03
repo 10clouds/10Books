@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { MobileTable, Table } from '~/components/productsTable'
+import { Table } from '~/components/productsTable'
 
 function ProductsTableContainer(props) {
   const {

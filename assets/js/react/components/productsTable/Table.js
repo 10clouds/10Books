@@ -20,9 +20,9 @@ export default class Table extends PureComponent {
     return (
       <div className="table">
         <div className="table__row table__row--transparent">
-          <div className="table__heading">Title</div>
-          <div className="table__heading">Author</div>
-          <div className="table__heading">Category</div>
+          <div className="table__heading table__heading-title">Title</div>
+          <div className="table__heading table__heading-author">Author</div>
+          <div className="table__heading table__heading-category">Category</div>
           {this.props.appendColumns.map((col, i) => (
             <div className="table__heading" key={i} {...col.thProps}>{col.title}</div>
           ))}

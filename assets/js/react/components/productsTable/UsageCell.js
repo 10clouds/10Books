@@ -70,18 +70,18 @@ export default class UsageCell extends PureComponent {
       product.used_by.return_subscribers.includes(currentUser.id) ? (
         <button
           type="button"
-          className="btn btn-danger"
+          className="table__bell-button"
           onClick={() => unsubscribeFromReturnNotification(product.id)}
         >
-          <img src="static/images/bell.svg" />
+          <img src="images/bell.svg" />
         </button>
       ) : (
         <button
           type="button"
-          className="btn btn-info"
+          className="table__bell-button"
           onClick={() => subscribeToReturnNotification(product.id)}
         >
-          <img src="static/images/bell--inactive.svg" />
+          <img src="images/bell--inactive.svg" />
         </button>
       )
     )

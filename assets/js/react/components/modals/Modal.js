@@ -11,6 +11,11 @@ export default class Modal extends PureComponent {
 
   componentDidMount() {
     $(this.modalEl).on('hide.bs.modal', this.props.onHide)
+    document.querySelector('body').classList.add('scroll-disabled')
+  }
+
+  componentWillUnmount() {
+    document.querySelector('body').classList.add('scroll-disabled')
   }
 
   componentWillReceiveProps(nextProps) {
@@ -24,16 +29,15 @@ export default class Modal extends PureComponent {
   render() {
     return (
       <div
-        className="modal fade"
+        className="popup"
         tabIndex="-1"
         role="dialog"
         aria-hidden="true"
         ref={el => this.modalEl = el}
       >
-        <div className="modal-dialog modal-lg">
-          <div className="modal-content">
-            {this.props.children}
-          </div>
+        <div className="popup__window">
+          <h1 className="popup__heading">Rate the book</h1>
+          {this.props.children}
         </div>
       </div>
     )

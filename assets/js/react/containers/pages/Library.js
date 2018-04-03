@@ -28,20 +28,23 @@ class Library extends PureComponent {
     {
       title: 'Ratings',
       thProps: {
-        className: 'table__heading'
+        className: 'table__heading table__heading-rating'
       },
-      // tdProps: {
-      //   className: 'table__data'
-      // },
       render: product => (
-        // <div>{JSON.stringify(product.ratings)}</div>
-        <div>4.5</div>
+        <div>
+          { product.ratings.length > 0 ?
+              (product.ratings.reduce((total, rating) => {
+                return total + rating.value
+            }, 0) / product.ratings.length).toFixed(1)
+            : '0.0'
+          }
+        </div>
       )
     },
     {
       title: 'Status',
       thProps: {
-        className: 'table__heading'
+        className: 'table__heading table__heading-status'
       },
       tdProps: {
         className: 'table__data table__data-status'
