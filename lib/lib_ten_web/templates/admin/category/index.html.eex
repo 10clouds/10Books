@@ -1,26 +1,25 @@
-<h2>Listing Categories</h2>
+<div class="categories">
+  <h2 class="categories__heading">Listing Categories</h2>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Name</th>
-
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for category <- @categories do %>
-    <tr>
-      <td><%= category.name %></td>
-
-      <td class="text-right">
-        <span><%= link "Show", to: admin_category_path(@conn, :show, category), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Edit", to: admin_category_path(@conn, :edit, category), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Delete", to: admin_category_path(@conn, :delete, category), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
-      </td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
-
-<span><%= link "New Category", to: admin_category_path(@conn, :new) %></span>
+  <div class="categories__wrapper">
+  <%# IDEA: i don't think this h3 is neccessary at all - it shoud be removed %>
+    <h3 class="categories__subheading">Name</h3>
+    <%= for category <- @categories do %>
+      <div class="categories__row">
+        <%# TODO: add different category icons for different categories %>
+        <div class="categories__category">
+          <div class="category-icon category-icon--design"></div>
+          <div class="categories__name"><%= category.name %></div>
+        </div>  
+        <div class="categories__actions">
+          <div class="categories__show"><%= link "Show", to: admin_category_path(@conn, :show, category) %></div>
+          <div class="categories__edit"><%= link "", to: admin_category_path(@conn, :edit, category) %>
+          <img src="../images/edit.svg" class="categories__edit-img" />
+          </div>
+          <button class="button button--delete"><%= link "Delete", to: admin_category_path(@conn, :delete, category), method: :delete, data: [confirm: "Are you sure?"], class: "categories__delete" %></button>
+        </div>
+      </div>
+  <% end %>
+  </div>
+  <button class="button button--dark"><%= link "+ New Category", to: admin_category_path(@conn, :new) %></button>
+</div>
