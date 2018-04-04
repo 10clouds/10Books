@@ -1,8 +1,8 @@
 .arrow {
   background-color: transparent;
-  border: none;
   border-left: 5px solid transparent !important;
   border-right: 5px solid transparent !important;
+  border: none;
   height: 0;
   padding: 0;
   width: 0;
@@ -17,8 +17,10 @@
 }
 
 .container {
-  width: 100%;
   padding: 0 10px 40px;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .category-icon {
@@ -90,20 +92,20 @@
     color: $accentLight;
   }
 
-  // &--delete {
-  //   background-color: lighten($warning, 35%);
-  //   color: $warning;
-  // }
+  &--delete {
+    background-color: lighten($warning, 35%);
+    color: $warning;
+  }
 
-  // &--narrow {
-  //   height: 56px;
-  //   padding: 0 50px;
-  //   width: auto;
-  // }
+  &--narrow {
+    height: 56px;
+    padding: 0 50px;
+    width: auto;
+  }
 
-  // &--categories { // TODO: change mod. class name
-  //   margin-top: 40px;
-  // }
+  &--categories { // TODO: change mod. class name
+    margin-top: 40px;
+  }
 
   &--transparent {
     background-color: transparent;
@@ -128,7 +130,7 @@ html, body {
 
 a {
   text-decoration: none;
-  
+
   &:link,
   &:visited,
   &:focus,
@@ -151,6 +153,6 @@ body {
 
 .user-avatar {
   height: 45px;
-  width: 45px;
   margin-right: 5px;
+  width: 45px;
 }

@@ -8,7 +8,6 @@ function ProductsTableContainer(props) {
     products,
     categories,
     renderNoResults,
-    windowWidth,
     currentUser,
     ...componentProps
   } = props
@@ -44,18 +43,3 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps)(ProductsTableContainer)
-
-
-// ( windowWidth > 700 ?
-//   <Table
-//     products={filteredProducts}
-//     categories={categories.byId}
-//     {...componentProps}
-//     currentUser={ currentUser }
-//   /> :
-//   <MobileTable
-//     products={filteredProducts}
-//     categories={categories.byId}
-//     {...componentProps}
-//   />
-// )) : renderNoResults ? renderNoResults() : null

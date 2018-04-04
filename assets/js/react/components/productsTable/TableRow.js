@@ -1,11 +1,13 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import cn from 'classnames'
+import debounce from 'lodash.debounce'
 
 export default class TableRow extends PureComponent {
 
   state = {
-    detailsVisible: true
+    detailsVisible: false,
+    isMobile: null,
   } 
 
   static propTypes = {
@@ -26,6 +28,16 @@ export default class TableRow extends PureComponent {
     }),
   }
 
+  componentDidMount() {
+    this.setState({ isMobile: window.innerWidth < 839 })
+    window.addEventListener('resize', this.handleWindowResize)
+  }
+
+  handleWindowResize = debounce(() => {
+    const x = window.innerWidth < 839
+    this.setState({isMobile: x })
+  }, 400 )
+
   handleArrowClick = () => {
     this.setState({
       detailsVisible: !this.state.detailsVisible
@@ -39,9 +51,9 @@ export default class TableRow extends PureComponent {
       appendColumns,
       currentUser
     } = this.props
-    const { detailsVisible } = this.state
-
-    //TDO: add isMobile or something like that, then isMobile && status === 'IN__LIBRARY'
+    const { detailsVisible, isMobile } = this.state
+    
+    //TDO: add isMobile or something like that, then isMobile && status === 'IN__LIBRARY' - ?
 
     const ownedBook =  product.used_by ? product.used_by.user.id === currentUser.id : false
     const rowClassNames = cn({
@@ -65,8 +77,7 @@ export default class TableRow extends PureComponent {
       'table__data-author': true
     })
 
-
-    //TODO: emove truncate onClick
+    //TODO: remove truncate onClick
 
     return (
       <div className={ rowClassNames }>
@@ -76,7 +87,7 @@ export default class TableRow extends PureComponent {
         <div className={ authorClassNames }>{product.author}</div>
         <button className={ arrowClassNames } onClick={ this.handleArrowClick }></button>
 
-        { detailsVisible &&
+        { (!isMobile || detailsVisible) &&
           <div className="table__details">
             <div className="table__data table__data-category">
               <div className="table__data table__category-wrapper">

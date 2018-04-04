@@ -2,46 +2,46 @@
   $module: &;
 
   &__radios-wrapper {
-    padding: 40px 0 70px;
     display: flex;
-    width: 100%;
-    max-width: 400px;
     margin: 0 auto;
+    max-width: 400px;
+    padding: 40px 0 70px;
+    width: 100%;
   }
 
   &__radio-option {
-    position: relative;
+    align-items: center;
     display: flex;
     flex-direction: column;
-    text-align: center;
     flex-grow: 1;
     justify-content: center;
-    align-items: center;
+    position: relative;
+    text-align: center;
 
     #{$module}__radio-label {
+      display: inline-block;
       font-size: 18px;
       font-weight: bold;
-      display: inline-block;
-      
+
     }
 
     #{$module}__radio-input {
-      margin: 30px auto 10px;
-      z-index: 3;
-      opacity: 0;
       height: $radioSize;
+      margin: 30px auto 10px;
+      opacity: 0;
       width: $radioSize;
+      z-index: 3;
 
       + #{$module}__radiobutton {
         background: $white;
         border-radius: 100%;
         border: 1px solid darken($white, 30%);
+        bottom: 10px;
         cursor: pointer;
-        transition: all 250ms ease;
-        width: $radioSize;
         height: $radioSize;
         position: absolute;
-        bottom: 10px;
+        transition: all 250ms ease;
+        width: $radioSize;
       }
 
       &:checked {
@@ -53,30 +53,28 @@
 
       &:focus {
         + #{$module}__radiobutton {
-          outline: none;
           border-color: $accent;
+          outline: none;
         }
       }
     }
   }
 
-
-
   &__buttons-wrapper {
-    width: 100%;
     display: flex;
     justify-content: space-between;
-    
+    width: 100%;
+
     @include s-up {
       justify-content: flex-end;
     }
 
     .button {
       display: inline-block;
-      width: 40%;
-      max-width: 120px;
       height: 45px;
-  
+      max-width: 120px;
+      width: 40%;
+
       &:first-of-type {
         @include s-up {
           margin-right: 20px;

@@ -1,40 +1,26 @@
 .grid-container {
-  //width: 1000px;
   margin: 0 auto;
-  //padding: 0 80px;
-
-  
 
   .row {
-    //border: 1px dotted magenta;
-    // border-radius: 5px;
-    // margin-bottom: 8px;
-    // padding: 0 20px;
-
     &:before,
     &:after {
       content : "";
-      display : table;
       clear: both;
+      display : table;
     }
 
     [class*='col-'] {
-      float: left;
-      //min-height: 60px;
-      min-height: 1px;
-      display: flex;
       align-items: center;
-      //padding-left: 20px;
-      //font-size: 18px;
+      display: flex;
+      float: left;
       font-weight: 600;
+      min-height: 1px;
     }
 
     @for $i from 1 through $colsNumber {
       .col-#{$i}{
-        width: 100% / $colsNumber * $i;
-        //border: 1px dotted magenta;
         padding: 0 0 0 15px;
-        
+        width: 100% / $colsNumber * $i;
       }
     }
   }

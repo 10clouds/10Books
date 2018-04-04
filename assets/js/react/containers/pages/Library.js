@@ -9,7 +9,6 @@ import { RateProductModal } from '~/components/modals'
 import { UsageCell } from '~/components/productsTable'
 import SearchContainer from '../common/SearchContainer'
 import ProductsTableContainer from '../common/ProductsTableContainer'
-import debounce from 'lodash.debounce'
 
 class Library extends PureComponent {
   constructor(props) {
@@ -20,8 +19,7 @@ class Library extends PureComponent {
   }
 
   state = {
-    rateProductWithId: null,
-    windowWidth: null,
+    rateProductWithId: null
   }
 
   appendColumns = [
@@ -60,11 +58,6 @@ class Library extends PureComponent {
     }
   ]
 
-  componentDidMount() {
-    this.setState({ windowWidth: window.innerWidth })
-    window.addEventListener('resize', this.handleWindowResize)
-  }
-
   openRateProduct = productId => {
     this.setState({ rateProductWithId: productId })
   }
@@ -72,11 +65,6 @@ class Library extends PureComponent {
   hideRateProduct = () => {
     this.setState({ rateProductWithId: null })
   }
-
-  handleWindowResize = debounce(() => {
-    //TODO: set as breakpoints
-    this.setState({ windowWidth: window.innerWidth })
-  }, 400 )
 
   render() {
     return (
@@ -92,7 +80,7 @@ class Library extends PureComponent {
           }}
         />
 
-        <ProductsTableContainer appendColumns={this.appendColumns} windowWidth={ this.state.windowWidth } currentUser={ this.props.currentUser } />
+        <ProductsTableContainer appendColumns={this.appendColumns} currentUser={ this.props.currentUser } />
       </div>
     )
   }
