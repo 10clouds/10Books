@@ -116,14 +116,14 @@
 
   &__heading-rating {
     order: 3;
-    overflow: hidden;
     width: 40px;
 
-    @include l-up {
-
+    @include m-up {
+      margin: 0 15px 0 -15px;
     }
 
     @include xl-up {
+      margin: 0;
       width: 70px;
     }
   }

@@ -29,7 +29,7 @@ export default class UsageCell extends PureComponent {
 
     return product.used_by.user.id !== currentUser.id && (
       <Fragment>
-        <img src={product.used_by.user.avatar_url} />
+        <img src={product.used_by.user.avatar_url} className="user-avatar" />
         <p>
           <span className="table__data table__data-status-date">
             Taken { moment(product.used_by.started_at).fromNow() }

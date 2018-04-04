@@ -91,13 +91,14 @@ export default class TableRow extends PureComponent {
           <div className="table__details">
             <div className="table__data table__data-category">
               <div className="table__data table__category-wrapper">
+              {/* TODO: add different category icons for different categories */}
                 <div className="category-icon category-icon--design"></div>
                 <div className="table__data table__category-name ">
                   {categoryName}
                 </div>
               </div>  
               {appendColumns.map((col, i) => (
-                col.title === 'Ratings' ?
+                col.title === 'Rating' ?
                   <div className="table__data table__rating" key={i} {...col.tdProps}>
                     {col.render(product)}
                   </div>

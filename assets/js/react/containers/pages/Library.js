@@ -24,7 +24,7 @@ class Library extends PureComponent {
 
   appendColumns = [
     {
-      title: 'Ratings',
+      title: 'Rating',
       thProps: {
         className: 'table__heading table__heading-rating'
       },

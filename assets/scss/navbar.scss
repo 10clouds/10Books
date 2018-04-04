@@ -1,7 +1,7 @@
 .navbar {
   background-color: $white;
   box-shadow: 0 2px 69px 0 rgba(13, 13, 30, 0.04);
-  font-size: 19px;
+  font-size: 18px;
   font-weight: 600;
   min-height: 75px;
 
@@ -106,8 +106,18 @@
   &__logout {
     padding-top: 60px;
 
+    .user-avatar {
+      display: none;
+
+      @include m-up {
+        display: block;
+      }
+    }
+
     @include m-up {
       padding: 0;
+      display: flex;
+      align-items: center;
     }
 
     a {
