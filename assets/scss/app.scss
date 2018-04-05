@@ -1,75 +1,10 @@
 $fa-font-path: "/fonts/font-awesome";
 @import '~font-awesome/scss/font-awesome';
-@import '~bootstrap/scss/functions';
-@import '~bootstrap/scss/variables';
-$table-dark-bg: $gray-700;
-$table-dark-border-color: $gray-700;
-@import '~bootstrap/scss/bootstrap';
 
-html {
-  font-size: 14px;
-}
-
-html, body {
-  height: 100%;
-}
-
-.nowrap-col {
-  white-space: nowrap;
-  width: 1px;
-}
-
-.header-navbar {
-  margin-bottom: 30px;
-}
-
-.auth-form {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-
-  &__title {
-    font-size: 48px;
-    margin: 0 0 15px 0;
-  }
-}
-
-.search-form {
-  position: relative;
-  margin: 40px auto;
-
-  @include media-breakpoint-up(lg) {
-    width: 60%;
-  }
-
-  &__input {
-    padding-left: 40px;
-  }
-
-  .fa {
-    font-size: 1.25rem; // TODO: bs variable
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(calc(-50% - 1px));
-    color: #495057; // TODO: bs variable
-  }
-}
-
-.products-table {
-  &.table {
-    thead th {
-      border-top: none;
-    }
-
-    th, td {
-      vertical-align: middle;
-    }
-  }
-
-  &__category-col {
-    min-width: 200px;
-  }
-}
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&subset=latin-ext');
+@import './reset.scss';
+@import './palette.scss';
+@import './variables.scss';
+@import './mixins.scss';
+@import './elements.scss';
+@import './navbar.scss';

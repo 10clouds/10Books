@@ -1,0 +1,32 @@
+.orders {
+
+  &__search-wrapper {
+    @include m-up {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 40px 0;
+    }
+  }
+
+  .search-form {
+    @include m-up {
+      width: 50%;
+      display: inline-block;
+
+      margin: 0;
+    }
+  }
+
+  .button {
+    height: 50px;
+    margin-top: 20px;
+
+    @include m-up {
+      width: 110px;
+      display: inline-block;
+      height: 55px;
+      margin: 0 0 0 40px;;
+    }
+  }
+}

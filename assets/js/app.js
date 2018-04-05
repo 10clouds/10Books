@@ -1,5 +1,4 @@
 import 'phoenix_html'
-import 'bootstrap' // TODO: Import only stuff we actually need
 import React from 'react'
 import ReactDOM from 'react-dom'
 import store from 'react/store'
@@ -12,8 +11,23 @@ function render(component, domNode) {
     <Provider store={store} children={component} />,
     domNode
   )
-}
 
+  const hamburgerButton = document.getElementById('hamburger-button')
+  const hamburgerMenu = document.getElementById('hamburger-menu')
+  const adminDropdownButton = document.getElementById('admin-dropdown-button')
+  const adminDropdownMenu = document.getElementById('admin-dropdown-menu')
+
+  hamburgerButton.addEventListener('click', () => {
+    hamburgerButton.classList.toggle('collapsed')
+    hamburgerMenu.classList.toggle('navbar__menu--visible')
+  })
+  
+  adminDropdownButton.addEventListener('click', () => {
+    adminDropdownButton.classList.toggle('collapsed')
+    adminDropdownMenu.classList.toggle('navbar__menu-dropdown--visible')
+  })
+}
+  
 window.LibTen = {
   ReactComponents: {
     renderLibrary(domNode, currentUser) {
