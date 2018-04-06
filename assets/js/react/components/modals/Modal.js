@@ -11,11 +11,11 @@ export default class Modal extends PureComponent {
 
   componentDidMount() {
     $(this.modalEl).on('hide.bs.modal', this.props.onHide)
-    document.querySelector('body').classList.add('scroll-disabled')
+    document.body.classList.add('scroll-disabled')
   }
 
   componentWillUnmount() {
-    document.querySelector('body').classList.add('scroll-disabled')
+    document.body.classList.remove('scroll-disabled')
   }
 
   componentWillReceiveProps(nextProps) {
