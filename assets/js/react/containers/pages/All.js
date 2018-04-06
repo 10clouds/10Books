@@ -62,13 +62,14 @@ class All extends PureComponent {
         <SearchContainer />
 
         <button
+          className="button button--dark button--narrow"
           onClick={() => (
             this.setState({
               modalProduct: MODAL_PRODUCT_NEW
             })
           )}
         >
-          Add {JSON.stringify(this.state.modalProduct)}
+          <span>+</span>  Add
         </button>
 
         <ProductFormModal
