@@ -96,9 +96,10 @@ class Orders extends PureComponent {
         <SearchContainer />
 
         <button
+          className="button button--dark button--narrow"
           onClick={this.handleAdd}
         >
-          Add
+          <span>+</span> Order book
         </button>
 
         <ProductFormModal

@@ -15,6 +15,10 @@ export default class RateProduct extends PureComponent {
     this.setState({ rating: parseInt(e.target.value, 10) })
   }
 
+  handleRejectRating = () => {
+    this.setState({ rating: null })
+  }
+
   render() {
     const { onSubmit, ...modalProps } = this.props
     const radioInputs = Array.from({ length: 5 }, (element, index) => index + 1)
@@ -22,6 +26,7 @@ export default class RateProduct extends PureComponent {
     return (
       modalProps.show ? (
       <Modal {...modalProps}>
+        <h2 className="popup__heading">Rate the book</h2>
         <form
           className="rating"
           onSubmit={e => {
@@ -52,7 +57,7 @@ export default class RateProduct extends PureComponent {
             }
           </div>
           <div className="rating__buttons-wrapper">
-            <button className="button button--transparent" type="submit">Cancel</button>
+            <button className="button button--transparent" onClick={this.handleRejectRating}>Cancel</button>
             <button className="button button--dark" type="submit">Save</button>
           </div>
         </form>
