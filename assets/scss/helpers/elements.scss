@@ -1,18 +1,18 @@
 .arrow {
   background-color: transparent;
-  border-left: 5px solid transparent !important;
-  border-right: 5px solid transparent !important;
   border: none;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
   height: 0;
   padding: 0;
   width: 0;
 
   &--up {
-    border-bottom: 5px solid $accent !important;
+    border-bottom: 5px solid $accent;
   }
 
   &--down {
-    border-top: 5px solid $accent !important;
+    border-top: 5px solid $accent;
   }
 }
 
@@ -113,20 +113,6 @@
     border: 1px solid $accent;
     color: $accent;
   }
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  font-size: 14px;
-}
-
-html, body {
-  background-color: $background;
-  box-sizing: border-box;
-  height: 100%;
 }
 
 a {
