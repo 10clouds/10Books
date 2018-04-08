@@ -16,7 +16,8 @@ class ProductForm extends PureComponent {
         name: PropTypes.string.isRequired
       })
     ).isRequired,
-    product: PropTypes.object
+    product: PropTypes.object,
+    show: PropTypes.bool
   }
 
   static defaultProps = {

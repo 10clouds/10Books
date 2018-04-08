@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import $ from 'jquery'
 
-const SCROLL_DISABLED_CLASS = 'scroll-disabled';
+const SCROLL_DISABLED_CLASS = 'scroll-disabled'
 
 export default class Modal extends PureComponent {
   static propTypes = {
@@ -16,7 +16,7 @@ export default class Modal extends PureComponent {
     $(this.modalEl).on('hide.bs.modal', this.props.onHide)
     document.body.classList.add(SCROLL_DISABLED_CLASS)
 
-    this.modalEl.addEventListener('click', this.handleClosePopup);
+    this.modalEl.addEventListener('click', this.handleClosePopup)
   }
 
   componentWillUnmount() {
@@ -31,10 +31,10 @@ export default class Modal extends PureComponent {
     }
   }
 
-  handleClosePopup = (e) => {
+  handleClosePopup = e => {
     if (e.target === this.modalEl) {
       document.body.classList.remove(SCROLL_DISABLED_CLASS)
-      this.props.onHide();
+      this.props.onHide()
     }
   }
 
