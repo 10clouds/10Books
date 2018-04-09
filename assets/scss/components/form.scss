@@ -1,10 +1,10 @@
 .form {
   $form: &;
   &__group {
-    margin-bottom: 35px;
+    margin-bottom: 30px;
     position: relative;
 
-    @include m-up {
+    @include xxl-up {
       margin-bottom: 50px;
     }
   }
@@ -40,26 +40,36 @@
     }
 
     &:focus,
-    &.is-invalid{
+    &.is-invalid {
       ~ #{$form}__bar {
         opacity: 1;
         width: 100%;
       }
     }
 
-    &.is-invalid{
+    &.is-invalid {
       ~ #{$form}__bar {
         background: $warning;
       }
     }
   }
 
-  &__select{
-    &.is-invalid{
+  &__select {
+    &.is-invalid {
       ~ #{$form}__bar {
         background: $warning;
         opacity: 1;
         width: 100%;
+      }
+    }
+  }
+
+  &__select-menu {
+    &--short {
+      height: 150px;
+
+      @include xxl-up {
+        height: 200px;
       }
     }
   }

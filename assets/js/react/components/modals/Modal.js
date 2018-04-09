@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import $ from 'jquery'
 
 const SCROLL_DISABLED_CLASS = 'scroll-disabled'
 
@@ -19,14 +18,6 @@ export default class Modal extends PureComponent {
 
   componentWillUnmount() {
     document.body.classList.remove(SCROLL_DISABLED_CLASS)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.show && !this.props.show) {
-      $(this.modalEl).modal('show')
-    } else if (!nextProps.show && this.props.show) {
-      $(this.modalEl).modal('hide')
-    }
   }
 
   handleClosePopup = e => {

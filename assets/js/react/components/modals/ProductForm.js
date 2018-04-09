@@ -180,6 +180,7 @@ class ProductForm extends PureComponent {
                   className={ classnames('form__select', {
                     'is-invalid': this.state.errors['category_id']
                   }) }
+                  menuClassName='form__select-menu--short'
                   onChange={ selectedOption => {
                     this.handleFieldChange('category_id',
                       parseInt(selectedOption.value, 10) || null
