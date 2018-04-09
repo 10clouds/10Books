@@ -75,8 +75,9 @@
         </ul>
         <ul class="navbar__menu-items">
           <li class="navbar__logout">
-            <%= img_tag((@conn.assigns.current_user.avatar_url), class: "user-avatar") %>
+            <%= img_tag(@conn.assigns.current_user.avatar_url, class: "user-avatar") %>
             <%# TODO: on desktop: add username, remove "sign out", replace with logout icon %>
+            <%= @conn.assigns.current_user.name %>
             <%= link("Sign out", to: auth_path(@conn, :sign_out), class: "nav-link") %>
             <img src="images/logout.svg" />
           </li>
