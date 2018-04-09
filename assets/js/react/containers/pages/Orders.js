@@ -44,10 +44,10 @@ class Orders extends PureComponent {
         className: 'text-center'
       },
       render: product => (
-        <VotesCell 
-          {...this.props.orderActions}
-          product={product}
-          currUser={this.props.user}
+        <VotesCell
+          { ...this.props.orderActions }
+          product={ product }
+          currUser={ this.props.user }
         />
       )
     },
@@ -60,11 +60,11 @@ class Orders extends PureComponent {
         className: 'text-center text-nowrap'
       },
       render: product => (
-        <OrderStatusCell 
-          product={product}
-          currUser={this.props.user}
-          onEdit={() => this.handleEdit(product)}
-          onChange={this.props.productActions.update}
+        <OrderStatusCell
+          product={ product }
+          currUser={ this.props.user }
+          onEdit={ () => this.handleEdit(product) }
+          onChange={ this.props.productActions.update }
         />
       )
     }
@@ -93,14 +93,16 @@ class Orders extends PureComponent {
   render() {
     return (
       <Fragment>
-        <SearchContainer />
+        <div className="search-container">
+          <SearchContainer/>
 
-        <button
-          className="button button--dark button--narrow"
-          onClick={this.handleAdd}
-        >
-          <span>+</span> Order book
-        </button>
+          <button
+            className="button button--dark button--narrow"
+            onClick={ this.handleAdd }
+          >
+            <span>+</span> Order book
+          </button>
+        </div>
 
         <ProductFormModal
           submitLabel={
@@ -112,13 +114,13 @@ class Orders extends PureComponent {
               ? this.state.modalProduct
               : undefined
           }
-          categories={this.props.categories}
-          onSubmit={this.handleSubmit}
-          show={this.state.modalProduct !== false}
-          onHide={this.handleHide}
+          categories={ this.props.categories }
+          onSubmit={ this.handleSubmit }
+          show={ this.state.modalProduct !== false }
+          onHide={ this.handleHide }
         />
 
-        <ProductsTableContainer appendColumns={this.appendColumns} />
+        <ProductsTableContainer appendColumns={ this.appendColumns }/>
       </Fragment>
     )
   }

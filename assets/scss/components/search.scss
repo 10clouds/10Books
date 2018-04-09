@@ -1,9 +1,18 @@
 .search-form {
   margin: 40px auto 0;
-  max-width: 800px;
+  width: 100%;
 
   @include m-up {
     margin: 40px auto;
+    max-width: 800px;
+  }
+
+  @include l-up {
+    margin: 60px auto;
+  }
+
+  @include xxl-up {
+    margin: 80px auto;
   }
 
   &__input {
@@ -27,5 +36,45 @@
     display: inline-block;
     font-size: 24px;
     margin-left: -40px;
+  }
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  @include m-up {
+    flex-wrap: nowrap;
+  }
+
+  .search-form {
+    margin: 40px 0;
+
+    @include m-up {
+      margin-right: 40px;
+    }
+
+    @include l-up {
+      margin: 60px 40px 60px 0;
+    }
+
+    @include xxl-up {
+      margin: 80px 40px 80px 0;
+    }
+  }
+
+  .button {
+    height: 65px;
+
+    @include m-up {
+      min-width: 150px;
+      padding: 0 30px;
+    }
+
+    @include xl-up {
+      padding: 0 50px;
+    }
   }
 }
