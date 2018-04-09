@@ -34,7 +34,7 @@ defmodule LibTenWeb.AuthController do
         |> redirect(to: products_path(conn, :library))
       {:error, reason} ->
         conn
-        |> put_flash(:error, reason)
+        |> put_flash(:error, get_error_message(reason))
         |> redirect(to: "/")
     end
   end
@@ -43,5 +43,18 @@ defmodule LibTenWeb.AuthController do
     conn
     |> clear_session()
     |> redirect(to: "/")
+  end
+
+  defp get_error_message(reason) do
+    case reason do
+      :invalid_email_domain ->
+        domains = Application.get_env(:lib_ten, :allowed_google_auth_domains)
+
+        "Only accounts with #{Enum.join(domains, ", ")} domain" <>
+          if length(domains) > 1, do: "s", else: "" <>
+          " allowed"
+
+      reason -> reason
+    end
   end
 end

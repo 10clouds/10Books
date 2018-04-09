@@ -1,5 +1,8 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+import cn from 'classnames'
+
+import CategoryLabel from '~/components/CategoryLabel'
 
 export default class TableRow extends PureComponent {
   static propTypes = {
@@ -8,37 +11,101 @@ export default class TableRow extends PureComponent {
       url: PropTypes.string,
       author: PropTypes.string,
     }),
-    categoryName: PropTypes.string.isRequired,
+    category: PropTypes.object.isRequired,
     appendColumns: PropTypes.arrayOf(
       PropTypes.shape({
-       tdProps: PropTypes.object,
-       render: PropTypes.func.isRequired,
+        elProps: PropTypes.shape({
+          modifiers: PropTypes.array
+        }),
+        render: PropTypes.func.isRequired,
       })
+    ),
+    isHighlighted: PropTypes.bool,
+    canToggleDetails: PropTypes.bool.isRequired
+  }
+
+  state = {
+    detailsVisible: false
+  }
+
+  handleArrowClick = () => {
+    this.setState({
+      detailsVisible: !this.state.detailsVisible
+    })
+  }
+
+  renderAppendColumn(colProps, key) {
+    const { render, elProps } = colProps
+    const {
+      modifiers,
+      className,
+      ...restElProps
+    } = (elProps || {})
+
+    return (
+      <div
+        key={key}
+        className={cn(
+          'table__col',
+          className,
+          modifiers && modifiers.map(mod => `table__col--${mod}`)
+        )}
+        {...restElProps}
+      >
+        {render(this.props.product)}
+      </div>
     )
   }
 
   render() {
     const {
       product,
-      categoryName,
-      appendColumns
+      category,
+      appendColumns,
+      canToggleDetails,
+      isHighlighted
     } = this.props
+    const { detailsVisible } = this.state
 
     return (
-      <tr>
-        <td>
-          <a href={product.url} target="_blank">{product.title}</a>
-        </td>
-        <td className="text-center">{product.author}</td>
-        <td className="products-table__category-col">
-          {categoryName}
-        </td>
-        {appendColumns.map((col, i) => (
-          <td key={i} {...col.tdProps}>
-            {col.render(product)}
-          </td>
-        ))}
-      </tr>
+      <div
+        className={cn('table__row', {
+          'table__row--highlighted': isHighlighted,
+        })}
+      >
+        <div className="table__row-header">
+          <div className="table__col table__col--title">
+            <a href={product.url} target="_blank">{product.title}</a>
+
+            {canToggleDetails && (
+              <button
+                type="button"
+                className="table__toggle-details-btn"
+                onClick={this.handleArrowClick}
+                children={
+                  <div className={cn('arrow', {
+                    'arrow--down': !detailsVisible,
+                    'arrow--up': detailsVisible
+                  })} />
+                }
+              />
+            )}
+          </div>
+
+          <div className="table__col table__col--author">
+            {product.author}
+          </div>
+        </div>
+
+        {(!canToggleDetails || detailsVisible) && (
+          <div className="table__row-details">
+            <div className="table__col table__col--category">
+              <CategoryLabel {...category} />
+            </div>
+            {appendColumns.map((col, i) => this.renderAppendColumn(col, i))}
+          </div>
+        )}
+      </div>
     )
   }
 }

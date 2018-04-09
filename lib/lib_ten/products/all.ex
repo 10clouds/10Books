@@ -6,12 +6,15 @@ defmodule LibTen.Products.All do
 
   def list do
     Product
+    |> preload(:requested_by_user)
     |> order_by(desc: :inserted_at)
     |> Repo.all()
   end
 
   def get(product_id) do
-    Repo.get(Product, product_id)
+    Product
+    |> preload(:requested_by_user)
+    |> Repo.get(product_id)
   end
 
   def create(attrs, current_user_id) do

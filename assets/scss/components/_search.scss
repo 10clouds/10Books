@@ -1,0 +1,124 @@
+.search {
+  $module: &;
+  $field-hor-padding: 15px;
+  $field-hor-padding-m: 20px;
+  $field-height: 52px;
+
+  padding: 30px 0 37px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @include m-up {
+    flex-direction: row;
+    justify-content: center;
+    padding: 60px 0;
+
+    > *:not(:last-child) {
+      margin: 0 26px 0 0 !important;
+    }
+  }
+
+  &__field {
+    width: 100%;
+    font-size: 14px;
+
+    &:not(:last-child) {
+      margin-bottom: 12px;
+    }
+
+    @include m-up {
+      margin: 0;
+    }
+
+    &.select {
+      .Select-control {
+        display: flex;
+        align-items: center;
+      }
+
+      .Select-arrow {
+        right: $field-hor-padding;
+      }
+
+      .Select-placeholder .category-label__text {
+        color: $gray;
+      }
+
+      .Select-value .category-label__text {
+        color: $text;
+      }
+    }
+
+    &--query {
+      @include m-up {
+        max-width: 625px;
+      }
+    }
+
+    &--category {
+      @include m-up {
+        max-width: 295px;
+        flex-basis: 52%;
+      }
+    }
+  }
+
+  input#{$module}__field,
+  &__field.select .Select-control,
+  &__action-btn {
+    box-shadow: 3px 43px 51px 0 rgba(75, 82, 113, 0.09);
+  }
+
+  input#{$module}__field,
+  &__field.select .Select-control {
+    background-color: $white;
+    border-radius: 5px;
+    height: $field-height;
+    padding: 0 $field-hor-padding;
+  }
+
+  input#{$module}__field {
+    @include input-placeholder-color($gray);
+
+    border: none;
+    display: block;
+
+    @include m-up {
+      padding: 0 $field-hor-padding-m;
+    }
+
+    &--query {
+      $icon-size: 22px;
+
+      padding-right: $field-hor-padding * 2 + $icon-size;
+      background-image: url(/images/search.svg);
+      background-repeat: no-repeat;
+      background-size: $icon-size $icon-size;
+      background-position: calc(100% - #{$field-hor-padding}) 50%;
+
+      @include m-up {
+        padding-right: $field-hor-padding-m * 2 + $icon-size;
+        background-position: calc(100% - #{$field-hor-padding-m}) 50%;
+      }
+    }
+  }
+
+  &__action-btn {
+    margin-top: 14px;
+    height: 46px;
+    font-size: 15px;
+    padding: 0 40px;
+
+    @include m-up {
+      height: $field-height;
+      margin: 0;
+    }
+
+    img {
+      margin-right: 0.7em;
+      width: 0.88em;
+      height: 0.88em;
+    }
+  }
+}

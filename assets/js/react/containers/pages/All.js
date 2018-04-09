@@ -1,12 +1,13 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent, Fragment } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import socket from 'socket'
 import { joinChannel as joinCategoriesChannel } from '~/store/actions/categories'
 import * as productActions from '~/store/actions/products'
 import { ProductFormModal } from '~/components/modals'
-import SearchContainer from '../common/SearchContainer'
-import ProductsTableContainer from '../common/ProductsTableContainer'
+import SearchContainer from '~/containers/common/SearchContainer'
+import ProductsTableContainer from '~/containers/common/ProductsTableContainer'
+import { ProductRequestedBy, ProductStatus } from '~/components/productsTable'
 
 const MODAL_PRODUCT_NEW = 'true'
 
@@ -24,30 +25,30 @@ class All extends PureComponent {
 
   productTableColumns = [
     {
-      title: 'Status',
-      thProps: {
-        className: 'text-center'
+      title: 'Requested by',
+      elProps: {
+        modifiers: ['requested-by'],
       },
-      tdProps: {
-        className: 'text-center'
-      },
-      render: product => product.status
+      render: product => (
+        <ProductRequestedBy name={product.requested_by ? product.requested_by.name : ''} />
+      )
     },
     {
       title: 'Status',
-      thProps: {
-        className: 'text-center'
-      },
-      tdProps: {
-        className: 'text-center nowrap-col'
+      elProps: {
+        modifiers: ['status']
       },
       render: product => (
-        <button
-          onClick={() => this.handleEdit(product)}
-          className="btn btn-secondary"
-        >
-          <i className="fa fa-pencil" />
-        </button>
+        <ProductStatus
+          status={product.status}
+          canChangeStatus
+          canEdit
+          canDelete
+          onStatusChange={status => {
+            this.props.productActions.update(product.id, { status })
+          }}
+          onEdit={() => this.handleEdit(product)}
+        />
       )
     }
   ]
@@ -59,17 +60,22 @@ class All extends PureComponent {
   render() {
     return (
       <div>
-        <SearchContainer />
-
-        <button
-          onClick={() => (
-            this.setState({
-              modalProduct: MODAL_PRODUCT_NEW
-            })
-          )}
-        >
-          Add {JSON.stringify(this.state.modalProduct)}
-        </button>
+        <SearchContainer
+          categories={this.props.categories}
+          action={{
+            onClick: () => {
+              this.setState({
+                modalProduct: MODAL_PRODUCT_NEW
+              })
+            },
+            children: (
+              <Fragment>
+                <img src="/images/icon-plus-white.svg" />
+                Add
+              </Fragment>
+            )
+          }}
+        />
 
         <ProductFormModal
           forAdmin
@@ -94,7 +100,9 @@ class All extends PureComponent {
           }}
         />
 
-        <ProductsTableContainer appendColumns={this.productTableColumns} />
+        <ProductsTableContainer
+          appendColumns={this.productTableColumns}
+        />
       </div>
     )
   }

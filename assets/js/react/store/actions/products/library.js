@@ -38,7 +38,7 @@ export const subscribeToReturnNotification = id => (dispatch, getState) => {
 
   return new Promise((resolve, reject) => {
     getState().products.channel
-      .push('subscribe_to_return_notification', {id})
+      .push('subscribe_to_return_notification', { id })
       .receive('ok', resolve)
       .receive('error', reject)
   })
@@ -53,7 +53,7 @@ export const unsubscribeFromReturnNotification = id => (dispatch, getState) => {
 
   return new Promise((resolve, reject) => {
     getState().products.channel
-      .push('unsubscribe_from_return_notification', {id})
+      .push('unsubscribe_from_return_notification', { id })
       .receive('ok', resolve)
       .receive('error', reject)
   })

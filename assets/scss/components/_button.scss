@@ -1,0 +1,109 @@
+// NOTE:
+// Needed, cause safari has problem rendering <button> with display: flex;
+.button-inner-centering {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.button-with-icon {
+  @include btn-reset;
+  width: 1em;
+  height: 1em;
+  border-radius: 3px;
+  border: 2px solid #efeff5;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background: #efeff5;
+  }
+}
+
+.button {
+  @include btn-reset;
+
+  position: relative;
+  z-index: 1;
+  height: 45px;
+  line-height: 45px;
+  border-radius: 3px;
+  font-size: 13px;
+  text-align: center;
+  transition: background-color .2s, color .2s;
+
+  &--block {
+    display: block;
+    width: 100%;
+  }
+
+  &--light-gray {
+    background-color: rgba($lightGray, .1);
+    color: rgba($lightGray, .75);
+  }
+
+  &--bright {
+    background-color: $accentLight;
+    color: $accent;
+
+    &-active,
+    &:hover {
+      background-color: darken($accentLight, 3%);
+    }
+  }
+
+  &--dark {
+    background-image: $accent-gradient;
+    color: $accentLight;
+
+    &:after {
+      background-image: $accent-gradient-hover;
+      border-radius: inherit;
+      position: absolute;
+      content: '';
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity .2s;
+      z-index: -1;
+    }
+
+    &:not([disabled]):hover:after {
+      opacity: 1;
+    }
+  }
+
+  &--green {
+    background-color: $success-background;
+    color: $success;
+
+    &-active,
+    &:hover {
+      background-color: darken($success-background, 8%);
+    }
+  }
+
+  &--red {
+    background-color: $error-background;
+    color: $error;
+
+    &-active,
+    &:hover {
+      background-color: darken($error-background, 8%);
+    }
+  }
+
+  &--transparent {
+    background-color: transparent;
+    border: 1px solid $accent;
+    color: $accent;
+
+    &:hover {
+      background-color: $accent;
+      color: $accentLight;
+    }
+  }
+}

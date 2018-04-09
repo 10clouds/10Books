@@ -4,7 +4,7 @@ defmodule LibTen.Accounts.Users do
   alias LibTen.Accounts.User
 
   def list do
-    query = from u in User, order_by: u.is_admin
+    query = from u in User, order_by: [desc: u.is_admin]
     Repo.all(query)
   end
 

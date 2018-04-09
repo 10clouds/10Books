@@ -20,8 +20,8 @@ defmodule LibTenWeb.ProductsControllerTest do
       assert html_response(conn, 200) =~ "products-table"
     end
 
-    test "GET /admin/products", %{conn: conn} do
-      conn = get conn, "/admin/products"
+    test "GET /all", %{conn: conn} do
+      conn = get conn, "/all"
       assert html_response(conn, 404)
     end
   end
@@ -34,8 +34,8 @@ defmodule LibTenWeb.ProductsControllerTest do
       {:ok, %{conn: signed_in_conn}}
     end
 
-    test "GET /admin/products", %{conn: conn} do
-      conn = get conn, "/admin/products"
+    test "GET /all", %{conn: conn} do
+      conn = get conn, "/all"
       assert html_response(conn, 200) =~ "products-table"
     end
   end

@@ -16,18 +16,13 @@ defmodule LibTenWeb.Admin.CategoryController do
 
   def create(conn, %{"category" => category_params}) do
     case Categories.create_category(category_params) do
-      {:ok, category} ->
+      {:ok, _} ->
         conn
         |> put_flash(:info, "Category created successfully.")
-        |> redirect(to: admin_category_path(conn, :show, category))
+        |> redirect(to: admin_category_path(conn, :index))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
-  end
-
-  def show(conn, %{"id" => id}) do
-    category = Categories.get_category!(id)
-    render(conn, "show.html", category: category)
   end
 
   def edit(conn, %{"id" => id}) do
@@ -40,10 +35,10 @@ defmodule LibTenWeb.Admin.CategoryController do
     category = Categories.get_category!(id)
 
     case Categories.update_category(category, category_params) do
-      {:ok, category} ->
+      {:ok, _} ->
         conn
         |> put_flash(:info, "Category updated successfully.")
-        |> redirect(to: admin_category_path(conn, :show, category))
+        |> redirect(to: admin_category_path(conn, :index))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", category: category, changeset: changeset)
     end

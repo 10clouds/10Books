@@ -1,26 +1,48 @@
-<h2>Listing Categories</h2>
+<h1 class="admin-page__title">Listing Categories</h1>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Name</th>
+<div class="admin-resource-listing">
+  <h2 class="admin-resource-listing__title">Name</h2>
 
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for category <- @categories do %>
-    <tr>
-      <td><%= category.name %></td>
+  <%= for category <- @categories do %>
+  <div class="admin-resource-listing__item">
+    <div class="admin-resource-listing__item-name">
+      <div class="category-label">
+        <div
+          class="category-label__icon"
+          style="color: <%= category.text_color%>; background: <%= category.background_color %>;"
+        >
+          <%= String.at(category.name, 0) %>
+        </div>
+        <div class="category-label__text">
+          <%= category.name %>
+        </div>
+      </div>
+    </div>
 
-      <td class="text-right">
-        <span><%= link "Show", to: admin_category_path(@conn, :show, category), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Edit", to: admin_category_path(@conn, :edit, category), class: "btn btn-default btn-xs" %></span>
-        <span><%= link "Delete", to: admin_category_path(@conn, :delete, category), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
-      </td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
+    <div class="admin-resource-listing__item-actions">
+      <%= link to: admin_category_path(@conn, :edit, category) do %>
+        <button class="button-with-icon">
+          <div class="button-inner-centering">
+            <%= img_tag static_path(@conn, "/images/icon-pencil.svg") %>
+          </div>
+        </button>
+      <% end %>
 
-<span><%= link "New Category", to: admin_category_path(@conn, :new) %></span>
+      <%= link(
+        "Delete",
+        to: admin_category_path(@conn, :delete, category),
+        method: :delete,
+        data: [confirm: "Are you sure?"],
+        class: "button button--red"
+      ) %>
+    </div>
+  </div>
+  <% end %>
+
+  <%= link to: admin_category_path(@conn, :new), class: "button button--dark admin-resource-listing__action-btn"  do %>
+    <div class="button-inner-centering">
+      <img src="/images/icon-plus-white.svg" />
+      New Category
+    </div>
+  <% end %>
+</div>

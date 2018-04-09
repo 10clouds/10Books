@@ -1,0 +1,14 @@
+.product-rating {
+  white-space: nowrap;
+  font-size: 20px;
+
+  &__value {
+    color: $text;
+    font-weight: bold;
+  }
+
+  &__label {
+    color: $lightGray;
+    font-size: 80%;
+  }
+}

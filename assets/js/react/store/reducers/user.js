@@ -7,7 +7,7 @@ const defaultState = {
 }
 
 const reducers = {
-  [actionTypes.SET_USER]: (state, {user}) => ({
+  [actionTypes.SET_USER]: (state, { user }) => ({
     ...state,
     ...user
   })

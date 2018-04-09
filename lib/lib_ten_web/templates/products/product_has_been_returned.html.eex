@@ -1,0 +1,18 @@
+Remember <b><%= @product.title %></b>? <br />
+<br />
+<br />
+It’s this book you wanted to read some time ago. <br />
+Yeah, the one filled with valuable and inspiring knowledge. <br />
+Yeah, the one that will make a few of your evenings much more interesting. <br />
+<br />
+<br />
+Good news - it has been returned! <br />
+<br />
+Feel free to grab it from our bookshelf. Just don’t forget to update its status on
+<%=
+  url = products_url(@conn, :library)
+  link url, to: url
+%> <br />
+<br />
+<br />
+We wish you a pleasant reading!

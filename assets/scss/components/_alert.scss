@@ -1,0 +1,23 @@
+.alert {
+  height: 50px;
+  display: flex;
+  font-size: 14px;
+  border-radius: 6px;
+  align-items: center;
+  padding: 0 20px 2px 60px;
+  max-width: 100%;
+  background-repeat: no-repeat;
+  background-position: 15px 50%;
+
+  &--info {
+    color: $success;
+    background-color: rgba($success-background, .11);
+    background-image: url(/images/check.svg);
+  }
+
+  &--error {
+    color: $error;
+    background-color: rgba($error-background, .11);
+    background-image: url(/images/fail.svg);
+  }
+}

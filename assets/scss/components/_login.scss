@@ -1,0 +1,33 @@
+.login-container {
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.login {
+  background-color: $white;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 313px;
+  width: 100%;
+  max-width: 476px;
+  padding: 10px 40px 0;
+  box-shadow: 15px 57px 112px 0 rgba(75, 82, 113, 0.09);
+
+  &__logo {
+    display: flex;
+    justify-content: center;
+  }
+
+  .button {
+    margin: 57px auto;
+
+    @include s-up {
+      max-width: 210px;
+    }
+  }
+}

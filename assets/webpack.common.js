@@ -18,7 +18,8 @@ module.exports = {
       'node_modules'
     ],
     alias: {
-      '~': path.resolve(__dirname, 'js/react')
+      '~': path.resolve(__dirname, 'js/react'),
+      '/static': path.resolve(__dirname, 'static')
     }
   },
   module: {
@@ -41,28 +42,24 @@ module.exports = {
       {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract({
-          use: ['css-loader', 'sass-loader']
+          use: [
+            'css-loader?sourceMap',
+            'postcss-loader?sourceMap',
+            'sass-loader?sourceMap'
+          ]
         })
+      },
+      {
+        test: /\.svg$/,
+        use: 'raw-loader'
       }
     ]
   },
   plugins: [
     new ExtractTextPlugin('css/app.css'),
-    new CopyWebpackPlugin([
-      {
-        from: 'node_modules/font-awesome/fonts',
-        to: path.resolve(__dirname, '../priv/static/fonts/font-awesome')
-      }
-    ]),
     new CopyWebpackPlugin([{
       from: "./static",
       to: path.resolve(__dirname, "../priv/static")
-    }]),
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-      'window.jQuery': 'jquery',
-      Popper: ['popper.js', 'default']
-    })
+    }])
   ]
 };

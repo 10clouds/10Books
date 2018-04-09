@@ -1,6 +1,30 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import $ from 'jquery'
+import classnames from 'classnames'
+import { Modal as ReactOverlaysModal } from 'react-overlays'
+import Transition, { ENTERED, ENTERING } from 'react-transition-group/Transition'
+
+const TRANSITION_TIME = 300 // NOTE: Must be in sync with CSS
+
+function ModalTransition({ children, ...props }) {
+  return (
+    <Transition
+      {...props}
+      timeout={TRANSITION_TIME}
+    >
+      {(status, innerProps) => React.cloneElement(children, {
+        ...innerProps,
+        className: classnames(children.props.className, {
+          'modal--visible': [ENTERING, ENTERED].includes(status)
+        })
+      })}
+    </Transition>
+  )
+}
+
+ModalTransition.propTypes = {
+  children: PropTypes.node
+}
 
 export default class Modal extends PureComponent {
   static propTypes = {
@@ -9,33 +33,52 @@ export default class Modal extends PureComponent {
     children: PropTypes.node
   }
 
-  componentDidMount() {
-    $(this.modalEl).on('hide.bs.modal', this.props.onHide)
+  handleEnter() {
+    document
+      .getElementById('js-page-header')
+      .setAttribute('style', document.body.getAttribute('style'))
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.show && !this.props.show) {
-      $(this.modalEl).modal('show')
-    } else if (!nextProps.show && this.props.show) {
-      $(this.modalEl).modal('hide')
+  handleExited() {
+    document
+      .getElementById('js-page-header')
+      .setAttribute('style', null)
+  }
+
+  handleClosePopup = e => {
+    if (e.target === this.modalEl) {
+      this.props.onHide()
     }
   }
 
   render() {
     return (
-      <div
-        className="modal fade"
-        tabIndex="-1"
-        role="dialog"
-        aria-hidden="true"
-        ref={el => this.modalEl = el}
+      <ReactOverlaysModal
+        transition={ModalTransition}
+        backdrop={false}
+        containerClassName="with-visible-popup"
+        onBackdropClick={this.props.onHide}
+        show={this.props.show}
+        onHide={this.props.onHide}
+        onEnter={this.handleEnter}
+        onExited={this.handleExited}
       >
-        <div className="modal-dialog modal-lg">
-          <div className="modal-content">
+        <div
+          className="modal"
+          ref={el => this.modalEl = el}
+          onClick={this.handleClosePopup}
+        >
+          <div className="modal__content">
+            <button
+              className="modal__close"
+              onClick={this.props.onHide}
+            >
+              Close
+            </button>
             {this.props.children}
           </div>
         </div>
-      </div>
+      </ReactOverlaysModal>
     )
   }
 }

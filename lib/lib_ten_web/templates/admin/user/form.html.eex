@@ -1,29 +1,28 @@
-<%= form_for @changeset, @action, fn f -> %>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
-    </div>
-  <% end %>
-
-  <div class="form-group">
-    <%= label f, :email, class: "control-label" %>
-    <%= text_input f, :email, class: "form-control", disabled: true %>
-    <%= error_tag f, :email %>
+<%= form_for @changeset, @action, [class: "form form--for-admin"], fn f -> %>
+  <div class="form__group">
+    <%= label f, :email, class: "form__label" %>
+    <%= text_input f, :email, class: "form__input", disabled: true %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :name, class: "control-label" %>
-    <%= text_input f, :name, class: "form-control", disabled: true %>
-    <%= error_tag f, :name %>
+  <div class="form__group">
+    <%= label f, :name, class: "form__label" %>
+    <%= text_input f, :name, class: "form__input", disabled: true %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :is_admin, class: "control-label" %>
-    <%= checkbox f, :is_admin, class: "form-control" %>
-    <%= error_tag f, :is_admin %>
+  <div class="form__group">
+    <%= label f, :is_admin,
+      class: "form__checkbox"
+    do %>
+      <%= checkbox f, :is_admin %>
+      <span class="form__checkbox-label">Admin</span>
+    <% end %>
   </div>
 
-  <div class="form-group">
-    <%= submit "Submit", class: "btn btn-primary" %>
+  <div class="form__buttons">
+    <%= link "Back",
+      to: admin_user_path(@conn, :index),
+      class: "button button--transparent"
+    %>
+    <%= submit "Submit", class: "button button--dark" %>
   </div>
 <% end %>

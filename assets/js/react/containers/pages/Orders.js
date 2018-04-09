@@ -6,11 +6,15 @@ import { joinChannel as joinCategoriesChannel } from '~/store/actions/categories
 import * as productActions from '~/store/actions/products'
 import * as orderActions from '~/store/actions/products/orders'
 import { ProductFormModal } from '~/components/modals'
-import { VotesCell, OrderStatusCell } from '~/components/productsTable'
+import {
+  ProductVotes,
+  ProductOrderStatus,
+  ProductRequestedBy
+} from '~/components/productsTable'
 import SearchContainer from '../common/SearchContainer'
 import ProductsTableContainer from '../common/ProductsTableContainer'
 
-const MODAL_PRODUCT_NEW = 'true'
+const MODAL_PRODUCT_NEW = 'new-product'
 
 class Orders extends PureComponent {
   constructor(props) {
@@ -27,42 +31,35 @@ class Orders extends PureComponent {
   appendColumns = [
     {
       title: 'Requested by',
-      thProps: {
-        className: 'text-center text-nowrap'
+      elProps: {
+        modifiers: ['requested-by'],
       },
-      tdProps: {
-        className: 'text-center'
-      },
-      render: product => product.requested_by.name
+      render: product => (
+        <ProductRequestedBy name={product.requested_by.name} />
+      )
     },
     {
       title: 'Votes',
-      thProps: {
-        className: 'text-center'
-      },
-      tdProps: {
-        className: 'text-center'
+      elProps: {
+        modifiers: ['votes']
       },
       render: product => (
-        <VotesCell 
+        <ProductVotes
           {...this.props.orderActions}
           product={product}
-          currUser={this.props.user}
+          currUser={this.props.currentUser}
         />
       )
     },
     {
       title: 'Status',
-      thProps: {
-        className: 'text-center'
-      },
-      tdProps: {
-        className: 'text-center text-nowrap'
+      elProps: {
+        modifiers: ['status']
       },
       render: product => (
-        <OrderStatusCell 
+        <ProductOrderStatus
           product={product}
-          currUser={this.props.user}
+          currUser={this.props.currentUser}
           onEdit={() => this.handleEdit(product)}
           onChange={this.props.productActions.update}
         />
@@ -90,16 +87,25 @@ class Orders extends PureComponent {
     this.setState({ modalProduct: false })
   }
 
+  getTableRowProps = product => ({
+    isHighlighted: product.requested_by.id === this.props.currentUser.id
+  })
+
   render() {
     return (
       <Fragment>
-        <SearchContainer />
-
-        <button
-          onClick={this.handleAdd}
-        >
-          Add
-        </button>
+        <SearchContainer
+          categories={this.props.categories}
+          action={{
+            onClick: this.handleAdd,
+            children: (
+              <Fragment>
+                <img src="/images/icon-plus-white.svg" />
+                Add
+              </Fragment>
+            )
+          }}
+        />
 
         <ProductFormModal
           submitLabel={
@@ -117,14 +123,17 @@ class Orders extends PureComponent {
           onHide={this.handleHide}
         />
 
-        <ProductsTableContainer appendColumns={this.appendColumns} />
+        <ProductsTableContainer
+          appendColumns={this.appendColumns}
+          getRowProps={this.getTableRowProps}
+        />
       </Fragment>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  user: state.user,
+  currentUser: state.user,
   categories: state.categories.all
 })
 

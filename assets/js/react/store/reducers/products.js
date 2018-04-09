@@ -3,11 +3,12 @@ import { makeReducer } from '../utils'
 
 const defaultState = {
   channel: null,
+  isReady: false,
   idsByInsertedAt: [],
   byId: {}
 }
 
-const getSortedIds = items => {
+function getSortedIds(items) {
   return items
     .sort((a, b) => b.inserted_at - a.inserted_at)
     .map(({ id, inserted_at }) => ({ id, inserted_at }))
@@ -16,7 +17,8 @@ const getSortedIds = items => {
 const reducers = {
   [actionTypes.JOIN_CHANNEL_SUCCESS]: (state, { channel }) => ({
     ...state,
-    channel
+    channel,
+    isReady: true
   }),
 
   [actionTypes.ALL_UPDATED]: (state, { items }) => ({
@@ -29,7 +31,7 @@ const reducers = {
   }),
 
   [actionTypes.UPDATED]: (state, { attrs }) => {
-    const updatedItem = {...state.byId[attrs.id], ...attrs}
+    const updatedItem = { ...state.byId[attrs.id], ...attrs }
 
     return {
       ...state,
@@ -46,7 +48,7 @@ const reducers = {
   },
 
   [actionTypes.DELETED]: (state, { id }) => {
-    const newById = {...state.byId}
+    const newById = { ...state.byId }
     delete newById[id]
     return {
       ...state,

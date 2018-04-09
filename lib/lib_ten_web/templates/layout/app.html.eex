@@ -1,86 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title><%= Application.get_env(:lib_ten, :title) %></title>
+  <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+  <script>
+    window.currentUserToken = "<%= @conn.assigns[:current_user_token] %>";
+  </script>
+  <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+</head>
+<body>
+  <nav id="js-page-header" class="navbar">
+    <div class="container">
+      <%= link(
+        to: products_path(@conn, :library)
+      ) do %>
+        <%= img_tag static_path(@conn, "/images/logo-10books.svg"),
+          alt: "10books",
+          class: "navbar__logo"
+        %>
+      <% end %>
 
-    <title><%= Application.get_env(:lib_ten, :title) %></title>
-    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
-    <script>window.currentUserToken = "<%= @conn.assigns[:current_user_token] %>";</script>
-    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
-  </head>
-
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark header-navbar">
-      <div class="navbar-brand">
-        <i class="fa fa-book" aria-hidden="true"></i>
-        <%= Application.get_env(:lib_ten, :title) %>
-      </div>
       <button
-        class="navbar-toggler"
         type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
+        id="js-navbar-menu-toggle-btn"
+        class="navbar-burger-btn"
       >
-        <span class="navbar-toggler-icon"></span>
+        <div class="navbar-burger-btn__icon">
+          <span class="navbar-burger-btn__icon-line"></span>
+          <span class="navbar-burger-btn__icon-line"></span>
+          <span class="navbar-burger-btn__icon-line"></span>
+        </div>
       </button>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <%= active_link(@conn, "Library",
-            to: products_path(@conn, :library),
-            wrap_tag: :li,
-            class: "nav-link")
-          %>
-          <%= active_link(@conn, "Orders",
-            to: products_path(@conn, :orders),
-            wrap_tag: :li,
-            class: "nav-link")
-          %>
-          <%= if @conn.assigns.current_user.is_admin do %>
-            <%= active_link(@conn, "All",
-              to: admin_products_path(@conn, :all),
-              wrap_tag: :li,
-              class: "nav-link")
+      <div class="navbar-menu" id="js-navbar-menu">
+        <ul class="navbar-menu__group">
+          <li class="navbar-menu__item">
+            <%= active_link @conn, "Library",
+              to: products_path(@conn, :library),
+              class: "navbar-menu__item-label"
             %>
-            <li class="nav-item dropdown">
-              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+          </li>
+          <li class="navbar-menu__item">
+            <%= active_link @conn, "Orders",
+              to: products_path(@conn, :orders),
+              class: "navbar-menu__item-label"
+            %>
+          </li>
+          <%= if @conn.assigns.current_user.is_admin do %>
+            <li class="navbar-menu__item">
+              <%= active_link @conn, "All",
+                to: products_path(@conn, :all),
+                class: "navbar-menu__item-label"
+              %>
+            </li>
+            <li class="navbar-menu__item">
+              <span class="navbar-menu__item-label">
                 Admin
-              </a>
-              <div class="dropdown-menu">
-                <%= link "Categories",
-                  to: admin_category_path(@conn, :index),
-                  class: "dropdown-item"
-                %>
-                <%= link "Users",
-                  to: admin_user_path(@conn, :index),
-                  class: "dropdown-item"
-                %>
+                <div class="arrow arrow--down"></div>
+              </span>
+              <div class="navbar-menu__subgroup">
+                <ul class="navbar-menu__subgroup-inner">
+                  <li class="navbar-menu__item">
+                    <%= link "Categories",
+                      to: admin_category_path(@conn, :index),
+                      class: "navbar-menu__item-label"
+                    %>
+                  </li>
+                  <li class="navbar-menu__item">
+                    <%= link "Users",
+                      to: admin_user_path(@conn, :index),
+                      class: "navbar-menu__item-label"
+                    %>
+                  </li>
+                </ul>
               </div>
             </li>
           <% end %>
         </ul>
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <%= img_tag(@conn.assigns.current_user.avatar_url) %>
-            <%= link("Sign out", to: auth_path(@conn, :sign_out), class: "nav-link") %>
+        <ul class="navbar-menu__group">
+          <li class="navbar-menu__item">
+            <%= link(
+              to: auth_path(@conn, :sign_out),
+              class: "navbar-menu__item-label navbar-logout"
+            ) do %>
+              <span class="navbar-logout__burger-label">Log Out</span>
+              <span class="navbar-logout__label">
+                <%= img_tag(
+                  @conn.assigns.current_user.avatar_url <> "?sz=50",
+                  class: "navbar-logout__avatar"
+                ) %>
+                <%= @conn.assigns.current_user.name %>
+                <%= img_tag(
+                  static_path(@conn, "/images/logout.svg"),
+                  alt: "Log Out",
+                  class: "navbar-logout__action-icon"
+                ) %>
+              </span>
+            <% end %>
           </li>
         </ul>
       </div>
-    </nav>
+    </div>
+  </nav>
+  <div class="navbar__height-compensator"></div>
 
-    <div class="container-fluid">
-
-      <main role="main">
+  <main>
+    <div class="container">
+      <div class="<%= if admin_section?(@conn), do: "admin-page", else: "" %>">
+        <%= for {key, val} <- get_flash(@conn) do %>
+          <div class="alert alert--<%= key %>">
+             <%= val %>
+          </div>
+        <% end %>
         <%= render @view_module, @view_template, assigns %>
-      </main>
-
-    </div> <!-- /container -->
-  </body>
+      </div>
+    </div>
+  </main>
+</body>
 </html>

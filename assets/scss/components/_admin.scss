@@ -1,0 +1,96 @@
+.admin-page {
+  padding: 28px 0 0 0;
+  max-width: $adminContainerWidth;
+
+  @include m-up {
+    padding-left: 40px;
+  }
+
+  &__title {
+    font-weight: bold;
+    font-size: 20px;
+    margin: 30px 0 27px 0;
+  }
+}
+
+.admin-resource-listing {
+  font-size: 15px;
+
+  &__title {
+    font-size: inherit;
+    color: $lightGray;
+    font-weight: bold;
+    margin: 0 0 12px 0;
+  }
+
+  &__item {
+    background: $white;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    padding: 14px 14px;
+    border-left: 4px solid $white;
+    margin-bottom: 6px;
+
+    @include s-up {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    &--highlighted {
+      border-color: $accent;
+    }
+  }
+
+  &__item-actions {
+    $btn-size: 40px;
+
+    display: flex;
+    justify-content: space-between;
+    margin-top: 18px;
+
+    @include s-up {
+      margin-top: 0;
+      margin-left: auto;
+      padding-left: 15px;
+    }
+
+    .button,
+    .button-with-icon {
+      height: $btn-size;
+      line-height: $btn-size;
+      font-weight: bold;
+
+      &:not(:first-child) {
+        margin-left: 12px;
+      }
+    }
+
+    .button {
+      width: auto;
+      padding: 0 20px;
+    }
+
+    .button-with-icon {
+      width: $btn-size;
+
+      img {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+
+  &__action-btn {
+    margin-top: 40px;
+    padding: 0 25px;
+    width: auto;
+    display: inline-block;
+
+    img {
+      width: 1em;
+      height: 1em;
+      margin-right: 0.75em;
+    }
+  }
+}
