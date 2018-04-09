@@ -1,0 +1,80 @@
+.search-form {
+  margin: 40px auto 0;
+  width: 100%;
+
+  @include m-up {
+    margin: 40px auto;
+    max-width: 800px;
+  }
+
+  @include l-up {
+    margin: 60px auto;
+  }
+
+  @include xxl-up {
+    margin: 80px auto;
+  }
+
+  &__input {
+    border-radius: 5px;
+    border: none;
+    box-shadow: 4px 57px 67px 0 rgba(75, 82, 113, 0.09);
+    font-size: 16px;
+    height: 65px;
+    padding: 0 40px 0 15px;
+    width: 100%;
+
+    &::placeholder {
+      color: $lightGray;
+      font-size: 16px;
+    }
+  }
+
+  &__loupe {
+    //light version is available for PRO users only :(
+    color: $lightGray;
+    display: inline-block;
+    font-size: 24px;
+    margin-left: -40px;
+  }
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  @include m-up {
+    flex-wrap: nowrap;
+  }
+
+  .search-form {
+    margin: 40px 0;
+
+    @include m-up {
+      margin-right: 40px;
+    }
+
+    @include l-up {
+      margin: 60px 40px 60px 0;
+    }
+
+    @include xxl-up {
+      margin: 80px 40px 80px 0;
+    }
+  }
+
+  .button {
+    height: 65px;
+
+    @include m-up {
+      min-width: 150px;
+      padding: 0 30px;
+    }
+
+    @include xl-up {
+      padding: 0 50px;
+    }
+  }
+}

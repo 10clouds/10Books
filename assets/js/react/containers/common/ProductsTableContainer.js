@@ -8,6 +8,7 @@ function ProductsTableContainer(props) {
     products,
     categories,
     renderNoResults,
+    currentUser,
     ...componentProps
   } = props
 
@@ -30,7 +31,8 @@ function ProductsTableContainer(props) {
       products={filteredProducts}
       categories={categories.byId}
       {...componentProps}
-    />
+      currentUser={ currentUser }
+    /> 
   ) : renderNoResults ? renderNoResults() : null
 }
 

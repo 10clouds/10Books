@@ -3,6 +3,17 @@ import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Modal from './Modal'
+import Dropdown from 'react-dropdown'
+
+const DROPDOWN_STATUS = [
+  { value: 'IN_LIBRARY', label: 'In Library' },
+  { value: 'REQUESTED', label: 'In Orders' },
+  { value: 'ACCEPTED', label: 'Accepted' },
+  { value: 'REJECTED', label: 'Rejected' },
+  { value: 'ORDERED', label: 'Ordered' },
+  { value: 'LOST', label: 'Lost' },
+  { value: 'DELETED', label: 'Deleted' },
+]
 
 class ProductForm extends PureComponent {
   static propTypes = {
@@ -16,7 +27,8 @@ class ProductForm extends PureComponent {
         name: PropTypes.string.isRequired
       })
     ).isRequired,
-    product: PropTypes.object
+    product: PropTypes.object,
+    show: PropTypes.bool
   }
 
   static defaultProps = {
@@ -66,35 +78,36 @@ class ProductForm extends PureComponent {
 
   handleFieldChange = (name, value) => {
     this.setState(prevState => ({
-      fields: {...prevState.fields, [name]: value},
-      errors: {...prevState.errors, [name]: null}
+      fields: { ...prevState.fields, [name]: value },
+      errors: { ...prevState.errors, [name]: null }
     }))
   }
 
-  renderFormGroup(props = {type: 'text'}) {
+  renderFormGroup(props = { type: 'text' }) {
     const { label, name, inputComponent, ...inputProps } = props
 
     return (
-      <div className="form-group">
-        <label className="form-control-label">
-          {label}
+      <div className="form__group">
+        <label className="form__label">
+          { label }
         </label>
-        {inputComponent ? inputComponent : (
+        { inputComponent ? inputComponent : (
           <input
-            className={classnames('form-control', {
+            className={ classnames('form__input', {
               'is-invalid': this.state.errors[name]
-            })}
-            {...inputProps}
-            name={name}
-            onChange={this.handleInputChange}
-            value={this.state.fields[name]}
+            }) }
+            { ...inputProps }
+            name={ name }
+            onChange={ this.handleInputChange }
+            value={ this.state.fields[name] }
           />
-        )}
-        {this.state.errors[name] && (
+        ) }
+        <span className="form__bar"/>
+        { this.state.errors[name] && (
           <div className="invalid-feedback">
-            {this.state.errors[name]}
+            { this.state.errors[name] }
           </div>
-        )}
+        ) }
       </div>
     )
   }
@@ -102,92 +115,89 @@ class ProductForm extends PureComponent {
   render() {
     const { onSubmit, ...modalProps } = this.props
 
+    const dropdownCategories = this.props.categories.map(option => (
+      {
+        value: option.id,
+        label: option.name
+      }
+    ))
+
     return (
-      <Modal {...modalProps}>
-        <form
-          onSubmit={e => {
-            e.preventDefault()
-            onSubmit(this.state.fields)
-              .then(this.props.onHide)
-              .catch(data => {
-                this.setErrors(data.errors)
-              })
-          }}
-        >
-          {this.renderFormGroup({
-            label: 'Title',
-            placeholder: 'Title',
-            name: 'title'
-          })}
-          {this.renderFormGroup({
-            label: 'Author',
-            placeholder: 'Author',
-            name: 'author'
-          })}
-          {this.renderFormGroup({
-            label: 'Url',
-            placeholder: 'Url',
-            name: 'url',
-            type: 'url'
-          })}
+      this.props.show ? (
+        <Modal popupModifier="form" { ...modalProps }>
+          <form
+            className="form form--popup"
+            onSubmit={ e => {
+              e.preventDefault()
+              onSubmit(this.state.fields)
+                .then(this.props.onHide)
+                .catch(data => {
+                  this.setErrors(data.errors)
+                })
+            } }
+          >
+            { this.renderFormGroup({
+              label: 'Title',
+              placeholder: 'Title',
+              name: 'title'
+            }) }
+            { this.renderFormGroup({
+              label: 'Author',
+              placeholder: 'Author',
+              name: 'author'
+            }) }
+            { this.renderFormGroup({
+              label: 'Url',
+              placeholder: 'Url',
+              name: 'url',
+              type: 'url'
+            }) }
 
-          {this.props.forAdmin && this.renderFormGroup({
-            label: 'Status',
-            name: 'status',
-            inputComponent: (
-              <select
-                name="status"
-                className={classnames('form-control', {
-                  'is-invalid': this.state.errors['status']
-                })}
-                onChange={this.handleInputChange}
-                value={this.state.fields.status}
-              >
-                <option value="">-- select --</option>
-                <option value="IN_LIBRARY">In Library</option>
-                <option value="REQUESTED">In Orders</option>
-                <option value="ACCEPTED">Accepted</option>
-                <option value="REJECTED">Rejected</option>
-                <option value="ORDERED">Ordered</option>
-                <option value="LOST">Lost</option>
-                <option value="DELETED">Deleted</option>
-              </select>
-            )
-          })}
+            { this.props.forAdmin && this.renderFormGroup({
+              label: 'Status',
+              name: 'status',
+              inputComponent: (
+                <Dropdown
+                  options={ DROPDOWN_STATUS }
+                  className={ classnames('form__select', {
+                    'is-invalid': this.state.errors['status']
+                  }) }
+                  onChange={ selectedOption => {
+                    this.handleFieldChange('status', selectedOption.value)
+                    this.setState({ selectedStatus: selectedOption })
+                  } }
+                  value={ this.state.selectedStatus }
+                  placeholder="Select an option"/>
+              )
+            }) }
 
-          {this.renderFormGroup({
-            label: 'Category',
-            name: 'category_id',
-            inputComponent: (
-              <select
-                className={classnames('form-control', {
-                  'is-invalid': this.state.errors['category_id']
-                })}
-                value={this.state.fields.category_id || ''}
-                onChange={e => {
-                  this.handleFieldChange('category_id',
-                    parseInt(e.target.value, 10) || null
-                  )
-                }}
-              >
-                <option value="">--select category--</option>
-                {this.props.categories.map(option => (
-                  <option
-                    key={option.id}
-                    value={option.id}
-                  >
-                    {option.name}
-                  </option>
-                ))}
-              </select>
-            )
-          })}
+            { this.renderFormGroup({
+              label: 'Category',
+              name: 'category_id',
+              inputComponent: (
+                <Dropdown
+                  options={ dropdownCategories }
+                  className={ classnames('form__select', {
+                    'is-invalid': this.state.errors['category_id']
+                  }) }
+                  menuClassName='form__select-menu--short'
+                  onChange={ selectedOption => {
+                    this.handleFieldChange('category_id',
+                      parseInt(selectedOption.value, 10) || null
+                    )
+                    this.setState({ selectedCategory: selectedOption })
+                  } }
+                  value={ this.state.selectedCategory }
+                  placeholder="Select an option"
+                />
+              )
+            }) }
 
-          <br />
-          <br />
-          <button type="submit">{this.props.submitLabel}</button>
-        </form>
-      </Modal>
+            <button className="button button--dark button--narrow form__button"
+                    type="submit">{ this.props.submitLabel }</button>
+          </form>
+        </Modal>
+      ) : null
     )
   }
 }

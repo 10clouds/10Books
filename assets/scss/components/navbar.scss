@@ -1,0 +1,283 @@
+.navbar {
+  $navbar: &;
+  position: fixed;
+  height: 75px;
+  top: 0;
+  background-color: $white;
+  box-shadow: 0 2px 69px 0 rgba(13, 13, 30, 0.04);
+  font-size: 18px;
+  font-weight: 600;
+  width: 100%;
+  z-index: 99;
+
+  @include m-up {
+    display: flex;
+    height: 75px;
+    padding: 0 40px;
+  }
+
+  &__header {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    min-height: 75px;
+    padding: 0 20px;
+
+    @include m-up {
+      margin-right: 30px;
+      min-width: 110px;
+      padding: 0;
+    }
+
+    @include l-up {
+      margin-right: 80px;
+    }
+  }
+
+  &__brand {
+    color: $gray;
+  }
+
+  &__menu {
+    background: white;
+    align-items: center;
+    display: none;
+    flex-direction: column;
+    padding: 0 0 40px;
+
+    @include m-up {
+      padding-top: 20px;
+    }
+
+    &--visible {
+      display: flex;
+      box-shadow: 0 20px 29px 0 rgba(13, 13, 30, 0.04);
+
+      @include m-up {
+        box-shadow: none;
+      }
+    }
+
+    @include m-up {
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 0;
+      width: 100%;
+    }
+  }
+
+  &__menu-items {
+    text-align: center;
+    width: 100%;
+
+    @include m-up {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      width: auto;
+    }
+
+    li {
+      @include m-up {
+        padding: 0 20px;
+        display: block;
+      }
+
+      @include xl-up {
+        padding: 0 30px;
+      }
+
+      &:first-of-type {
+        padding-left: 0;
+      }
+
+      &:last-of-type {
+        padding-right: 0;
+      }
+
+      &:hover,
+      &:active {
+        > a {
+          color: $accent;
+        }
+      }
+    }
+  }
+
+  &__menu-item {
+    display: block;
+    padding: 20px 10px;
+
+    &--relative {
+      padding: 0;
+      position: relative;
+    }
+  }
+
+  &__logout {
+    padding-top: 20px;
+
+    #{$navbar} & {
+      @include m-up {
+        display: flex;
+      }
+    }
+
+    .nav-link {
+      padding: 0 10px;
+    }
+
+    .user-avatar {
+      display: none;
+
+      @include m-up {
+        display: block;
+      }
+    }
+
+    @include m-up {
+      padding: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    a {
+      color: $gray;
+    }
+  }
+
+  .arrow {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 10px;
+
+    @include m-up {
+      margin: 0;
+      right: -10px;
+    }
+  }
+
+  &__admin {
+    position: relative;
+
+    &.collapsed {
+      .arrow {
+        margin-top: -2px;
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  &__menu-dropdown {
+    display: none;
+    background-color: $white;
+
+    @include m-up {
+      position: absolute;
+      top: 50px;
+      left: 30px;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 4px 5px 47px 0 rgba(75, 82, 113, 0.2);
+      text-align: left;
+      min-width: 200px;
+    }
+
+    &--visible {
+      display: block;
+    }
+
+    #{$navbar}__dropdown-item {
+      font-size: 16px;
+      padding: 15px 10px;
+
+      @include m-up {
+        padding: 20px 10px;
+      }
+
+      &:hover {
+        color: $accent;
+      }
+    }
+  }
+
+  &__dropdown-item {
+    display: block;
+    padding: 20px;
+  }
+
+  &__hamburger {
+    background-color: transparent;
+    border: none;
+    outline: none;
+
+    @include m-up {
+      display: none;
+    }
+
+    &-icon {
+      width: 30px;
+      height: 30px;
+      position: relative;
+      transform: rotate(0deg);
+      transition: .5s ease-in-out;
+      cursor: pointer;
+    }
+
+    &-icon span {
+      background: $accent;
+      border-radius: 9px;
+      display: block;
+      height: 3px;
+      left: 0;
+      opacity: 1;
+      position: absolute;
+      width: 100%;
+      transform: rotate(0deg);
+      transition: .25s ease-in-out;
+      transform-origin: left center;
+
+      &:nth-child(1) {
+        top: 0;
+      }
+
+      &:nth-child(2) {
+        top: 10px;
+      }
+
+      &:nth-child(3) {
+        top: 20px;
+      }
+    }
+
+    &.collapsed {
+      #{$navbar}__hamburger-icon {
+        span {
+          &:nth-child(1) {
+            transform: rotate(45deg);
+            left: 6px;
+            top: -3px;
+            width: 32px;
+          }
+
+          &:nth-child(2) {
+            opacity: 0;
+            width: 0;
+          }
+
+          &:nth-child(3) {
+            transform: rotate(-45deg);
+            left: 6px;
+            top: 20px;
+            width: 32px;
+          }
+        }
+      }
+    }
+  }
+}

@@ -29,15 +29,15 @@ export default class UsageCell extends PureComponent {
 
     return product.used_by.user.id !== currentUser.id && (
       <Fragment>
-        Taken by <b>{product.used_by.user.name}</b> <br />
-        <img
-          width={40}
-          src={product.used_by.user.avatar_url}
-        />
-        <br />
-        { moment(product.used_by.started_at).fromNow() }
-        <br />
-      </Fragment>
+        <img src={product.used_by.user.avatar_url} className="user-avatar" />
+        <p>
+          <span className="table__data table__data-status-date">
+            Taken { moment(product.used_by.started_at).fromNow() }
+          </span>
+          <br/>
+          {product.used_by.user.name}
+        </p>
+      </Fragment>  
     )
   }
 
@@ -51,9 +51,11 @@ export default class UsageCell extends PureComponent {
       unsubscribeFromReturnNotification
     } = this.props
 
+    //TODO: add alt for images, change buttons CN
+
     return product.used_by.user.id === currentUser.id ? (
       <button
-        className="btn btn-warning"
+        className="button button--dark"
         onClick={() => {
           const isUserRated = product.ratings
             .find(item => item.user.id === currentUser.id)
@@ -68,18 +70,18 @@ export default class UsageCell extends PureComponent {
       product.used_by.return_subscribers.includes(currentUser.id) ? (
         <button
           type="button"
-          className="btn btn-danger"
+          className="table__bell-button"
           onClick={() => unsubscribeFromReturnNotification(product.id)}
         >
-          Cancel Notification
+          <img src="images/bell.svg" />
         </button>
       ) : (
         <button
           type="button"
-          className="btn btn-info"
+          className="table__bell-button"
           onClick={() => subscribeToReturnNotification(product.id)}
         >
-          Notify when returned
+          <img src="images/bell--inactive.svg" />
         </button>
       )
     )
@@ -98,7 +100,7 @@ export default class UsageCell extends PureComponent {
       </Fragment>
     ) : (
       <button
-        className="btn btn-primary"
+        className="button button--bright"
         onClick={() => takeProduct(product.id)}
       >
         Take book

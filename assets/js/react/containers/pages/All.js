@@ -43,10 +43,10 @@ class All extends PureComponent {
       },
       render: product => (
         <button
-          onClick={() => this.handleEdit(product)}
+          onClick={ () => this.handleEdit(product) }
           className="btn btn-secondary"
         >
-          <i className="fa fa-pencil" />
+          <i className="fa fa-pencil"/>
         </button>
       )
     }
@@ -59,21 +59,24 @@ class All extends PureComponent {
   render() {
     return (
       <div>
-        <SearchContainer />
+        <div className="search-container">
+          <SearchContainer/>
 
-        <button
-          onClick={() => (
-            this.setState({
-              modalProduct: MODAL_PRODUCT_NEW
-            })
-          )}
-        >
-          Add {JSON.stringify(this.state.modalProduct)}
-        </button>
+          <button
+            className="button button--dark button--narrow"
+            onClick={ () => (
+              this.setState({
+                modalProduct: MODAL_PRODUCT_NEW
+              })
+            ) }
+          >
+            <span>+</span> Add
+          </button>
+        </div>
 
         <ProductFormModal
           forAdmin
-          categories={this.props.categories}
+          categories={ this.props.categories }
           submitLabel={
             this.state.modalProduct === MODAL_PRODUCT_NEW ? 'Add' : 'Update'
           }
@@ -83,18 +86,18 @@ class All extends PureComponent {
               ? this.state.modalProduct
               : undefined
           }
-          onSubmit={attrs => (
+          onSubmit={ attrs => (
             this.state.modalProduct === MODAL_PRODUCT_NEW
               ? this.props.productActions.create(attrs)
               : this.props.productActions.update(this.state.modalProduct.id, attrs)
-          )}
-          show={this.state.modalProduct !== false}
-          onHide={() => {
+          ) }
+          show={ this.state.modalProduct !== false }
+          onHide={ () => {
             this.setState({ modalProduct: false })
-          }}
+          } }
         />
 
-        <ProductsTableContainer appendColumns={this.productTableColumns} />
+        <ProductsTableContainer appendColumns={ this.productTableColumns }/>
       </div>
     )
   }

@@ -6,7 +6,10 @@ export default class Table extends PureComponent {
   static propTypes = {
     products: PropTypes.array.isRequired,
     categories: PropTypes.object.isRequired,
-    appendColumns: PropTypes.array.isRequired
+    appendColumns: PropTypes.array.isRequired,
+    currentUser: PropTypes.shape({
+      id: PropTypes.number.isRequired
+    }),
   }
 
   static defaultProps = {
@@ -15,27 +18,25 @@ export default class Table extends PureComponent {
 
   render() {
     return (
-      <table className="products-table table table-striped">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th className="text-center">Author</th>
-            {this.props.appendColumns.map((col, i) => (
-              <th key={i} {...col.thProps}>{col.title}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {this.props.products.map(product => (
-            <TableRow
-              key={product.id}
-              product={product}
-              categoryName={this.props.categories[product.category_id].name}
-              appendColumns={this.props.appendColumns}
-            />
+      <div className="table">
+        <div className="table__row table__row--transparent">
+          <div className="table__heading table__heading-title">Title</div>
+          <div className="table__heading table__heading-author">Author</div>
+          <div className="table__heading table__heading-category">Category</div>
+          {this.props.appendColumns.map((col, i) => (
+            <div className="table__heading" key={i} {...col.thProps}>{col.title}</div>
           ))}
-        </tbody>
-      </table>
+        </div>
+        {this.props.products.map(product => (
+          <TableRow
+            key={product.id}
+            product={product}
+            categoryName={this.props.categories[product.category_id].name}
+            appendColumns={this.props.appendColumns}
+            currentUser={this.props.currentUser}
+          />
+        ))}
+      </div>
     )
   }
 }
