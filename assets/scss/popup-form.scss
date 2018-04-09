@@ -1,0 +1,32 @@
+.popup-form {
+  $module: &;
+
+  &__field {
+    &:first-of-type {
+      #{$module}__label {
+        margin-top: 0;
+      }
+    }
+  }
+
+  
+  &__label {
+    font-size: 18px;
+    display: block;
+    margin: 40px 0 10px;
+    font-weight: bold;
+  }
+
+  &__input {
+    background-color: $inputBg;
+    border: none;
+    height: 50px;
+    width: 100%;
+    padding: 0 15px;
+
+    &::placeholder {
+      color: $lightGray;
+      font-size: 16px;
+    }
+  }
+}

@@ -14,73 +14,80 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark header-navbar">
-      <div class="navbar-brand">
-        <i class="fa fa-book" aria-hidden="true"></i>
-        <%= Application.get_env(:lib_ten, :title) %>
+    <nav class="navbar">
+      <div class="navbar__header">
+        <div class="navbar__brand">
+          <i class="fa fa-book" aria-hidden="true"></i>
+          <%= Application.get_env(:lib_ten, :title) %>
+        </div>
+        <button
+          id="hamburger-button"
+          class="navbar__hamburger"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <div class="navbar__hamburger-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </button>
       </div>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
+      <div class="navbar__menu" id="hamburger-menu">
+        <ul class="navbar__menu-items">
           <%= active_link(@conn, "Library",
             to: products_path(@conn, :library),
             wrap_tag: :li,
-            class: "nav-link")
+            class: "navbar__menu-item")
           %>
           <%= active_link(@conn, "Orders",
             to: products_path(@conn, :orders),
             wrap_tag: :li,
-            class: "nav-link")
+            class: "navbar__menu-item")
           %>
           <%= if @conn.assigns.current_user.is_admin do %>
             <%= active_link(@conn, "All",
               to: admin_products_path(@conn, :all),
               wrap_tag: :li,
-              class: "nav-link")
+              class: "navbar__menu-item")
             %>
-            <li class="nav-item dropdown">
-              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+            <li class="navbar__menu-item navbar__menu-item--relative">
+              <a href="#" class="navbar__menu-item navbar__admin" data-toggle="dropdown" id="admin-dropdown-button">
                 Admin
+                <div class="arrow arrow--down"></div>
               </a>
-              <div class="dropdown-menu">
+              <div class="navbar__menu-dropdown" id="admin-dropdown-menu">
                 <%= link "Categories",
                   to: admin_category_path(@conn, :index),
-                  class: "dropdown-item"
+                  class: "navbar__dropdown-item"
                 %>
                 <%= link "Users",
                   to: admin_user_path(@conn, :index),
-                  class: "dropdown-item"
+                  class: "navbar__dropdown-item"
                 %>
               </div>
             </li>
           <% end %>
         </ul>
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <%= img_tag(@conn.assigns.current_user.avatar_url) %>
+        <ul class="navbar__menu-items">
+          <li class="navbar__logout">
+            <%= img_tag(@conn.assigns.current_user.avatar_url, class: "user-avatar") %>
+            <%# TODO: on desktop: add username, remove "sign out", replace with logout icon %>
+            <%= @conn.assigns.current_user.name %>
             <%= link("Sign out", to: auth_path(@conn, :sign_out), class: "nav-link") %>
+            <img src="images/logout.svg" />
           </li>
         </ul>
       </div>
     </nav>
-
-    <div class="container-fluid">
-
+    <div class="container">
       <main role="main">
         <%= render @view_module, @view_template, assigns %>
       </main>
-
     </div> <!-- /container -->
   </body>
 </html>
