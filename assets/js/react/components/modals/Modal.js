@@ -46,8 +46,7 @@ export default class Modal extends PureComponent {
         ref={ el => this.modalEl = el }
         onClick={ this.handleClosePopup }
       >
-        <div
-          className={ `popup__window ${this.props.popupModifier ? `popup__window--${this.props.popupModifier}` : ''}` }>
+        <div className={`popup__window ${this.props.popupModifier ? `popup__window--${this.props.popupModifier}` : ''}`}>
           { this.props.children }
         </div>
       </div>

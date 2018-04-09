@@ -49,12 +49,6 @@
       border-left: 5px solid $accent;
     }
 
-    [class*='col-'] {
-      &:last-of-type {
-        padding-right: 20px;
-      }
-    }
-
     .table__arrow {
       outline: none;
       position: absolute;
