@@ -23,7 +23,7 @@ defmodule LibTenWeb.CategoriesChannel do
 
 
   defp to_json_map(%Category{} = category) do
-    Map.take(category, [:id, :name])
+    Map.take(category, [:id, :name, :text_color, :background_color])
   end
 
   defp to_json_map(categories) do

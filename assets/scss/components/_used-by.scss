@@ -1,0 +1,31 @@
+.used-by {
+  display: flex;
+  align-items: center;
+
+  &__user-avatar {
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 100%;
+    box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  &__info {
+    @include with-line-limit;
+    color: $lightGray;
+    margin: 0 15px;
+  }
+
+  &__user-name {
+    font-weight: bold;
+    color: $text;
+  }
+
+  &__notification-container {
+    margin-left: auto;
+
+    .notification-btn {
+      display: block;
+    }
+  }
+}

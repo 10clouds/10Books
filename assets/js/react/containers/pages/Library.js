@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent, Fragment } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import socket from 'socket'
@@ -24,19 +24,29 @@ class Library extends PureComponent {
 
   appendColumns = [
     {
-      title: 'Ratings',
-      render: product => (
-        <div>{JSON.stringify(product.ratings)}</div>
-      )
+      title: 'Rating',
+      elProps: {
+        modifiers: ['rating']
+      },
+      render: product => {
+        const rating = product.ratings.length > 0
+          ? (product.ratings.reduce((total, rating) => {
+              return total + rating.value
+            }, 0) / parseFloat(product.ratings.length).toFixed(1)).toString()
+          : null
+
+        return rating ? (
+          <div className="product-rating">
+            <span className="product-rating__value">{rating}</span>
+            <span className="product-rating__label">/5</span>
+          </div>
+        ) : '-'
+      }
     },
     {
       title: 'Status',
-      thProps: {
-        className: 'text-center',
-        colSpan: 2
-      },
-      tdProps: {
-        className: 'text-center text-nowrap'
+      elProps: {
+        modifiers: ['used-by']
       },
       render: product => (
         <UsageCell
@@ -44,13 +54,19 @@ class Library extends PureComponent {
           product={product}
           currentUser={this.props.currentUser}
           openRateProduct={this.openRateProduct}
+          isMobile={this.state.isMobile}
         />
       )
     }
   ]
 
-  openRateProduct = productId => {
-    this.setState({ rateProductWithId: productId })
+  getTableRowProps = product => ({
+    isHighlighted: product.used_by
+      && product.used_by.user.id === this.props.currentUser.id
+  })
+
+  openRateProduct = product => {
+    this.setState({ rateProductWithId: product.id })
   }
 
   hideRateProduct = () => {
@@ -59,8 +75,8 @@ class Library extends PureComponent {
 
   render() {
     return (
-      <div>
-        <SearchContainer />
+      <Fragment>
+        <SearchContainer categories={this.props.categories} />
 
         <RateProductModal
           show={this.state.rateProductWithId !== null}
@@ -71,13 +87,18 @@ class Library extends PureComponent {
           }}
         />
 
-        <ProductsTableContainer appendColumns={this.appendColumns} />
-      </div>
+        <ProductsTableContainer
+          modifier="library"
+          appendColumns={this.appendColumns}
+          getRowProps={this.getTableRowProps}
+        />
+      </Fragment>
     )
   }
 }
 
 const mapStateToProps = state => ({
+  categories: state.categories.all,
   currentUser: state.user
 })
 

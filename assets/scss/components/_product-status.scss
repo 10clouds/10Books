@@ -1,0 +1,34 @@
+.product-status {
+  position: relative;
+  border-radius: 4px;
+
+  &__label {
+    white-space: nowrap;
+    padding: 0 40px;
+    justify-content: center;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+  }
+
+  &__option-divider {
+    border-top: 1px solid #efeff5;
+    margin: 4px 0;
+  }
+
+  .Select-arrow {
+    right: 12px;
+  }
+
+  &--bright .Select-arrow {
+    border-top-color: $accent;
+  }
+
+  &--green .Select-arrow {
+    border-top-color: $success;
+  }
+
+  &--red .Select-arrow {
+    border-top-color: $error;
+  }
+}

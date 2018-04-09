@@ -9,8 +9,8 @@ defmodule LibTenWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
+  if Mix.env == :dev do
+    forward "/sent_emails", Bamboo.EmailPreviewPlug
   end
 
   scope "/", LibTenWeb do
@@ -23,11 +23,14 @@ defmodule LibTenWeb.Router do
       get "/library", ProductsController, :library
       get "/orders", ProductsController, :orders
 
-      scope "/admin", as: :admin do
+      scope "/" do
         pipe_through :is_admin
-        get "/products", ProductsController, :all
-        resources "/users", Admin.UserController, only: [:index, :edit, :update]
-        resources "/categories", Admin.CategoryController
+        get "/all", ProductsController, :all
+
+        scope "/admin", as: :admin do
+          resources "/users", Admin.UserController, only: [:index, :edit, :update]
+          resources "/categories", Admin.CategoryController, except: [:show]
+        end
       end
     end
 
@@ -37,11 +40,6 @@ defmodule LibTenWeb.Router do
       get "/:provider/callback", AuthController, :callback
     end
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", LibTenWeb do
-  #   pipe_through :api
-  # end
 
   defp authenticate_user(conn, _) do
     case get_session(conn, :user_id) do

@@ -1,10 +1,11 @@
-import React, { PureComponent } from 'react'
+import React, { Fragment, PureComponent } from 'react'
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Modal from './Modal'
+import { READABLE_PRODUCT_STATUS } from '~/constants'
 
-class ProductForm extends PureComponent {
+class ProductFormModal extends PureComponent {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
     onHide: PropTypes.func.isRequired,
@@ -16,7 +17,8 @@ class ProductForm extends PureComponent {
         name: PropTypes.string.isRequired
       })
     ).isRequired,
-    product: PropTypes.object
+    product: PropTypes.object,
+    show: PropTypes.bool
   }
 
   static defaultProps = {
@@ -45,7 +47,7 @@ class ProductForm extends PureComponent {
       author: product.author || '',
       url: product.url || '',
       status: product.status || '',
-      category_id: product.category_id || null
+      category_id: product.category_id || ''
     }
   }
 
@@ -66,33 +68,52 @@ class ProductForm extends PureComponent {
 
   handleFieldChange = (name, value) => {
     this.setState(prevState => ({
-      fields: {...prevState.fields, [name]: value},
-      errors: {...prevState.errors, [name]: null}
+      fields: { ...prevState.fields, [name]: value },
+      errors: { ...prevState.errors, [name]: null }
     }))
   }
 
-  renderFormGroup(props = {type: 'text'}) {
-    const { label, name, inputComponent, ...inputProps } = props
+  renderFormGroup(props = { type: 'text' }) {
+    const { label, name, options, ...inputProps } = props
+    const fieldProps = {
+      className: classnames('form__input', {
+        'form__input--invalid': this.state.errors[name]
+      }),
+      name,
+      onChange: this.handleInputChange,
+      value: this.state.fields[name],
+      ...inputProps
+    }
 
     return (
-      <div className="form-group">
-        <label className="form-control-label">
-          {label}
+      <div className="form__group">
+        <label className="form__label">
+          { label }
         </label>
-        {inputComponent ? inputComponent : (
-          <input
-            className={classnames('form-control', {
-              'is-invalid': this.state.errors[name]
+        {options ? (
+          <div
+            className={classnames('select select--native', {
+              'select--empty': !fieldProps.value
             })}
-            {...inputProps}
-            name={name}
-            onChange={this.handleInputChange}
-            value={this.state.fields[name]}
-          />
+          >
+            <select {...fieldProps}>
+              <option>{inputProps.placeholder}</option>
+              {options.map(o => (
+                <option key={o.value} value={o.value} children={o.text} />
+              ))}
+            </select>
+            <span className="form__bar"/>
+          </div>
+        ) : (
+          <Fragment>
+            <input {...fieldProps} />
+            <span className="form__bar"/>
+          </Fragment>
         )}
+
         {this.state.errors[name] && (
           <div className="invalid-feedback">
-            {this.state.errors[name]}
+            { this.state.errors[name] }
           </div>
         )}
       </div>
@@ -105,6 +126,7 @@ class ProductForm extends PureComponent {
     return (
       <Modal {...modalProps}>
         <form
+          className="form modal-form"
           onSubmit={e => {
             e.preventDefault()
             onSubmit(this.state.fields)
@@ -133,59 +155,31 @@ class ProductForm extends PureComponent {
 
           {this.props.forAdmin && this.renderFormGroup({
             label: 'Status',
+            placeholder: 'Select status',
             name: 'status',
-            inputComponent: (
-              <select
-                name="status"
-                className={classnames('form-control', {
-                  'is-invalid': this.state.errors['status']
-                })}
-                onChange={this.handleInputChange}
-                value={this.state.fields.status}
-              >
-                <option value="">-- select --</option>
-                <option value="IN_LIBRARY">In Library</option>
-                <option value="REQUESTED">In Orders</option>
-                <option value="ACCEPTED">Accepted</option>
-                <option value="REJECTED">Rejected</option>
-                <option value="ORDERED">Ordered</option>
-                <option value="LOST">Lost</option>
-                <option value="DELETED">Deleted</option>
-              </select>
-            )
+            options: Object.keys(READABLE_PRODUCT_STATUS).map(key => ({
+              value: key,
+              text: READABLE_PRODUCT_STATUS[key]
+            }))
           })}
 
           {this.renderFormGroup({
             label: 'Category',
+            placeholder: 'Select category',
             name: 'category_id',
-            inputComponent: (
-              <select
-                className={classnames('form-control', {
-                  'is-invalid': this.state.errors['category_id']
-                })}
-                value={this.state.fields.category_id || ''}
-                onChange={e => {
-                  this.handleFieldChange('category_id',
-                    parseInt(e.target.value, 10) || null
-                  )
-                }}
-              >
-                <option value="">--select category--</option>
-                {this.props.categories.map(option => (
-                  <option
-                    key={option.id}
-                    value={option.id}
-                  >
-                    {option.name}
-                  </option>
-                ))}
-              </select>
-            )
+            options: this.props.categories.map(option => ({
+              value: option.id,
+              text: option.name
+            }))
           })}
-
-          <br />
-          <br />
-          <button type="submit">{this.props.submitLabel}</button>
+          <div className="modal-form__footer">
+            <button
+              className="button button--dark"
+              type="submit"
+            >
+              { this.props.submitLabel }
+            </button>
+          </div>
         </form>
       </Modal>
     )
@@ -196,4 +190,4 @@ const mapStateToProps = state => ({
   values: state.categories.all
 })
 
-export default connect(mapStateToProps)(ProductForm)
+export default connect(mapStateToProps)(ProductFormModal)

@@ -1,0 +1,23 @@
+.no-results {
+  margin: 0;
+  text-align: center;
+
+  @include s-up {
+    margin: 70px 0 0 0;
+  }
+
+  &__heading {
+    font-size: 18px;
+    font-weight: normal;
+    margin-bottom: 21px;
+  }
+
+  &__text {
+    color: $lightGray;
+    font-size: 14px;
+  }
+
+  &__link {
+    color: $accent;
+  }
+}

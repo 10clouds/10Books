@@ -1,0 +1,311 @@
+.navbar-burger-btn {
+  $module: &;
+
+  @include btn-reset;
+
+  &__icon {
+    height: 24px;
+    position: relative;
+    transform: rotate(0deg);
+    transition: .5s ease-in-out;
+    width: 25px;
+  }
+
+  &__icon-line {
+    background: $accent;
+    border-radius: 9px;
+    display: block;
+    height: 3px;
+    left: 0;
+    opacity: 1;
+    position: absolute;
+    transform-origin: left center;
+    transform: rotate(0deg);
+    transition: .25s ease-in-out;
+    width: 100%;
+
+    &:nth-child(1) {
+      top: 0;
+
+      #{$module}--active & {
+        left: 2px;
+        top: 0;
+        transform: rotate(45deg);
+        width: 29px;
+      }
+    }
+
+    &:nth-child(2) {
+      top: 10px;
+
+      #{$module}--active & {
+        opacity: 0;
+        width: 0;
+      }
+    }
+
+    &:nth-child(3) {
+      top: 20px;
+
+      #{$module}--active & {
+        left: 2px;
+        top: 20px;
+        transform: rotate(-45deg);
+        width: 28px;
+      }
+    }
+  }
+}
+
+.navbar-menu {
+  $module: &;
+
+  display: flex;
+
+  @include m-down {
+    position: fixed;
+    width: 100%;
+    height: 0;
+    top: 0;
+    left: 0;
+    background: $white;
+    overflow: auto;
+    z-index: $z-index-navbar;
+    transition: height 0.2s;
+    flex-direction: column;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  @include m-up {
+    flex-basis: 100%;
+  }
+
+  &__group {
+    @include m-down {
+      &:first-child {
+        margin-top: 6px;
+      }
+
+      &:last-child {
+        margin-bottom: 15px;
+
+        #{$module}__item-label {
+          color: $gray;
+        }
+      }
+    }
+
+    @include m-up {
+      display: flex;
+
+      &:first-child {
+        margin-right: 40px;
+      }
+
+      &:last-child {
+        margin-left: auto;
+      }
+    }
+  }
+
+  &__group > &__item {
+    @include m-up {
+      display: flex;
+      margin: 0 10px;
+
+      > #{$module}__item-label {
+        padding: 0 15px;
+      }
+
+      &:last-child > #{$module}__item-label {
+        padding-right: 0;
+      }
+    }
+  }
+
+  &__item {
+    position: relative;
+
+    @include m-down {
+      padding: 8px 0;
+      text-align: center;
+    }
+
+    &-label {
+      align-items: center;
+      height: 100%;
+      cursor: pointer;
+      position: relative;
+
+      @include m-down {
+        display: inline-flex;
+        padding: 8px 0;
+      }
+
+      @include m-up {
+        display: flex;
+      }
+
+      @media (any-hover: hover) {
+        &:hover {
+          color: $accent;
+        }
+      }
+
+      &.active,
+      &--active {
+        color: $accent;
+      }
+
+      .arrow {
+        display: inline-block;
+        border-top-color: inherit;
+        margin-left: 10px;
+        margin-top: 2px;
+
+        @include m-up {
+          border-width: 4px;
+        }
+      }
+    }
+  }
+
+  &__subgroup {
+    overflow: hidden;
+    max-height: 0;
+    transition-duration: 0.2s;
+    transition-property: max-height, box-shadow;
+
+    #{$module}__item {
+      font-size: 90%;
+    }
+
+    @include m-up {
+      position: absolute;
+      z-index: 1;
+      left: -10px;
+      box-shadow: 0 36px 54px 0 rgba(75, 82, 113, .13);
+      border-bottom-left-radius: 3px;
+      border-bottom-right-radius: 3px;
+
+      &-inner {
+        margin-top: 4px;
+        min-width: 153px;
+        background-color: $white;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        overflow: hidden;
+        padding: 10px 0;
+      }
+
+      #{$module}__item-label {
+        padding: 10px 20px;
+      }
+    }
+  }
+}
+
+.navbar-logout {
+  &,
+  &:hover {
+    color: inherit;
+  }
+
+  &__burger-label {
+    @include m-up {
+      display: none;
+    }
+  }
+
+  &__label {
+    display: none;
+
+    @include m-up {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &__avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 100%;
+    box-shadow: 0 8px 13px 0 rgba(0, 0, 0, 0.10);
+    margin-right: 16px;
+  }
+
+  &__action-icon {
+    margin-left: 25px;
+    width: 16px;
+  }
+}
+
+.navbar {
+  $navbar: &;
+  $height: 65px;
+
+  background: $white;
+  font-size: 19px;
+  font-weight: 600;
+  height: $height;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: $z-index-navbar;
+  box-shadow: 0 2px 69px 0 rgba(13, 13, 30, .08);
+
+  @include m-up {
+    font-size: 15px;
+  }
+
+  &__logo {
+    margin-left: 4px;
+    display: block;
+    height: 16px;
+
+    @include m-up {
+      margin-right: 30px;
+    }
+
+    @include l-up {
+      margin-right: 45px;
+    }
+  }
+
+  &__height-compensator {
+    height: $height;
+  }
+
+  .container {
+    display: flex;
+    height: 100%;
+    align-items: center;
+  }
+
+  .navbar-burger-btn {
+    margin-left: auto;
+
+    @include m-up {
+      display: none;
+    }
+  }
+
+  .navbar-menu {
+    @include m-down {
+      top: $height;
+      height: 0;
+
+      &--visible {
+        height: calc(100% - #{$height});
+      }
+    }
+
+    @include m-up {
+      height: 100%;
+
+      &__subgroup {
+        top: $height;
+      }
+    }
+  }
+}

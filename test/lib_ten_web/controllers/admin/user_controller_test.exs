@@ -1,26 +1,17 @@
 defmodule LibTenWeb.UserControllerTest do
   use LibTenWeb.ConnCase
 
+  import LibTen.Factory
+
   alias LibTen.Accounts.Users
 
-  @valid_attrs %{name: "Ruslan Savenok", email: "ruslan@10clouds.com"}
   @update_attrs %{name: "Ruslan 2", email: "ruslan-2@10clouds.com"}
   @invalid_attrs %{name: nil, email: nil}
 
-  def fixture(:user) do
-    {:ok, user} = Users.create(@valid_attrs)
-    user
-  end
-
   setup %{conn: conn} do
-    {:ok, user} = Users.create(%{
-      email: "user@user.com",
-      name: "Test",
-      is_admin: true
-    })
-    signed_in_conn = sign_in(conn, user)
+    user = insert(:user, is_admin: true)
     {:ok, %{
-      conn: signed_in_conn,
+      conn: sign_in(conn, user),
       current_user: user
     }}
   end
@@ -89,7 +80,7 @@ defmodule LibTenWeb.UserControllerTest do
 
 
   defp create_user(_) do
-    user = fixture(:user)
+    user = insert(:user)
     {:ok, user: user}
   end
 end

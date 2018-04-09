@@ -1,0 +1,18 @@
+.text-gray {
+  color: $gray;
+}
+
+.arrow {
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  height: 0;
+  width: 0;
+
+  &--up {
+    border-bottom: 6px solid $accent;
+  }
+
+  &--down {
+    border-top: 6px solid $accent;
+  }
+}

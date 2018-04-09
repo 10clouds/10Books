@@ -1,0 +1,13 @@
+Hey there! <br />
+<br />
+You took <b>“<%= @product.title %>”</b> from our bookshelf <%=
+  Timex.from_now(@product.used_by.inserted_at)
+%>. We hope you had a pleasant read, but it’s time to return the book.
+<br />
+<br />
+<%= if @return_subscribers_count > 1 do %>
+  <b><%= @return_subscribers_count %> people</b> can’t wait to read it. Maybe you told them that it’s worth their time? Anyways, don’t make them wait longer 🙂
+  <br />
+  <br />
+<% end %>
+Please return it! But feel free to take another one - there’s always time for a good book 🙂

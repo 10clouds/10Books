@@ -1,11 +1,13 @@
 defmodule LibTenWeb.Admin.CategoryControllerTest do
   use LibTenWeb.ConnCase
 
+  import LibTen.Factory
+
   alias LibTen.Accounts.Users
   alias LibTen.Categories
 
   @create_attrs %{name: "some name"}
-  @update_attrs %{name: "some updated name"}
+  @update_attrs %{name: "Some updated name"}
   @invalid_attrs %{name: nil}
 
   def fixture(:category) do
@@ -14,14 +16,9 @@ defmodule LibTenWeb.Admin.CategoryControllerTest do
   end
 
   setup %{conn: conn} do
-    {:ok, user} = Users.create(%{
-      email: "user@user.com",
-      name: "Test",
-      is_admin: true
-    })
-    signed_in_conn = sign_in(conn, user)
+    user = insert(:user, is_admin: true)
     {:ok, %{
-      conn: signed_in_conn,
+      conn: sign_in(conn, user),
       current_user: user
     }}
   end
@@ -67,14 +64,13 @@ defmodule LibTenWeb.Admin.CategoryControllerTest do
       assert html_response(conn, 404) =~ "not found"
     end
 
-    test "redirects to show when data is valid", %{conn: conn} do
+    test "redirects to index when data is valid", %{conn: conn} do
       conn = post conn, admin_category_path(conn, :create), category: @create_attrs
 
-      assert %{id: id} = redirected_params(conn)
-      assert redirected_to(conn) == admin_category_path(conn, :show, id)
+      assert redirected_to(conn) == admin_category_path(conn, :index)
 
-      conn = get conn, admin_category_path(conn, :show, id)
-      assert html_response(conn, 200) =~ "Show Category"
+      conn = get conn, admin_category_path(conn, :index)
+      assert html_response(conn, 200) =~ "Listing Categories"
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
@@ -115,10 +111,10 @@ defmodule LibTenWeb.Admin.CategoryControllerTest do
 
     test "redirects when data is valid", %{conn: conn, category: category} do
       conn = put conn, admin_category_path(conn, :update, category), category: @update_attrs
-      assert redirected_to(conn) == admin_category_path(conn, :show, category)
+      assert redirected_to(conn) == admin_category_path(conn, :index)
 
-      conn = get conn, admin_category_path(conn, :show, category)
-      assert html_response(conn, 200) =~ "some updated name"
+      conn = get conn, admin_category_path(conn, :index)
+      assert html_response(conn, 200) =~ Regex.compile!(@update_attrs.name)
     end
 
     test "renders errors when data is invalid", %{conn: conn, category: category} do
@@ -143,7 +139,7 @@ defmodule LibTenWeb.Admin.CategoryControllerTest do
       conn = delete conn, admin_category_path(conn, :delete, category)
       assert redirected_to(conn) == admin_category_path(conn, :index)
       assert_error_sent 404, fn ->
-        get conn, admin_category_path(conn, :show, category)
+        get conn, admin_category_path(conn, :edit, category)
       end
     end
   end

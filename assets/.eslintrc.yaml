@@ -1,31 +1,38 @@
 parser: babel-eslint
-extends: 
+extends:
   - eslint:recommended
   - plugin:react/recommended
 rules:
   quotes:
     - 2
     - single
-  semi: 
+  semi:
     - 2
     - never
   react/no-children-prop: 0
   no-console:
     - 2
-    - allow: 
+    - allow:
       - warn
       - error
-  no-unused-vars: 
+  no-unused-vars:
     - 2
     - ignoreRestSiblings: true
   arrow-parens:
     - 2
     - as-needed
-overrides: 
-  - files: 
+  object-curly-spacing:
+    - 2
+    - always
+  react/jsx-curly-spacing:
+    - 2
+    - never
+overrides:
+  - files:
     - '**/containers/**/*.js'
-    rules: 
+    rules:
       react/prop-types: false
-env: 
+env:
+  amd: true
   browser: true
   es6: true

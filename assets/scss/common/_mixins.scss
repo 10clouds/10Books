@@ -1,0 +1,78 @@
+@mixin s-up {
+  @media only #{$small} {
+    @content;
+  }
+}
+
+@mixin s-down {
+  @media only #{$small-down} {
+    @content;
+  }
+}
+
+@mixin m-up {
+  @media only #{$medium} {
+    @content;
+  }
+}
+
+@mixin m-down {
+  @media only #{$medium-down} {
+    @content;
+  }
+}
+
+@mixin l-up {
+  @media only #{$large} {
+    @content;
+  }
+}
+
+@mixin xl-up {
+  @media only #{$xlarge} {
+    @content;
+  }
+}
+
+@mixin xxl-up {
+  @media only #{$xxlarge} {
+    @content;
+  }
+}
+
+@mixin btn-reset {
+  outline: none;
+  padding: 0;
+  border: none;
+  background: transparent;
+
+  &:not([disabled]) {
+    cursor: pointer;
+  }
+}
+
+@mixin with-line-limit {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@mixin input-placeholder-color($color) {
+  &::-webkit-input-placeholder {
+    color: $color;
+  }
+
+  &:-ms-input-placeholder {
+    color: $color;
+  }
+
+  &::-moz-placeholder {
+    color: $color;
+    opacity: 1;
+  }
+
+  &:-moz-placeholder {
+    color: $color;
+    opacity: 1;
+  }
+}

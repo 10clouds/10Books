@@ -13,17 +13,19 @@ const reducers = {
     channel
   }),
 
-  [actionTypes.ALL_UPDATED]: (state, { items }) => ({
-    ...state,
-    all: items,
-    byId: items.reduce((all, item) => {
-      all[item.id] = item
-      return all
-    }, {})
-  }),
+  [actionTypes.ALL_UPDATED]: (state, { items }) => {
+    return {
+      ...state,
+      all: items,
+      byId: items.reduce((all, item) => {
+        all[item.id] = item
+        return all
+      }, {})
+    }
+  },
 
   [actionTypes.UPDATED]: (state, { attrs }) => {
-    const updatedItem = {...state.byId[attrs.id], ...attrs}
+    const updatedItem = { ...state.byId[attrs.id], ...attrs }
 
     return {
       ...state,
@@ -40,9 +42,9 @@ const reducers = {
   },
 
   [actionTypes.DELETED]: (state, { id }) => {
-    const newById = {...state.byId}
+    const newById = { ...state.byId }
     delete newById[id]
-    return {...state, byId: newById}
+    return { ...state, byId: newById }
   }
 }
 

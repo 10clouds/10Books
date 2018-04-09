@@ -1,0 +1,66 @@
+.notification-btn {
+  $module: &;
+
+  position: relative;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  width: 34px;
+  height: 34px;
+  background: $lightGray;
+  border-radius: 100%;
+  z-index: 1;
+
+  &:before {
+    content: '';
+    display: block;
+    width: 15px;
+    height: 19px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-image: url(/images/bell-icon-white.svg);
+    background-size: cover;
+  }
+
+  &--active {
+    background-image: $accent-gradient;
+  }
+
+  &__label {
+    opacity: 0;
+    position: absolute;
+    bottom: 130%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    background: $white;
+    border-radius: 5px;
+    box-shadow: 0 0 27px 2px rgba(75, 82, 113, .11);
+    padding: 12px;
+    color: $gray;
+    font-size: 11px;
+    transition: opacity 0.2s;
+    pointer-events: none;
+
+    &:after {
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 6px solid $white;
+      content: '';
+      height: 0;
+      left: 50%;
+      position: absolute;
+      top: 100%;
+      transform: translateX(-50%);
+      width: 0;
+    }
+
+    @media (hover: hover) {
+      #{$module}:hover & {
+        opacity: 1;
+      }
+    }
+  }
+}
