@@ -7,15 +7,11 @@
     "eslint": "eslint js/**/**.js; exit 0"
   },
   "dependencies": {
-    "bootstrap": "4.0.0-beta.2",
     "classnames": "^2.2.5",
-    "font-awesome": "^4.7.0",
-    "jquery": "^3.2.1",
     "lodash.debounce": "^4.0.8",
     "moment": "^2.19.4",
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",
-    "popper.js": "^1.12.6",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",

@@ -48,21 +48,9 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin('css/app.css'),
-    new CopyWebpackPlugin([
-      {
-        from: 'node_modules/font-awesome/fonts',
-        to: path.resolve(__dirname, '../priv/static/fonts/font-awesome')
-      }
-    ]),
     new CopyWebpackPlugin([{
       from: "./static",
       to: path.resolve(__dirname, "../priv/static")
-    }]),
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-      'window.jQuery': 'jquery',
-      Popper: ['popper.js', 'default']
-    })
+    }])
   ]
 };
