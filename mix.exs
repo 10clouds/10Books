@@ -61,7 +61,7 @@ defmodule LibTen.Mixfile do
       {:edeliver, "~> 1.4.5"},
       {:distillery, "~> 1.0.0", warn_missing: false},
       {:timex, "~> 3.1"},
-      {:quantum, "~> 2.2.5"},
+      {:quantum, "~> 2.2.7"},
       # TODO: Doesn't work with elixir 1.5.2, check later
       #{:credo, "~> 0.8", only: [:dev, :test], runtime: false}
       #
