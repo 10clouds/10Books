@@ -3,6 +3,17 @@ import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Modal from './Modal'
+import Dropdown from 'react-dropdown'
+
+const DROPDOWN_STATUS = [
+  { value: 'IN_LIBRARY', label: 'In Library' },
+  { value: 'REQUESTED', label: 'In Orders' },
+  { value: 'ACCEPTED', label: 'Accepted' },
+  { value: 'REJECTED', label: 'Rejected' },
+  { value: 'ORDERED', label: 'Ordered' },
+  { value: 'LOST', label: 'Lost' },
+  { value: 'DELETED', label: 'Deleted' },
+]
 
 class ProductForm extends PureComponent {
   static propTypes = {
@@ -16,7 +27,8 @@ class ProductForm extends PureComponent {
         name: PropTypes.string.isRequired
       })
     ).isRequired,
-    product: PropTypes.object
+    product: PropTypes.object,
+    show: PropTypes.bool
   }
 
   static defaultProps = {
@@ -90,6 +102,7 @@ class ProductForm extends PureComponent {
             value={ this.state.fields[name] }
           />
         ) }
+        <span className="form__bar"/>
         { this.state.errors[name] && (
           <div className="invalid-feedback">
             { this.state.errors[name] }
@@ -101,6 +114,13 @@ class ProductForm extends PureComponent {
 
   render() {
     const { onSubmit, ...modalProps } = this.props
+
+    const dropdownCategories = this.props.categories.map(option => (
+      {
+        value: option.id,
+        label: option.name
+      }
+    ))
 
     return (
       this.props.show ? (
@@ -137,23 +157,17 @@ class ProductForm extends PureComponent {
               label: 'Status',
               name: 'status',
               inputComponent: (
-                <select
-                  name="status"
+                <Dropdown
+                  options={ DROPDOWN_STATUS }
                   className={ classnames('form__select', {
                     'is-invalid': this.state.errors['status']
                   }) }
-                  onChange={ this.handleInputChange }
-                  value={ this.state.fields.status }
-                >
-                  <option value="">-- select --</option>
-                  <option value="IN_LIBRARY">In Library</option>
-                  <option value="REQUESTED">In Orders</option>
-                  <option value="ACCEPTED">Accepted</option>
-                  <option value="REJECTED">Rejected</option>
-                  <option value="ORDERED">Ordered</option>
-                  <option value="LOST">Lost</option>
-                  <option value="DELETED">Deleted</option>
-                </select>
+                  onChange={ selectedOption => {
+                    this.handleFieldChange('status', selectedOption.value)
+                    this.setState({ selectedStatus: selectedOption })
+                  } }
+                  value={ this.state.selectedStatus }
+                  placeholder="Select an option"/>
               )
             }) }
 
@@ -161,30 +175,25 @@ class ProductForm extends PureComponent {
               label: 'Category',
               name: 'category_id',
               inputComponent: (
-                <select
-                  className={ classnames('form-control', {
+                <Dropdown
+                  options={ dropdownCategories }
+                  className={ classnames('form__select', {
                     'is-invalid': this.state.errors['category_id']
                   }) }
-                  value={ this.state.fields.category_id || '' }
-                  onChange={ e => {
+                  onChange={ selectedOption => {
                     this.handleFieldChange('category_id',
-                      parseInt(e.target.value, 10) || null
+                      parseInt(selectedOption.value, 10) || null
                     )
+                    this.setState({ selectedCategory: selectedOption })
                   } }
-                >
-                  <option value="">--select category--</option>
-                  { this.props.categories.map(option => (
-                    <option
-                      key={ option.id }
-                      value={ option.id }
-                    >
-                      { option.name }
-                    </option>
-                  )) }
-                </select>
+                  value={ this.state.selectedCategory }
+                  placeholder="Select an option"
+                />
               )
             }) }
-            <button className="button button--dark button--narrow form__button" type="submit">{ this.props.submitLabel }</button>
+
+            <button className="button button--dark button--narrow form__button"
+                    type="submit">{ this.props.submitLabel }</button>
           </form>
         </Modal>
       ) : null
