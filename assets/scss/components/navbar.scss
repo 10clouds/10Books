@@ -1,12 +1,12 @@
 .navbar {
   $navbar: &;
-  position: fixed;
-  height: 75px;
-  top: 0;
   background-color: $white;
   box-shadow: 0 2px 69px 0 rgba(13, 13, 30, 0.04);
   font-size: 18px;
   font-weight: 600;
+  height: 75px;
+  position: fixed;
+  top: 0;
   width: 100%;
   z-index: 99;
 
@@ -25,7 +25,7 @@
     padding: 0 20px;
 
     @include m-up {
-      margin-right: 30px;
+      margin-right: 10px;
       min-width: 110px;
       padding: 0;
     }
@@ -40,8 +40,8 @@
   }
 
   &__menu {
-    background: white;
     align-items: center;
+    background: white;
     display: none;
     flex-direction: column;
     padding: 0 0 40px;
@@ -51,8 +51,8 @@
     }
 
     &--visible {
-      display: flex;
       box-shadow: 0 20px 29px 0 rgba(13, 13, 30, 0.04);
+      display: flex;
 
       @include m-up {
         box-shadow: none;
@@ -74,16 +74,16 @@
     width: 100%;
 
     @include m-up {
+      align-items: center;
       display: flex;
       height: 100%;
-      align-items: center;
       width: auto;
     }
 
     li {
       @include m-up {
-        padding: 0 20px;
         display: block;
+        padding: 0 20px;
       }
 
       @include xl-up {
@@ -126,10 +126,6 @@
       }
     }
 
-    .nav-link {
-      padding: 0 10px;
-    }
-
     .user-avatar {
       display: none;
 
@@ -139,9 +135,10 @@
     }
 
     @include m-up {
-      padding: 0;
-      display: flex;
       align-items: center;
+      display: flex;
+      margin-left: 20px;
+      padding: 0;
     }
 
     a {
@@ -149,12 +146,31 @@
     }
   }
 
+  &__logout-link {
+    @include m-up {
+      display: none;
+    }
+  }
+
+  &__username,
+  &__logout-icon {
+    display: none;
+
+    @include m-up {
+      display: block;
+    }
+  }
+
+  &__username {
+    margin: 0 20px;
+  }
+
   .arrow {
     display: inline-block;
+    margin-left: 10px;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    margin-left: 10px;
 
     @include m-up {
       margin: 0;
@@ -178,14 +194,14 @@
     background-color: $white;
 
     @include m-up {
-      position: absolute;
-      top: 50px;
-      left: 30px;
-      padding: 10px;
       border-radius: 5px;
       box-shadow: 4px 5px 47px 0 rgba(75, 82, 113, 0.2);
-      text-align: left;
+      left: 30px;
       min-width: 200px;
+      padding: 10px;
+      position: absolute;
+      text-align: left;
+      top: 50px;
     }
 
     &--visible {
@@ -221,12 +237,12 @@
     }
 
     &-icon {
-      width: 30px;
+      cursor: pointer;
       height: 30px;
       position: relative;
       transform: rotate(0deg);
       transition: .5s ease-in-out;
-      cursor: pointer;
+      width: 30px;
     }
 
     &-icon span {
@@ -237,10 +253,10 @@
       left: 0;
       opacity: 1;
       position: absolute;
-      width: 100%;
+      transform-origin: left center;
       transform: rotate(0deg);
       transition: .25s ease-in-out;
-      transform-origin: left center;
+      width: 100%;
 
       &:nth-child(1) {
         top: 0;
@@ -259,9 +275,9 @@
       #{$navbar}__hamburger-icon {
         span {
           &:nth-child(1) {
-            transform: rotate(45deg);
             left: 6px;
             top: -3px;
+            transform: rotate(45deg);
             width: 32px;
           }
 
@@ -271,9 +287,9 @@
           }
 
           &:nth-child(3) {
-            transform: rotate(-45deg);
             left: 6px;
             top: 20px;
+            transform: rotate(-45deg);
             width: 32px;
           }
         }
