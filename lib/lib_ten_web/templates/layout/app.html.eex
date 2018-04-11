@@ -81,8 +81,11 @@
             </span>
             <%= link("Sign out", to: auth_path(@conn, :sign_out), class: "navbar__logout-link") %>
             <%= link to: auth_path(@conn, :sign_out),
-              class: "navbar__logout-icon" do %>
-              <img src="images/logout.svg" alt="logout" />
+              class: "navbar__logout-icon" 
+            do %>
+              <%= img_tag static_path(@conn, "/images/logout.svg"),
+                alt: "logout"
+              %>
             <% end %>
           </li>
         </ul>
