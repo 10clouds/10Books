@@ -12,7 +12,6 @@
           <div class="categories__name"><%= category.name %></div>
         </div>  
         <div class="categories__actions">
-          <div class="categories__show"><%= link "Show", to: admin_category_path(@conn, :show, category) %></div>
           <div class="categories__edit"><%= link "", to: admin_category_path(@conn, :edit, category) %>
           <img src="../images/edit.svg" class="categories__edit-img" />
           </div>
