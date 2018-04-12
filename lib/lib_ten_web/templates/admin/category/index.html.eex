@@ -12,9 +12,14 @@
           <div class="categories__name"><%= category.name %></div>
         </div>  
         <div class="categories__actions">
-          <div class="categories__edit"><%= link "", to: admin_category_path(@conn, :edit, category) %>
-          <img src="../images/edit.svg" class="categories__edit-img" />
-          </div>
+          <%= link to: admin_category_path(@conn, :edit, category),
+            class: "categories__edit"
+          do %>
+            <%= img_tag static_path(@conn, "/images/edit.svg"),
+              alt: "edit",
+              class: "categories__edit-img"
+            %>
+          <% end %>
           <button class="button button--delete"><%= link "Delete", to: admin_category_path(@conn, :delete, category), method: :delete, data: [confirm: "Are you sure?"], class: "categories__delete" %></button>
         </div>
       </div>
