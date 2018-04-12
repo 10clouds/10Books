@@ -208,7 +208,7 @@
   }
 
   &__category-name {
-    font-weight: 600;
+    font-weight: bold;
     margin-left: 15px;
 
     @include m-up {
@@ -250,7 +250,7 @@
   &__data-status-date {
     color: $gray;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: bold;
   }
 
   &__bell-button {
