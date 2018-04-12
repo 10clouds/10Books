@@ -12,7 +12,7 @@ export default class Modal extends PureComponent {
   }
 
   componentDidMount() {
-    $(this.modalEl).on('hide.bs.modal', this.props.onHide)
+    this.modalEl.addEventListener('hide.bs.modal', this.props.onHide)
     document.body.classList.add(SCROLL_DISABLED_CLASS)
   }
 
