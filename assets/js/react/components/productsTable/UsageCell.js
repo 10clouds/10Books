@@ -1,6 +1,8 @@
 import React, { PureComponent, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
+import classnames from "classnames";
+import TooltipButton from "./Tooltip-button";
 
 export default class UsageCell extends PureComponent {
   static propTypes = {
@@ -37,7 +39,7 @@ export default class UsageCell extends PureComponent {
           <br/>
           {product.used_by.user.name}
         </p>
-      </Fragment>  
+      </Fragment>
     )
   }
 
@@ -68,21 +70,25 @@ export default class UsageCell extends PureComponent {
       </button>
     ) : (
       product.used_by.return_subscribers.includes(currentUser.id) ? (
-        <button
-          type="button"
+        <TooltipButton
+          onClick={ () => {
+            unsubscribeFromReturnNotification(product.id)
+          } }
           className="table__bell-button"
-          onClick={() => unsubscribeFromReturnNotification(product.id)}
+          tooltipText="Notify when returned"
         >
-          <img src="images/bell.svg" />
-        </button>
+          <img src="images/bell.svg"/>
+        </TooltipButton>
       ) : (
-        <button
-          type="button"
+        <TooltipButton
+          onClick={ () => {
+            subscribeToReturnNotification(product.id)
+          } }
           className="table__bell-button"
-          onClick={() => subscribeToReturnNotification(product.id)}
+          tooltipText="Notify when returned"
         >
-          <img src="images/bell--inactive.svg" />
-        </button>
+          <img src="images/bell--inactive.svg"/>
+        </TooltipButton>
       )
     )
   }
