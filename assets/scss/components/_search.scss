@@ -1,18 +1,19 @@
 .search-form {
-  margin: 40px auto 0;
+  position: relative;
   width: 100%;
 
   @include m-up {
-    margin: 40px auto;
-    max-width: 800px;
+    display: flex;
+    justify-content: center;
+    width: auto;
   }
 
-  @include l-up {
-    margin: 60px auto;
-  }
+  &__wrapper-input{
+    position: relative;
 
-  @include xxl-up {
-    margin: 80px auto;
+    @include m-up {
+      width: 500px;
+    }
   }
 
   &__input {
@@ -31,11 +32,28 @@
   }
 
   &__loupe {
-    //light version is available for PRO users only :(
-    color: $lightGray;
-    display: inline-block;
     font-size: 24px;
-    margin-left: -40px;
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &__dropdown{
+    background: #ffffff;
+    border-radius: 5px;
+    margin-left: 40px;
+    width: 250px;
+    display: none;
+
+    @include m-up {
+      display: block;
+    }
+
+    .Dropdown-control{
+      background: #ffffff;
+      height: 100%;
+    }
   }
 }
 
@@ -44,25 +62,19 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  margin: 40px 0;
 
   @include m-up {
     flex-wrap: nowrap;
+    margin-right: 40px;
   }
 
-  .search-form {
-    margin: 40px 0;
+  @include l-up {
+    margin: 60px 0;
+  }
 
-    @include m-up {
-      margin-right: 40px;
-    }
-
-    @include l-up {
-      margin: 60px 40px 60px 0;
-    }
-
-    @include xxl-up {
-      margin: 80px 40px 80px 0;
-    }
+  @include xxl-up {
+    margin: 80px 0;
   }
 
   .button {
@@ -71,6 +83,7 @@
     @include m-up {
       min-width: 150px;
       padding: 0 30px;
+      margin-left: 40px;
     }
 
     @include xl-up {

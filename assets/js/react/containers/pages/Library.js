@@ -69,7 +69,9 @@ class Library extends PureComponent {
   render() {
     return (
       <div>
-        <SearchContainer />
+        <div className="search-container">
+          <SearchContainer categories={ this.props.categories } />
+        </div>
 
         <RateProductModal
           show={this.state.rateProductWithId !== null}
@@ -87,6 +89,7 @@ class Library extends PureComponent {
 }
 
 const mapStateToProps = state => ({
+  categories: state.categories.all,
   currentUser: state.user
 })
 

@@ -4,21 +4,41 @@ import { connect } from 'react-redux'
 import debounce from 'lodash.debounce'
 import * as searchActions from '~/store/actions/search'
 import Search from '~/components/Search'
+import CategoryFilter from '~/components/CategoryFilter'
 
 class SearchContainer extends Component {
+
+  state = {
+    dropdownCategoryPlaceholder: ''
+  }
+
   handleSearchUpdate = debounce(e => {
     this.props.updateQuery(e.target.value)
   }, 50)
 
+  handleDropdownChange = debounce(selectedOption => {
+    this.props.updateQuery(selectedOption.label)
+  }, 50)
+
   render() {
     return (
-      <Search
-        onChange={e => {
-          e.persist()
-          this.handleSearchUpdate(e)
-        }}
-        value={this.props.queryString}
-      />
+      <div className="search-form">
+        <Search
+          onChange={ e => {
+            e.persist()
+            this.handleSearchUpdate(e)
+          } }
+          value={ this.props.queryString }
+        />
+        <CategoryFilter
+          onChange={ selectedOption => {
+            this.handleDropdownChange(selectedOption)
+            this.setState({dropdownCategoryPlaceholder: selectedOption.label})
+          } }
+          value={ this.state.dropdownCategoryPlaceholder }
+          categories={ this.props.categories }
+        />
+      </div>
     )
   }
 }

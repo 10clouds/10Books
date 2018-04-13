@@ -17,10 +17,14 @@
 }
 
 .container {
-  padding: 80px 10px 40px;
+  padding: 80px 20px 40px;
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
+
+  @include s-up {
+    padding: 80px 25px 40px;
+  }
 }
 
 .category-icon {
