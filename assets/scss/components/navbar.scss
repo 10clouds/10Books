@@ -77,7 +77,12 @@
       align-items: center;
       display: flex;
       height: 100%;
+      margin-right: 50px;
       width: auto;
+    }
+
+    @include l-up {
+      margin-right: 0;
     }
 
     li {
