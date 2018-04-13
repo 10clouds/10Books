@@ -84,7 +84,7 @@
             <span class="navbar__username">
               <%= @conn.assigns.current_user.name %>
             </span>
-            <%= link("Sign out", to: auth_path(@conn, :sign_out), class: "navbar__logout-link") %>
+            <%= link("Logout", to: auth_path(@conn, :sign_out), class: "navbar__logout-link") %>
             <%= link to: auth_path(@conn, :sign_out),
               class: "navbar__logout-icon" 
             do %>

@@ -48,7 +48,7 @@
     background: white;
     display: none;
     flex-direction: column;
-    padding: 0 0 40px;
+    padding: 7px 0 40px;
 
     @include m-up {
       padding-top: 20px;
@@ -118,7 +118,7 @@
 
   &__menu-item {
     display: block;
-    padding: 20px 10px;
+    padding: 16px 10px;
 
     &--relative {
       padding: 0;
@@ -127,7 +127,7 @@
   }
 
   &__logout {
-    padding-top: 20px;
+    margin-top: 40px;
 
     #{$navbar} & {
       @include m-up {
