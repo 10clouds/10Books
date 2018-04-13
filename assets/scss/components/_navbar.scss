@@ -22,7 +22,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     min-height: 75px;
-    padding: 0 20px;
+    padding: 0 20px 0 28px;
 
     @include m-up {
       margin-right: 10px;
@@ -37,6 +37,10 @@
 
   &__brand {
     color: $gray;
+  }
+
+  &__logo {
+    height: 17px;
   }
 
   &__menu {
@@ -236,6 +240,7 @@
     background-color: transparent;
     border: none;
     outline: none;
+    padding: 0;
 
     @include m-up {
       display: none;
@@ -243,11 +248,11 @@
 
     &-icon {
       cursor: pointer;
-      height: 30px;
+      height: 24px;
       position: relative;
       transform: rotate(0deg);
       transition: .5s ease-in-out;
-      width: 30px;
+      width: 25px;
     }
 
     &-icon span {
@@ -281,9 +286,9 @@
         span {
           &:nth-child(1) {
             left: 6px;
-            top: -3px;
+            top: 0;
             transform: rotate(45deg);
-            width: 32px;
+            width: 29px;
           }
 
           &:nth-child(2) {
@@ -295,7 +300,7 @@
             left: 6px;
             top: 20px;
             transform: rotate(-45deg);
-            width: 32px;
+            width: 28px;
           }
         }
       }
