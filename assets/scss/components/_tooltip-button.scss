@@ -1,0 +1,39 @@
+.button-tooltip {
+  $btn-tooltip: &;
+  padding: 0;
+  position: relative;
+  cursor: pointer;
+
+  &.tooltip-active {
+    #{$btn-tooltip}__text {
+      display: block;
+    }
+  }
+
+  &__text {
+    background: $white;
+    border-radius: 5px;
+    bottom: 130%;
+    box-shadow: 17px 17px 29px 0 rgba(75, 82, 113, 0.11);
+    color: $gray;
+    padding: 10px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    display: none;
+
+    &:after {
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 6px solid $white;
+      content: '';
+      height: 0;
+      left: 50%;
+      position: absolute;
+      top: 100%;
+      transform: translateX(-50%);
+      width: 0;
+    }
+  }
+}
