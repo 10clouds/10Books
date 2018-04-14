@@ -2,9 +2,9 @@
   $navbar: &;
 
   background-color: $white;
-  box-shadow: 0 2px 69px 0 rgba(13, 13, 30, 0.04);
+  box-shadow: 0 2px 69px 0 rgba(13, 13, 30, .04);
   font-size: 19px;
-  font-weight: bold;
+  font-weight: 600;
   height: 75px;
   position: fixed;
   top: 0;
@@ -20,17 +20,21 @@
 
   &__header {
     align-items: center;
+    background-color: $white;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     min-height: 75px;
     padding: 0 20px 0 28px;
+    position: relative;
+    z-index: 98;
 
     @include m-up {
-      margin-right: 10px;
+      margin-right: 40px;
       min-height: 0;
       min-width: 110px;
       padding: 1px 0 0;
+      background-color: transparent;
     }
 
     @include l-up {
@@ -53,18 +57,22 @@
   &__menu {
     align-items: center;
     background: white;
-    display: none;
     flex-direction: column;
+    margin-top: -306px;
     padding: 6px 0 40px;
+    position: relative;
+    transition: margin .6s ease-in-out;
+    z-index: 97;
 
     @include m-up {
       padding-top: 20px;
     }
 
     &--visible {
-      box-shadow: 0 20px 29px 0 rgba(13, 13, 30, 0.04);
+      box-shadow: 0 20px 29px 0 rgba(13, 13, 30, .04);
       display: flex;
-
+      margin-top: 0;
+      
       @include m-up {
         box-shadow: none;
       }
@@ -77,6 +85,8 @@
       justify-content: space-between;
       padding: 0;
       width: 100%;
+      z-index: 100;
+      margin-top: 0;
     }
   }
 
@@ -88,12 +98,8 @@
       align-items: center;
       display: flex;
       height: 100%;
-      margin-right: 50px;
-      width: auto;
-    }
-
-    @include l-up {
       margin-right: 0;
+      width: auto;
     }
 
     li {
@@ -215,7 +221,7 @@
 
     @include m-up {
       border-radius: 5px;
-      box-shadow: 4px 5px 47px 0 rgba(75, 82, 113, 0.2);
+      box-shadow: 4px 5px 47px 0 rgba(75, 82, 113, .2);
       left: 30px;
       min-width: 200px;
       padding: 10px;

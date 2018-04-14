@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     hamburgerMenu.classList.toggle('navbar__menu--visible')
   })
   
-  adminDropdownButton.addEventListener('click', (e) => {
+  adminDropdownButton.addEventListener('click', e => {
     e.preventDefault()
     adminDropdownButton.classList.toggle('collapsed')
     adminDropdownMenu.classList.toggle('navbar__menu-dropdown--visible')

@@ -10,7 +10,7 @@
     align-items: center;
     position: relative;
     overflow: hidden;
-    background-color: rgba(237, 237, 242, 0.4);
+    background-color: rgba(237, 237, 242, .4);
     border-radius: 3px;
     box-sizing: border-box;
     height: 55px;
@@ -43,7 +43,7 @@
   &-menu {
     background-color: white;
     border-radius: 3px;
-    box-shadow: 0 2px 69px 5px rgba(13, 13, 30, 0.1);
+    box-shadow: 0 2px 69px 5px rgba(13, 13, 30, .1);
     box-sizing: border-box;
     margin-top: -1px;
     max-height: 200px;
@@ -64,7 +64,7 @@
 
   &-option {
     box-sizing: border-box;
-    color: rgba(51, 51, 51, 0.8);
+    color: rgba(51, 51, 51, .8);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -81,12 +81,12 @@
     }
 
     &:hover {
-      background-color: rgba(237, 237, 242, 0.4);
+      background-color: rgba(237, 237, 242, .4);
       color: #333;
     }
 
     &.is-selected {
-      background-color: rgba(237, 237, 242, 0.4);
+      background-color: rgba(237, 237, 242, .4);
       color: #333;
     }
   }
