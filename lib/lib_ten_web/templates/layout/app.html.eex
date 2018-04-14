@@ -89,7 +89,8 @@
               class: "navbar__logout-icon" 
             do %>
               <%= img_tag static_path(@conn, "/images/logout.svg"),
-                alt: "logout"
+                alt: "logout",
+                class: "navbar__logout-icon"
               %>
             <% end %>
           </li>

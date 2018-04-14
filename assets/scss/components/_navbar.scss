@@ -1,8 +1,9 @@
 .navbar {
   $navbar: &;
+
   background-color: $white;
   box-shadow: 0 2px 69px 0 rgba(13, 13, 30, 0.04);
-  font-size: 18px;
+  font-size: 19px;
   font-weight: bold;
   height: 75px;
   position: fixed;
@@ -12,8 +13,9 @@
 
   @include m-up {
     display: flex;
-    height: 75px;
-    padding: 0 40px;
+    font-size: 14px;
+    height: 63px;
+    padding: 0 35px 0 48px;
   }
 
   &__header {
@@ -26,12 +28,13 @@
 
     @include m-up {
       margin-right: 10px;
+      min-height: 0;
       min-width: 110px;
-      padding: 0;
+      padding: 1px 0 0;
     }
 
     @include l-up {
-      margin-right: 80px;
+      margin-right: 65px;
     }
   }
 
@@ -41,6 +44,10 @@
 
   &__logo {
     height: 17px;
+
+    @include m-up {
+      height: 16px;
+    }
   }
 
   &__menu {
@@ -48,7 +55,7 @@
     background: white;
     display: none;
     flex-direction: column;
-    padding: 7px 0 40px;
+    padding: 6px 0 40px;
 
     @include m-up {
       padding-top: 20px;
@@ -118,7 +125,11 @@
 
   &__menu-item {
     display: block;
-    padding: 16px 10px;
+    padding: 16px 0;
+
+    @include m-up {
+
+    }
 
     &--relative {
       padding: 0;
@@ -127,11 +138,14 @@
   }
 
   &__logout {
-    margin-top: 40px;
+    margin-top: 37px;
 
     #{$navbar} & {
       @include m-up {
+        align-items: center;
         display: flex;
+        margin: 0 0 0 20px;
+        padding: 0;
       }
     }
 
@@ -143,13 +157,6 @@
       }
     }
 
-    @include m-up {
-      align-items: center;
-      display: flex;
-      margin-left: 20px;
-      padding: 0;
-    }
-
     a {
       color: $gray;
     }
@@ -159,6 +166,10 @@
     @include m-up {
       display: none;
     }
+  }
+
+  &__logout-icon {
+    height: 16px;
   }
 
   &__username,
@@ -183,7 +194,7 @@
 
     @include m-up {
       margin: 0;
-      right: -10px;
+      right: -20px;
     }
   }
 
@@ -199,8 +210,8 @@
   }
 
   &__menu-dropdown {
-    display: none;
     background-color: $white;
+    display: none;
 
     @include m-up {
       border-radius: 5px;
@@ -210,7 +221,7 @@
       padding: 10px;
       position: absolute;
       text-align: left;
-      top: 50px;
+      top: 38px;
     }
 
     &--visible {
