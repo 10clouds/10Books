@@ -94,7 +94,7 @@ class Orders extends PureComponent {
     return (
       <Fragment>
         <div className="search-container">
-          <SearchContainer/>
+          <SearchContainer categories={ this.props.categories } />
 
           <button
             className="button button--dark button--narrow"
