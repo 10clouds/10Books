@@ -58,10 +58,10 @@
     align-items: center;
     background: white;
     flex-direction: column;
-    margin-top: -306px;
     padding: 6px 0 40px;
     position: relative;
-    transition: margin .6s ease-in-out;
+    transform: translateY(-306px);
+    transition: transform .6s ease-in-out;
     z-index: 97;
 
     @include m-up {
@@ -71,7 +71,7 @@
     &--visible {
       box-shadow: 0 20px 29px 0 rgba(13, 13, 30, .04);
       display: flex;
-      margin-top: 0;
+      transform: translateY(0px);
       
       @include m-up {
         box-shadow: none;
@@ -86,7 +86,7 @@
       padding: 0;
       width: 100%;
       z-index: 100;
-      margin-top: 0;
+      transform: translateY(0px);
     }
   }
 
