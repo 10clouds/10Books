@@ -55,8 +55,8 @@
               wrap_tag: :li,
               class: "navbar__menu-item")
             %>
-            <li class="navbar__menu-item navbar__menu-item--relative">
-              <a href="#" class="navbar__menu-item navbar__admin" data-toggle="dropdown" id="admin-dropdown-button">
+            <li id="admin-dropdown" class="navbar__menu-item navbar__menu-item--relative">
+              <a id="admin-dropdown-button" href="#" class="navbar__menu-item navbar__admin" data-toggle="dropdown">
                 Admin
                 <div class="arrow arrow--down"></div>
               </a>

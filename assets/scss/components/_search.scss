@@ -20,19 +20,19 @@
     border-radius: 5px;
     border: none;
     box-shadow: 4px 57px 67px 0 rgba(75, 82, 113, 0.09);
-    font-size: 16px;
-    height: 65px;
+    font-size: 14px;
+    height: 55px;
     padding: 0 40px 0 15px;
     width: 100%;
 
     &::placeholder {
       color: $lightGray;
-      font-size: 16px;
     }
   }
 
   &__loupe {
-    font-size: 24px;
+    width: 20px;
+    height: auto;
     position: absolute;
     right: 30px;
     top: 50%;
@@ -42,12 +42,16 @@
   &__dropdown{
     background: #ffffff;
     border-radius: 5px;
-    margin-left: 40px;
+    margin-left: 20px;
     width: 250px;
     display: none;
 
     @include m-up {
       display: block;
+    }
+
+    @include l-up{
+      margin-left: 40px;
     }
 
     .Dropdown-control{
@@ -78,12 +82,14 @@
   }
 
   .button {
-    height: 65px;
+    height: 55px;
+    margin-top: 30px;
 
     @include m-up {
       min-width: 150px;
       padding: 0 30px;
       margin-left: 40px;
+      margin-top: 0;
     }
 
     @include xl-up {

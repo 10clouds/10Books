@@ -2,7 +2,7 @@
   $navbar: &;
   background-color: $white;
   box-shadow: 0 2px 69px 0 rgba(13, 13, 30, 0.04);
-  font-size: 18px;
+  font-size: 14px;
   font-weight: bold;
   height: 75px;
   position: fixed;
@@ -13,6 +13,10 @@
   @include m-up {
     display: flex;
     height: 75px;
+    padding: 0 25px;
+  }
+
+  @include l-up {
     padding: 0 40px;
   }
 
@@ -26,12 +30,12 @@
 
     @include m-up {
       margin-right: 10px;
-      min-width: 110px;
+      width: 100px;
       padding: 0;
     }
 
     @include l-up {
-      margin-right: 80px;
+      margin-right: 85px;
     }
   }
 
@@ -77,7 +81,6 @@
       align-items: center;
       display: flex;
       height: 100%;
-      margin-right: 50px;
       width: auto;
     }
 
@@ -85,7 +88,7 @@
       margin-right: 0;
     }
 
-    li {
+    li:not(#{$navbar}__logout) {
       @include m-up {
         display: block;
         padding: 0 20px;
@@ -114,7 +117,7 @@
 
   &__menu-item {
     display: block;
-    padding: 20px 10px;
+    padding: 20px 0;
 
     &--relative {
       padding: 0;
@@ -125,10 +128,13 @@
   &__logout {
     padding-top: 20px;
 
-    #{$navbar} & {
-      @include m-up {
-        display: flex;
-      }
+    @include m-up {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      margin-left: 20px;
+      padding: 0;
+      width: 210px;
     }
 
     .user-avatar {
@@ -137,13 +143,6 @@
       @include m-up {
         display: block;
       }
-    }
-
-    @include m-up {
-      align-items: center;
-      display: flex;
-      margin-left: 20px;
-      padding: 0;
     }
 
     a {
@@ -157,6 +156,12 @@
     }
   }
 
+  &__logout-icon {
+    img {
+      height: 16px;
+    }
+  }
+
   &__username,
   &__logout-icon {
     display: none;
@@ -167,7 +172,7 @@
   }
 
   &__username {
-    margin: 0 20px;
+    padding: 0 10px;
   }
 
   .arrow {
@@ -179,7 +184,7 @@
 
     @include m-up {
       margin: 0;
-      right: -10px;
+      right: -20px;
     }
   }
 
@@ -201,7 +206,7 @@
     @include m-up {
       border-radius: 5px;
       box-shadow: 4px 5px 47px 0 rgba(75, 82, 113, 0.2);
-      left: 30px;
+      left: 20px;
       min-width: 200px;
       padding: 10px;
       position: absolute;
@@ -214,7 +219,6 @@
     }
 
     #{$navbar}__dropdown-item {
-      font-size: 16px;
       padding: 15px 10px;
 
       @include m-up {

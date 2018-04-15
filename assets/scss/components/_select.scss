@@ -100,13 +100,12 @@
   }
 
   &-placeholder {
-    font-size: 16px;
+    font-size: 14px;
     color: $gray;
     width: 100%;
     padding-left: 10px;
 
     @include m-up {
-      font-size: 14px;
       padding-left: 20px;
     }
   }
