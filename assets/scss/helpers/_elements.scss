@@ -81,11 +81,11 @@
 .button {
   border-radius: 3px;
   border: none;
-  font-weight: bold;
-  height: 45px;
+  font-size: 13px;
+  height: 40px;
+  padding: 0;
   text-align: center;
   width: 100%;
-  font-size: 14px;
 
   &--bright {
     background-color: $accentLight;
