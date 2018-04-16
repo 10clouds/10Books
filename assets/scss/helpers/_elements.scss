@@ -7,6 +7,10 @@
   padding: 0;
   width: 0;
 
+  &:hover {
+    cursor: pointer;
+  }
+
   &--up {
     border-bottom: 5px solid $accent;
   }
@@ -38,44 +42,45 @@
     @include categoryIcon($categoryIconSize, $design, 'D');
   }
 
-  &--programming {
-    @include categoryIcon($categoryIconSize, $programming, 'P');
-  }
+  // TODO: remove, if it won't be used
+  // &--programming {
+  //   @include categoryIcon($categoryIconSize, $programming, 'P');
+  // }
 
-  &--business {
-    @include categoryIcon($categoryIconSize, $business, 'B');
-    background-color: lighten($business, 43%);
-  }
+  // &--business {
+  //   @include categoryIcon($categoryIconSize, $business, 'B');
+  //   background-color: lighten($business, 43%);
+  // }
 
-  &--recruitment {
-    @include categoryIcon($categoryIconSize, $recruitment, 'R');
-  }
+  // &--recruitment {
+  //   @include categoryIcon($categoryIconSize, $recruitment, 'R');
+  // }
 
-  &--web {
-    @include categoryIcon($categoryIconSize, $web, 'W');
-  }
+  // &--web {
+  //   @include categoryIcon($categoryIconSize, $web, 'W');
+  // }
 
-  &--security {
-    @include categoryIcon($categoryIconSize, $security, 'S');
-  }
+  // &--security {
+  //   @include categoryIcon($categoryIconSize, $security, 'S');
+  // }
 
-  &--graphic {
-    @include categoryIcon($categoryIconSize, $graphic, 'G');
-  }
+  // &--graphic {
+  //   @include categoryIcon($categoryIconSize, $graphic, 'G');
+  // }
 
-  &--database {
-    @include categoryIcon($categoryIconSize, $database, 'D');
-  }
+  // &--database {
+  //   @include categoryIcon($categoryIconSize, $database, 'D');
+  // }
 
-  &--os {
-    @include categoryIcon($categoryIconSize, $os, 'O');
-    background-color: lighten($os, 45%);
-  }
+  // &--os {
+  //   @include categoryIcon($categoryIconSize, $os, 'O');
+  //   background-color: lighten($os, 45%);
+  // }
 
-  &--mobile {
-    @include categoryIcon($categoryIconSize, $mobile, 'M');
-    background-color: lighten($mobile, 50%);
-  }
+  // &--mobile {
+  //   @include categoryIcon($categoryIconSize, $mobile, 'M');
+  //   background-color: lighten($mobile, 50%);
+  // }
 }
 
 .button {

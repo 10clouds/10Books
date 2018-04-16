@@ -34,8 +34,8 @@ export default class TableRow extends PureComponent {
   }
 
   handleWindowResize = debounce(() => {
-    const x = window.innerWidth < 839
-    this.setState({isMobile: x })
+    const isMobile = window.innerWidth < 839
+    this.setState({ isMobile })
   }, 400 )
 
   handleArrowClick = () => {
@@ -61,7 +61,6 @@ export default class TableRow extends PureComponent {
       'table__row--highlight': ownedBook,
     })
     const arrowClassNames = cn({
-      'table__arrow': true,
       'arrow': true,
       'arrow--down': !detailsVisible,
       'arrow--up': detailsVisible 
@@ -77,15 +76,15 @@ export default class TableRow extends PureComponent {
       'table__data-author': true
     })
 
-    //TODO: remove truncate onClick
-
     return (
       <div className={ rowClassNames }>
         <div className={ titleClassNames }>
           <a href={product.url} target="_blank">{product.title}</a>
         </div>
         <div className={ authorClassNames }>{product.author}</div>
-        <button className={ arrowClassNames } onClick={ this.handleArrowClick }></button>
+        <div className="table__arrow" onClick={ this.handleArrowClick }>
+          <button className={ arrowClassNames }></button>
+        </div>
 
         { (!isMobile || detailsVisible) &&
           <div className="table__details">
