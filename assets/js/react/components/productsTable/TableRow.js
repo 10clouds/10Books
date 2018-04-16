@@ -35,9 +35,9 @@ export default class TableRow extends PureComponent {
   }
 
   handleWindowResize = debounce(() => {
-    const x = window.innerWidth < 839
-    this.setState({ isMobile: x })
-  }, 400)
+    const isMobile = window.innerWidth < 839
+    this.setState({ isMobile })
+  }, 400 )
 
   handleArrowClick = () => {
     this.setState({
@@ -63,7 +63,6 @@ export default class TableRow extends PureComponent {
       'table__row--highlight': ownedBook,
     })
     const arrowClassNames = cn({
-      'table__arrow': true,
       'arrow': true,
       'arrow--down': !detailsVisible,
       'arrow--up': detailsVisible
@@ -84,10 +83,12 @@ export default class TableRow extends PureComponent {
     return (
       <div className={ rowClassNames }>
         <div className={ titleClassNames }>
-          <a href={ product.url } target="_blank">{ product.title }</a>
+          <a href={product.url} target="_blank">{product.title}</a>
         </div>
-        <div className={ authorClassNames }>{ product.author }</div>
-        <button className={ arrowClassNames } onClick={ this.handleArrowClick }></button>
+        <div className={ authorClassNames }>{product.author}</div>
+        <div className="table__arrow" onClick={ this.handleArrowClick }>
+          <button className={ arrowClassNames }></button>
+        </div>
 
         { (!isMobile || detailsVisible) &&
         <div className="table__details">
@@ -107,18 +108,18 @@ export default class TableRow extends PureComponent {
                   { col.render(product) }
                 </div>
                 : null
-            )) }
-          </div>
-          { appendColumns.map((col, i) => (
-            col.title === 'Status' ?
-              <div key={ i } { ...col.tdProps }>
-                { col.render(product) }
+              ))}
+            </div>
+            {appendColumns.map((col, i) => (
+              col.title === 'Status' ?
+              <div key={i} {...col.tdProps}>
+                {col.render(product)}
               </div>
               : null
-          )) }
-        </div>
+            ))}
+          </div>
         }
-      </div>
+      </div>  
     )
   }
 }

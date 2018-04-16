@@ -7,6 +7,10 @@
   padding: 0;
   width: 0;
 
+  &:hover {
+    cursor: pointer;
+  }
+
   &--up {
     border-bottom: 5px solid $accent;
   }

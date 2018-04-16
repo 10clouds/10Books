@@ -19,8 +19,8 @@
         <div class="navbar__brand">
           <%= link to: products_path(@conn, :library)
             do %>
-              <%= img_tag static_path(@conn, "/images/logo.svg"),
-                alt: "10clouds",
+              <%= img_tag static_path(@conn, "/images/logo-10books.svg"),
+                alt: "10books",
                 class: "navbar__logo"
               %>
             <% end %>
