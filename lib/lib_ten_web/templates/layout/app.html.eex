@@ -17,8 +17,13 @@
     <nav class="navbar">
       <div class="navbar__header">
         <div class="navbar__brand">
-          <i class="fa fa-book" aria-hidden="true"></i>
-          <%= Application.get_env(:lib_ten, :title) %>
+          <%= link to: products_path(@conn, :library)
+            do %>
+              <%= img_tag static_path(@conn, "/images/logo.svg"),
+                alt: "10clouds",
+                class: "navbar__logo"
+              %>
+            <% end %>
         </div>
         <button
           id="hamburger-button"
@@ -79,12 +84,13 @@
             <span class="navbar__username">
               <%= @conn.assigns.current_user.name %>
             </span>
-            <%= link("Sign out", to: auth_path(@conn, :sign_out), class: "navbar__logout-link") %>
+            <%= link("Logout", to: auth_path(@conn, :sign_out), class: "navbar__logout-link") %>
             <%= link to: auth_path(@conn, :sign_out),
               class: "navbar__logout-icon"
             do %>
               <%= img_tag static_path(@conn, "/images/logout.svg"),
-                alt: "logout"
+                alt: "logout",
+                class: "navbar__logout-icon"
               %>
             <% end %>
           </li>
