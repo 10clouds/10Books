@@ -8,10 +8,11 @@ const defaultState = {
 }
 
 const availableColors = [
-  'rgba(235, 66, 136, 0.19)',
-  'rgba(30, 207, 174, 0.19)',
-  'rgba(113, 66, 235, 0.19)',
-  'rgba(192, 215, 255, 0.52)'
+  '#eb42bc',
+  '#3c79e4',
+  '#7142eb',
+  '#1ecfae',
+  '#eb4288',
 ]
 
 let nextAvailableColorIndex = availableColors.length

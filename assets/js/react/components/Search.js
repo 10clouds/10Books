@@ -11,7 +11,7 @@ const Search = props => {
         onChange={ props.onChange }
         defaultValue={ props.value }
       />
-      <img src="images/search.svg" alt="Search icon" className="search-form__loupe"/>
+      <img src="/images/search.svg" alt="Search icon" className="search-form__loupe"/>
     </div>
   )
 }

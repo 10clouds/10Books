@@ -3,16 +3,21 @@ import PropTypes from 'prop-types'
 import Dropdown from 'react-dropdown'
 
 const CategoryFilter = props => {
-  const dropdownCategories = props.categories.map(option => (
+  const categories = props.categories.map(option => (
     {
       value: option.id,
       label: option.name
     }
   ));
 
+  const dropdownCategories = [{
+    value: 'all',
+    label: 'All categories',
+  }, ...categories]
+
   return (
     <Dropdown
-      className="search-form__dropdown"
+      className={ props.classNames }
       options={ dropdownCategories }
       onChange={ selectedOption => props.onChange(selectedOption) }
       value={ props.value }
@@ -23,7 +28,8 @@ const CategoryFilter = props => {
 CategoryFilter.propTypes = {
   onChange: PropTypes.func,
   categories: PropTypes.array.isRequired,
-  value: PropTypes.string
+  value: PropTypes.string,
+  classNames: PropTypes.string
 }
 
 export default CategoryFilter

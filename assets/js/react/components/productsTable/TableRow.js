@@ -8,7 +8,7 @@ export default class TableRow extends PureComponent {
   state = {
     detailsVisible: false,
     isMobile: null,
-  } 
+  }
 
   static propTypes = {
     product: PropTypes.shape({
@@ -17,10 +17,11 @@ export default class TableRow extends PureComponent {
       author: PropTypes.string,
     }),
     categoryName: PropTypes.string.isRequired,
+    categoryColor: PropTypes.string.isRequired,
     appendColumns: PropTypes.arrayOf(
       PropTypes.shape({
-       tdProps: PropTypes.object,
-       render: PropTypes.func.isRequired,
+        tdProps: PropTypes.object,
+        render: PropTypes.func.isRequired,
       })
     ),
     currentUser: PropTypes.shape({
@@ -48,14 +49,15 @@ export default class TableRow extends PureComponent {
     const {
       product,
       categoryName,
+      categoryColor,
       appendColumns,
       currentUser
     } = this.props
     const { detailsVisible, isMobile } = this.state
-    
+
     //TDO: add isMobile or something like that, then isMobile && status === 'IN__LIBRARY' - ?
 
-    const ownedBook =  product.used_by ? product.used_by.user.id === currentUser.id : false
+    const ownedBook = product.used_by ? product.used_by.user.id === currentUser.id : false
     const rowClassNames = cn({
       'table__row': true,
       'table__row--highlight': ownedBook,
@@ -63,18 +65,20 @@ export default class TableRow extends PureComponent {
     const arrowClassNames = cn({
       'arrow': true,
       'arrow--down': !detailsVisible,
-      'arrow--up': detailsVisible 
+      'arrow--up': detailsVisible
     })
-    const titleClassNames = cn ({
+    const titleClassNames = cn({
       'table__data': true,
       'table__data--truncate': !detailsVisible,
       'table__data-title': true
     })
-    const authorClassNames = cn ({
+    const authorClassNames = cn({
       'table__data': true,
       'table__data--truncate': !detailsVisible,
       'table__data-author': true
     })
+
+    //TODO: remove truncate onClick
 
     return (
       <div className={ rowClassNames }>
@@ -87,20 +91,22 @@ export default class TableRow extends PureComponent {
         </div>
 
         { (!isMobile || detailsVisible) &&
-          <div className="table__details">
-            <div className="table__data table__data-category">
-              <div className="table__data table__category-wrapper">
-              {/* TODO: add different category icons for different categories */}
-                <div className="category-icon category-icon--design"></div>
-                <div className="table__data table__category-name ">
-                  {categoryName}
+        <div className="table__details">
+          <div className="table__data table__data-category">
+            <div className="table__data table__category-wrapper">
+              <div className="category-icon" style={ { color: categoryColor } }>
+                <div className="category-icon__bckg" style={ { background: categoryColor } }/>
+                { categoryName.charAt(0) }
+              </div>
+              <div className="table__data table__category-name ">
+                { categoryName }
+              </div>
+            </div>
+            { appendColumns.map((col, i) => (
+              col.title === 'Rating' ?
+                <div className="table__data table__rating" key={ i } { ...col.tdProps }>
+                  { col.render(product) }
                 </div>
-              </div>  
-              {appendColumns.map((col, i) => (
-                col.title === 'Rating' ?
-                  <div className="table__data table__rating" key={i} {...col.tdProps}>
-                    {col.render(product)}
-                  </div>
                 : null
               ))}
             </div>

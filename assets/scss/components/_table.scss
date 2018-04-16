@@ -37,9 +37,10 @@
       @include m-up {
         display: flex;
       }
+
     }
 
-    &:hover {
+    &:not(&--transparent):hover {
       box-shadow: 5px 40px 40px 10px rgba(75, 82, 113, .08);
       position: relative;
       z-index: 2;
@@ -217,7 +218,8 @@
 
   &__category-name {
     font-weight: bold;
-    margin-left: 15px;
+    padding-left: 15px;
+    width: calc(100% - #{$categoryIconSize});
 
     @include m-up {
       display: none;
