@@ -5,6 +5,7 @@ import debounce from 'lodash.debounce'
 import * as searchActions from '~/store/actions/search'
 import Search from '~/components/Search'
 import CategoryFilter from '~/components/CategoryFilter'
+import classnames from 'classnames'
 
 class SearchContainer extends Component {
 
@@ -17,7 +18,11 @@ class SearchContainer extends Component {
   }, 50)
 
   handleDropdownChange = debounce(selectedOption => {
-    this.props.updateQuery(selectedOption.label)
+    if (selectedOption.value === 'all') {
+      this.props.updateQuery('')
+    } else {
+      this.props.updateQuery(selectedOption.label)
+    }
   }, 50)
 
   render() {
@@ -31,9 +36,12 @@ class SearchContainer extends Component {
           value={ this.props.queryString }
         />
         <CategoryFilter
+          classNames={classnames( 'search-form__dropdown', {
+            'search-form__dropdown--selected': this.state.dropdownCategoryPlaceholder
+          })}
           onChange={ selectedOption => {
             this.handleDropdownChange(selectedOption)
-            this.setState({dropdownCategoryPlaceholder: selectedOption.label})
+            this.setState({ dropdownCategoryPlaceholder: selectedOption.label })
           } }
           value={ this.state.dropdownCategoryPlaceholder }
           categories={ this.props.categories }

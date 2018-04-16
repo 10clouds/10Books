@@ -1,15 +1,3 @@
-@mixin categoryIcon($size, $color, $categoryAbbr) {
-  background-color: lighten($color, 35%);
-  color: $color;
-  height: $size;
-  min-width: $size;
-  width: $size;
-
-  &::after {
-    content: $categoryAbbr;
-  }
-}
-
 @mixin s-up {
   @media only #{$small} {
     @content;

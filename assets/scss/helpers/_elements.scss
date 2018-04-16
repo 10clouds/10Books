@@ -28,60 +28,29 @@
 }
 
 .category-icon {
+  position: relative;
   align-items: center;
-  border-radius: 100%;
   display: flex;
   font-weight: bold;
   justify-content: center;
+  height: $categoryIconSize;
+  width: $categoryIconSize;
 
-  &--design {
-    @include categoryIcon($categoryIconSize, $design, 'D');
-  }
-
-  &--programming {
-    @include categoryIcon($categoryIconSize, $programming, 'P');
-  }
-
-  &--business {
-    @include categoryIcon($categoryIconSize, $business, 'B');
-    background-color: lighten($business, 43%);
-  }
-
-  &--recruitment {
-    @include categoryIcon($categoryIconSize, $recruitment, 'R');
-  }
-
-  &--web {
-    @include categoryIcon($categoryIconSize, $web, 'W');
-  }
-
-  &--security {
-    @include categoryIcon($categoryIconSize, $security, 'S');
-  }
-
-  &--graphic {
-    @include categoryIcon($categoryIconSize, $graphic, 'G');
-  }
-
-  &--database {
-    @include categoryIcon($categoryIconSize, $database, 'D');
-  }
-
-  &--os {
-    @include categoryIcon($categoryIconSize, $os, 'O');
-    background-color: lighten($os, 45%);
-  }
-
-  &--mobile {
-    @include categoryIcon($categoryIconSize, $mobile, 'M');
-    background-color: lighten($mobile, 50%);
+  &__bckg{
+    border-radius: 100%;
+    height: 100%;
+    opacity: 0.19;
+    position: absolute;
+    width: 100%;
   }
 }
 
 .button {
   border-radius: 3px;
   border: none;
+  cursor: pointer;
   font-size: 13px;
+  font-weight: 500;
   height: 40px;
   padding: 0;
   text-align: center;
@@ -134,7 +103,7 @@ a {
 body {
   background-color: $background;
   color: $text;
-  font-family: 'Lato', sans-serif;
+  font-family: $font-family;
   height: 100vh;
 
   &.scroll-disabled {

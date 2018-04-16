@@ -31,6 +31,7 @@ export default class Table extends PureComponent {
           <TableRow
             key={product.id}
             product={product}
+            categoryColor={this.props.categories[product.category_id].color}
             categoryName={this.props.categories[product.category_id].name}
             appendColumns={this.props.appendColumns}
             currentUser={this.props.currentUser}
