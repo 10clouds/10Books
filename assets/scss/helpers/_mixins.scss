@@ -10,6 +10,12 @@
   }
 }
 
+@mixin m-down {
+  @media only #{$medium-down} {
+    @content;
+  }
+}
+
 @mixin l-up {
   @media only #{$large} {
     @content;

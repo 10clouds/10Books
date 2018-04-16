@@ -1,7 +1,7 @@
 .table {
   $module: &;
 
-  font-size: 14px;
+  font-size: 16px;
   line-height: 24px;
   line-height: normal;
   width: 100%;
@@ -13,7 +13,7 @@
     display: flex;
     flex-direction: column;
     margin: 0 0 10px 0;
-    padding: 20px;
+    padding: 20px 16px;
     position: relative;
 
     &:nth-of-type(2) {
@@ -64,8 +64,8 @@
 
       .arrow {
         position: absolute;
-        right: 15px;
-        top: 15px;
+        right: 19px;
+        top: 24px;
       }
 
     }
@@ -161,7 +161,7 @@
 
   &__data-author {
     font-weight: bold;
-    margin-top: 10px;
+    margin-top: 15px;
     width: 90%;
 
     @include m-up {
@@ -174,10 +174,13 @@
 
   &__details {
     margin-top: 30px;
+    padding-right: 10px;
+    max-width: 300px;
 
     @include m-up {
       display: flex;
       margin-top: 0;
+      padding: 0;
     }
   }
 
@@ -218,7 +221,7 @@
 
   &__category-name {
     font-weight: bold;
-    padding-left: 15px;
+    padding-left: 23px;
     width: calc(100% - #{$categoryIconSize});
 
     @include m-up {
@@ -248,8 +251,10 @@
     display: flex;
     font-weight: bold;
     justify-content: space-between;
-    margin-top: 30px;
+    margin-top: 40px;
     text-align: center;
+    margin-bottom: 10px;
+    font-size: 18px;
 
     @include m-up {
       margin-top: 0;
@@ -259,7 +264,7 @@
 
   &__data-status-date {
     color: $gray;
-    font-size: 12px;
+    font-size: 16px;
     font-weight: bold;
   }
 
@@ -268,5 +273,19 @@
     border: none;
     outline: none;
     padding-right: 0px;
+  }
+
+  .button {
+    @include m-down {
+      height: 47px;
+      font-size: 18px;
+    }
+  }
+
+  .user-avatar {
+    @include m-down {
+      height: 47px;
+      width: 47px;
+    }
   }
 }

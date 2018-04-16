@@ -1,8 +1,7 @@
 import React, { PureComponent, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import classnames from "classnames";
-import TooltipButton from "./Tooltip-button";
+import TooltipButton from './Tooltip-button'
 
 export default class UsageCell extends PureComponent {
   static propTypes = {
