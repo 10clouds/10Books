@@ -13,7 +13,7 @@
     display: flex;
     flex-direction: column;
     margin: 0 0 10px 0;
-    padding: 20px 10px;
+    padding: 20px;
     position: relative;
 
     &:nth-of-type(2) {
@@ -27,7 +27,7 @@
     @include m-up {
       align-items: center;
       flex-direction: row;
-      padding: 10px;
+      padding: 20px 30px 20px 25px;
     }
 
     &--transparent {
@@ -40,7 +40,7 @@
     }
 
     &:hover {
-      box-shadow: 5px 40px 40px 10px rgba(75, 82, 113, 0.08);
+      box-shadow: 5px 40px 40px 10px rgba(75, 82, 113, .08);
       position: relative;
       z-index: 2;
     }

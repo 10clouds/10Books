@@ -60,7 +60,7 @@ class All extends PureComponent {
     return (
       <div>
         <div className="search-container">
-          <SearchContainer/>
+          <SearchContainer categories={ this.props.categories } />
 
           <button
             className="button button--dark button--narrow"

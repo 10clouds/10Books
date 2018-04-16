@@ -17,8 +17,13 @@
     <nav class="navbar">
       <div class="navbar__header">
         <div class="navbar__brand">
-          <i class="fa fa-book" aria-hidden="true"></i>
-          <%= Application.get_env(:lib_ten, :title) %>
+          <%= link to: products_path(@conn, :library)
+            do %>
+              <%= img_tag static_path(@conn, "/images/logo-10books.svg"),
+                alt: "10books",
+                class: "navbar__logo"
+              %>
+            <% end %>
         </div>
         <button
           id="hamburger-button"
@@ -55,8 +60,8 @@
               wrap_tag: :li,
               class: "navbar__menu-item")
             %>
-            <li class="navbar__menu-item navbar__menu-item--relative">
-              <a href="#" class="navbar__menu-item navbar__admin" data-toggle="dropdown" id="admin-dropdown-button">
+            <li id="admin-dropdown" class="navbar__menu-item navbar__menu-item--relative">
+              <a id="admin-dropdown-button" href="#" class="navbar__menu-item navbar__admin" data-toggle="dropdown">
                 Admin
                 <div class="arrow arrow--down"></div>
               </a>
@@ -79,12 +84,13 @@
             <span class="navbar__username">
               <%= @conn.assigns.current_user.name %>
             </span>
-            <%= link("Sign out", to: auth_path(@conn, :sign_out), class: "navbar__logout-link") %>
+            <%= link("Logout", to: auth_path(@conn, :sign_out), class: "navbar__logout-link") %>
             <%= link to: auth_path(@conn, :sign_out),
-              class: "navbar__logout-icon" 
+              class: "navbar__logout-icon"
             do %>
               <%= img_tag static_path(@conn, "/images/logout.svg"),
-                alt: "logout"
+                alt: "logout",
+                class: "navbar__logout-icon"
               %>
             <% end %>
           </li>
@@ -92,6 +98,8 @@
       </div>
     </nav>
     <div class="container">
+      <div><%= get_flash(@conn, :info) %></div>
+      <div><%= get_flash(@conn, :error) %></div>
       <main role="main">
         <%= render @view_module, @view_template, assigns %>
       </main>

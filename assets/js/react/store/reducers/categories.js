@@ -7,23 +7,46 @@ const defaultState = {
   all: []
 }
 
+const availableColors = [
+  'rgba(235, 66, 136, 0.19)',
+  'rgba(30, 207, 174, 0.19)',
+  'rgba(113, 66, 235, 0.19)',
+  'rgba(192, 215, 255, 0.52)'
+]
+
+let nextAvailableColorIndex = availableColors.length
+function withColor(category) {
+  if (category.color) {
+    return category
+  } else {
+    nextAvailableColorIndex = nextAvailableColorIndex >= availableColors.length - 1
+      ? 0
+      : ++nextAvailableColorIndex
+    return {...category, color: availableColors[nextAvailableColorIndex]}
+  }
+}
+
 const reducers = {
   [actionTypes.JOIN_CHANNEL_SUCCESS]: (state, { channel }) => ({
     ...state,
     channel
   }),
 
-  [actionTypes.ALL_UPDATED]: (state, { items }) => ({
-    ...state,
-    all: items,
-    byId: items.reduce((all, item) => {
-      all[item.id] = item
-      return all
-    }, {})
-  }),
+  [actionTypes.ALL_UPDATED]: (state, { items }) => {
+    const mappedItems = items.map(withColor)
+
+    return {
+      ...state,
+      all: mappedItems,
+      byId: mappedItems.reduce((all, item) => {
+        all[item.id] = item
+        return all
+      }, {})
+    }
+  },
 
   [actionTypes.UPDATED]: (state, { attrs }) => {
-    const updatedItem = {...state.byId[attrs.id], ...attrs}
+    const updatedItem = withColor({...state.byId[attrs.id], ...attrs})
 
     return {
       ...state,

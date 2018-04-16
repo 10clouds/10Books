@@ -23,7 +23,7 @@
   }
 
   &__input {
-    background-color: rgba(237, 237, 242, 0.4);
+    background-color: rgba(237, 237, 242, .4);
     border-radius: 3px;
     border: none;
     display: block;
@@ -31,7 +31,7 @@
     color: $gray;
     height: 55px;
     padding-left: 10px;
-    transition: border-bottom-color 0.2s;
+    transition: border-bottom-color .2s;
     width: 100%;
 
     @include m-up {
@@ -83,7 +83,7 @@
     position: absolute;
     left: 0;
     opacity: 0;
-    transition: width 0.2s, opacity 0.1s;
+    transition: width .2s, opacity .1s;
     width: 0;
   }
 

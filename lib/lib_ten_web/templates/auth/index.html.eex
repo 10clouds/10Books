@@ -1,15 +1,14 @@
-<div class="auth-form">
-  <div class="auth-form__title">
-    <i class="fa fa-book" aria-hidden="true"></i>
-    <%= Application.get_env(:lib_ten, :title) %>
+<div class="login">
+  <div class="login__logo">
+    <%= img_tag static_path(@conn, "/images/logo-10books.svg"),
+      alt: "10books"
+    %>
   </div>
 
   <%= link(
-    to: auth_path(@conn, :request, :google),
-    class: 'btn btn-success btn-lg'
+    to: auth_path(@conn, :request, :google)
   ) do %>
-    <i class="fa fa-google" aria-hidden="true"></i>
-    Login with google
+    <button class="button button--dark">Login with google</button>
   <% end %>
 </div>
 

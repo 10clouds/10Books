@@ -1,9 +1,10 @@
 .navbar {
   $navbar: &;
+
   background-color: $white;
-  box-shadow: 0 2px 69px 0 rgba(13, 13, 30, 0.04);
-  font-size: 18px;
-  font-weight: bold;
+  box-shadow: 0 2px 69px 0 rgba(13, 13, 30, .04);
+  font-size: 19px;
+  font-weight: 600;
   height: 75px;
   position: fixed;
   top: 0;
@@ -12,26 +13,32 @@
 
   @include m-up {
     display: flex;
-    height: 75px;
-    padding: 0 40px;
+    font-size: 14px;
+    height: 63px;
+    padding: 0 35px 0 48px;
   }
 
   &__header {
     align-items: center;
+    background-color: $white;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     min-height: 75px;
-    padding: 0 20px;
+    padding: 0 20px 0 28px;
+    position: relative;
+    z-index: 98;
 
     @include m-up {
-      margin-right: 10px;
+      margin-right: 40px;
+      min-height: 0;
       min-width: 110px;
-      padding: 0;
+      padding: 1px 0 0;
+      background-color: transparent;
     }
 
     @include l-up {
-      margin-right: 80px;
+      margin-right: 65px;
     }
   }
 
@@ -39,20 +46,32 @@
     color: $gray;
   }
 
+  &__logo {
+    height: 17px;
+
+    @include m-up {
+      height: 16px;
+    }
+  }
+
   &__menu {
     align-items: center;
     background: white;
-    display: none;
     flex-direction: column;
-    padding: 0 0 40px;
+    padding: 6px 0 40px;
+    position: relative;
+    transform: translateY(-306px);
+    transition: transform .6s ease-in-out;
+    z-index: 97;
 
     @include m-up {
       padding-top: 20px;
     }
 
     &--visible {
-      box-shadow: 0 20px 29px 0 rgba(13, 13, 30, 0.04);
+      box-shadow: 0 20px 29px 0 rgba(13, 13, 30, .04);
       display: flex;
+      transform: translateY(0px);
 
       @include m-up {
         box-shadow: none;
@@ -65,7 +84,9 @@
       flex-direction: row;
       justify-content: space-between;
       padding: 0;
+      transform: translateY(0px);
       width: 100%;
+      z-index: 100;
     }
   }
 
@@ -77,6 +98,7 @@
       align-items: center;
       display: flex;
       height: 100%;
+      margin-right: 0;
       width: auto;
     }
 
@@ -109,7 +131,11 @@
 
   &__menu-item {
     display: block;
-    padding: 20px 10px;
+    padding: 16px 0;
+
+    @include m-up {
+
+    }
 
     &--relative {
       padding: 0;
@@ -118,11 +144,14 @@
   }
 
   &__logout {
-    padding-top: 20px;
+    margin-top: 37px;
 
     #{$navbar} & {
       @include m-up {
+        align-items: center;
         display: flex;
+        margin: 0 0 0 20px;
+        padding: 0;
       }
     }
 
@@ -134,13 +163,6 @@
       }
     }
 
-    @include m-up {
-      align-items: center;
-      display: flex;
-      margin-left: 20px;
-      padding: 0;
-    }
-
     a {
       color: $gray;
     }
@@ -150,6 +172,10 @@
     @include m-up {
       display: none;
     }
+  }
+
+  &__logout-icon {
+    height: 16px;
   }
 
   &__username,
@@ -174,7 +200,7 @@
 
     @include m-up {
       margin: 0;
-      right: -10px;
+      right: -20px;
     }
   }
 
@@ -190,18 +216,18 @@
   }
 
   &__menu-dropdown {
-    display: none;
     background-color: $white;
+    display: none;
 
     @include m-up {
       border-radius: 5px;
-      box-shadow: 4px 5px 47px 0 rgba(75, 82, 113, 0.2);
+      box-shadow: 4px 5px 47px 0 rgba(75, 82, 113, .2);
       left: 30px;
       min-width: 200px;
       padding: 10px;
       position: absolute;
       text-align: left;
-      top: 50px;
+      top: 38px;
     }
 
     &--visible {
@@ -231,6 +257,7 @@
     background-color: transparent;
     border: none;
     outline: none;
+    padding: 0;
 
     @include m-up {
       display: none;
@@ -238,11 +265,11 @@
 
     &-icon {
       cursor: pointer;
-      height: 30px;
+      height: 24px;
       position: relative;
       transform: rotate(0deg);
       transition: .5s ease-in-out;
-      width: 30px;
+      width: 25px;
     }
 
     &-icon span {
@@ -276,9 +303,9 @@
         span {
           &:nth-child(1) {
             left: 6px;
-            top: -3px;
+            top: 0;
             transform: rotate(45deg);
-            width: 32px;
+            width: 29px;
           }
 
           &:nth-child(2) {
@@ -290,7 +317,7 @@
             left: 6px;
             top: 20px;
             transform: rotate(-45deg);
-            width: 32px;
+            width: 28px;
           }
         }
       }

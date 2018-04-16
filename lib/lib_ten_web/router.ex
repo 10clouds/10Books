@@ -27,7 +27,7 @@ defmodule LibTenWeb.Router do
         pipe_through :is_admin
         get "/products", ProductsController, :all
         resources "/users", Admin.UserController, only: [:index, :edit, :update]
-        resources "/categories", Admin.CategoryController
+        resources "/categories", Admin.CategoryController, except: [:show]
       end
     end
 
