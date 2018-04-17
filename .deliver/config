@@ -1,6 +1,6 @@
 APP="lib_ten"
 
-RELEASE_STORE_TYPE="local"
+RELEASE_STORE="root@books.10clouds.com:/root/lib_ten/releases/"
 GIT_CLEAN_PATHS="_build rel priv/static"
 
 BUILD_HOST="94.130.226.14"
