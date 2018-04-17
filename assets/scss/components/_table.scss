@@ -6,28 +6,34 @@
   line-height: normal;
   width: 100%;
 
+  @include m-up {
+    font-size: 13px;
+  }
+
   &__row {
     background-color: $white;
-    border-left: 5px solid transparent; // :(
+    border-left: 5px solid transparent;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
     margin: 0 0 10px 0;
     padding: 20px 16px;
     position: relative;
+    max-width: 1277px;
 
     &:nth-of-type(2) {
       margin: 40px 0 10px 0;
 
       @include m-up {
-        margin: 0 0 10px 0;
+        margin: 0 auto 10px;
       }
     }
 
     @include m-up {
       align-items: center;
       flex-direction: row;
-      padding: 20px 30px 20px 25px;
+      padding: 15px 17px;
+      margin: 0 auto 10px;
     }
 
     &--transparent {
@@ -36,8 +42,8 @@
 
       @include m-up {
         display: flex;
+        margin-bottom: 4px;
       }
-
     }
 
     &:not(&--transparent):hover {
@@ -67,7 +73,6 @@
         right: 19px;
         top: 24px;
       }
-
     }
   }
 
@@ -75,6 +80,7 @@
     color: $gray;
     font-weight: bold;
     text-align: left;
+    font-size: 14px;
   }
 
   &__heading-title {
@@ -181,6 +187,7 @@
       display: flex;
       margin-top: 0;
       padding: 0;
+      max-width: none;
     }
   }
 
@@ -214,15 +221,15 @@
       order: 2;
     }
 
-    @include xl-up {
-      width: 210px;
+    @include l-up {
+      width: 250px;
     }
   }
 
   &__category-name {
     font-weight: bold;
     padding-left: 23px;
-    width: calc(100% - #{$categoryIconSize});
+    width: calc(100% - #{$categoryIconSizeDesktop});
 
     @include m-up {
       display: none;
@@ -230,6 +237,8 @@
 
     @include l-up {
       display: block;
+      font-weight: 500;
+      padding-left: 20px;
     }
   }
 
@@ -251,14 +260,13 @@
     display: flex;
     font-weight: bold;
     justify-content: space-between;
-    margin-top: 40px;
+    margin: 40px 0 18px 0;
     text-align: center;
-    margin-bottom: 10px;
-    font-size: 18px;
 
     @include m-up {
-      margin-top: 0;
-      width: 275px;
+      margin: 0;
+      width: 210px;
+      font-size: 13px;
     }
   }
 
@@ -266,6 +274,12 @@
     color: $gray;
     font-size: 16px;
     font-weight: bold;
+
+    @include m-up {
+      font-size: 12px;
+
+      font-weight: 500;
+    }
   }
 
   &__bell-button {
@@ -273,6 +287,11 @@
     border: none;
     outline: none;
     padding-right: 0px;
+  }
+
+  &__bell-icon {
+    height: 26px;
+    width: 26px;
   }
 
   .button {

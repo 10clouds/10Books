@@ -76,7 +76,7 @@ export default class UsageCell extends PureComponent {
           className="table__bell-button"
           tooltipText="Notify when returned"
         >
-          <img src="images/bell.svg"/>
+          <img src="images/bell.svg" className="table__bell-icon" />
         </TooltipButton>
       ) : (
         <TooltipButton
@@ -86,7 +86,7 @@ export default class UsageCell extends PureComponent {
           className="table__bell-button"
           tooltipText="Notify when returned"
         >
-          <img src="images/bell--inactive.svg"/>
+          <img src="images/bell--inactive.svg" className="table__bell-icon" />
         </TooltipButton>
       )
     )
