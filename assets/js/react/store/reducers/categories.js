@@ -11,8 +11,16 @@ const availableColors = [
   '#eb42bc',
   '#3c79e4',
   '#7142eb',
-  '#1ecfae',
-  '#eb4288',
+  '#13b596',
+  '#eb425f',
+  '#fa732f',
+  '#fdad1f',
+  '#36bbed',
+  '#1ecf42',
+  '#230ab4',
+  '#434343',
+  '#7c3761',
+  '#3b6b54',
 ]
 
 let nextAvailableColorIndex = availableColors.length
