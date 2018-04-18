@@ -77,10 +77,6 @@ export default class TableRow extends PureComponent {
       'table__data--truncate': !detailsVisible,
       'table__data-author': true
     })
-    const categoryClassNames = cn({
-      'category-icon': true,
-      'category-icon--desktop': !isMobile
-    })
 
     //TODO: remove truncate onClick
 
@@ -98,7 +94,7 @@ export default class TableRow extends PureComponent {
         <div className="table__details">
           <div className="table__data table__data-category">
             <div className="table__data table__category-wrapper">
-              <div className={ categoryClassNames } style={ { color: categoryColor } }>
+              <div className="category-icon" style={ { color: categoryColor } }>
                 <div className="category-icon__bckg" style={ { background: categoryColor } }/>
                 { categoryName.charAt(0) }
               </div>

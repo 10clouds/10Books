@@ -37,13 +37,8 @@
   display: flex;
   font-weight: bold;
   justify-content: center;
-  height: $categoryIconSizeMobile;
-  width: $categoryIconSizeMobile;
-
-  &--desktop {
-    height: $categoryIconSizeDesktop;
-    width: $categoryIconSizeDesktop;
-  }
+  height: $categoryIconSize;
+  width: $categoryIconSize;
 
   &__bckg {
     border-radius: 100%;

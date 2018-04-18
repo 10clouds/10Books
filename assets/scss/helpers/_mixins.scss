@@ -33,3 +33,17 @@
     @content;
   }
 }
+
+@mixin column-width($size) {
+  @include m-up {
+    width: calc(#{$size} * (100% - 310px));
+  }
+
+  @include l-up {
+    width: calc(#{$size} * (100% - 460px));
+  }
+
+  @include xl-up {
+    width: calc(#{$size} * (100% - 510px));
+  }
+}

@@ -6,7 +6,7 @@
   line-height: normal;
   width: 100%;
 
-  @include m-up {
+  @include s-up {
     font-size: 13px;
   }
 
@@ -85,28 +85,14 @@
 
   &__heading-title {
     order: 1;
-    width: calc(0.7 * (100% - 375px));
-
-    @include l-up {
-      width: calc(0.7 * (100% - 525px));
-    }
-
-    @include xl-up {
-      width: calc(0.7 * (100% - 575px));
-    }
+    
+    @include column-width(0.7);
   }
 
   &__heading-author {
-    width: calc(0.3 * (100% - 375px));
     order: 2;
 
-    @include l-up {
-      width: calc(0.3 * (100% - 525px));
-    }
-
-    @include xl-up {
-      width: calc(0.3 * (100% - 575px));
-    }
+    @include column-width(0.3);
   }
 
   &__heading-category {
@@ -139,11 +125,7 @@
 
   &__heading-status {
     order: 5;
-    width: 275px;
-
-    @include l-up {
-
-    }
+    width: 210px;
   }
 
   &__data {
@@ -159,9 +141,10 @@
   &__data-title {
     width: 90%;
 
+    @include column-width(0.7);
+
     @include m-up {
       padding-right: 20px;
-      width: calc(0.7 * (100% - 375px));
     }
   }
 
@@ -170,24 +153,36 @@
     margin-top: 15px;
     width: 90%;
 
+    @include column-width(0.3);
+
     @include m-up {
       margin-top: 0;
       padding-right: 20px;
-      width: auto;
-      width: calc(0.3 * (100% - 375px));
     }
   }
 
   &__details {
     margin-top: 30px;
     padding-right: 10px;
-    max-width: 300px;
+    width: 100%;
+
+    @include s-up {
+      width: 300px;
+    }
 
     @include m-up {
       display: flex;
       margin-top: 0;
       padding: 0;
-      max-width: none;
+      width: 310px;
+    }
+
+    @include l-up {
+      width: 460px;
+    }
+
+    @include xl-up {
+      width: 510px;
     }
   }
 
@@ -229,7 +224,7 @@
   &__category-name {
     font-weight: bold;
     padding-left: 23px;
-    width: calc(100% - #{$categoryIconSizeDesktop});
+    width: calc(100% - #{$categoryIconSize});
 
     @include m-up {
       display: none;
@@ -298,13 +293,6 @@
     @include m-down {
       height: 47px;
       font-size: 18px;
-    }
-  }
-
-  .user-avatar {
-    @include m-down {
-      height: 47px;
-      width: 47px;
     }
   }
 }
