@@ -15,86 +15,88 @@
 
   <body>
     <nav class="navbar">
-      <div class="navbar__header">
-        <div class="navbar__brand">
-          <%= link to: products_path(@conn, :library)
-            do %>
-              <%= img_tag static_path(@conn, "/images/logo-10books.svg"),
-                alt: "10books",
-                class: "navbar__logo"
-              %>
-            <% end %>
-        </div>
-        <button
-          id="hamburger-button"
-          class="navbar__hamburger"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <div class="navbar__hamburger-icon">
-            <span></span>
-            <span></span>
-            <span></span>
+      <div class="navbar__container">
+        <div class="navbar__header">
+          <div class="navbar__brand">
+            <%= link to: products_path(@conn, :library)
+              do %>
+                <%= img_tag static_path(@conn, "/images/logo-10books.svg"),
+                  alt: "10books",
+                  class: "navbar__logo"
+                %>
+              <% end %>
           </div>
-        </button>
-      </div>
-      <div class="navbar__menu" id="hamburger-menu">
-        <ul class="navbar__menu-items">
-          <%= active_link(@conn, "Library",
-            to: products_path(@conn, :library),
-            wrap_tag: :li,
-            class: "navbar__menu-item")
-          %>
-          <%= active_link(@conn, "Orders",
-            to: products_path(@conn, :orders),
-            wrap_tag: :li,
-            class: "navbar__menu-item")
-          %>
-          <%= if @conn.assigns.current_user.is_admin do %>
-            <%= active_link(@conn, "All",
-              to: admin_products_path(@conn, :all),
+          <button
+            id="hamburger-button"
+            class="navbar__hamburger"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <div class="navbar__hamburger-icon">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </button>
+        </div>
+        <div class="navbar__menu" id="hamburger-menu">
+          <ul class="navbar__menu-items">
+            <%= active_link(@conn, "Library",
+              to: products_path(@conn, :library),
               wrap_tag: :li,
               class: "navbar__menu-item")
             %>
-            <li id="admin-dropdown" class="navbar__menu-item navbar__menu-item--relative">
-              <a id="admin-dropdown-button" href="#" class="navbar__menu-item navbar__admin" data-toggle="dropdown">
-                Admin
-                <div class="arrow arrow--down"></div>
-              </a>
-              <div class="navbar__menu-dropdown" id="admin-dropdown-menu">
-                <%= link "Categories",
-                  to: admin_category_path(@conn, :index),
-                  class: "navbar__dropdown-item"
-                %>
-                <%= link "Users",
-                  to: admin_user_path(@conn, :index),
-                  class: "navbar__dropdown-item"
-                %>
-              </div>
-            </li>
-          <% end %>
-        </ul>
-        <ul class="navbar__menu-items">
-          <li class="navbar__logout">
-            <%= img_tag(@conn.assigns.current_user.avatar_url, class: "user-avatar") %>
-            <span class="navbar__username">
-              <%= @conn.assigns.current_user.name %>
-            </span>
-            <%= link("Logout", to: auth_path(@conn, :sign_out), class: "navbar__logout-link") %>
-            <%= link to: auth_path(@conn, :sign_out),
-              class: "navbar__logout-icon"
-            do %>
-              <%= img_tag static_path(@conn, "/images/logout.svg"),
-                alt: "logout",
-                class: "navbar__logout-icon"
+            <%= active_link(@conn, "Orders",
+              to: products_path(@conn, :orders),
+              wrap_tag: :li,
+              class: "navbar__menu-item")
+            %>
+            <%= if @conn.assigns.current_user.is_admin do %>
+              <%= active_link(@conn, "All",
+                to: admin_products_path(@conn, :all),
+                wrap_tag: :li,
+                class: "navbar__menu-item")
               %>
+              <li id="admin-dropdown" class="navbar__menu-item navbar__menu-item--relative">
+                <a id="admin-dropdown-button" href="#" class="navbar__menu-item navbar__admin" data-toggle="dropdown">
+                  Admin
+                  <div class="arrow arrow--down"></div>
+                </a>
+                <div class="navbar__menu-dropdown" id="admin-dropdown-menu">
+                  <%= link "Categories",
+                    to: admin_category_path(@conn, :index),
+                    class: "navbar__dropdown-item"
+                  %>
+                  <%= link "Users",
+                    to: admin_user_path(@conn, :index),
+                    class: "navbar__dropdown-item"
+                  %>
+                </div>
+              </li>
             <% end %>
-          </li>
-        </ul>
+          </ul>
+          <ul class="navbar__menu-items">
+            <li class="navbar__logout">
+              <%= img_tag(@conn.assigns.current_user.avatar_url, class: "user-avatar") %>
+              <span class="navbar__username">
+                <%= @conn.assigns.current_user.name %>
+              </span>
+              <%= link("Logout", to: auth_path(@conn, :sign_out), class: "navbar__logout-link") %>
+              <%= link to: auth_path(@conn, :sign_out),
+                class: "navbar__logout-icon"
+              do %>
+                <%= img_tag static_path(@conn, "/images/logout.svg"),
+                  alt: "logout",
+                  class: "navbar__logout-icon"
+                %>
+              <% end %>
+            </li>
+          </ul>
+        </div>
       </div>
     </nav>
     <div class="container">
