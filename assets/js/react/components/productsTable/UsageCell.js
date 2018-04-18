@@ -75,7 +75,7 @@ export default class UsageCell extends PureComponent {
             unsubscribeFromReturnNotification(product.id)
           } }
           className="table__bell-button"
-          tooltipText="Notify when returned"
+          tooltipText="Cancel notification"
         >
           <img src="images/bell.svg"/>
         </TooltipButton>
