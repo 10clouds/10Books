@@ -1,0 +1,29 @@
+@mixin s-up {
+  @media only #{$small} {
+    @content;
+  }
+}
+
+@mixin m-up {
+  @media only #{$medium} {
+    @content;
+  }
+}
+
+@mixin l-up {
+  @media only #{$large} {
+    @content;
+  }
+}
+
+@mixin xl-up {
+  @media only #{$xlarge} {
+    @content;
+  }
+}
+
+@mixin xxl-up {
+  @media only #{$xxlarge} {
+    @content;
+  }
+}

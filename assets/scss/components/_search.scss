@@ -1,0 +1,127 @@
+.search-form {
+  position: relative;
+  width: 100%;
+
+  @include m-up {
+    display: flex;
+    justify-content: center;
+    width: auto;
+  }
+
+  &__wrapper-input{
+    position: relative;
+
+    @include m-up {
+      width: 400px;
+    }
+
+    @include l-up {
+      width: 500px;
+    }
+  }
+
+  &__input {
+    border-radius: 3px;
+    border: none;
+    box-shadow: 4px 57px 67px 0 rgba(75, 82, 113, .09);
+    font-family: $font-family;
+    font-size: 14px;
+    font-weight: 500;
+    height: 55px;
+    padding: 0 55px 0 24px;
+    width: 100%;
+
+    &::placeholder {
+      color: $lightGray;
+      font-weight: normal;
+    }
+  }
+
+  &__loupe {
+    width: 20px;
+    height: auto;
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  &__dropdown{
+    background: #ffffff;
+    border-radius: 5px;
+    box-shadow: 4px 57px 67px 0 rgba(75, 82, 113, .09);
+    margin-left: 20px;
+    width: 200px;
+    display: none;
+
+    @include m-up {
+      display: block;
+    }
+
+    @include l-up{
+      margin-left: 40px;
+      width: 250px;
+    }
+    .Dropdown-control{
+      background: #ffffff;
+      height: 100%;
+    }
+
+    .Dropdown-option {
+      color: $lightGray;
+      font-weight: 500;
+      padding-left: 24px;
+    }
+
+    .Dropdown-placeholder{
+      color: $lightGray;
+      padding-left: 24px;
+    }
+
+    &--selected{
+      .Dropdown-placeholder {
+        color: $text;
+      }
+    }
+  }
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 40px 0;
+
+  @include m-up {
+    flex-wrap: nowrap;
+  }
+
+  @include l-up {
+    margin: 60px 0;
+  }
+
+  @include xxl-up {
+    margin: 80px 0;
+  }
+
+  .button {
+    height: 55px;
+    margin-top: 30px;
+
+    @include m-up {
+      min-width: 150px;
+      padding: 0 30px;
+      margin-left: 20px;
+      margin-top: 0;
+    }
+
+    @include l-up {
+      margin-left: 40px;
+    }
+
+    @include xl-up {
+      padding: 0 50px;
+    }
+  }
+}

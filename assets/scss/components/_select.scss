@@ -1,0 +1,112 @@
+//from 'react-dropdown' package
+
+.Dropdown {
+  &-root {
+    position: relative;
+  }
+
+  &-control {
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    background-color: rgba(237, 237, 242, .4);
+    border-radius: 3px;
+    box-sizing: border-box;
+    height: 55px;
+    color: #333;
+    cursor: pointer;
+    outline: none;
+    padding: 0 52px 0 0;
+    transition: all 200ms ease;
+  }
+
+  &-arrow {
+    border-color: #999 transparent transparent;
+    border-style: solid;
+    border-width: 5px 5px 0;
+    content: ' ';
+    display: block;
+    height: 0;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    width: 0;
+    transform: translateY(-50%);
+  }
+
+  &.is-open &-arrow {
+    border-color: transparent transparent #999;
+    border-width: 0 5px 5px;
+  }
+
+  &-menu {
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 0 2px 69px 5px rgba(13, 13, 30, .1);
+    box-sizing: border-box;
+    margin-top: -1px;
+    max-height: 200px;
+    overflow-y: auto;
+    position: absolute;
+    top: 110%;
+    width: 100%;
+    z-index: 10;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  &-group > &-title {
+    padding: 8px 10px;
+    color: rgba(51, 51, 51, 1);
+    font-weight: bold;
+    text-transform: capitalize;
+  }
+
+  &-option {
+    box-sizing: border-box;
+    color: rgba(51, 51, 51, .8);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    height: 50px;
+    padding: 0 10px;
+
+    @include m-up {
+      padding-left: 20px;
+    }
+
+    &:last-child {
+      border-bottom-right-radius: 2px;
+      border-bottom-left-radius: 2px;
+    }
+
+    &:hover {
+      background-color: rgba(237, 237, 242, .4);
+      color: #333;
+    }
+
+    &.is-selected {
+      background-color: rgba(237, 237, 242, .4);
+      color: #333;
+    }
+  }
+
+  &-noresults {
+    box-sizing: border-box;
+    color: #ccc;
+    cursor: default;
+    display: block;
+    padding: 8px 10px;
+  }
+
+  &-placeholder {
+    font-size: 14px;
+    color: $gray;
+    width: 100%;
+    padding-left: 10px;
+
+    @include m-up {
+      padding-left: 20px;
+    }
+  }
+}

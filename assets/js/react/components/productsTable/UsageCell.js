@@ -1,6 +1,8 @@
 import React, { PureComponent, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
+import classnames from "classnames";
+import TooltipButton from "./Tooltip-button";
 
 export default class UsageCell extends PureComponent {
   static propTypes = {
@@ -29,14 +31,14 @@ export default class UsageCell extends PureComponent {
 
     return product.used_by.user.id !== currentUser.id && (
       <Fragment>
-        Taken by <b>{product.used_by.user.name}</b> <br />
-        <img
-          width={40}
-          src={product.used_by.user.avatar_url}
-        />
-        <br />
-        { moment(product.used_by.started_at).fromNow() }
-        <br />
+        <img src={product.used_by.user.avatar_url} className="user-avatar" />
+        <p>
+          <span className="table__data table__data-status-date">
+            Taken { moment(product.used_by.started_at).fromNow() }
+          </span>
+          <br/>
+          {product.used_by.user.name}
+        </p>
       </Fragment>
     )
   }
@@ -51,9 +53,11 @@ export default class UsageCell extends PureComponent {
       unsubscribeFromReturnNotification
     } = this.props
 
+    //TODO: add alt for images, change buttons CN
+
     return product.used_by.user.id === currentUser.id ? (
       <button
-        className="btn btn-warning"
+        className="button button--dark"
         onClick={() => {
           const isUserRated = product.ratings
             .find(item => item.user.id === currentUser.id)
@@ -66,21 +70,25 @@ export default class UsageCell extends PureComponent {
       </button>
     ) : (
       product.used_by.return_subscribers.includes(currentUser.id) ? (
-        <button
-          type="button"
-          className="btn btn-danger"
-          onClick={() => unsubscribeFromReturnNotification(product.id)}
+        <TooltipButton
+          onClick={ () => {
+            unsubscribeFromReturnNotification(product.id)
+          } }
+          className="table__bell-button"
+          tooltipText="Notify when returned"
         >
-          Cancel Notification
-        </button>
+          <img src="images/bell.svg"/>
+        </TooltipButton>
       ) : (
-        <button
-          type="button"
-          className="btn btn-info"
-          onClick={() => subscribeToReturnNotification(product.id)}
+        <TooltipButton
+          onClick={ () => {
+            subscribeToReturnNotification(product.id)
+          } }
+          className="table__bell-button"
+          tooltipText="Notify when returned"
         >
-          Notify when returned
-        </button>
+          <img src="images/bell--inactive.svg"/>
+        </TooltipButton>
       )
     )
   }
@@ -98,7 +106,7 @@ export default class UsageCell extends PureComponent {
       </Fragment>
     ) : (
       <button
-        className="btn btn-primary"
+        className="button button--bright"
         onClick={() => takeProduct(product.id)}
       >
         Take book

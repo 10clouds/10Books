@@ -1,0 +1,272 @@
+.table {
+  $module: &;
+
+  font-size: 14px;
+  line-height: 24px;
+  line-height: normal;
+  width: 100%;
+
+  &__row {
+    background-color: $white;
+    border-left: 5px solid transparent; // :(
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 10px 0;
+    padding: 20px;
+    position: relative;
+
+    &:nth-of-type(2) {
+      margin: 40px 0 10px 0;
+
+      @include m-up {
+        margin: 0 0 10px 0;
+      }
+    }
+
+    @include m-up {
+      align-items: center;
+      flex-direction: row;
+      padding: 20px 30px 20px 25px;
+    }
+
+    &--transparent {
+      background-color: transparent;
+      display: none;
+
+      @include m-up {
+        display: flex;
+      }
+
+    }
+
+    &:not(&--transparent):hover {
+      box-shadow: 5px 40px 40px 10px rgba(75, 82, 113, .08);
+      position: relative;
+      z-index: 2;
+    }
+
+    &--highlight {
+      border-left: 5px solid $accent;
+    }
+
+    #{$module}__arrow {
+      height: 40px;
+      outline: none;
+      position: absolute;
+      right: 0;
+      top: 20px;
+      width: 40px;
+
+      @include m-up {
+        display: none;
+      }
+
+      .arrow {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+      }
+
+    }
+  }
+
+  &__heading {
+    color: $gray;
+    font-weight: bold;
+    text-align: left;
+  }
+
+  &__heading-title {
+    order: 1;
+    width: calc(0.7 * (100% - 375px));
+
+    @include l-up {
+      width: calc(0.7 * (100% - 525px));
+    }
+
+    @include xl-up {
+      width: calc(0.7 * (100% - 575px));
+    }
+  }
+
+  &__heading-author {
+    width: calc(0.3 * (100% - 375px));
+    order: 2;
+
+    @include l-up {
+      width: calc(0.3 * (100% - 525px));
+    }
+
+    @include xl-up {
+      width: calc(0.3 * (100% - 575px));
+    }
+  }
+
+  &__heading-category {
+    order: 4;
+    overflow: hidden;
+    width: 70px;
+
+    @include l-up {
+      width: 210px;
+    }
+
+    @include xl-up {
+      width: 230px;
+    }
+  }
+
+  &__heading-rating {
+    order: 3;
+    width: 40px;
+
+    @include m-up {
+      margin: 0 15px 0 -15px;
+    }
+
+    @include xl-up {
+      margin: 0;
+      width: 70px;
+    }
+  }
+
+  &__heading-status {
+    order: 5;
+    width: 275px;
+
+    @include l-up {
+
+    }
+  }
+
+  &__data {
+    line-height: normal;
+
+    &--truncate {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  &__data-title {
+    width: 90%;
+
+    @include m-up {
+      padding-right: 20px;
+      width: calc(0.7 * (100% - 375px));
+    }
+  }
+
+  &__data-author {
+    font-weight: bold;
+    margin-top: 10px;
+    width: 90%;
+
+    @include m-up {
+      margin-top: 0;
+      padding-right: 20px;
+      width: auto;
+      width: calc(0.3 * (100% - 375px));
+    }
+  }
+
+  &__details {
+    margin-top: 30px;
+
+    @include m-up {
+      display: flex;
+      margin-top: 0;
+    }
+  }
+
+  &__data-category {
+    align-items: center;
+    color: $gray;
+    display: flex;
+    justify-content: space-between;
+
+    @include m-up {
+      justify-content: flex-start;
+      width: 100px;
+    }
+
+    @include l-up {
+      padding-right: 20px;
+      width: 250px;
+    }
+
+    @include xl-up {
+      width: 300px;
+    }
+  }
+
+  &__category-wrapper {
+    align-items: center;
+    display: flex;
+
+    @include m-up {
+      margin-left: 20px;
+      order: 2;
+    }
+
+    @include xl-up {
+      width: 210px;
+    }
+  }
+
+  &__category-name {
+    font-weight: bold;
+    padding-left: 15px;
+    width: calc(100% - #{$categoryIconSize});
+
+    @include m-up {
+      display: none;
+    }
+
+    @include l-up {
+      display: block;
+    }
+  }
+
+  &__rating {
+    color: $text;
+    font-weight: bold;
+
+    @include m-up {
+      order: 1;
+    }
+
+    @include xl-up {
+      width: 50px;
+    }
+  }
+
+  &__data-status {
+    align-items: center;
+    display: flex;
+    font-weight: bold;
+    justify-content: space-between;
+    margin-top: 30px;
+    text-align: center;
+
+    @include m-up {
+      margin-top: 0;
+      width: 275px;
+    }
+  }
+
+  &__data-status-date {
+    color: $gray;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  &__bell-button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    padding-right: 0px;
+  }
+}

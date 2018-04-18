@@ -1,0 +1,117 @@
+.arrow {
+  background-color: transparent;
+  border: none;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  height: 0;
+  padding: 0;
+  width: 0;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &--up {
+    border-bottom: 5px solid $accent;
+  }
+
+  &--down {
+    border-top: 5px solid $accent;
+  }
+}
+
+.container {
+  padding: 80px 20px 40px;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+
+  @include s-up {
+    padding: 80px 25px 40px;
+  }
+}
+
+.category-icon {
+  align-items: center;
+  border-radius: 100%;
+  display: flex;
+  font-weight: bold;
+  justify-content: center;
+  height: $categoryIconSize;
+  position: relative;
+  width: $categoryIconSize;
+}
+
+.button {
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  height: 40px;
+  padding: 0;
+  text-align: center;
+  width: 100%;
+
+  &--bright {
+    background-color: $accentLight;
+    color: $accent;
+  }
+
+  &--dark {
+    background-image: linear-gradient(to right, #865ee8, #6536e2);
+    color: $accentLight;
+  }
+
+  &--delete {
+    background-color: lighten($warning, 35%);
+    color: $warning;
+  }
+
+  &--narrow {
+    height: 56px;
+    padding: 0 50px;
+    width: auto;
+  }
+
+  &--categories { // TODO: change mod. class name
+    margin-top: 40px;
+  }
+
+  &--transparent {
+    background-color: transparent;
+    border: 1px solid $accent;
+    color: $accent;
+  }
+}
+
+a {
+  text-decoration: none;
+
+  &:link,
+  &:visited,
+  &:focus,
+  &:hover,
+  &:active {
+    color: $text;
+  }
+}
+
+body {
+  background-color: $background;
+  color: $text;
+  font-family: $font-family;
+  height: 100vh;
+
+  &.scroll-disabled {
+    overflow: hidden;
+  }
+}
+
+.user-avatar {
+  border-radius: 100%;
+  box-shadow: 4px 10px 18px 0 rgba(0, 0, 0, .1);
+  height: 36px;
+  margin-right: 5px;
+  width: 36px;
+}

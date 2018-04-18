@@ -1,0 +1,13 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 13px;
+}
+
+html, body {
+  background-color: $background;
+  box-sizing: border-box;
+  height: 100%;
+}

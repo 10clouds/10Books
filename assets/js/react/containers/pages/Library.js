@@ -24,19 +24,28 @@ class Library extends PureComponent {
 
   appendColumns = [
     {
-      title: 'Ratings',
+      title: 'Rating',
+      thProps: {
+        className: 'table__heading table__heading-rating'
+      },
       render: product => (
-        <div>{JSON.stringify(product.ratings)}</div>
+        <div>
+          { product.ratings.length > 0 ?
+              (product.ratings.reduce((total, rating) => {
+                return total + rating.value
+            }, 0) / product.ratings.length).toFixed(1)
+            : '0.0'
+          }
+        </div>
       )
     },
     {
       title: 'Status',
       thProps: {
-        className: 'text-center',
-        colSpan: 2
+        className: 'table__heading table__heading-status'
       },
       tdProps: {
-        className: 'text-center text-nowrap'
+        className: 'table__data table__data-status'
       },
       render: product => (
         <UsageCell
@@ -60,7 +69,9 @@ class Library extends PureComponent {
   render() {
     return (
       <div>
-        <SearchContainer />
+        <div className="search-container">
+          <SearchContainer categories={ this.props.categories } />
+        </div>
 
         <RateProductModal
           show={this.state.rateProductWithId !== null}
@@ -71,13 +82,14 @@ class Library extends PureComponent {
           }}
         />
 
-        <ProductsTableContainer appendColumns={this.appendColumns} />
+        <ProductsTableContainer appendColumns={this.appendColumns} currentUser={ this.props.currentUser } />
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
+  categories: state.categories.all,
   currentUser: state.user
 })
 
