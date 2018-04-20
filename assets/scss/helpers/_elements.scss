@@ -1,8 +1,8 @@
 .arrow {
   background-color: transparent;
   border: none;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
   height: 0;
   padding: 0;
   width: 0;
@@ -12,11 +12,11 @@
   }
 
   &--up {
-    border-bottom: 5px solid $accent;
+    border-bottom: 6px solid $accent;
   }
 
   &--down {
-    border-top: 5px solid $accent;
+    border-top: 6px solid $accent;
   }
 }
 
@@ -47,8 +47,7 @@
   border: none;
   cursor: pointer;
   font-size: 13px;
-  font-weight: 500;
-  height: 40px;
+  height: 36px;
   padding: 0;
   text-align: center;
   width: 100%;
@@ -111,7 +110,12 @@ body {
 .user-avatar {
   border-radius: 100%;
   box-shadow: 4px 10px 18px 0 rgba(0, 0, 0, .1);
-  height: 36px;
+  height: 47px;
   margin-right: 5px;
-  width: 36px;
+  width: 47px;
+
+  @include m-up {
+    height: 36px;
+    width: 36px;
+  }
 }

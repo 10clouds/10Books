@@ -77,6 +77,10 @@ export default class TableRow extends PureComponent {
       'table__data--truncate': !detailsVisible,
       'table__data-author': true
     })
+    const categoryClassNames = cn({
+      'category-icon': true,
+      'category-icon--desktop': !isMobile,
+    })
 
     //TODO: remove truncate onClick
 

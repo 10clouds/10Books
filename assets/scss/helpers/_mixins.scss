@@ -10,6 +10,12 @@
   }
 }
 
+@mixin m-down {
+  @media only #{$medium-down} {
+    @content;
+  }
+}
+
 @mixin l-up {
   @media only #{$large} {
     @content;
@@ -25,5 +31,19 @@
 @mixin xxl-up {
   @media only #{$xxlarge} {
     @content;
+  }
+}
+
+@mixin column-width($size) {
+  @include m-up {
+    width: calc(#{$size} * (100% - 310px));
+  }
+
+  @include l-up {
+    width: calc(#{$size} * (100% - 460px));
+  }
+
+  @include xl-up {
+    width: calc(#{$size} * (100% - 510px));
   }
 }

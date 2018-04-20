@@ -1,8 +1,7 @@
 import React, { PureComponent, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import classnames from "classnames";
-import TooltipButton from "./Tooltip-button";
+import TooltipButton from './Tooltip-button'
 
 export default class UsageCell extends PureComponent {
   static propTypes = {
@@ -77,7 +76,7 @@ export default class UsageCell extends PureComponent {
           className="table__bell-button"
           tooltipText="Cancel notification"
         >
-          <img src="images/bell.svg"/>
+          <img src="images/bell.svg" className="table__bell-icon" />
         </TooltipButton>
       ) : (
         <TooltipButton
@@ -87,7 +86,7 @@ export default class UsageCell extends PureComponent {
           className="table__bell-button"
           tooltipText="Notify when returned"
         >
-          <img src="images/bell--inactive.svg"/>
+          <img src="images/bell--inactive.svg" className="table__bell-icon" />
         </TooltipButton>
       )
     )

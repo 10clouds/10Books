@@ -1,33 +1,39 @@
 .table {
   $module: &;
 
-  font-size: 14px;
+  font-size: 16px;
   line-height: 24px;
   line-height: normal;
   width: 100%;
 
+  @include s-up {
+    font-size: 13px;
+  }
+
   &__row {
     background-color: $white;
-    border-left: 5px solid transparent; // :(
+    border-left: 5px solid transparent;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
     margin: 0 0 10px 0;
-    padding: 20px;
+    padding: 20px 16px;
     position: relative;
+    max-width: 1277px;
 
     &:nth-of-type(2) {
       margin: 40px 0 10px 0;
 
       @include m-up {
-        margin: 0 0 10px 0;
+        margin: 0 auto 10px;
       }
     }
 
     @include m-up {
       align-items: center;
       flex-direction: row;
-      padding: 20px 30px 20px 25px;
+      padding: 15px 17px;
+      margin: 0 auto 10px;
     }
 
     &--transparent {
@@ -36,8 +42,8 @@
 
       @include m-up {
         display: flex;
+        margin-bottom: 4px;
       }
-
     }
 
     &:not(&--transparent):hover {
@@ -64,10 +70,9 @@
 
       .arrow {
         position: absolute;
-        right: 15px;
-        top: 15px;
+        right: 19px;
+        top: 24px;
       }
-
     }
   }
 
@@ -75,32 +80,19 @@
     color: $gray;
     font-weight: bold;
     text-align: left;
+    font-size: 14px;
   }
 
   &__heading-title {
     order: 1;
-    width: calc(0.7 * (100% - 375px));
-
-    @include l-up {
-      width: calc(0.7 * (100% - 525px));
-    }
-
-    @include xl-up {
-      width: calc(0.7 * (100% - 575px));
-    }
+    
+    @include column-width(0.7);
   }
 
   &__heading-author {
-    width: calc(0.3 * (100% - 375px));
     order: 2;
 
-    @include l-up {
-      width: calc(0.3 * (100% - 525px));
-    }
-
-    @include xl-up {
-      width: calc(0.3 * (100% - 575px));
-    }
+    @include column-width(0.3);
   }
 
   &__heading-category {
@@ -133,11 +125,7 @@
 
   &__heading-status {
     order: 5;
-    width: 275px;
-
-    @include l-up {
-
-    }
+    width: 210px;
   }
 
   &__data {
@@ -153,31 +141,48 @@
   &__data-title {
     width: 90%;
 
+    @include column-width(0.7);
+
     @include m-up {
       padding-right: 20px;
-      width: calc(0.7 * (100% - 375px));
     }
   }
 
   &__data-author {
     font-weight: bold;
-    margin-top: 10px;
+    margin-top: 15px;
     width: 90%;
+
+    @include column-width(0.3);
 
     @include m-up {
       margin-top: 0;
       padding-right: 20px;
-      width: auto;
-      width: calc(0.3 * (100% - 375px));
     }
   }
 
   &__details {
     margin-top: 30px;
+    padding-right: 10px;
+    width: 100%;
+
+    @include s-up {
+      width: 300px;
+    }
 
     @include m-up {
       display: flex;
       margin-top: 0;
+      padding: 0;
+      width: 310px;
+    }
+
+    @include l-up {
+      width: 460px;
+    }
+
+    @include xl-up {
+      width: 510px;
     }
   }
 
@@ -211,15 +216,15 @@
       order: 2;
     }
 
-    @include xl-up {
-      width: 210px;
+    @include l-up {
+      width: 250px;
     }
   }
 
   &__category-name {
     font-weight: bold;
-    padding-left: 15px;
-    width: calc(100% - #{$categoryIconSize});
+    padding-left: 23px;
+    width: calc(100% - #{$categoryIconSizeMobile});
 
     @include m-up {
       display: none;
@@ -227,6 +232,9 @@
 
     @include l-up {
       display: block;
+      font-weight: 500;
+      padding-left: 20px;
+      width: calc(100% - #{$categoryIconSizeDesktop});
     }
   }
 
@@ -248,19 +256,25 @@
     display: flex;
     font-weight: bold;
     justify-content: space-between;
-    margin-top: 30px;
+    margin: 40px 0 18px 0;
     text-align: center;
 
     @include m-up {
-      margin-top: 0;
-      width: 275px;
+      margin: 0;
+      width: 210px;
+      font-size: 13px;
     }
   }
 
   &__data-status-date {
     color: $gray;
-    font-size: 12px;
+    font-size: 16px;
     font-weight: bold;
+
+    @include m-up {
+      font-size: 12px;
+      font-weight: 500;
+    }
   }
 
   &__bell-button {
@@ -268,5 +282,22 @@
     border: none;
     outline: none;
     padding-right: 0px;
+  }
+
+  &__bell-icon {
+    height: 34px;
+    width: 34px;
+
+    @include m-up {
+      height: 26px;
+      width: 26px;
+    }
+  }
+
+  .button {
+    @include m-down {
+      height: 47px;
+      font-size: 18px;
+    }
   }
 }
