@@ -37,9 +37,14 @@
   display: flex;
   font-weight: bold;
   justify-content: center;
-  height: $categoryIconSizeDesktop;
+  height: $categoryIconSizeMobile;
   position: relative;
-  width: $categoryIconSizeDesktop;
+  width: $categoryIconSizeMobile;
+
+  @include m-up {
+    height: $categoryIconSizeDesktop;
+    width: $categoryIconSizeDesktop;
+  }
 }
 
 .button {

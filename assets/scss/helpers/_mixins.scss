@@ -36,7 +36,7 @@
 
 @mixin column-width($size) {
   @include m-up {
-    width: calc(#{$size} * (100% - 310px));
+    width: calc(#{$size} * (100% - 330px));
   }
 
   @include l-up {

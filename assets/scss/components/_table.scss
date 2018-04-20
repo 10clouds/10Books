@@ -2,7 +2,6 @@
   $module: &;
 
   font-size: 16px;
-  line-height: 24px;
   line-height: normal;
   width: 100%;
 
@@ -101,11 +100,11 @@
     width: 70px;
 
     @include l-up {
-      width: 210px;
+      width: 190px;
     }
 
     @include xl-up {
-      width: 230px;
+      width: 210px;
     }
   }
 
@@ -125,7 +124,7 @@
 
   &__heading-status {
     order: 5;
-    width: 210px;
+    width: 230px;
   }
 
   &__data {
@@ -199,11 +198,11 @@
 
     @include l-up {
       padding-right: 20px;
-      width: 250px;
+      width: 230px;
     }
 
     @include xl-up {
-      width: 300px;
+      width: 280px;
     }
   }
 
@@ -217,7 +216,7 @@
     }
 
     @include l-up {
-      width: 250px;
+      width: 200px;
     }
   }
 
@@ -228,12 +227,20 @@
 
     @include m-up {
       display: none;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: calc(100% - #{$categoryIconSizeMobile} - 20px);
     }
 
     @include l-up {
       display: block;
       font-weight: 500;
       padding-left: 20px;
+      width: calc(100% - #{$categoryIconSizeDesktop} - 20px);
+    }
+
+    @include xl-up {
       width: calc(100% - #{$categoryIconSizeDesktop});
     }
   }
@@ -261,15 +268,32 @@
 
     @include m-up {
       margin: 0;
-      width: 210px;
+      width: 230px;
       font-size: 13px;
+    }
+  }
+
+  &__data-user {
+    display: flex;
+    text-align: left;
+    align-items: center;
+    line-height: 24px;
+
+    @include s-up {
+      font-size: 13px;
+      line-height: 20px;
+    }
+
+    .user-avatar {
+      margin-right: 10px;
     }
   }
 
   &__data-status-date {
     color: $gray;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
+    margin-bottom: 5px;
 
     @include m-up {
       font-size: 12px;
@@ -282,6 +306,11 @@
     border: none;
     outline: none;
     padding-right: 0px;
+    margin-left: 5px;
+
+    @include m-up {
+      margin-left: 10px;
+    }
   }
 
   &__bell-icon {

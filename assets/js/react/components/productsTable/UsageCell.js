@@ -29,7 +29,7 @@ export default class UsageCell extends PureComponent {
     const { product, currentUser } = this.props
 
     return product.used_by.user.id !== currentUser.id && (
-      <Fragment>
+      <div className="table__data table__data-user">
         <img src={product.used_by.user.avatar_url} className="user-avatar" />
         <p>
           <span className="table__data table__data-status-date">
@@ -38,7 +38,7 @@ export default class UsageCell extends PureComponent {
           <br/>
           {product.used_by.user.name}
         </p>
-      </Fragment>
+      </div>
     )
   }
 
