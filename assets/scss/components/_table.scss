@@ -224,7 +224,7 @@
   &__category-name {
     font-weight: bold;
     padding-left: 23px;
-    width: calc(100% - #{$categoryIconSize});
+    width: calc(100% - #{$categoryIconSizeMobile});
 
     @include m-up {
       display: none;
@@ -234,6 +234,7 @@
       display: block;
       font-weight: 500;
       padding-left: 20px;
+      width: calc(100% - #{$categoryIconSizeDesktop});
     }
   }
 
@@ -272,7 +273,6 @@
 
     @include m-up {
       font-size: 12px;
-
       font-weight: 500;
     }
   }
@@ -285,8 +285,13 @@
   }
 
   &__bell-icon {
-    height: 26px;
-    width: 26px;
+    height: 34px;
+    width: 34px;
+
+    @include m-up {
+      height: 26px;
+      width: 26px;
+    }
   }
 
   .button {

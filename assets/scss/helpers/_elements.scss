@@ -37,8 +37,13 @@
   display: flex;
   font-weight: bold;
   justify-content: center;
-  height: $categoryIconSize;
-  width: $categoryIconSize;
+  height: $categoryIconSizeMobile;
+  width: $categoryIconSizeMobile;
+
+  &--desktop {
+    height: $categoryIconSizeDesktop;
+    width: $categoryIconSizeDesktop;
+  }
 
   &__bckg {
     border-radius: 100%;
@@ -117,7 +122,12 @@ body {
 .user-avatar {
   border-radius: 100%;
   box-shadow: 4px 10px 18px 0 rgba(0, 0, 0, .1);
-  height: 36px;
+  height: 47px;
   margin-right: 5px;
-  width: 36px;
+  width: 47px;
+
+  @include m-up {
+    height: 36px;
+    width: 36px;
+  }
 }
