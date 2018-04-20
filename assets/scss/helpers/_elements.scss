@@ -124,3 +124,18 @@ body {
     width: 36px;
   }
 }
+
+.alert {
+  width: 100%;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  font-size: 17px;
+  border-radius: 6px;
+  align-items: center;
+
+  &--success {
+    color: $success;
+    background-color: rgba($success-background, .11);
+  }
+}

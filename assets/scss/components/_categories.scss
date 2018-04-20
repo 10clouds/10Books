@@ -32,7 +32,7 @@
     background-color: $white;
     border-radius: 5px;
     margin-bottom: 10px;
-    padding: 20px 15px;
+    padding: 20px 25px;
 
     @include s-up {
       align-items: center;
@@ -47,10 +47,17 @@
     color: $gray;
     display: flex;
     font-weight: bold;
+    font-size: 18px;
+
+    @include m-up {
+      font-size: 13px;
+    }
   }
 
   &__name {
-    margin-left: 20px;
+    @include m-up {
+      margin-left: 20px;
+    }
   }
 
   &__actions {
