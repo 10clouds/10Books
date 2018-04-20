@@ -17,7 +17,7 @@ export default class TableRow extends PureComponent {
       author: PropTypes.string,
     }),
     categoryName: PropTypes.string.isRequired,
-    categoryColor: PropTypes.string.isRequired,
+    categoryColor: PropTypes.object.isRequired,
     appendColumns: PropTypes.arrayOf(
       PropTypes.shape({
         tdProps: PropTypes.object,
@@ -98,8 +98,7 @@ export default class TableRow extends PureComponent {
         <div className="table__details">
           <div className="table__data table__data-category">
             <div className="table__data table__category-wrapper">
-              <div className={ categoryClassNames } style={ { color: categoryColor } }>
-                <div className="category-icon__bckg" style={ { background: categoryColor } }/>
+              <div className="category-icon" style={ { color: categoryColor.text, background: categoryColor.background } }>
                 { categoryName.charAt(0) }
               </div>
               <div className="table__data table__category-name ">
