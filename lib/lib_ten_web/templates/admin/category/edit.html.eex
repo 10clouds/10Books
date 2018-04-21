@@ -1,5 +1,7 @@
-<h2>Edit Category</h2>
-
-<%= render "form.html", Map.put(assigns, :action, admin_category_path(@conn, :update, @category)) %>
-
-<span><%= link "Back", to: admin_category_path(@conn, :index) %></span>
+<div class="categories categories__edit-page">
+  <h2 class="categories__heading">Edit Category</h2>
+  <%= render "form.html", Map.put(assigns, :action, admin_category_path(@conn, :update, @category)) %>
+  <%= link to: admin_category_path(@conn, :index) do %>
+    <button class="button button--transparent">Cancel</button>
+  <% end %>
+</div>

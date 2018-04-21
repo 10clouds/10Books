@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const adminDropdown = document.getElementById('admin-dropdown')
   const adminDropdownButton = document.getElementById('admin-dropdown-button')
   const adminDropdownMenu = document.getElementById('admin-dropdown-menu')
+  const alerts = Array.from(document.querySelectorAll('.alert'))
 
   hamburgerButton.addEventListener('click', () => {
     hamburgerButton.classList.toggle('collapsed')
@@ -54,6 +55,10 @@ document.addEventListener('DOMContentLoaded', () => {
     adminDropdown.classList.remove('collapsed')
     adminDropdownMenu.classList.remove('navbar__menu-dropdown--visible')
   }
+
+  alerts.forEach(alert => {
+    alert.innerText ? alert.classList.remove('alert--hidden') : alert.classList.add('alert--hidden')
+  })
 })
 
 window.LibTen = {

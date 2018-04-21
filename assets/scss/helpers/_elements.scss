@@ -138,4 +138,17 @@ body {
     color: $success;
     background-color: rgba($success-background, .11);
   }
+
+  &--error {
+    color: $error;
+    background-color: rgba($error-background, .11);
+  }
+
+  &--hidden {
+    display: none;
+  }
+
+  img {
+    margin-right: 20px;
+  }
 }

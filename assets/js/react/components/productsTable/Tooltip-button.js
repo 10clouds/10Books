@@ -8,11 +8,11 @@ class TooltipButton extends PureComponent {
     className: PropTypes.string,
     children: PropTypes.node,
     tooltipText: PropTypes.string
-  };
+  }
 
   state = {
     isTooltipVisible: false,
-  };
+  }
 
   toggleTooltip = () => {
     if (this.state.isTooltipVisible) {
@@ -20,15 +20,15 @@ class TooltipButton extends PureComponent {
     } else {
       this.showTooltip()
     }
-  };
+  }
 
   showTooltip = () => {
     this.setState({ isTooltipVisible: true })
-  };
+  }
 
   hideTooltip = () => {
     this.setState({ isTooltipVisible: false })
-  };
+  }
 
   render() {
     const { onClick, className, children, tooltipText } = this.props
