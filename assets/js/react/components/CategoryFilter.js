@@ -8,7 +8,7 @@ const CategoryFilter = props => {
       value: option.id,
       label: option.name
     }
-  ));
+  ))
 
   const dropdownCategories = [{
     value: 'all',

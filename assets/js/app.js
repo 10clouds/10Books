@@ -14,7 +14,7 @@ function render(component, domNode) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const navbarBreakPoint = 839;
+  const navbarBreakPoint = 839
   const hamburgerButton = document.getElementById('hamburger-button')
   const hamburgerMenu = document.getElementById('hamburger-menu')
   const adminDropdown = document.getElementById('admin-dropdown')
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   })
   
   adminDropdownButton.addEventListener('click', e => {
-    if(window.innerWidth >= navbarBreakPoint) return;
+    if(window.innerWidth >= navbarBreakPoint) return
     e.preventDefault()
     adminDropdownButton.classList.toggle('collapsed')
     adminDropdownMenu.classList.toggle('navbar__menu-dropdown--visible')
