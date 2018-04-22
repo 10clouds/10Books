@@ -1,12 +1,12 @@
 .categories {
   $module: &;
 
-  margin: 60px 0;
+  margin: 60px 0 40px;
   padding: 0 10px;
   width: 100%;
 
   @include m-up {
-    margin-left: 40px;
+    padding-left: 40px;
   }
 
   &__heading {
