@@ -17,6 +17,7 @@
   }
 
   &__container {
+    height: 100%;
 
     @include m-up {
       align-items: center;
@@ -69,7 +70,6 @@
     align-items: center;
     background: white;
     flex-direction: column;
-    height: 100%;
     padding: 6px 0 40px;
     position: relative;
     transform: translateY(-306px);
