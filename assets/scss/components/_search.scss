@@ -27,7 +27,7 @@
     font-family: $font-family;
     font-size: 14px;
     font-weight: 500;
-    height: 55px;
+    height: 51.2px;
     padding: 0 55px 0 24px;
     width: 100%;
 
@@ -41,7 +41,7 @@
     width: 20px;
     height: auto;
     position: absolute;
-    right: 30px;
+    right: 25px;
     top: 50%;
     transform: translateY(-50%);
   }
@@ -106,22 +106,19 @@
   }
 
   .button {
-    height: 55px;
-    margin-top: 30px;
+    height: 47px;
+    margin-top: 40px;
 
     @include m-up {
-      min-width: 150px;
-      padding: 0 30px;
+      height: 51.2px;
       margin-left: 20px;
       margin-top: 0;
+      min-width: 120px;
+      padding: 0 30px;
     }
 
     @include l-up {
       margin-left: 40px;
-    }
-
-    @include xl-up {
-      padding: 0 50px;
     }
   }
 }

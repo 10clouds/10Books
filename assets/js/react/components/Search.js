@@ -7,7 +7,7 @@ const Search = props => {
       <input
         className="search-form__input"
         type="text"
-        placeholder="Type name, author or category"
+        placeholder="Type book name or author"
         onChange={ props.onChange }
         defaultValue={ props.value }
       />
