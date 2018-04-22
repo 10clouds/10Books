@@ -4,14 +4,14 @@
   }
 }
 
-@mixin m-up {
-  @media only #{$medium} {
+@mixin s-down {
+  @media only #{$small-down} {
     @content;
   }
 }
 
-@mixin m-down {
-  @media only #{$medium-down} {
+@mixin m-up {
+  @media only #{$medium} {
     @content;
   }
 }

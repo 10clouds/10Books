@@ -30,12 +30,12 @@ export default class TableRow extends PureComponent {
   }
 
   componentDidMount() {
-    this.setState({ isMobile: window.innerWidth < 839 })
+    this.setState({ isMobile: window.innerWidth < 480 })
     window.addEventListener('resize', this.handleWindowResize)
   }
 
   handleWindowResize = debounce(() => {
-    const isMobile = window.innerWidth < 839
+    const isMobile = window.innerWidth < 480
     this.setState({ isMobile })
   }, 400 )
 

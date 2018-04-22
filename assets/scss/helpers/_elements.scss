@@ -119,7 +119,7 @@ body {
   margin-right: 5px;
   width: 47px;
 
-  @include m-up {
+  @include s-up {
     height: 36px;
     width: 36px;
   }

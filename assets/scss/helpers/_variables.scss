@@ -4,8 +4,8 @@ $radioSize: 22px;
 $font-family: 'Lato', 'Arial', sans-serif;
 
 $small: "screen and (min-width: 480px)";
+$small-down: "screen and (max-width: 479px)";
 $medium: "screen and (min-width: 839px)";
-$medium-down: "screen and (max-width: 838px)";
 $large: "screen and (min-width: 1024px)";
 $xlarge: "screen and (min-width: 1199px)";
 $xxlarge: "screen and (min-width: 1800px)";
