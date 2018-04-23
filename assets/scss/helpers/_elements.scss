@@ -25,6 +25,7 @@
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
+  position: relative;
 
   @include s-up {
     padding: 80px 25px 40px;
@@ -126,13 +127,22 @@ body {
 }
 
 .alert {
-  width: 100%;
   height: 56px;
   display: flex;
   justify-content: center;
   font-size: 17px;
   border-radius: 6px;
   align-items: center;
+  position: absolute;
+  padding: 0 20px;
+  margin: 0 auto;
+  top: 80px;
+  left: 25px;
+  right: 25px;
+
+  @include m-up {
+    top: 75px;
+  }
 
   &--success {
     color: $success;
@@ -151,4 +161,10 @@ body {
   img {
     margin-right: 20px;
   }
+}
+
+.form-hint {
+  color: $error;
+  display: block;
+  margin-top: 10px;
 }

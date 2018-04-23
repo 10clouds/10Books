@@ -1,7 +1,7 @@
 .categories {
   $module: &;
 
-  margin: 60px 0 40px;
+  margin: 70px 0 40px;
   padding: 0 10px;
   width: 100%;
 
@@ -124,4 +124,9 @@
     }
   }
 
+  .form-group {
+    &__category {
+      height: 100px;
+    }
+  }
 }
