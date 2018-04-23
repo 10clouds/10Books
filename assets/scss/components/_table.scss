@@ -140,11 +140,11 @@
   &__data-title {
     width: 90%;
 
-    @include column-width(0.7);
-
     @include s-up {
       width: 100%;
     }
+
+    @include column-width(0.7);
 
     @include m-up {
       padding-right: 20px;
@@ -156,12 +156,12 @@
     margin-top: 15px;
     width: 90%;
 
-    @include column-width(0.3);
-
     @include s-up {
       width: 100%;
     }
 
+    @include column-width(0.3);
+    
     @include m-up {
       margin-top: 0;
       padding-right: 20px;
