@@ -1,10 +1,12 @@
 .categories {
-  margin: 60px 0;
+  $module: &;
+
+  margin: 70px 0 40px;
   padding: 0 10px;
   width: 100%;
 
   @include m-up {
-    margin-left: 40px;
+    padding-left: 40px;
   }
 
   &__heading {
@@ -19,12 +21,12 @@
 
   &__subheading {
     display: none;
+    color: $gray;
+    font-weight: bold;
+    margin-bottom: 15px;
 
     @include s-up {
-      color: $gray;
       display: block;
-      font-weight: bold;
-      margin-bottom: 15px;
     }
   }
 
@@ -32,13 +34,13 @@
     background-color: $white;
     border-radius: 5px;
     margin-bottom: 10px;
-    padding: 20px 15px;
+    padding: 20px;
 
     @include s-up {
       align-items: center;
       display: flex;
       justify-content: space-between;
-      padding: 15px;
+      padding: 12px;
     }
   }
 
@@ -47,10 +49,13 @@
     color: $gray;
     display: flex;
     font-weight: bold;
+    font-size: 13px;
   }
 
   &__name {
-    margin-left: 20px;
+    @include m-up {
+      margin-left: 20px;
+    }
   }
 
   &__actions {
@@ -58,7 +63,6 @@
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
-    padding: 0 5px;
 
     @include s-up {
       margin: 0;
@@ -68,11 +72,6 @@
     .button {
       height: 40px;
       width: 100px;
-
-      a {
-        color: $warning;
-        font-weight: bold;
-      }
     }
   }
 
@@ -96,6 +95,38 @@
 
     a {
       color: $accentLight;
+    }
+  }
+
+  &__input {
+    height: 50px;
+    width: 100%;
+    max-width: 475px;
+    border: none;
+    border-radius: 5px;
+    padding: 0 20px;
+    font-size: 14px;
+  }
+
+  &__edit-page {
+    .button {
+      height: 40px;
+      margin-top: 30px;
+
+      @include s-up {
+        width: 100px;
+      }
+    }
+
+    #{$module}__subheading {
+      display: block;
+      margin-top: 40px;
+    }
+  }
+
+  .form-group {
+    &__category {
+      height: 100px;
     }
   }
 }

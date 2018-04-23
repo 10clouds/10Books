@@ -25,6 +25,7 @@
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
+  position: relative;
 
   @include s-up {
     padding: 80px 25px 40px;
@@ -123,4 +124,47 @@ body {
     height: 36px;
     width: 36px;
   }
+}
+
+.alert {
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  font-size: 17px;
+  border-radius: 6px;
+  align-items: center;
+  position: absolute;
+  padding: 0 20px;
+  margin: 0 auto;
+  top: 80px;
+  left: 25px;
+  right: 25px;
+
+  @include m-up {
+    top: 75px;
+  }
+
+  &--success {
+    color: $success;
+    background-color: rgba($success-background, .11);
+  }
+
+  &--error {
+    color: $error;
+    background-color: rgba($error-background, .11);
+  }
+
+  &--hidden {
+    display: none;
+  }
+
+  img {
+    margin-right: 20px;
+  }
+}
+
+.form-hint {
+  color: $error;
+  display: block;
+  margin-top: 10px;
 }

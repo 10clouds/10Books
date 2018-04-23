@@ -19,7 +19,9 @@
               class: "categories__edit-img"
             %>
           <% end %>
-          <button class="button button--delete"><%= link "Delete", to: admin_category_path(@conn, :delete, category), method: :delete, data: [confirm: "Are you sure?"], class: "categories__delete" %></button>
+          <%= link to: admin_category_path(@conn, :delete, category), method: :delete, data: [confirm: "Are you sure?"] do %>
+            <button class="button button--delete">Delete</button>
+          <% end %>
         </div>
       </div>
   <% end %>
