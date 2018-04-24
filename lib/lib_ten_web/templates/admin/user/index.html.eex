@@ -1,25 +1,34 @@
-<h2>Listing Users</h2>
+<div class="users">
+    <h2 class="users__heading">Listing Users</h2>
+  <div class="table">
+    <div class="table__row table__row--transparent">
+      <div class="table__heading table__heading-name">Name</div>
+      <div class="table__heading table__heading-email">E-mail</div>
+      <div class="table__heading table__heading-admin">User type</div>
+      <div class="table__heading table__heading-edit"></div>
+    </div>
+    <%= for user <- @users do %>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Body</th>
-      <th>Admin ?</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for user <- @users do %>
-    <tr>
-      <td><%= user.email %></td>
-      <td><%= user.name %></td>
-      <td><%= user.is_admin %></td>
-
-      <td class="text-right">
-        <span><%= link "Edit", to: admin_user_path(@conn, :edit, user), class: "btn btn-default btn-xs" %></span>
-      </td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
+      <%= if user.is_admin === true do %>
+        <div class="table__row table__row--highlight">
+      <% else %>
+        <div class="table__row">
+      <% end %>
+        <div class="table__data table__user-wrapper">
+          <div class="table__data table__data-name"><%= user.name %></div>
+          <div class="table__data table__data-email table__data-email--truncate"><%= user.email %></div>
+          <div class="table__data table__data-admin">
+            <%= if user.is_admin === true do %>
+              Admin
+            <% else %>
+              User
+            <% end %>
+          </div>
+        </div>  
+        <div class="table__data table__data-edit">
+          <%= link "Edit", to: admin_user_path(@conn, :edit, user), class: 'edit' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -127,6 +127,18 @@
     width: 230px;
   }
 
+  &__heading-name {
+    width: calc(0.45 * (100% - 160px));
+  }
+
+  &__heading-email {
+    width: calc(0.55 * (100% - 160px));
+  }
+
+  &__heading-admin {
+    width: 160px;
+  }
+
   &__data {
     line-height: normal;
 
@@ -161,7 +173,7 @@
     }
 
     @include column-width(0.3);
-    
+
     @include m-up {
       margin-top: 0;
       padding-right: 20px;
@@ -330,6 +342,64 @@
     @include s-up {
       font-size: 12px;
       font-weight: 500;
+    }
+  }
+
+  &__data-name {
+    font-weight: bold;
+
+    @include m-up {
+      width: calc(0.45 * (100% - 100px));
+    }
+  }
+
+  &__data-email {
+    margin: 20px 0;
+
+    &--truncate {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100%;
+    }
+
+    @include m-up {
+      width: calc(0.55 * (100% - 100px));
+      margin: 0;
+    }
+  }
+
+  &__data-admin {
+    font-weight: bold;
+
+    @include s-up {
+      width: 100px;
+    }
+  }
+
+  &__data-edit {
+    bottom: 20px;
+    position: absolute;
+    right: 16px;
+
+    @include s-up {
+      position: static;
+      width: 60px;
+    }
+
+    .edit {
+      color: $accent;
+      font-weight: bold;
+    }
+  }
+
+  &__user-wrapper {
+    overflow: hidden;
+
+    @include m-up {
+      align-items: center;
+      display: flex;
+      width: calc((100% - 60px));
     }
   }
 
