@@ -13,7 +13,7 @@
     background-color: rgba(237, 237, 242, .4);
     border-radius: 3px;
     box-sizing: border-box;
-    height: 50px;
+    height: 45px;
     color: #333;
     cursor: pointer;
     outline: none;
@@ -46,7 +46,7 @@
     box-shadow: 0 2px 69px 5px rgba(13, 13, 30, .1);
     box-sizing: border-box;
     margin-top: -1px;
-    max-height: 200px;
+    max-height: 230px;
     overflow-y: auto;
     position: absolute;
     top: 110%;
@@ -68,7 +68,7 @@
     cursor: pointer;
     display: flex;
     align-items: center;
-    height: 50px;
+    height: 45px;
     padding: 0 10px;
 
     @include m-up {

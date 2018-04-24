@@ -35,13 +35,13 @@
     font-family: $font-family;
     font-size: 17px;
     font-weight: 500;
-    height: 68px;
+    height: 56px;
     padding: 0 55px 0 24px;
     width: 100%;
 
     @include s-up {
       font-size: 14px;
-      height: 50px;
+      height: 45px;
     }
 
     &::placeholder {
