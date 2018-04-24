@@ -1,0 +1,13 @@
+.users {
+  .table {
+    max-width: 800px;
+    
+    &__row:not(:first-of-type) {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+      align-items: center;
+      position: relative;
+    }
+  }
+}

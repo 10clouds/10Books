@@ -127,6 +127,19 @@
     width: 230px;
   }
 
+  &__heading-name,
+  &__heading-email {
+    width: calc(0.5 * (100% - 140px));
+  }
+
+  &__heading-admin {
+    width: 80px;
+  }
+
+  &__heading-edit {
+    width: 60px;
+  }
+
   &__data {
     line-height: normal;
 
@@ -331,6 +344,44 @@
       font-size: 12px;
       font-weight: 500;
     }
+  }
+
+  &__data-name {
+    font-weight: bold;
+
+    @include m-up {
+      width: calc(0.5 * (100% - 140px));
+    }
+  }
+
+  &__data-email {
+    margin: 20px 0;
+
+    @include m-up {
+      width: calc(0.5 * (100% - 140px));
+    }
+  }
+
+  &__data-admin {
+    font-weight: bold;
+  }
+
+  &__data-edit {
+    position: absolute;
+    right: 16px;
+    bottom: 20px;
+    
+    .edit {
+      font-weight: bold;
+      color: $accent;
+
+    }
+
+  }
+
+  &__user-wrapper {
+    // display: flex;
+    // justify-content: space-between;
   }
 
   &__bell-button {
