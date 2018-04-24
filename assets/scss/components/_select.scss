@@ -13,7 +13,7 @@
     background-color: rgba(237, 237, 242, .4);
     border-radius: 3px;
     box-sizing: border-box;
-    height: 55px;
+    height: 50px;
     color: #333;
     cursor: pointer;
     outline: none;
@@ -100,12 +100,13 @@
   }
 
   &-placeholder {
-    font-size: 14px;
+    font-size: 16px;
     color: $gray;
     width: 100%;
     padding-left: 10px;
 
     @include m-up {
+      font-size: 14px;
       padding-left: 20px;
     }
   }
