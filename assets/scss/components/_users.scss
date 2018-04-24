@@ -1,13 +1,27 @@
 .users {
+  margin: 70px auto 40px;
+  width: 100%;
+  max-width: 800px;
+
+  &__heading {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
   .table {
     max-width: 800px;
-    
+    margin: 40px auto 0;
+
     &__row:not(:first-of-type) {
       display: flex;
       justify-content: space-between;
       flex-direction: row;
       align-items: center;
       position: relative;
+
+      @include s-up {
+        position: static;
+      }
     }
   }
 }
