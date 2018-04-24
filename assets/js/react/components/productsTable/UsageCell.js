@@ -105,7 +105,7 @@ export default class UsageCell extends PureComponent {
       </Fragment>
     ) : (
       <button
-        className="button button--bright"
+        className="button button--bright button--small"
         onClick={() => takeProduct(product.id)}
       >
         Take book

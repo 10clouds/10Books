@@ -29,11 +29,16 @@
     border: none;
     box-shadow: 4px 57px 67px 0 rgba(75, 82, 113, .09);
     font-family: $font-family;
-    font-size: 14px;
+    font-size: 17px;
     font-weight: 500;
-    height: 51.2px;
+    height: 68px;
     padding: 0 55px 0 24px;
     width: 100%;
+
+    @include s-up {
+      font-size: 14px;
+      height: 50px;
+    }
 
     &::placeholder {
       color: $lightGray;
@@ -107,12 +112,15 @@
   }
 
   .button {
-    height: 47px;
     margin-top: 40px;
     min-width: 150px;
+    font-size: 18px;
+
+    @include s-up {
+      font-size: 13px;
+    }
 
     @include m-up {
-      height: 51.2px;
       margin-left: 20px;
       padding: 0 30px;
     }
