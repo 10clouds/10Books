@@ -105,8 +105,12 @@
     width: 100%;
     padding-left: 10px;
 
-    @include m-up {
+    @include s-up {
       font-size: 14px;
+      padding-left: 20px;
+    }
+
+    @include m-up {
       padding-left: 20px;
     }
   }
