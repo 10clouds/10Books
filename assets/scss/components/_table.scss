@@ -173,7 +173,7 @@
     }
 
     @include column-width(0.3);
-    
+
     @include m-up {
       margin-top: 0;
       padding-right: 20px;
@@ -357,10 +357,10 @@
     margin: 20px 0;
 
     &--truncate {
-      width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      width: 100%;
     }
 
     @include m-up {
@@ -378,18 +378,18 @@
   }
 
   &__data-edit {
+    bottom: 20px;
     position: absolute;
     right: 16px;
-    bottom: 20px;
 
     @include s-up {
       position: static;
       width: 60px;
     }
-    
+
     .edit {
-      font-weight: bold;
       color: $accent;
+      font-weight: bold;
     }
   }
 
@@ -397,9 +397,9 @@
     overflow: hidden;
 
     @include m-up {
-      width: calc((100% - 60px));
-      display: flex;
       align-items: center;
+      display: flex;
+      width: calc((100% - 60px));
     }
   }
 
