@@ -28,8 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
   })
   
   adminDropdownButton.addEventListener('click', e => {
-    if(window.innerWidth >= navbarBreakPoint) return
     e.preventDefault()
+    if(window.innerWidth >= navbarBreakPoint) return
     adminDropdownButton.classList.toggle('collapsed')
     adminDropdownMenu.classList.toggle('navbar__menu-dropdown--visible')
   })

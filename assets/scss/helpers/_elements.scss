@@ -53,28 +53,73 @@
   border: none;
   cursor: pointer;
   font-size: 13px;
-  height: 36px;
+  height: 47px;
   padding: 0;
+  position: relative;
   text-align: center;
   width: 100%;
+  transition: background-color .2s, color .2s;
+  z-index: 1;
+
+  @include s-up {
+    height: 50px;
+  }
+
+  &--small {
+    font-size: 18px;
+    height: 47px;
+
+    @include s-up {
+      font-size: 13px;
+      height: 36px;
+    }
+  }
 
   &--bright {
     background-color: $accentLight;
     color: $accent;
+
+    &:hover{
+      background-color: $accent;
+      color: $accentLight;
+    }
   }
 
   &--dark {
     background-image: linear-gradient(to right, #865ee8, #6536e2);
     color: $accentLight;
+
+    &:after{
+      background-image: linear-gradient(to right, darken(#865ee8, 5%), darken(#6536e2, 5%));
+      border-radius: 3px;
+      position: absolute;
+      content: '';
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity .2s;
+      z-index: -1;
+    }
+
+    &:hover{
+      &:after{
+        opacity: 1;
+      }
+    }
   }
 
   &--delete {
     background-color: lighten($warning, 35%);
     color: $warning;
+
+    &:hover{
+      background-color: lighten($warning, 28%);
+    }
   }
 
   &--narrow {
-    height: 56px;
     padding: 0 50px;
     width: auto;
   }
@@ -87,6 +132,11 @@
     background-color: transparent;
     border: 1px solid $accent;
     color: $accent;
+
+    &:hover{
+      background-color: $accent;
+      color: $accentLight;
+    }
   }
 }
 

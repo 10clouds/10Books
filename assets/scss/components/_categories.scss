@@ -110,11 +110,10 @@
 
   &__edit-page {
     .button {
-      height: 40px;
       margin-top: 30px;
 
       @include s-up {
-        width: 100px;
+        width: 150px;
       }
     }
 

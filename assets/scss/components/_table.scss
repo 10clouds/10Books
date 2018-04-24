@@ -354,11 +354,4 @@
       width: 26px;
     }
   }
-
-  .button {
-    @include s-down {
-      font-size: 18px;
-      height: 47px;
-    }
-  }
 }
