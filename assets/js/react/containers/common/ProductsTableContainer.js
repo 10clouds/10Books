@@ -9,6 +9,7 @@ function ProductsTableContainer(props) {
     categories,
     renderNoResults,
     currentUser,
+    isMobile,
     ...componentProps
   } = props
 
@@ -32,6 +33,7 @@ function ProductsTableContainer(props) {
       categories={categories.byId}
       {...componentProps}
       currentUser={ currentUser }
+      isMobile={ isMobile }
     /> 
   ) : renderNoResults ? renderNoResults() : null
 }

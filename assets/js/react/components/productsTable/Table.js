@@ -10,6 +10,7 @@ export default class Table extends PureComponent {
     currentUser: PropTypes.shape({
       id: PropTypes.number.isRequired
     }),
+    isMobile: PropTypes.bool.isRequired,
   }
 
   static defaultProps = {
@@ -17,6 +18,13 @@ export default class Table extends PureComponent {
   }
 
   render() {
+    const {
+      appendColumns,
+      currentUser,
+      isMobile,
+      categories,
+      products,
+    } = this.props
     return (
       <div className="table">
         <div className="table__row table__row--transparent">
@@ -27,14 +35,15 @@ export default class Table extends PureComponent {
             <div className="table__heading" key={i} {...col.thProps}>{col.title}</div>
           ))}
         </div>
-        {this.props.products.map(product => (
+        {products.map(product => (
           <TableRow
             key={product.id}
             product={product}
-            categoryColor={this.props.categories[product.category_id].color}
-            categoryName={this.props.categories[product.category_id].name}
-            appendColumns={this.props.appendColumns}
-            currentUser={this.props.currentUser}
+            categoryColor={ categories[product.category_id].color }
+            categoryName={ categories[product.category_id].name }
+            appendColumns={ appendColumns }
+            currentUser={ currentUser }
+            isMobile={ isMobile }
           />
         ))}
       </div>

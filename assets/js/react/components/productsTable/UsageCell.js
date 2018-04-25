@@ -2,6 +2,7 @@ import React, { PureComponent, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import TooltipButton from './Tooltip-button'
+import cn from 'classnames'
 
 export default class UsageCell extends PureComponent {
   static propTypes = {
@@ -22,7 +23,8 @@ export default class UsageCell extends PureComponent {
     openRateProduct: PropTypes.func.isRequired,
     returnProduct: PropTypes.func.isRequired,
     subscribeToReturnNotification: PropTypes.func.isRequired,
-    unsubscribeFromReturnNotification: PropTypes.func.isRequired
+    unsubscribeFromReturnNotification: PropTypes.func.isRequired,
+    isMobile: PropTypes.bool.isRequired,
   }
 
   renderUsedBy() {
@@ -49,14 +51,18 @@ export default class UsageCell extends PureComponent {
       openRateProduct,
       returnProduct,
       subscribeToReturnNotification,
-      unsubscribeFromReturnNotification
+      unsubscribeFromReturnNotification,
+      isMobile,
     } = this.props
-
-    //TODO: add alt for images, change buttons CN
+    const buttonClassNames = cn({
+      'button': true,
+      'button--dark': true,
+      'button--small': !isMobile,
+    })
 
     return product.used_by.user.id === currentUser.id ? (
       <button
-        className="button button--dark"
+        className={ buttonClassNames }
         onClick={() => {
           const isUserRated = product.ratings
             .find(item => item.user.id === currentUser.id)
@@ -95,8 +101,14 @@ export default class UsageCell extends PureComponent {
   render() {
     const {
       product,
-      takeProduct
+      takeProduct,
+      isMobile
     } = this.props
+    const buttonClassNames = cn({
+      'button': true,
+      'button--bright': true,
+      'button--small': !isMobile,
+    })
 
     return product.used_by ? (
       <Fragment>
@@ -105,7 +117,7 @@ export default class UsageCell extends PureComponent {
       </Fragment>
     ) : (
       <button
-        className="button button--bright button--small"
+        className={ buttonClassNames }
         onClick={() => takeProduct(product.id)}
       >
         Take book
