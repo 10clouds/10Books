@@ -1,20 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="47px" height="47px" viewBox="0 0 47 47" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 49.1 (51147) - http://www.bohemiancoding.com/sketch -->
-    <title>Group 45</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="10books" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Category-listing" transform="translate(-817.000000, -997.000000)">
-            <g id="Group" transform="translate(112.000000, 978.000000)">
-                <g id="Group-45" transform="translate(705.000000, 19.000000)">
-                    <rect id="Rectangle-10" stroke="#EFEFF5" stroke-width="2" transform="translate(23.500000, 23.500000) scale(-1, 1) translate(-23.500000, -23.500000) " x="1" y="1" width="45" height="45" rx="3"></rect>
-                    <g id="Page-1" transform="translate(13.000000, 13.000000)" fill="#9DA0B7">
-                        <polygon id="Fill-1" points="0 22 5.934125 21.38625 0.61425 16.066"></polygon>
-                        <path d="M21.269525,6.050225 C22.24315,5.0766 22.24365,3.497475 21.269525,2.52335 L19.4764,0.730475 C18.5029,-0.24365 16.923775,-0.243275 15.94965,0.730475 L14.215275,2.465225 L19.53515,7.7846 L21.269525,6.050225 Z M13.20165,3.478475 L18.521525,8.79835 L6.957025,20.363225 L1.637275,15.04335 L13.20165,3.478475 Z" id="Fill-2"></path>
-                    </g>
-                </g>
-            </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="47" height="47">
+    <g fill="none" fill-rule="evenodd">
+        <rect width="45" height="45" x="1" y="1" stroke="#EFEFF5" stroke-width="2" rx="3" transform="matrix(-1 0 0 1 47 0)"/>
+        <g fill="#9DA0B7">
+            <path d="M13 35l5.934125-.61375L13.61425 29.066zM34.269525 19.050225c.973625-.973625.974125-2.55275 0-3.526875L32.4764 13.730475c-.9735-.974125-2.552625-.97375-3.52675 0l-1.734375 1.73475L32.53515 20.7846l1.734375-1.734375zm-8.067875-2.57175l5.319875 5.319875-11.5645 11.564875-5.31975-5.319875L26.20165 16.478475z"/>
         </g>
     </g>
 </svg>

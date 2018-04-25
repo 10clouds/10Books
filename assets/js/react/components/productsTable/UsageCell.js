@@ -56,7 +56,7 @@ export default class UsageCell extends PureComponent {
 
     return product.used_by.user.id === currentUser.id ? (
       <button
-        className="button button--dark"
+        className="button button--dark button--small"
         onClick={() => {
           const isUserRated = product.ratings
             .find(item => item.user.id === currentUser.id)

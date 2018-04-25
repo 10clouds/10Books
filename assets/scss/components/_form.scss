@@ -1,5 +1,6 @@
 .form {
   $form: &;
+
   &__group {
     margin-bottom: 30px;
     position: relative;
@@ -43,6 +44,18 @@
       font-size: 14px;
       font-weight: bold;
       margin-bottom: 15px;
+    }
+
+    &--checkbox {
+      color: $text;
+      display: inline-block;
+      margin: 0;
+      cursor: pointer;
+
+      span {
+        display: inline-block;
+        vertical-align: middle;
+      }
     }
   }
 
@@ -128,5 +141,22 @@
     left: 0;
     position: absolute;
     top: 105%;
+  }
+
+  &__checkbox {
+    display: none;
+  }
+
+  &__checkbox-placeholder {
+    border-radius: 5px;
+    border: solid 2px $accent;
+    height: 18px;
+    margin-right: 10px;
+    width: 18px;
+
+    #{$form}__checkbox:checked + & {
+      background: url('/images/checked.svg');
+      background-size: cover;
+    }
   }
 }

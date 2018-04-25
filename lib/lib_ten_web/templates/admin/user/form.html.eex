@@ -18,8 +18,13 @@
 </div>
 
 <div class="form__group">
-  <%= label f, :is_admin, class: "form__label form__label--admin" %>
-  <%= checkbox f, :is_admin, class: "form__checkbox" %>
+
+  <%= label f, :is_admin, class: "form__label form__label--admin form__label--checkbox" do %>
+    <%= checkbox f, :is_admin, class: "form__checkbox" %>
+    <span class="form__checkbox-placeholder"></span>
+    <span>Admin</span>
+  <% end %>
+
   <%= error_tag f, :is_admin %>
 </div>
 
