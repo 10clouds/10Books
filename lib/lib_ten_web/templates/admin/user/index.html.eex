@@ -1,34 +1,37 @@
-<div class="users">
-    <h2 class="users__heading">Listing Users</h2>
-  <div class="table">
-    <div class="table__row table__row--transparent">
-      <div class="table__heading table__heading-name">Name</div>
-      <div class="table__heading table__heading-email">E-mail</div>
-      <div class="table__heading table__heading-admin">User type</div>
-      <div class="table__heading table__heading-edit"></div>
-    </div>
-    <%= for user <- @users do %>
+<div class="admin">
+  <h1>Listing Users</h1>
+  <div class="admin__wrapper">
+    <div class="table">
+      <div class="table__row table__row--transparent">
+        <div class="table__heading table__heading-name">Name</div>
+        <div class="table__heading table__heading-email">E-mail</div>
+        <div class="table__heading table__heading-admin">User type</div>
+        <div class="table__heading table__heading-edit"></div>
+      </div>
+      <%= for user <- @users do %>
 
       <%= if user.is_admin === true do %>
-        <div class="table__row table__row--highlight">
-      <% else %>
-        <div class="table__row">
-      <% end %>
-        <div class="table__data table__user-wrapper">
-          <div class="table__data table__data-name"><%= user.name %></div>
-          <div class="table__data table__data-email table__data-email--truncate"><%= user.email %></div>
-          <div class="table__data table__data-admin">
-            <%= if user.is_admin === true do %>
+      <div class="table__row table__row--highlight table__row--users">
+        <% else %>
+        <div class="table__row table__row--users">
+          <% end %>
+          <div class="table__data table__user-wrapper">
+            <div class="table__data table__data-name"><%= user.name %></div>
+            <div class="table__data table__data-email table__data-email--truncate"><%= user.email %></div>
+            <div class="table__data table__data-admin">
+              <%= if user.is_admin === true do %>
               Admin
-            <% else %>
+              <% else %>
               User
-            <% end %>
+              <% end %>
+            </div>
           </div>
-        </div>  
-        <div class="table__data table__data-edit">
-          <%= link "Edit", to: admin_user_path(@conn, :edit, user), class: 'edit' %>
+          <div class="table__data table__data-edit">
+            <%= link "Edit", to: admin_user_path(@conn, :edit, user), class: 'edit' %>
+          </div>
         </div>
+        <% end %>
       </div>
-    <% end %>
+    </div>
   </div>
 </div>

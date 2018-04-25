@@ -48,12 +48,26 @@
   }
 }
 
-.button {
+a {
+  text-decoration: none;
+
+  &:link,
+  &:visited,
+  &:focus,
+  &:hover,
+  &:active {
+    color: $text;
+  }
+}
+
+.button, a.button {
   border-radius: 3px;
   border: none;
   cursor: pointer;
+  display: block;
   font-size: 13px;
   height: 45px;
+  line-height: 45px;
   padding: 0;
   position: relative;
   text-align: center;
@@ -64,10 +78,12 @@
   &--small {
     font-size: 18px;
     height: 45px;
+    line-height: 45px;
 
     @include s-up {
       font-size: 13px;
       height: 36px;
+      line-height: 36px;
     }
   }
 
@@ -133,29 +149,6 @@
       background-color: $accent;
       color: $accentLight;
     }
-  }
-}
-
-a {
-  text-decoration: none;
-
-  &:link,
-  &:visited,
-  &:focus,
-  &:hover,
-  &:active {
-    color: $text;
-  }
-}
-
-body {
-  background-color: $background;
-  color: $text;
-  font-family: $font-family;
-  height: 100vh;
-
-  &.scroll-disabled {
-    overflow: hidden;
   }
 }
 

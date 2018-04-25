@@ -7,6 +7,22 @@
     @include xxl-up {
       margin-bottom: 50px;
     }
+
+    &--category {
+      height: 100px;
+    }
+
+    &--buttons {
+      display: flex;
+
+      .button {
+        margin-left: 12px;
+
+        &:first-child {
+          margin-left: 0;
+        }
+      }
+    }
   }
 
   &__label {
@@ -18,6 +34,14 @@
 
     @include m-up {
       font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    &--admin {
+      color: $gray;
+      display: block;
+      font-size: 14px;
+      font-weight: bold;
       margin-bottom: 15px;
     }
   }
@@ -51,6 +75,12 @@
       ~ #{$form}__bar {
         background: $warning;
       }
+    }
+
+    &--admin {
+      background: $white;
+      max-width: 475px;
+      width: 100%;
     }
   }
 

@@ -11,3 +11,12 @@ html, body {
   box-sizing: border-box;
   height: 100%;
 }
+
+body {
+  color: $text;
+  font-family: $font-family;
+
+  &.scroll-disabled {
+    overflow: hidden;
+  }
+}

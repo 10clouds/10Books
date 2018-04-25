@@ -1,20 +1,20 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:400,700&subset=latin-ext');
 @import 'helpers/palette';
-@import 'base/reset';
-@import 'base/base';
-
 @import 'helpers/variables';
 @import 'helpers/mixins';
 @import 'helpers/elements';
+
+@import 'base/reset';
+@import 'base/base';
+@import 'base/typography';
 
 @import 'components/search';
 @import 'components/table';
 @import 'components/popup';
 @import 'components/rating';
 @import 'components/navbar';
-@import 'components/categories';
 @import 'components/form';
 @import 'components/select';
 @import 'components/tooltip-button';
 @import 'components/login';
-@import 'components/users';
+@import 'components/admin';

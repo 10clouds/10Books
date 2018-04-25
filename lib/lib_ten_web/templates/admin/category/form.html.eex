@@ -8,13 +8,14 @@
     </div>
   <% end %>
 
-  <div class="form-group form-group__category">
-    <%= label f, :name, class: "categories__subheading" %>
-    <%= text_input f, :name, class: "categories__input" %>
+  <div class="form__group form__group--category">
+    <%= label f, :name, class: "form__label form__label--admin" %>
+    <%= text_input f, :name, class: "form__input form__input--admin" %>
     <%= error_tag f, :name %>
   </div>
 
-  <div class="form-group">
+  <div class="form__group form__group--buttons">
     <%= submit "Submit", class: "button button--dark" %>
+    <%= link "Cancel", to: admin_category_path(@conn, :index), class: "button button--transparent" %>
   </div>
 <% end %>

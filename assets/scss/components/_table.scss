@@ -20,19 +20,19 @@
     padding: 20px 16px;
     position: relative;
 
+    @include m-up {
+      align-items: center;
+      flex-direction: row;
+      margin: 0 auto 10px;
+      padding: 15px 17px;
+    }
+
     &:nth-of-type(2) {
       margin: 40px 0 10px 0;
 
       @include m-up {
         margin: 0 auto 10px;
       }
-    }
-
-    @include m-up {
-      align-items: center;
-      flex-direction: row;
-      margin: 0 auto 10px;
-      padding: 15px 17px;
     }
 
     &--transparent {
@@ -53,6 +53,14 @@
 
     &--highlight {
       border-left: 5px solid $accent;
+    }
+
+    &--users{
+      padding: 20px 16px;
+
+      @include m-up {
+        padding: 20px 17px;
+      }
     }
 
     #{$module}__arrow {

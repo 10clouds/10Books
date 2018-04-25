@@ -1,9 +1,8 @@
-<div class="container">
-  <h2>Edit User</h2>
+<div class="admin admin__edit-page">
+
+  <h1>Edit User</h1>
 
   <%= render "form.html",
-    Map.put(assigns, :action, admin_user_path(@conn, :update, @user))
+  Map.put(assigns, :action, admin_user_path(@conn, :update, @user))
   %>
-
-  <span><%= link "Back", to: admin_user_path(@conn, :index) %></span>
 </div>

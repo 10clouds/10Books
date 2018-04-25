@@ -1,22 +1,22 @@
-<div class="categories">
-  <h2 class="categories__heading">Listing Categories</h2>
+<div class="admin">
+  <h1>Listing Categories</h1>
 
-  <div class="categories__wrapper">
+  <div class="admin__wrapper">
   <%# IDEA: i don't think this h3 is neccessary at all - it shoud be removed %>
-    <h3 class="categories__subheading">Name</h3>
+    <h3 class="admin__subheading">Name</h3>
     <%= for category <- @categories do %>
-      <div class="categories__row">
+      <div class="admin__row">
         <%# TODO: add different category icons for different categories %>
-        <div class="categories__category">
-          <div class="categories__name"><%= category.name %></div>
+        <div class="admin__category">
+          <div class="admin__name"><%= category.name %></div>
         </div>  
-        <div class="categories__actions">
+        <div class="admin__actions">
           <%= link to: admin_category_path(@conn, :edit, category),
-            class: "categories__edit"
+            class: "admin__edit"
           do %>
             <%= img_tag static_path(@conn, "/images/edit.svg"),
               alt: "edit",
-              class: "categories__edit-img"
+              class: "admin__edit-img"
             %>
           <% end %>
           <%= link to: admin_category_path(@conn, :delete, category), method: :delete, data: [confirm: "Are you sure?"] do %>
@@ -26,5 +26,5 @@
       </div>
   <% end %>
   </div>
-  <button class="button button--dark"><%= link "+ New Category", to: admin_category_path(@conn, :new) %></button>
+  <%= link "+ New Category", to: admin_category_path(@conn, :new), class: "button button--dark"  %>
 </div>
