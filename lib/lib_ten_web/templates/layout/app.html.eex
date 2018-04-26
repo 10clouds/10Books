@@ -100,19 +100,19 @@
       </div>
     </nav>
     <div class="container">
-      <div class="alert alert--success">
-        <%= img_tag static_path(@conn, "/images/check.svg"),
-          alt: "success"
-        %>
-        <%= get_flash(@conn, :info) %>
-      </div>
-      <div class="alert alert--error">
-        <%= img_tag static_path(@conn, "/images/fail.svg"),
-          alt: "fail"
-        %>
-        <%= get_flash(@conn, :error) %>
-      </div>
       <main role="main">
+        <div class="alert alert--success">
+          <%= img_tag static_path(@conn, "/images/check.svg"),
+            alt: "success"
+          %>
+          <%= get_flash(@conn, :info) %>
+        </div>
+        <div class="alert alert--error">
+          <%= img_tag static_path(@conn, "/images/fail.svg"),
+            alt: "fail"
+          %>
+          <%= get_flash(@conn, :error) %>
+        </div>
         <%= render @view_module, @view_template, assigns %>
       </main>
     </div> <!-- /container -->

@@ -13,7 +13,7 @@
   }
 
   &__wrapper {
-    max-width: 700px;
+    max-width: $adminContainerWidth;
 
     .table {
       &__row {
