@@ -10,7 +10,7 @@ export default class Table extends PureComponent {
     currentUser: PropTypes.shape({
       id: PropTypes.number.isRequired
     }),
-    isMobile: PropTypes.bool.isRequired,
+    isMobile: PropTypes.bool,
   }
 
   static defaultProps = {

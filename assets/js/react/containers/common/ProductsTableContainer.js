@@ -15,8 +15,8 @@ function ProductsTableContainer(props) {
 
   const searchString = search.queryString.toLowerCase()
   const filteredProducts = Object
-    .values(props.products.idsByInsertedAt)
-    .map(({ id }) => props.products.byId[id])
+    .values(products.idsByInsertedAt)
+    .map(({ id }) => products.byId[id])
     .filter(product => (
       product.title.toLowerCase().includes(searchString) || (
         product.author &&
