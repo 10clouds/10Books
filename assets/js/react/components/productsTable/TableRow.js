@@ -1,13 +1,11 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import cn from 'classnames'
-import debounce from 'lodash.debounce'
 
 export default class TableRow extends PureComponent {
 
   state = {
     detailsVisible: false,
-    isMobile: null,
   }
 
   static propTypes = {
@@ -27,17 +25,8 @@ export default class TableRow extends PureComponent {
     currentUser: PropTypes.shape({
       id: PropTypes.number.isRequired
     }),
+    isMobile: PropTypes.bool.isRequired
   }
-
-  componentDidMount() {
-    this.setState({ isMobile: window.innerWidth < 480 })
-    window.addEventListener('resize', this.handleWindowResize)
-  }
-
-  handleWindowResize = debounce(() => {
-    const isMobile = window.innerWidth < 480
-    this.setState({ isMobile })
-  }, 400 )
 
   handleArrowClick = () => {
     this.setState({
@@ -51,12 +40,10 @@ export default class TableRow extends PureComponent {
       categoryName,
       categoryColor,
       appendColumns,
-      currentUser
+      currentUser,
+      isMobile
     } = this.props
-    const { detailsVisible, isMobile } = this.state
-
-    //TDO: add isMobile or something like that, then isMobile && status === 'IN__LIBRARY' - ?
-
+    const { detailsVisible } = this.state
     const ownedBook = product.used_by ? product.used_by.user.id === currentUser.id : false
     const rowClassNames = cn({
       'table__row': true,
@@ -77,8 +64,6 @@ export default class TableRow extends PureComponent {
       'table__data--truncate': !detailsVisible,
       'table__data-author': true
     })
-
-    //TODO: remove truncate onClick
 
     return (
       <div className={ rowClassNames }>

@@ -92,8 +92,7 @@ a {
     color: $accent;
 
     &:hover{
-      background-color: $accent;
-      color: $accentLight;
+      background-color: darken($accentLight, 5%);
     }
   }
 

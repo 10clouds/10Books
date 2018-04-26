@@ -26,25 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
     hamburgerButton.classList.toggle('collapsed')
     hamburgerMenu.classList.toggle('navbar__menu--visible')
   })
-  
-  adminDropdownButton.addEventListener('click', e => {
-    e.preventDefault()
-    if(window.innerWidth >= navbarBreakPoint) return
-    adminDropdownButton.classList.toggle('collapsed')
-    adminDropdownMenu.classList.toggle('navbar__menu-dropdown--visible')
-  })
-
-  adminDropdown.addEventListener('mouseenter', () => {
-    if(window.innerWidth >= navbarBreakPoint){
-      adminMenuShow()
-    }
-  })
-
-  adminDropdown.addEventListener('mouseleave', () => {
-    if(window.innerWidth >= navbarBreakPoint){
-      adminMenuHide()
-    }
-  })
 
   function adminMenuShow() {
     adminDropdown.classList.add('collapsed')
@@ -59,6 +40,27 @@ document.addEventListener('DOMContentLoaded', () => {
   alerts.forEach(alert => {
     alert.innerText ? alert.classList.remove('alert--hidden') : alert.classList.add('alert--hidden')
   })
+
+  if (store.getState().user.is_admin) {
+    adminDropdownButton.addEventListener('click', e => {
+      e.preventDefault()
+      if(window.innerWidth >= navbarBreakPoint) return
+      adminDropdownButton.classList.toggle('collapsed')
+      adminDropdownMenu.classList.toggle('navbar__menu-dropdown--visible')
+    })
+
+    adminDropdown.addEventListener('mouseenter', () => {
+      if(window.innerWidth >= navbarBreakPoint){
+        adminMenuShow()
+      }
+    })
+
+    adminDropdown.addEventListener('mouseleave', () => {
+      if(window.innerWidth >= navbarBreakPoint){
+        adminMenuHide()
+      }
+    })
+  }
 })
 
 window.LibTen = {
