@@ -2,8 +2,11 @@
   $module: &;
 
   margin: 70px 0 40px;
-  padding: 0 10px;
   width: 100%;
+
+  @include s-up {
+    padding: 0 10px;
+  }
 
   @include m-up {
     padding-left: 40px;
