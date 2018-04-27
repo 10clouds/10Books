@@ -1,0 +1,42 @@
+@keyframes backgroundFadingIn {
+  0% {
+    background-color:rgba($black, 0);
+  }
+  100% {
+    background-color:rgba($black, .4);
+  }
+}
+
+@keyframes backgroundFadingOut {
+  0% {
+    background-color:rgba($black, .4);
+  }
+  100% {
+    background-color:rgba($black, 0);
+  }
+}
+
+@keyframes popupIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes popupOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  70% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+}
