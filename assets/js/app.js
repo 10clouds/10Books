@@ -27,6 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
     hamburgerMenu.classList.toggle('navbar__menu--visible')
   })
 
+  alerts.forEach(alert => {
+    alert.innerText ? alert.classList.remove('alert--hidden') : alert.classList.add('alert--hidden')
+  })
+
   function adminMenuShow() {
     adminDropdown.classList.add('collapsed')
     adminDropdownMenu.classList.add('navbar__menu-dropdown--visible')
@@ -37,11 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     adminDropdownMenu.classList.remove('navbar__menu-dropdown--visible')
   }
 
-  alerts.forEach(alert => {
-    alert.innerText ? alert.classList.remove('alert--hidden') : alert.classList.add('alert--hidden')
-  })
-
-  if (store.getState().user.is_admin) {
+  if (adminDropdown) {
     adminDropdownButton.addEventListener('click', e => {
       e.preventDefault()
       if(window.innerWidth >= navbarBreakPoint) return

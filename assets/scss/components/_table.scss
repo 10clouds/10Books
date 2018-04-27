@@ -356,7 +356,7 @@
   &__data-name {
     font-weight: bold;
 
-    @include m-up {
+    @include s-up {
       width: calc(0.45 * (100% - 100px));
     }
   }
@@ -390,7 +390,7 @@
     position: absolute;
     right: 16px;
 
-    @include s-up {
+    @include m-up {
       position: static;
       width: 60px;
     }

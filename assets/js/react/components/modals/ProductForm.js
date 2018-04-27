@@ -123,81 +123,79 @@ class ProductForm extends PureComponent {
     ))
 
     return (
-      this.props.show ? (
-        <Modal popupModifier="form" { ...modalProps }>
-          <form
-            className="form form--popup"
-            onSubmit={ e => {
-              e.preventDefault()
-              onSubmit(this.state.fields)
-                .then(this.props.onHide)
-                .catch(data => {
-                  this.setErrors(data.errors)
-                })
-            } }
-          >
-            { this.renderFormGroup({
-              label: 'Title',
-              placeholder: 'Title',
-              name: 'title'
-            }) }
-            { this.renderFormGroup({
-              label: 'Author',
-              placeholder: 'Author',
-              name: 'author'
-            }) }
-            { this.renderFormGroup({
-              label: 'Url',
-              placeholder: 'Url',
-              name: 'url',
-              type: 'url'
-            }) }
+      <Modal popupModifier="form" { ...modalProps }>
+        <form
+          className="form form--popup"
+          onSubmit={ e => {
+            e.preventDefault()
+            onSubmit(this.state.fields)
+              .then(this.props.onHide)
+              .catch(data => {
+                this.setErrors(data.errors)
+              })
+          } }
+        >
+          { this.renderFormGroup({
+            label: 'Title',
+            placeholder: 'Title',
+            name: 'title'
+          }) }
+          { this.renderFormGroup({
+            label: 'Author',
+            placeholder: 'Author',
+            name: 'author'
+          }) }
+          { this.renderFormGroup({
+            label: 'Url',
+            placeholder: 'Url',
+            name: 'url',
+            type: 'url'
+          }) }
 
-            { this.props.forAdmin && this.renderFormGroup({
-              label: 'Status',
-              name: 'status',
-              inputComponent: (
-                <Dropdown
-                  options={ DROPDOWN_STATUS }
-                  className={ classnames('form__select', {
-                    'is-invalid': this.state.errors['status']
-                  }) }
-                  onChange={ selectedOption => {
-                    this.handleFieldChange('status', selectedOption.value)
-                    this.setState({ selectedStatus: selectedOption })
-                  } }
-                  value={ this.state.selectedStatus }
-                  placeholder="Select an option"/>
-              )
-            }) }
+          { this.props.forAdmin && this.renderFormGroup({
+            label: 'Status',
+            name: 'status',
+            inputComponent: (
+              <Dropdown
+                options={ DROPDOWN_STATUS }
+                className={ classnames('form__select', {
+                  'is-invalid': this.state.errors['status']
+                }) }
+                onChange={ selectedOption => {
+                  this.handleFieldChange('status', selectedOption.value)
+                  this.setState({ selectedStatus: selectedOption })
+                } }
+                value={ this.state.selectedStatus }
+                placeholder="Select an option"/>
+            )
+          }) }
 
-            { this.renderFormGroup({
-              label: 'Category',
-              name: 'category_id',
-              inputComponent: (
-                <Dropdown
-                  options={ dropdownCategories }
-                  className={ classnames('form__select', {
-                    'is-invalid': this.state.errors['category_id']
-                  }) }
-                  menuClassName='form__select-menu--short'
-                  onChange={ selectedOption => {
-                    this.handleFieldChange('category_id',
-                      parseInt(selectedOption.value, 10) || null
-                    )
-                    this.setState({ selectedCategory: selectedOption })
-                  } }
-                  value={ this.state.selectedCategory }
-                  placeholder="Select an option"
-                />
-              )
-            }) }
+          { this.renderFormGroup({
+            label: 'Category',
+            name: 'category_id',
+            inputComponent: (
+              <Dropdown
+                options={ dropdownCategories }
+                className={ classnames('form__select', {
+                  'is-invalid': this.state.errors['category_id']
+                }) }
+                menuClassName='form__select-menu--short'
+                onChange={ selectedOption => {
+                  this.handleFieldChange('category_id',
+                    parseInt(selectedOption.value, 10) || null
+                  )
+                  this.setState({ selectedCategory: selectedOption })
+                } }
+                value={ this.state.selectedCategory }
+                placeholder="Select an option"
+              />
+            )
+          }) }
 
-            <button className="button button--dark button--narrow form__button"
-                    type="submit">{ this.props.submitLabel }</button>
-          </form>
-        </Modal>
-      ) : null
+          <button className="button button--dark button--narrow form__button"
+                  type="submit">{ this.props.submitLabel }</button>
+        </form>
+      </Modal>
     )
   }
 }
