@@ -34,7 +34,7 @@ export default class Modal extends PureComponent {
 
   render() {
     return (
-      <Transition in={ this.props.show } timeout={ { enter: 1000, exit: 1000 } } unmountOnExit>
+      <Transition in={ this.props.show } timeout={ 500 } unmountOnExit>
         { state => {
           return <div
             className={ classnames('popup', {
