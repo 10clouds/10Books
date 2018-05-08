@@ -17,10 +17,10 @@ const CategoryFilter = props => {
 
   return (
     <Dropdown
-      className={ props.classNames }
-      options={ dropdownCategories }
-      onChange={ selectedOption => props.onChange(selectedOption) }
-      value={ props.value }
+      className={props.classNames}
+      options={dropdownCategories}
+      onChange={selectedOption => props.onChange(selectedOption)}
+      value={props.value}
       placeholder="Category"/>
   )
 }

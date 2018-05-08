@@ -67,14 +67,13 @@ defmodule LibTenWeb.Admin.CategoryControllerTest do
       assert html_response(conn, 404) =~ "not found"
     end
 
-    test "redirects to show when data is valid", %{conn: conn} do
+    test "redirects to index when data is valid", %{conn: conn} do
       conn = post conn, admin_category_path(conn, :create), category: @create_attrs
 
-      assert %{id: id} = redirected_params(conn)
-      assert redirected_to(conn) == admin_category_path(conn, :show, id)
+      assert redirected_to(conn) == admin_category_path(conn, :index)
 
-      conn = get conn, admin_category_path(conn, :show, id)
-      assert html_response(conn, 200) =~ "Show Category"
+      conn = get conn, admin_category_path(conn, :index)
+      assert html_response(conn, 200) =~ "Listing Categories"
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
@@ -115,9 +114,9 @@ defmodule LibTenWeb.Admin.CategoryControllerTest do
 
     test "redirects when data is valid", %{conn: conn, category: category} do
       conn = put conn, admin_category_path(conn, :update, category), category: @update_attrs
-      assert redirected_to(conn) == admin_category_path(conn, :show, category)
+      assert redirected_to(conn) == admin_category_path(conn, :index)
 
-      conn = get conn, admin_category_path(conn, :show, category)
+      conn = get conn, admin_category_path(conn, :index)
       assert html_response(conn, 200) =~ "some updated name"
     end
 
@@ -143,7 +142,7 @@ defmodule LibTenWeb.Admin.CategoryControllerTest do
       conn = delete conn, admin_category_path(conn, :delete, category)
       assert redirected_to(conn) == admin_category_path(conn, :index)
       assert_error_sent 404, fn ->
-        get conn, admin_category_path(conn, :show, category)
+        get conn, admin_category_path(conn, :edit, category)
       end
     end
   end

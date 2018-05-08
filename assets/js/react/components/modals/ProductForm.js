@@ -93,13 +93,13 @@ class ProductForm extends PureComponent {
         </label>
         { inputComponent ? inputComponent : (
           <input
-            className={ classnames('form__input', {
+            className={classnames('form__input', {
               'is-invalid': this.state.errors[name]
-            }) }
-            { ...inputProps }
-            name={ name }
-            onChange={ this.handleInputChange }
-            value={ this.state.fields[name] }
+            })}
+            {...inputProps}
+            name={name}
+            onChange={this.handleInputChange}
+            value={this.state.fields[name]}
           />
         ) }
         <span className="form__bar"/>
@@ -123,17 +123,17 @@ class ProductForm extends PureComponent {
     ))
 
     return (
-      <Modal popupModifier="form" { ...modalProps }>
+      <Modal popupModifier="form" {...modalProps}>
         <form
           className="form form--popup"
-          onSubmit={ e => {
+          onSubmit={e => {
             e.preventDefault()
             onSubmit(this.state.fields)
               .then(this.props.onHide)
               .catch(data => {
                 this.setErrors(data.errors)
               })
-          } }
+          }}
         >
           { this.renderFormGroup({
             label: 'Title',
@@ -157,15 +157,15 @@ class ProductForm extends PureComponent {
             name: 'status',
             inputComponent: (
               <Dropdown
-                options={ DROPDOWN_STATUS }
-                className={ classnames('form__select', {
+                options={DROPDOWN_STATUS}
+                className={classnames('form__select', {
                   'is-invalid': this.state.errors['status']
-                }) }
-                onChange={ selectedOption => {
+                })}
+                onChange={selectedOption => {
                   this.handleFieldChange('status', selectedOption.value)
                   this.setState({ selectedStatus: selectedOption })
-                } }
-                value={ this.state.selectedStatus }
+                }}
+                value={this.state.selectedStatus}
                 placeholder="Select an option"/>
             )
           }) }
@@ -175,18 +175,18 @@ class ProductForm extends PureComponent {
             name: 'category_id',
             inputComponent: (
               <Dropdown
-                options={ dropdownCategories }
-                className={ classnames('form__select', {
+                options={dropdownCategories}
+                className={classnames('form__select', {
                   'is-invalid': this.state.errors['category_id']
-                }) }
+                })}
                 menuClassName='form__select-menu--short'
-                onChange={ selectedOption => {
+                onChange={selectedOption => {
                   this.handleFieldChange('category_id',
                     parseInt(selectedOption.value, 10) || null
                   )
                   this.setState({ selectedCategory: selectedOption })
-                } }
-                value={ this.state.selectedCategory }
+                }}
+                value={this.state.selectedCategory}
                 placeholder="Select an option"
               />
             )

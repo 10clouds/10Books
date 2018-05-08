@@ -34,22 +34,22 @@ export default class Modal extends PureComponent {
 
   render() {
     return (
-      <Transition in={ this.props.show } timeout={ 500 } unmountOnExit>
+      <Transition in={this.props.show} timeout={500} unmountOnExit>
         { state => {
           return <div
-            className={ classnames('popup', {
+            className={classnames('popup', {
               [`popup--${state}`]: state,
-            }) }
+            })}
             tabIndex="-1"
             role="dialog"
             aria-hidden="true"
-            ref={ el => this.modalEl = el }
-            onClick={ this.handleClosePopup }
+            ref={el => this.modalEl = el}
+            onClick={this.handleClosePopup}
           >
             <div
-              className={ classnames('popup__window', {
+              className={classnames('popup__window', {
                 [`popup__window--${this.props.popupModifier}`]: this.props.popupModifier
-              }) }>
+              })}>
               { this.props.children }
             </div>
           </div>

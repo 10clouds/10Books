@@ -8,8 +8,8 @@ const Search = props => {
         className="search-form__input"
         type="text"
         placeholder="Type book name or author"
-        onChange={ props.onChange }
-        defaultValue={ props.value }
+        onChange={props.onChange}
+        defaultValue={props.value}
       />
       <img src="/images/search.svg" alt="Search icon" className="search-form__loupe"/>
     </div>

@@ -1,4 +1,6 @@
 export { default as UsageCell } from './UsageCell'
-export { default as VotesCell } from './VotesCell'
-export { default as OrderStatusCell } from './OrderStatusCell'
+export { default as ProductVotes } from './ProductVotes'
+export { default as ProductStatus } from './ProductStatus'
 export { default as Table } from './Table'
+export { default as ProductActions } from './ProductActions'
+export { default as ProductRequestedBy } from './ProductRequestedBy'

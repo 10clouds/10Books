@@ -86,7 +86,7 @@
 
     &.is-invalid {
       ~ #{$form}__bar {
-        background: $warning;
+        background: $error;
       }
     }
 
@@ -100,7 +100,7 @@
   &__select {
     &.is-invalid {
       ~ #{$form}__bar {
-        background: $warning;
+        background: $error;
         opacity: 1;
         width: 100%;
       }
@@ -136,7 +136,7 @@
   }
 
   .invalid-feedback {
-    color: $warning;
+    color: $error;
     font-size: 12px;
     left: 0;
     position: absolute;

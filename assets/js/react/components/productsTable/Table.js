@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+import cn from 'classnames'
 import TableRow from './TableRow'
 
 export default class Table extends PureComponent {
@@ -7,26 +8,33 @@ export default class Table extends PureComponent {
     products: PropTypes.array.isRequired,
     categories: PropTypes.object.isRequired,
     appendColumns: PropTypes.array.isRequired,
-    currentUser: PropTypes.shape({
-      id: PropTypes.number.isRequired
-    }),
-    isMobile: PropTypes.bool,
+    canToggleDetails: PropTypes.bool.isRequired,
+    modifier: PropTypes.string,
+    getRowProps: PropTypes.func.isRequired
   }
 
   static defaultProps = {
-    appendColumns: []
+    appendColumns: [],
+    canToggleDetails: false,
+    getRowProps: () => ({})
   }
 
   render() {
     const {
       appendColumns,
-      currentUser,
-      isMobile,
       categories,
       products,
+      canToggleDetails,
+      modifier,
+      getRowProps
     } = this.props
     return (
-      <div className="table">
+      <div
+        className={cn('table', {
+          [`table--${modifier}`]: modifier
+        })}
+      >
+        {/*
         <div className="table__row table__row--transparent">
           <div className="table__heading table__heading-title">Title</div>
           <div className="table__heading table__heading-author">Author</div>
@@ -35,15 +43,15 @@ export default class Table extends PureComponent {
             <div className="table__heading" key={i} {...col.thProps}>{col.title}</div>
           ))}
         </div>
+        */}
         {products.map(product => (
           <TableRow
+            {...getRowProps(product)}
             key={product.id}
             product={product}
-            categoryColor={ categories[product.category_id].color }
-            categoryName={ categories[product.category_id].name }
-            appendColumns={ appendColumns }
-            currentUser={ currentUser }
-            isMobile={ isMobile }
+            category={categories[product.category_id]}
+            appendColumns={appendColumns}
+            canToggleDetails={canToggleDetails}
           />
         ))}
       </div>

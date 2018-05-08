@@ -9,10 +9,6 @@ defmodule LibTenWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
-  end
-
   scope "/", LibTenWeb do
     pipe_through :browser # Use the default browser stack
 
@@ -37,11 +33,6 @@ defmodule LibTenWeb.Router do
       get "/:provider/callback", AuthController, :callback
     end
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", LibTenWeb do
-  #   pipe_through :api
-  # end
 
   defp authenticate_user(conn, _) do
     case get_session(conn, :user_id) do

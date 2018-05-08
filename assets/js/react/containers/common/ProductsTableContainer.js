@@ -1,41 +1,70 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import debounce from 'lodash.debounce'
 import { Table } from '~/components/productsTable'
 
-function ProductsTableContainer(props) {
-  const {
-    search,
-    products,
-    categories,
-    renderNoResults,
-    currentUser,
-    isMobile,
-    ...componentProps
-  } = props
+function canToggleDetails() {
+  return window.innerWidth < 900
+}
 
-  const searchString = search.queryString.toLowerCase()
-  const filteredProducts = Object
-    .values(products.idsByInsertedAt)
-    .map(({ id }) => products.byId[id])
-    .filter(product => (
-      product.title.toLowerCase().includes(searchString) || (
-        product.author &&
-        product.author.toLowerCase().includes(searchString)
-      ) || (
-        product.category_id &&
-        categories.byId[product.category_id].name.toLowerCase().includes(searchString)
-      )
-    ))
+class ProductsTableContainer extends PureComponent {
+  static getDerivedStateFromProps(nextProps, prevState) {
+    return prevState.canToggleDetails === null ? {
+      canToggleDetails: canToggleDetails()
+    } : null
+  }
 
-  return filteredProducts.length > 0 ? (
-    <Table
-      products={filteredProducts}
-      categories={categories.byId}
-      {...componentProps}
-      currentUser={ currentUser }
-      isMobile={ isMobile }
-    /> 
-  ) : renderNoResults ? renderNoResults() : null
+  state = {
+    canToggleDetails: null
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.handleWindowResize)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleWindowResize)
+  }
+
+  handleWindowResize = debounce(() => {
+    this.setState({ canToggleDetails: canToggleDetails() })
+  }, 400)
+
+  render() {
+    const {
+      search,
+      products,
+      categories,
+      renderNoResults,
+      ...componentProps
+    } = this.props
+
+    const searchString = search.queryString.toLowerCase()
+    const filteredProducts = Object
+      .values(products.idsByInsertedAt)
+      .map(({ id }) => products.byId[id])
+      .filter(product => (
+        product.title.toLowerCase().includes(searchString) || (
+          product.author &&
+          product.author.toLowerCase().includes(searchString)
+        ) || (
+          product.category_id &&
+          categories
+            .byId[product.category_id]
+            .name
+            .toLowerCase().includes(searchString)
+        )
+      ))
+
+    return filteredProducts.length > 0 ? (
+      <Table
+        {...componentProps}
+        {...this.state}
+        products={filteredProducts}
+        categories={categories.byId}
+      />
+    ) : renderNoResults ? renderNoResults() : null
+  }
 }
 
 const mapStateToProps = state => ({

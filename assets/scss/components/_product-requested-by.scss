@@ -1,0 +1,7 @@
+.product-requested-by {
+  @include with-line-limit;
+
+  &__label {
+    color: $lightGray;
+  }
+}

@@ -6,6 +6,7 @@ defmodule LibTen.Products.All do
 
   def list do
     Product
+    |> preload(:requested_by_user)
     |> order_by(desc: :inserted_at)
     |> Repo.all()
   end

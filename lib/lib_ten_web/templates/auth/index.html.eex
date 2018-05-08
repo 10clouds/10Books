@@ -1,15 +1,18 @@
-<div class="login">
-  <div class="login__logo">
-    <%= img_tag static_path(@conn, "/images/logo-10books.svg"),
-      alt: "10books"
-    %>
-  </div>
+<div class="login-container">
+  <div class="login">
+    <div class="login__logo">
+      <%= img_tag static_path(@conn, "/images/logo-10books.svg"),
+        alt: "10books"
+      %>
+    </div>
 
-  <%= link(
-    to: auth_path(@conn, :request, :google)
-  ) do %>
-    <button class="button button--dark">Login with google</button>
-  <% end %>
+    <%= link(
+      to: auth_path(@conn, :request, :google),
+      class: "button button--dark"
+    ) do %>
+      Login with google
+    <% end %>
+  </div>
 </div>
 
 <%= if get_flash(@conn, :error) do %>

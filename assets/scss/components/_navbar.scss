@@ -1,11 +1,12 @@
 .navbar {
   $navbar: &;
+  $height: 65px;
 
   background-color: $white;
-  box-shadow: 0 2px 69px 0 rgba(13, 13, 30, .04);
+  box-shadow: 0 2px 69px 0 rgba(13, 13, 30, .08);
   font-size: 19px;
   font-weight: 600;
-  height: 75px;
+  height: $height;
   position: fixed;
   top: 0;
   width: 100%;
@@ -36,8 +37,8 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    min-height: 75px;
-    padding: 0 20px 0 28px;
+    min-height: $height;
+    padding: 0 15px;
     position: relative;
     z-index: 98;
 
@@ -59,6 +60,7 @@
   }
 
   &__logo {
+    margin-left: 4px;
     height: 17px;
 
     @include m-up {
@@ -350,7 +352,7 @@
       #{$navbar}__hamburger-icon {
         span {
           &:nth-child(1) {
-            left: 6px;
+            left: 2px;
             top: 0;
             transform: rotate(45deg);
             width: 29px;
@@ -362,7 +364,7 @@
           }
 
           &:nth-child(3) {
-            left: 6px;
+            left: 2px;
             top: 20px;
             transform: rotate(-45deg);
             width: 28px;

@@ -70,6 +70,7 @@ window.LibTen = {
       render(<Library />, domNode)
     },
     renderOrders(domNode, currentUser) {
+      //currentUser.is_admin = false
       store.dispatch(setUser(currentUser))
       render(<Orders />, domNode)
     },

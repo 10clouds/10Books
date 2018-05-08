@@ -1,15 +1,8 @@
 .arrow {
-  background-color: transparent;
-  border: none;
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
   height: 0;
-  padding: 0;
   width: 0;
-
-  &:hover {
-    cursor: pointer;
-  }
 
   &--up {
     border-bottom: 6px solid $accent;
@@ -21,46 +14,18 @@
 }
 
 .container {
-  padding: 80px 20px 40px;
+  padding: 80px 15px 40px;
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
   position: relative;
 
-  @include s-up {
+  @include l-up {
     padding: 80px 25px 40px;
   }
 }
 
-.category-icon {
-  align-items: center;
-  border-radius: 100%;
-  display: flex;
-  font-weight: bold;
-  justify-content: center;
-  height: $categoryIconSizeMobile;
-  position: relative;
-  width: $categoryIconSizeMobile;
-
-  @include m-up {
-    height: $categoryIconSizeDesktop;
-    width: $categoryIconSizeDesktop;
-  }
-}
-
-a {
-  text-decoration: none;
-
-  &:link,
-  &:visited,
-  &:focus,
-  &:hover,
-  &:active {
-    color: $text;
-  }
-}
-
-.button, a.button {
+.button {
   border-radius: 3px;
   border: none;
   cursor: pointer;
@@ -81,9 +46,9 @@ a {
     line-height: 45px;
 
     @include s-up {
-      font-size: 13px;
-      height: 36px;
-      line-height: 36px;
+      font-size: 14px;
+      height: 40px;
+      line-height: 40px;
     }
   }
 
@@ -91,8 +56,9 @@ a {
     background-color: $accentLight;
     color: $accent;
 
+    &-active,
     &:hover {
-      background-color: darken($accentLight, 5%);
+      background-color: darken($accentLight, 3%);
     }
   }
 
@@ -121,12 +87,23 @@ a {
     }
   }
 
-  &--delete {
-    background-color: lighten($warning, 35%);
-    color: $warning;
+  &--green {
+    background-color: $success-background;
+    color: $success;
 
+    &-active,
     &:hover {
-      background-color: lighten($warning, 28%);
+      background-color: darken($success-background, 8%);
+    }
+  }
+
+  &--red {
+    background-color: $error-background;
+    color: $error;
+
+    &-active,
+    &:hover {
+      background-color: darken($error-background, 8%);
     }
   }
 

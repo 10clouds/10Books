@@ -5,8 +5,9 @@ import socket from 'socket'
 import { joinChannel as joinCategoriesChannel } from '~/store/actions/categories'
 import * as productActions from '~/store/actions/products'
 import { ProductFormModal } from '~/components/modals'
-import SearchContainer from '../common/SearchContainer'
-import ProductsTableContainer from '../common/ProductsTableContainer'
+import SearchContainer from '~/containers/common/SearchContainer'
+import ProductsTableContainer from '~/containers/common/ProductsTableContainer'
+import { ProductRequestedBy, ProductActions } from '~/components/productsTable'
 
 const MODAL_PRODUCT_NEW = 'true'
 
@@ -24,30 +25,30 @@ class All extends PureComponent {
 
   productTableColumns = [
     {
-      title: 'Status',
-      thProps: {
-        className: 'text-center'
+      title: 'Requested by',
+      elProps: {
+        modifiers: ['requested-by'],
       },
-      tdProps: {
-        className: 'text-center'
-      },
-      render: product => product.status
+      render: product => (
+        <ProductRequestedBy name={product.requested_by ? product.requested_by.name : ''} />
+      )
     },
     {
       title: 'Status',
-      thProps: {
-        className: 'text-center'
-      },
-      tdProps: {
-        className: 'text-center nowrap-col'
+      elProps: {
+        modifiers: ['status']
       },
       render: product => (
-        <button
-          onClick={ () => this.handleEdit(product) }
-          className="btn btn-secondary"
-        >
-          <i className="fa fa-pencil"/>
-        </button>
+        <ProductActions
+          status={product.status}
+          canChangeStatus
+          canEdit
+          canDelete
+          onStatusChange={status => {
+            this.props.productActions.update(product.id, { status })
+          }}
+          onEdit={() => this.handleEdit(product)}
+        />
       )
     }
   ]
@@ -60,15 +61,15 @@ class All extends PureComponent {
     return (
       <div>
         <div className="search-container">
-          <SearchContainer categories={ this.props.categories } />
+          <SearchContainer categories={this.props.categories} />
 
           <button
             className="button button--dark button--narrow"
-            onClick={ () => (
+            onClick={() => (
               this.setState({
                 modalProduct: MODAL_PRODUCT_NEW
               })
-            ) }
+            )}
           >
             <span>+</span> Add
           </button>
@@ -76,7 +77,7 @@ class All extends PureComponent {
 
         <ProductFormModal
           forAdmin
-          categories={ this.props.categories }
+          categories={this.props.categories}
           submitLabel={
             this.state.modalProduct === MODAL_PRODUCT_NEW ? 'Add' : 'Update'
           }
@@ -86,18 +87,20 @@ class All extends PureComponent {
               ? this.state.modalProduct
               : undefined
           }
-          onSubmit={ attrs => (
+          onSubmit={attrs => (
             this.state.modalProduct === MODAL_PRODUCT_NEW
               ? this.props.productActions.create(attrs)
               : this.props.productActions.update(this.state.modalProduct.id, attrs)
-          ) }
-          show={ this.state.modalProduct !== false }
-          onHide={ () => {
+          )}
+          show={this.state.modalProduct !== false}
+          onHide={() => {
             this.setState({ modalProduct: false })
-          } }
+          }}
         />
 
-        <ProductsTableContainer appendColumns={ this.productTableColumns }/>
+        <ProductsTableContainer
+          appendColumns={this.productTableColumns}
+        />
       </div>
     )
   }

@@ -4,8 +4,15 @@ defmodule LibTen.Products.AllTest do
   alias LibTen.Products.All
 
   test "list/0 returns products sorted by inserted_at" do
-    product1 = insert(:product, inserted_at: ~N[2000-01-01 00:00:00.000000])
-    product2 = insert(:product, inserted_at: ~N[2000-01-01 00:01:00.000000])
+    user = insert(:user)
+    product1 = insert(:product,
+      inserted_at: ~N[2000-01-01 00:00:00.000000],
+      requested_by_user: user
+    )
+    product2 = insert(:product,
+      inserted_at: ~N[2000-01-01 00:01:00.000000],
+      requested_by_user: user
+    )
     assert All.list() == [product2, product1]
   end
 

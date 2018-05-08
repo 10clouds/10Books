@@ -2,16 +2,15 @@
   box-sizing: border-box;
 }
 
-html {
-  font-size: 13px;
-}
-
-html, body {
-  background-color: $background;
-  box-sizing: border-box;
+html,
+body {
+  height: 100%;
 }
 
 body {
+  background-color: $background;
+  font-size: 13px;
+  line-height: $line-height;
   color: $text;
   font-family: $font-family;
 
@@ -20,6 +19,7 @@ body {
   }
 }
 
-main{
+// wtf?
+main {
   position: relative;
 }

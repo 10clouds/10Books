@@ -1,0 +1,86 @@
+.product-votes {
+  $module: &;
+  $base-size: 33px;
+
+  @function size-in-em($px, $font-size: $base-size) {
+    @return #{$px / $font-size}em;
+  }
+
+  display: flex;
+  align-items: center;
+  font-size: 28px;
+
+  &__vote-btn {
+    @include btn-reset;
+    font-size: 1em;
+    width: 1em;
+    height: 1em;
+    border-radius: 3px;
+    background: #efeff5;
+    transition: background 0.2s;
+
+    &-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+
+      svg {
+        width: size-in-em(9px);
+        height: size-in-em(13px);
+      }
+
+      path#arrow {
+        fill: #86899e;
+        transition: fill 0.2s;
+      }
+    }
+
+    #{$module}--cant-vote & {
+      background: transparent;
+      pointer-events: none;
+    }
+
+    &:first-child {
+      margin-right: size-in-em(5px);
+    }
+
+    &:last-child {
+      margin-left: size-in-em(5px);
+    }
+
+    &:not(&--active):hover {
+      background-color: $accentLight;
+
+      path#arrow {
+        fill: $accent;
+      }
+    }
+
+    &--down &-icon {
+      transform: rotate(180deg);
+    }
+
+    &--active {
+      // TODO: this gradient should be in palette or as mixin
+      background-image: linear-gradient(to right, #865ee8, #6536e2);
+
+      path#arrow {
+        fill: $white;
+      }
+    }
+  }
+
+  &__value {
+    $font-size: 20px;
+    width: size-in-em(35px, $font-size);
+    text-align: center;
+    font-size: size-in-em($font-size);
+    font-weight: bold;
+
+    &--upvotes {
+      color: $accent;
+    }
+  }
+}

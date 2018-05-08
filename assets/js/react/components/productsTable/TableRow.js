@@ -2,30 +2,30 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import cn from 'classnames'
 
+import CategoryLabel from '~/components/CategoryLabel'
+
 export default class TableRow extends PureComponent {
-
-  state = {
-    detailsVisible: false,
-  }
-
   static propTypes = {
     product: PropTypes.shape({
       title: PropTypes.string.isRequired,
       url: PropTypes.string,
       author: PropTypes.string,
     }),
-    categoryName: PropTypes.string.isRequired,
-    categoryColor: PropTypes.object.isRequired,
+    category: PropTypes.object.isRequired,
     appendColumns: PropTypes.arrayOf(
       PropTypes.shape({
-        tdProps: PropTypes.object,
+        elProps: PropTypes.shape({
+          modifiers: PropTypes.array
+        }),
         render: PropTypes.func.isRequired,
       })
     ),
-    currentUser: PropTypes.shape({
-      id: PropTypes.number.isRequired
-    }),
-    isMobile: PropTypes.bool
+    isHighlighted: PropTypes.bool,
+    canToggleDetails: PropTypes.bool.isRequired
+  }
+
+  state = {
+    detailsVisible: false
   }
 
   handleArrowClick = () => {
@@ -34,76 +34,80 @@ export default class TableRow extends PureComponent {
     })
   }
 
+  renderAppendColumn(colProps, key) {
+    const { render, elProps } = colProps
+    const {
+      modifiers,
+      className,
+      ...restElProps
+    } = (elProps || {})
+
+    return (
+      <div
+        key={key}
+        className={cn(
+          'table-row__col',
+          className,
+          modifiers && modifiers.map(mod => `table-row__col--${mod}`)
+        )}
+        {...restElProps}
+      >
+        {render(this.props.product)}
+      </div>
+    )
+  }
+
   render() {
     const {
       product,
-      categoryName,
-      categoryColor,
+      category,
       appendColumns,
-      currentUser,
-      isMobile
+      canToggleDetails,
+      isHighlighted
     } = this.props
     const { detailsVisible } = this.state
-    const ownedBook = product.used_by ? product.used_by.user.id === currentUser.id : false
-    const rowClassNames = cn({
-      'table__row': true,
-      'table__row--highlight': ownedBook,
-    })
-    const arrowClassNames = cn({
-      'arrow': true,
-      'arrow--down': !detailsVisible,
-      'arrow--up': detailsVisible
-    })
-    const titleClassNames = cn({
-      'table__data': true,
-      'table__data--truncate': !detailsVisible,
-      'table__data-title': true
-    })
-    const authorClassNames = cn({
-      'table__data': true,
-      'table__data--truncate': !detailsVisible,
-      'table__data-author': true
-    })
 
     return (
-      <div className={ rowClassNames }>
-        <div className={ titleClassNames }>
-          <a href={product.url} target="_blank">{product.title}</a>
-        </div>
-        <div className={ authorClassNames }>{product.author}</div>
-        <div className="table__arrow" onClick={ this.handleArrowClick }>
-          <button className={ arrowClassNames }></button>
+      <div
+        className={cn('table-row', {
+          'table-row--highlighted': isHighlighted,
+          'table-row--with-toggler': canToggleDetails,
+          'table-row--no-toggler': !canToggleDetails
+        })}
+      >
+        <div className="table-row__header">
+          <div className="table-row__col table-row__col--title">
+            <a href={product.url} target="_blank">{product.title}</a>
+
+            {canToggleDetails && (
+              <button
+                type="button"
+                className="table-row__toggle-details-btn"
+                onClick={this.handleArrowClick}
+                children={
+                  <div className={cn('arrow', {
+                    'arrow--down': !detailsVisible,
+                    'arrow--up': detailsVisible
+                  })} />
+                }
+              />
+            )}
+          </div>
+
+          <div className="table-row__col table-row__col--author">
+            {product.author}
+          </div>
         </div>
 
-        { (!isMobile || detailsVisible) &&
-        <div className="table__details">
-          <div className="table__data table__data-category">
-            <div className="table__data table__category-wrapper">
-              <div className="category-icon" style={ { color: categoryColor.text, background: categoryColor.background } }>
-                { categoryName.charAt(0) }
-              </div>
-              <div className="table__data table__category-name ">
-                { categoryName }
-              </div>
+        {(!canToggleDetails || detailsVisible) && (
+          <div className="table-row__details">
+            <div className="table-row__col table-row__col--category">
+              <CategoryLabel category={category} />
             </div>
-            { appendColumns.map((col, i) => (
-              col.title === 'Rating' ?
-                <div className="table__data table__rating" key={ i } { ...col.tdProps }>
-                  { col.render(product) }
-                </div>
-                : null
-              ))}
-            </div>
-            {appendColumns.map((col, i) => (
-              col.title === 'Status' ?
-              <div key={i} {...col.tdProps}>
-                {col.render(product)}
-              </div>
-              : null
-            ))}
+            {appendColumns.map((col, i) => this.renderAppendColumn(col, i))}
           </div>
-        }
-      </div>  
+        )}
+      </div>
     )
   }
 }

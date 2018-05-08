@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import TooltipButton from './Tooltip-button'
+import cn from 'classnames'
 
 export default class UsageCell extends PureComponent {
   static propTypes = {
@@ -25,86 +25,89 @@ export default class UsageCell extends PureComponent {
     unsubscribeFromReturnNotification: PropTypes.func.isRequired,
   }
 
-  renderUsedBy() {
-    const { product, currentUser } = this.props
+  handleReturnProduct = () => {
+    const {
+      product,
+      returnProduct,
+      openRateProduct,
+      currentUser
+    } = this.props
 
-    return product.used_by.user.id !== currentUser.id && (
-      <div className="table__data table__data-user">
-        <img src={ product.used_by.user.avatar_url } className="user-avatar"/>
-        <p>
-          <span className="table__data table__data-status-date">
-            Taken { moment(product.used_by.started_at).fromNow() }
-          </span>
-          <br/>
-          { product.used_by.user.name }
-        </p>
-      </div>
-    )
+    const isUserRated =
+      product.ratings.find(item => item.user.id === currentUser.id)
+
+    if (!isUserRated) openRateProduct(product.id)
+    returnProduct(product.id)
   }
 
-  renderUsedByActions() {
+  renderUsedBy() {
     const {
       product,
       currentUser,
-      openRateProduct,
-      returnProduct,
       subscribeToReturnNotification,
-      unsubscribeFromReturnNotification,
+      unsubscribeFromReturnNotification
     } = this.props
 
-    return product.used_by.user.id === currentUser.id ? (
-      <button
-        className="button button--dark button--small"
-        onClick={ () => {
-          const isUserRated = product.ratings
-            .find(item => item.user.id === currentUser.id)
+    const isSubscribed =
+      product.used_by.return_subscribers.includes(currentUser.id)
 
-          if (!isUserRated) openRateProduct(product.id)
-          returnProduct(product.id)
-        } }
-      >
-        Return book
-      </button>
-    ) : (
-      product.used_by.return_subscribers.includes(currentUser.id) ? (
-        <TooltipButton
-          onClick={ () => {
-            unsubscribeFromReturnNotification(product.id)
-          } }
-          className="table__bell-button"
-          tooltipText="Cancel notification"
-        >
-          <img src="images/bell.svg" className="table__bell-icon"/>
-        </TooltipButton>
-      ) : (
-        <TooltipButton
-          onClick={ () => {
-            subscribeToReturnNotification(product.id)
-          } }
-          className="table__bell-button"
-          tooltipText="Notify when returned"
-        >
-          <img src="images/bell--inactive.svg" className="table__bell-icon"/>
-        </TooltipButton>
-      )
+    return product.used_by.user.id !== currentUser.id && (
+      <div className="used-by">
+        <img
+          src={product.used_by.user.avatar_url}
+          className="used-by__user-avatar"
+        />
+        <div className="used-by__info">
+          Taken {moment(product.used_by.started_at).fromNow()} <br />
+          by
+          {' '}
+          <b className="used-by__user-name">{product.used_by.user.name}</b>
+        </div>
+        <div className="used-by__notification-container">
+          <button
+            className={cn('notification-btn', {
+              'notification-btn--active': isSubscribed
+            })}
+            onClick={() => {
+              isSubscribed
+                ? unsubscribeFromReturnNotification(product.id)
+                : subscribeToReturnNotification(product.id)
+            }}
+          >
+            <div className="notification-btn__label">
+              {isSubscribed
+                ? 'Cancel notification'
+                : 'Notify when returned'}
+            </div>
+          </button>
+        </div>
+      </div>
     )
   }
 
   render() {
     const {
       product,
-      takeProduct,
+      currentUser,
+      takeProduct
     } = this.props
 
     return product.used_by ? (
       <Fragment>
         { this.renderUsedBy() }
-        { this.renderUsedByActions() }
+        {product.used_by.user.id === currentUser.id && (
+          <button
+            className="button button--dark button--small"
+            onClick={this.handleReturnProduct}
+          >
+            Return book
+          </button>
+        )}
       </Fragment>
     ) : (
       <button
         className="button button--bright button--small"
-        onClick={ () => takeProduct(product.id) }
+        onClick={() => takeProduct(product.id)}
       >
         Take book
       </button>

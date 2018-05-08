@@ -1,0 +1,21 @@
+.category-label {
+  display: flex;
+  align-items: center;
+
+  &__icon {
+    flex-shrink: 0;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2em;
+    height: 2em;
+    font-weight: bold;
+    margin-right: 0.8125em;
+  }
+
+  &__text {
+    @include with-line-limit;
+    color: $lightGray;
+  }
+}

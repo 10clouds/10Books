@@ -18,7 +18,8 @@ module.exports = {
       'node_modules'
     ],
     alias: {
-      '~': path.resolve(__dirname, 'js/react')
+      '~': path.resolve(__dirname, 'js/react'),
+      '/static': path.resolve(__dirname, 'static')
     }
   },
   module: {
@@ -43,6 +44,10 @@ module.exports = {
         use: ExtractTextPlugin.extract({
           use: ['css-loader', 'postcss-loader', 'sass-loader']
         })
+      },
+      {
+        test: /\.svg$/,
+        use: 'raw-loader'
       }
     ]
   },

@@ -34,16 +34,19 @@
   }
 }
 
-@mixin column-width($size) {
-  @include m-up {
-    width: calc(#{$size} * (100% - 330px));
-  }
+@mixin btn-reset {
+  outline: none;
+  padding: 0;
+  border: none;
+  background: transparent;
 
-  @include l-up {
-    width: calc(#{$size} * (100% - 460px));
+  &:not([disabled]) {
+    cursor: pointer;
   }
+}
 
-  @include xl-up {
-    width: calc(#{$size} * (100% - 510px));
-  }
+@mixin with-line-limit {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

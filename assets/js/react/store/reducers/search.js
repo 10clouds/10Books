@@ -6,7 +6,7 @@ const defaultState = {
 }
 
 const reducers = {
-  [actionTypes.QUERY_CHANGED]: (state, {queryString}) => ({
+  [actionTypes.QUERY_CHANGED]: (state, { queryString }) => ({
     ...state,
     queryString
   })

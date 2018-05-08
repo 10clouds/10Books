@@ -9,7 +9,6 @@ import { RateProductModal } from '~/components/modals'
 import { UsageCell } from '~/components/productsTable'
 import SearchContainer from '../common/SearchContainer'
 import ProductsTableContainer from '../common/ProductsTableContainer'
-import debounce from 'lodash.debounce'
 
 class Library extends PureComponent {
   constructor(props) {
@@ -20,34 +19,34 @@ class Library extends PureComponent {
   }
 
   state = {
-    rateProductWithId: null,
-    isMobile: null,
+    rateProductWithId: null
   }
 
   appendColumns = [
     {
       title: 'Rating',
-      thProps: {
-        className: 'table__heading table__heading-rating'
+      elProps: {
+        modifiers: ['rating']
       },
-      render: product => (
-        <div>
-          { product.ratings.length > 0 ?
-              (product.ratings.reduce((total, rating) => {
-                return total + rating.value
-            }, 0) / product.ratings.length).toFixed(1)
-            : '0.0'
-          }
-        </div>
-      )
+      render: product => {
+        const rating = product.ratings.length > 0
+          ? (product.ratings.reduce((total, rating) => {
+              return total + rating.value
+            }, 0) / parseFloat(product.ratings.length).toFixed(1)).toString()
+          : null
+
+        return rating ? (
+          <div className="product-rating">
+            <span className="product-rating__value">{rating}</span>
+            <span className="product-rating__label">/5</span>
+          </div>
+        ) : '-'
+      }
     },
     {
       title: 'Status',
-      thProps: {
-        className: 'table__heading table__heading-status'
-      },
-      tdProps: {
-        className: 'table__data table__data-status'
+      elProps: {
+        modifiers: ['used-by']
       },
       render: product => (
         <UsageCell
@@ -60,15 +59,10 @@ class Library extends PureComponent {
     }
   ]
 
-  componentDidMount() {
-    this.setState({ isMobile: window.innerWidth < 480 })
-    window.addEventListener('resize', this.handleWindowResize)
-  }
-
-  handleWindowResize = debounce(() => {
-    const isMobile = window.innerWidth < 480
-    this.setState({ isMobile })
-  }, 400 )
+  getTableRowProps = product => ({
+    isHighlighted: product.used_by
+      && product.used_by.user.id === this.props.currentUser.id
+  })
 
   openRateProduct = productId => {
     this.setState({ rateProductWithId: productId })
@@ -82,7 +76,7 @@ class Library extends PureComponent {
     return (
       <div>
         <div className="search-container">
-          <SearchContainer categories={ this.props.categories } />
+          <SearchContainer categories={this.props.categories} />
         </div>
 
         <RateProductModal
@@ -95,11 +89,10 @@ class Library extends PureComponent {
         />
 
         <ProductsTableContainer
+          modifier="library"
           appendColumns={this.appendColumns}
-          currentUser={ this.props.currentUser }
-          isMobile={this.state.isMobile}
+          getRowProps={this.getTableRowProps}
         />
-        
       </div>
     )
   }

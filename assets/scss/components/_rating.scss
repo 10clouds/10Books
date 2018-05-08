@@ -1,5 +1,7 @@
+// TODO: Rating modal
 .rating {
   $module: &;
+  $radioSize: 22px;
 
   &__radios-wrapper {
     display: flex;

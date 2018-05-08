@@ -18,33 +18,31 @@ class SearchContainer extends Component {
   }, 50)
 
   handleDropdownChange = debounce(selectedOption => {
-    if (selectedOption.value === 'all') {
-      this.props.updateQuery('')
-    } else {
-      this.props.updateQuery(selectedOption.label)
-    }
+    this.props.updateQuery(
+      selectedOption.value === 'all' ? '' : selectedOption.label
+    )
   }, 50)
 
   render() {
     return (
       <div className="search-form">
         <Search
-          onChange={ e => {
+          onChange={e => {
             e.persist()
             this.handleSearchUpdate(e)
-          } }
-          value={ this.props.queryString }
+          }}
+          value={this.props.queryString}
         />
         <CategoryFilter
           classNames={classnames( 'search-form__dropdown', {
             'search-form__dropdown--selected': this.state.dropdownCategoryPlaceholder
           })}
-          onChange={ selectedOption => {
+          onChange={selectedOption => {
             this.handleDropdownChange(selectedOption)
             this.setState({ dropdownCategoryPlaceholder: selectedOption.label })
-          } }
-          value={ this.state.dropdownCategoryPlaceholder }
-          categories={ this.props.categories }
+          }}
+          value={this.state.dropdownCategoryPlaceholder}
+          categories={this.props.categories}
         />
       </div>
     )
