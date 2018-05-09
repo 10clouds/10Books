@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title><%= Application.get_env(:lib_ten, :title) %></title>
   <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+  <link rel="icon" type="image/png" href="/images/10c-logo-fav.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="/images/10c-logo-fav.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/images/10c-logo-fav.png" sizes="96x96">
   <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
 </head>
 <body>
