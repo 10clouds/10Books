@@ -1,10 +1,7 @@
 <%= form_for @changeset, @action, fn f -> %>
   <%= if @changeset.action do %>
     <div class="alert alert--error">
-      <%= img_tag static_path(@conn, "/images/fail.svg"),
-        alt: "fail"
-      %>
-      <p>Oops, something went wrong! Please check the errors below.</p>
+      Invalid form! Please check the errors below.
     </div>
   <% end %>
 

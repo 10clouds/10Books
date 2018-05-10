@@ -33,11 +33,6 @@
             id="hamburger-button"
             class="navbar__hamburger"
             type="button"
-            data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
           >
             <div class="navbar__hamburger-icon">
               <span></span>
@@ -65,7 +60,7 @@
                 class: "navbar__menu-item")
               %>
               <li id="admin-dropdown" class="navbar__menu-item navbar__menu-item--relative">
-                <a id="admin-dropdown-button" href="#" class="navbar__menu-item navbar__admin" data-toggle="dropdown">
+                <a id="admin-dropdown-button" href="#" class="navbar__menu-item navbar__admin">
                   Admin
                   <div class="arrow arrow--down"></div>
                 </a>
@@ -104,18 +99,11 @@
     </nav>
     <div class="container">
       <main role="main">
-        <div class="alert alert--success">
-          <%= img_tag static_path(@conn, "/images/check.svg"),
-            alt: "success"
-          %>
-          <%= get_flash(@conn, :info) %>
-        </div>
-        <div class="alert alert--error">
-          <%= img_tag static_path(@conn, "/images/fail.svg"),
-            alt: "fail"
-          %>
-          <%= get_flash(@conn, :error) %>
-        </div>
+        <%= for {key, val} <- get_flash(@conn) do %>
+          <div class="alert alert--<%= key %>">
+             <%= val %>
+          </div>
+        <% end %>
         <%= render @view_module, @view_template, assigns %>
       </main>
     </div> <!-- /container -->

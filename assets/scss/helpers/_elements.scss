@@ -141,48 +141,6 @@
   }
 }
 
-.alert {
-  height: 50px;
-  display: flex;
-  font-size: 14px;
-  border-radius: 6px;
-  align-items: center;
-  position: absolute;
-  padding: 0 20px;
-  top: -65px;
-  left: 0;
-  max-width: 100%;
-  width: $adminContainerWidth;
-
-  @include m-up {
-    left: 40px;
-    top: -70px;
-  }
-
-  &--success {
-    color: $success;
-    background-color: rgba($success-background, .11);
-  }
-
-  &--error {
-    color: $error;
-    background-color: rgba($error-background, .11);
-  }
-
-  &--hidden {
-    display: none;
-  }
-
-  img {
-    margin-right: 15px;
-    width: 25px;
-
-    @include m-up {
-      margin-right: 20px;
-    }
-  }
-}
-
 .form-hint {
   color: $error;
   display: block;
