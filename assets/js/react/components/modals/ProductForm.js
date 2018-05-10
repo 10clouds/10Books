@@ -2,18 +2,9 @@ import React, { PureComponent } from 'react'
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import Modal from './Modal'
 import Dropdown from 'react-dropdown'
-
-const DROPDOWN_STATUS = [
-  { value: 'IN_LIBRARY', label: 'In Library' },
-  { value: 'REQUESTED', label: 'In Orders' },
-  { value: 'ACCEPTED', label: 'Accepted' },
-  { value: 'REJECTED', label: 'Rejected' },
-  { value: 'ORDERED', label: 'Ordered' },
-  { value: 'LOST', label: 'Lost' },
-  { value: 'DELETED', label: 'Deleted' },
-]
+import Modal from './Modal'
+import { READABLE_PRODUCT_STATUS } from '~/constants'
 
 class ProductForm extends PureComponent {
   static propTypes = {
@@ -115,12 +106,16 @@ class ProductForm extends PureComponent {
   render() {
     const { onSubmit, ...modalProps } = this.props
 
-    const dropdownCategories = this.props.categories.map(option => (
-      {
-        value: option.id,
-        label: option.name
-      }
-    ))
+    const dropdownCategories = this.props.categories.map(option => ({
+      value: option.id,
+      label: option.name
+    }))
+
+    const dropdownStatuses = Object.keys(READABLE_PRODUCT_STATUS).map(key => ({
+      value: key,
+      label: READABLE_PRODUCT_STATUS[key]
+    }))
+
 
     return (
       <Modal popupModifier="form" {...modalProps}>
@@ -157,16 +152,17 @@ class ProductForm extends PureComponent {
             name: 'status',
             inputComponent: (
               <Dropdown
-                options={DROPDOWN_STATUS}
+                options={dropdownStatuses}
                 className={classnames('form__select', {
                   'is-invalid': this.state.errors['status']
                 })}
                 onChange={selectedOption => {
                   this.handleFieldChange('status', selectedOption.value)
-                  this.setState({ selectedStatus: selectedOption })
                 }}
-                value={this.state.selectedStatus}
-                placeholder="Select an option"/>
+                value={
+                  dropdownStatuses.find(s => s.value == this.state.fields.status)
+                }
+              />
             )
           }) }
 
@@ -184,16 +180,20 @@ class ProductForm extends PureComponent {
                   this.handleFieldChange('category_id',
                     parseInt(selectedOption.value, 10) || null
                   )
-                  this.setState({ selectedCategory: selectedOption })
                 }}
-                value={this.state.selectedCategory}
-                placeholder="Select an option"
+                value={
+                  dropdownCategories.find(c => c.value == this.state.fields.category_id)
+                }
               />
             )
           }) }
 
-          <button className="button button--dark button--narrow form__button"
-                  type="submit">{ this.props.submitLabel }</button>
+          <button
+            className="button button--dark button--narrow form__button"
+            type="submit"
+          >
+            { this.props.submitLabel }
+          </button>
         </form>
       </Modal>
     )
