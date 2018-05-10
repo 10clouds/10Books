@@ -9,6 +9,7 @@
   height: 34px;
   background: $lightGray;
   border-radius: 100%;
+  z-index: 1;
 
   &:before {
     content: '';

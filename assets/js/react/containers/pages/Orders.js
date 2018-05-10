@@ -101,7 +101,7 @@ class Orders extends PureComponent {
             className="button button--dark button--narrow"
             onClick={this.handleAdd}
           >
-            <span>+</span> Suggest book
+            <span>+</span> Suggest Book
           </button>
         </div>
 

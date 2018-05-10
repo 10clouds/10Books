@@ -46,9 +46,9 @@ export default class TableRow extends PureComponent {
       <div
         key={key}
         className={cn(
-          'table-row__col',
+          'table__col',
           className,
-          modifiers && modifiers.map(mod => `table-row__col--${mod}`)
+          modifiers && modifiers.map(mod => `table__col--${mod}`)
         )}
         {...restElProps}
       >
@@ -69,20 +69,18 @@ export default class TableRow extends PureComponent {
 
     return (
       <div
-        className={cn('table-row', {
-          'table-row--highlighted': isHighlighted,
-          'table-row--with-toggler': canToggleDetails,
-          'table-row--no-toggler': !canToggleDetails
+        className={cn('table__row', {
+          'table__row--highlighted': isHighlighted,
         })}
       >
-        <div className="table-row__header">
-          <div className="table-row__col table-row__col--title">
+        <div className="table__row-header">
+          <div className="table__col table__col--title">
             <a href={product.url} target="_blank">{product.title}</a>
 
             {canToggleDetails && (
               <button
                 type="button"
-                className="table-row__toggle-details-btn"
+                className="table__toggle-details-btn"
                 onClick={this.handleArrowClick}
                 children={
                   <div className={cn('arrow', {
@@ -94,14 +92,14 @@ export default class TableRow extends PureComponent {
             )}
           </div>
 
-          <div className="table-row__col table-row__col--author">
+          <div className="table__col table__col--author">
             {product.author}
           </div>
         </div>
 
         {(!canToggleDetails || detailsVisible) && (
-          <div className="table-row__details">
-            <div className="table-row__col table-row__col--category">
+          <div className="table__row-details">
+            <div className="table__col table__col--category">
               <CategoryLabel category={category} />
             </div>
             {appendColumns.map((col, i) => this.renderAppendColumn(col, i))}

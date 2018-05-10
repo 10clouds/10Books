@@ -11,7 +11,6 @@
 
   &__info {
     @include with-line-limit;
-    font-size: 16px;
     color: $lightGray;
     margin: 0 15px;
   }

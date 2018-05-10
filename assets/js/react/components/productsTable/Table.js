@@ -31,19 +31,34 @@ export default class Table extends PureComponent {
     return (
       <div
         className={cn('table', {
-          [`table--${modifier}`]: modifier
+          [`table--${modifier}`]: modifier,
+          'table--with-toggler': canToggleDetails
         })}
       >
-        {/*
-        <div className="table__row table__row--transparent">
-          <div className="table__heading table__heading-title">Title</div>
-          <div className="table__heading table__heading-author">Author</div>
-          <div className="table__heading table__heading-category">Category</div>
+        <div className="table__row table__row--header">
+          <div className="table__col table__col--title">
+            Title
+          </div>
+          <div className="table__col table__col--author">
+            Author
+          </div>
+          <div className="table__col table__col--category">
+            Category
+          </div>
           {this.props.appendColumns.map((col, i) => (
-            <div className="table__heading" key={i} {...col.thProps}>{col.title}</div>
+            <div
+              key={i}
+              className={cn(
+                'table__col',
+                col.elProps
+                  && col.elProps.modifiers
+                  && col.elProps.modifiers.map(mod => `table__col--${mod}`)
+              )}
+            >
+              {col.title}
+            </div>
           ))}
         </div>
-        */}
         {products.map(product => (
           <TableRow
             {...getRowProps(product)}
