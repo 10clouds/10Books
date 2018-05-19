@@ -5,10 +5,8 @@ export default class CategoryLabel extends PureComponent {
   static propTypes = {
     category: PropTypes.shape({
       name: PropTypes.string.isRequired,
-      color: PropTypes.shape({
-        text: PropTypes.string.isRequired,
-        background: PropTypes.string.isRequired
-      }).isRequired
+      text_color: PropTypes.string.isRequired,
+      background_color: PropTypes.string.isRequired
     }).isRequired
   }
 
@@ -20,8 +18,8 @@ export default class CategoryLabel extends PureComponent {
         <div
           className="category-label__icon"
           style={{
-            color: category.color.text,
-            background: category.color.background
+            color: category.text_color,
+            background: category.background_color
           }}
         >
           {category.name.charAt(0)}

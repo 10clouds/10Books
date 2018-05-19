@@ -6,10 +6,23 @@
     <h3 class="admin__subheading">Name</h3>
     <%= for category <- @categories do %>
       <div class="admin__row">
-        <%# TODO: add different category icons for different categories %>
         <div class="admin__category">
-          <div class="admin__name"><%= category.name %></div>
-        </div>  
+          <div class="admin__name">
+
+            <div class="category-label">
+              <div
+                class="category-label__icon"
+                style="color: <%= category.text_color%>; background: <%= category.background_color %>;"
+              >
+                <%= String.at(category.name, 0) %>
+              </div>
+              <div class="category-label__text">
+                <%= category.name %>
+              </div>
+            </div>
+
+          </div>
+        </div>
         <div class="admin__actions">
           <%= link to: admin_category_path(@conn, :edit, category),
             class: "admin__edit"

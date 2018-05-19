@@ -1,6 +1,8 @@
 defmodule LibTenWeb.Admin.CategoryControllerTest do
   use LibTenWeb.ConnCase
 
+  import LibTen.Factory
+
   alias LibTen.Accounts.Users
   alias LibTen.Categories
 
@@ -14,14 +16,9 @@ defmodule LibTenWeb.Admin.CategoryControllerTest do
   end
 
   setup %{conn: conn} do
-    {:ok, user} = Users.create(%{
-      email: "user@user.com",
-      name: "Test",
-      is_admin: true
-    })
-    signed_in_conn = sign_in(conn, user)
+    user = insert(:user, is_admin: true)
     {:ok, %{
-      conn: signed_in_conn,
+      conn: sign_in(conn, user),
       current_user: user
     }}
   end
