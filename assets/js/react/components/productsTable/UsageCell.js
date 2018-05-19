@@ -33,10 +33,14 @@ export default class UsageCell extends PureComponent {
       currentUser
     } = this.props
 
+    const oneDay = 1000 * 60 * 60 * 24
+    const takenAt = new Date(product.used_by.started_at)
+    const canRateAfter = new Date(takenAt.getTime() + oneDay)
+
     const isUserRated =
       product.ratings.find(item => item.user.id === currentUser.id)
 
-    if (!isUserRated) openRateProduct(product.id)
+    if (!isUserRated && new Date() > canRateAfter) openRateProduct(product)
     returnProduct(product.id)
   }
 
