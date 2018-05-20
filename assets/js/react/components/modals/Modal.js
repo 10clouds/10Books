@@ -1,9 +1,26 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import { Transition } from 'react-transition-group'
+import { Modal as ReactOverlaysModal } from 'react-overlays'
+import Transition, { ENTERED, ENTERING } from 'react-transition-group/Transition'
 
-const SCROLL_DISABLED_CLASS = 'scroll-disabled'
+const TRANSITION_TIME = 300 // NOTE: Must be in sync with CSS
+
+function ModalTransition({ children, ...props }) {
+  return (
+    <Transition
+      {...props}
+      timeout={TRANSITION_TIME}
+    >
+      {(status, innerProps) => React.cloneElement(children, {
+        ...innerProps,
+        className: classnames(children.props.className, {
+          'modal--visible': [ENTERING, ENTERED].includes(status)
+        })
+      })}
+    </Transition>
+  )
+}
 
 export default class Modal extends PureComponent {
   static propTypes = {
@@ -13,49 +30,50 @@ export default class Modal extends PureComponent {
     popupModifier: PropTypes.string
   }
 
-  componentWillReceiveProps(newProps) {
-    if (newProps.show) {
-      document.body.classList.add(SCROLL_DISABLED_CLASS)
-    } else {
-      document.body.classList.remove(SCROLL_DISABLED_CLASS)
-    }
+  handleEnter() {
+    document
+      .getElementById('js-page-header')
+      .setAttribute('style', document.body.getAttribute('style'))
   }
 
-  componentWillUnmount() {
-    document.body.classList.remove(SCROLL_DISABLED_CLASS)
+  handleExited() {
+    document
+      .getElementById('js-page-header')
+      .setAttribute('style', null)
   }
 
   handleClosePopup = e => {
     if (e.target === this.modalEl) {
-      document.body.classList.remove(SCROLL_DISABLED_CLASS)
       this.props.onHide()
     }
   }
 
   render() {
     return (
-      <Transition in={this.props.show} timeout={500} unmountOnExit>
-        { state => {
-          return <div
-            className={classnames('popup', {
-              [`popup--${state}`]: state,
+      <ReactOverlaysModal
+        transition={ModalTransition}
+        backdrop={false}
+        containerClassName="with-visible-popup"
+        onBackdropClick={this.props.onHide}
+        show={this.props.show}
+        onHide={this.props.onHide}
+        onEnter={this.handleEnter}
+        onExited={this.handleExited}
+      >
+        <div
+          className="modal"
+          ref={el => this.modalEl = el}
+          onClick={this.handleClosePopup}
+        >
+          <div
+            className={classnames('modal__content', {
+              [`modal__content--${this.props.popupModifier}`]: this.props.popupModifier
             })}
-            tabIndex="-1"
-            role="dialog"
-            aria-hidden="true"
-            ref={el => this.modalEl = el}
-            onClick={this.handleClosePopup}
           >
-            <div
-              className={classnames('popup__window', {
-                [`popup__window--${this.props.popupModifier}`]: this.props.popupModifier
-              })}>
-              { this.props.children }
-            </div>
+            {this.props.children}
           </div>
-        }
-        }
-      </Transition>
+        </div>
+      </ReactOverlaysModal>
     )
   }
 }

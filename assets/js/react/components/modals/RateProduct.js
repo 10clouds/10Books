@@ -25,7 +25,7 @@ export default class RateProduct extends PureComponent {
 
     return (
       <Modal {...modalProps}>
-        <h2 className="popup__heading">Rate the book</h2>
+        <h2 className="modal__heading">Rate the book</h2>
         <form
           className="rating"
           onSubmit={e => {

@@ -14,7 +14,7 @@
   </head>
 
   <body>
-    <nav class="navbar">
+    <nav id="js-page-header" class="navbar">
       <div class="navbar__container">
         <div class="navbar__header">
           <div class="navbar__brand">
