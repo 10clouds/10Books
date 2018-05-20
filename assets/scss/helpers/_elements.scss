@@ -13,18 +13,7 @@
   }
 }
 
-.container {
-  padding: 80px 15px 40px;
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  position: relative;
-
-  @include l-up {
-    padding: 80px 25px 40px;
-  }
-}
-
+// _buttons
 .button {
   border-radius: 3px;
   border: none;
@@ -108,12 +97,8 @@
   }
 
   &--narrow {
-    padding: 0 50px;
+    padding: 0 30px;
     width: auto;
-  }
-
-  &--categories { // TODO: change mod. class name
-    margin-top: 40px;
   }
 
   &--transparent {
@@ -128,19 +113,7 @@
   }
 }
 
-.user-avatar {
-  border-radius: 100%;
-  box-shadow: 4px 10px 18px 0 rgba(0, 0, 0, .1);
-  height: 47px;
-  margin-right: 5px;
-  width: 47px;
-
-  @include s-up {
-    height: 36px;
-    width: 36px;
-  }
-}
-
+// Forms
 .form-hint {
   color: $error;
   display: block;

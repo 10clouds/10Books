@@ -1,0 +1,35 @@
+@font-face {
+  font-family: 'LatoLatinWeb';
+  src: url('/fonts/LatoLatin-Regular.eot');
+  src: url('/fonts/LatoLatin-Regular.eot?#iefix') format('embedded-opentype'),
+       url('/fonts/LatoLatin-Regular.woff2') format('woff2'),
+       url('/fonts/LatoLatin-Regular.woff') format('woff'),
+       url('/fonts/LatoLatin-Regular.ttf') format('truetype');
+  font-style: normal;
+  font-weight: normal;
+  text-rendering: optimizeLegibility;
+}
+
+@font-face {
+  font-family: 'LatoLatinWeb';
+  src: url('/fonts/LatoLatin-Semibold.eot');
+  src: url('/fonts/LatoLatin-Semibold.eot?#iefix') format('embedded-opentype'),
+       url('/fonts/LatoLatin-Semibold.woff2') format('woff2'),
+       url('/fonts/LatoLatin-Semibold.woff') format('woff'),
+       url('/fonts/LatoLatin-Semibold.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 600;
+  text-rendering: optimizeLegibility;
+}
+
+@font-face {
+  font-family: 'LatoLatinWeb';
+  src: url('/fonts/LatoLatin-Bold.eot');
+  src: url('/fonts/LatoLatin-Bold.eot?#iefix') format('embedded-opentype'),
+       url('/fonts/LatoLatin-Bold.woff2') format('woff2'),
+       url('/fonts/LatoLatin-Bold.woff') format('woff'),
+       url('/fonts/LatoLatin-Bold.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 700;
+  text-rendering: optimizeLegibility;
+}

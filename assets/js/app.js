@@ -13,56 +13,6 @@ function render(component, domNode) {
   )
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const navbarBreakPoint = 839
-  const hamburgerButton = document.getElementById('hamburger-button')
-  const hamburgerMenu = document.getElementById('hamburger-menu')
-  const adminDropdown = document.getElementById('admin-dropdown')
-  const adminDropdownButton = document.getElementById('admin-dropdown-button')
-  const adminDropdownMenu = document.getElementById('admin-dropdown-menu')
-  const alerts = Array.from(document.querySelectorAll('.alert'))
-
-  hamburgerButton.addEventListener('click', () => {
-    hamburgerButton.classList.toggle('collapsed')
-    hamburgerMenu.classList.toggle('navbar__menu--visible')
-  })
-
-  alerts.forEach(alert => {
-    alert.innerText ? alert.classList.remove('alert--hidden') : alert.classList.add('alert--hidden')
-  })
-
-  function adminMenuShow() {
-    adminDropdown.classList.add('collapsed')
-    adminDropdownMenu.classList.add('navbar__menu-dropdown--visible')
-  }
-
-  function adminMenuHide() {
-    adminDropdown.classList.remove('collapsed')
-    adminDropdownMenu.classList.remove('navbar__menu-dropdown--visible')
-  }
-
-  if (adminDropdown) {
-    adminDropdownButton.addEventListener('click', e => {
-      e.preventDefault()
-      if(window.innerWidth >= navbarBreakPoint) return
-      adminDropdownButton.classList.toggle('collapsed')
-      adminDropdownMenu.classList.toggle('navbar__menu-dropdown--visible')
-    })
-
-    adminDropdown.addEventListener('mouseenter', () => {
-      if(window.innerWidth >= navbarBreakPoint){
-        adminMenuShow()
-      }
-    })
-
-    adminDropdown.addEventListener('mouseleave', () => {
-      if(window.innerWidth >= navbarBreakPoint){
-        adminMenuHide()
-      }
-    })
-  }
-})
-
 window.LibTen = {
   ReactComponents: {
     renderLibrary(domNode, currentUser) {
@@ -70,7 +20,6 @@ window.LibTen = {
       render(<Library />, domNode)
     },
     renderOrders(domNode, currentUser) {
-      //currentUser.is_admin = false
       store.dispatch(setUser(currentUser))
       render(<Orders />, domNode)
     },
@@ -80,3 +29,48 @@ window.LibTen = {
     }
   }
 }
+
+
+function toggleHeight(el, isVisible = true) {
+  if (el.clientHeight === 0 && isVisible) {
+    el.style.maxHeight = 'auto'
+    el.style.maxHeight = `${el.scrollHeight}px`
+  } else {
+    el.style.maxHeight = `0px`
+  }
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const navbarMenuToggler = document.getElementById('js-navbar-menu-toggle-btn')
+  const navbarMenu = document.getElementById('js-navbar-menu')
+  const navbarMenuSubgroupSelector = '.navbar-menu__subgroup'
+
+  function toggleNavbarSubgroup(menuItem, isVisible = true) {
+    menuItem.classList.toggle('navbar-menu__item--active', isVisible)
+    toggleHeight(
+      menuItem.querySelector(navbarMenuSubgroupSelector),
+      isVisible
+    )
+  }
+
+  navbarMenuToggler.addEventListener('click', (e) => {
+    navbarMenuToggler.classList.toggle('navbar-burger-btn--active')
+    navbarMenu.classList.toggle('navbar-menu--visible')
+  })
+
+  Array.from(
+    document.querySelectorAll(navbarMenuSubgroupSelector)
+  )
+  .map(node => node.parentNode)
+  .forEach(node => {
+    node.addEventListener('click', () => {
+      if (navbarMenuToggler.style.display === 'none') return
+      toggleNavbarSubgroup(node)
+    })
+
+    node.addEventListener('mouseenter', () => toggleNavbarSubgroup(node))
+    node.addEventListener('mouseleave', () => toggleNavbarSubgroup(node, false))
+  })
+})
+

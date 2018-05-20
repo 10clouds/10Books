@@ -16,6 +16,12 @@
   }
 }
 
+@mixin m-down {
+  @media only #{$medium-down} {
+    @content;
+  }
+}
+
 @mixin l-up {
   @media only #{$large} {
     @content;
@@ -49,4 +55,24 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+@mixin input-placeholder-color($color) {
+  &::-webkit-input-placeholder {
+    color: $color;
+  }
+
+  &:-ms-input-placeholder {
+    color: $color;
+  }
+
+  &::-moz-placeholder {
+    color: $color;
+    opacity: 1;
+  }
+
+  &:-moz-placeholder {
+    color: $color;
+    opacity: 1;
+  }
 }

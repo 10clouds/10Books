@@ -13,13 +13,21 @@ body {
   line-height: $line-height;
   color: $text;
   font-family: $font-family;
-
-  &.scroll-disabled {
-    overflow: hidden;
-  }
 }
 
-// wtf?
-main {
+.container {
+  padding: 0 15px 0;
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
   position: relative;
+
+  @include l-up {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+  main & {
+    padding-bottom: 40px;
+  }
 }
