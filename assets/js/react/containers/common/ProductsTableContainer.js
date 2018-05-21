@@ -40,19 +40,18 @@ class ProductsTableContainer extends PureComponent {
     } = this.props
 
     const searchString = search.queryString.toLowerCase()
+    const filterByCategoryId = search.filterByCategoryId
+
     const filteredProducts = Object
       .values(products.idsByInsertedAt)
       .map(({ id }) => products.byId[id])
       .filter(product => (
+        filterByCategoryId ? product.category_id === filterByCategoryId : true
+      ))
+      .filter(product => (
         product.title.toLowerCase().includes(searchString) || (
           product.author &&
           product.author.toLowerCase().includes(searchString)
-        ) || (
-          product.category_id &&
-          categories
-            .byId[product.category_id]
-            .name
-            .toLowerCase().includes(searchString)
         )
       ))
 

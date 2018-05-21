@@ -100,7 +100,7 @@ export default class TableRow extends PureComponent {
         {(!canToggleDetails || detailsVisible) && (
           <div className="table__row-details">
             <div className="table__col table__col--category">
-              <CategoryLabel category={category} />
+              <CategoryLabel {...category} />
             </div>
             {appendColumns.map((col, i) => this.renderAppendColumn(col, i))}
           </div>

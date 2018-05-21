@@ -16,6 +16,6 @@
 
   &__text {
     @include with-line-limit;
-    color: $lightGray;
+    color: darken($gray, 10%);
   }
 }

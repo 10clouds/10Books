@@ -1,27 +1,24 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import debounce from 'lodash.debounce'
 import * as searchActions from '~/store/actions/search'
 import Search from '~/components/Search'
 import CategoryFilter from '~/components/CategoryFilter'
-import classnames from 'classnames'
 
 class SearchContainer extends Component {
-
-  state = {
-    dropdownCategoryPlaceholder: ''
+  static propTypes = {
+    actions: PropTypes.node
   }
 
   handleSearchUpdate = debounce(e => {
-    this.props.updateQuery(e.target.value)
+    this.props.updateQuery('queryString', e.target.value)
   }, 50)
 
-  handleDropdownChange = debounce(selectedOption => {
-    this.props.updateQuery(
-      selectedOption.value === 'all' ? '' : selectedOption.label
-    )
-  }, 50)
+  handleDropdownChange = selectedOption => {
+    this.props.updateQuery('filterByCategoryId', selectedOption.value)
+  }
 
   render() {
     return (
@@ -34,16 +31,11 @@ class SearchContainer extends Component {
           value={this.props.queryString}
         />
         <CategoryFilter
-          classNames={classnames( 'search-form__dropdown', {
-            'search-form__dropdown--selected': this.state.dropdownCategoryPlaceholder
-          })}
-          onChange={selectedOption => {
-            this.handleDropdownChange(selectedOption)
-            this.setState({ dropdownCategoryPlaceholder: selectedOption.label })
-          }}
-          value={this.state.dropdownCategoryPlaceholder}
+          onChange={this.handleDropdownChange}
+          value={this.props.filterByCategoryId}
           categories={this.props.categories}
         />
+        {this.props.actions}
       </div>
     )
   }

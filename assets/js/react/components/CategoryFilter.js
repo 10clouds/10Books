@@ -1,35 +1,50 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import Dropdown from 'react-dropdown'
+import Select from '~/components/Select'
+import CategoryLabel from '~/components/CategoryLabel'
 
-const CategoryFilter = props => {
-  const categories = props.categories.map(option => (
-    {
-      value: option.id,
-      label: option.name
-    }
-  ))
+export default class CategoryFilter extends PureComponent {
+  static propTypes = {
+    categories: PropTypes.array.isRequired,
+    onChange: PropTypes.func.isRequired,
+    value: PropTypes.number
+  }
 
-  const dropdownCategories = [{
-    value: 'all',
-    label: 'All categories',
-  }, ...categories]
+  renderOption = option => {
+    const { text_color, background_color } = option.value
+      ? this.props.categories.find(c => c.id === option.value)
+      : { text_color: "#fff", background_color: "#000" } // TODO
 
-  return (
-    <Dropdown
-      className={props.classNames}
-      options={dropdownCategories}
-      onChange={selectedOption => props.onChange(selectedOption)}
-      value={props.value}
-      placeholder="Category"/>
-  )
+    return (
+      <CategoryLabel
+        name={option.label}
+        text_color={text_color}
+        background_color={background_color}
+      />
+    )
+  }
+
+  render() {
+    const options = [
+      {
+        value: null,
+        label: 'All Categories',
+      },
+      ...this.props.categories.map(option => ({
+        value: option.id,
+        label: option.name
+      }))
+    ]
+
+    return (
+      <Select
+        value={this.props.value}
+        onChange={this.props.onChange}
+        options={options}
+        optionRenderer={this.renderOption}
+        placeholder={this.renderOption(options[0])}
+        valueRenderer={this.renderOption}
+      />
+    )
+  }
 }
-
-CategoryFilter.propTypes = {
-  onChange: PropTypes.func,
-  categories: PropTypes.array.isRequired,
-  value: PropTypes.string,
-  classNames: PropTypes.string
-}
-
-export default CategoryFilter
