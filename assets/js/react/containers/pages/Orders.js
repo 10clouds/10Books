@@ -94,16 +94,18 @@ class Orders extends PureComponent {
   render() {
     return (
       <Fragment>
-        <div className="search-container">
-          <SearchContainer categories={this.props.categories} />
-
-          <button
-            className="button button--dark button--narrow"
-            onClick={this.handleAdd}
-          >
-            <span>+</span> Suggest Book
-          </button>
-        </div>
+        <SearchContainer
+          categories={this.props.categories}
+          action={{
+            onClick: this.handleAdd,
+            children: (
+              <Fragment>
+                <img src="/images/icon-plus-white.svg" />
+                Add
+              </Fragment>
+            )
+          }}
+        />
 
         <ProductFormModal
           submitLabel={

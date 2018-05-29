@@ -1,146 +1,114 @@
-.search-form {
-  position: relative;
-  width: 100%;
+.search {
+  $module: &;
+  $field-hor-padding: 15px;
+  $field-height: 52px;
 
-  @include s-up {
-    display: flex;
+  padding: 30px 0 37px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @include m-up {
+    flex-direction: row;
     justify-content: center;
-  }
+    padding: 60px 0;
 
-  @include l-up {
-    width: auto;
-  }
-
-  &__wrapper-input {
-    position: relative;
-
-    @include s-up {
-      width: calc(100% - 220px - 23px);
-      min-width: 250px;
-    }
-
-    @include m-up {
-      width: calc(100% - 250px - 23px);
-    }
-
-    @include l-up {
-      width: 500px;
+    > * {
+      margin: 0 13px !important;
     }
   }
 
-  &__input {
-    border-radius: 3px;
-    border: none;
-    box-shadow: 4px 57px 67px 0 rgba(75, 82, 113, .09);
-    font-family: $font-family;
-    font-size: 16px;
-    font-weight: 500;
-    height: 56px;
-    padding: 0 55px 0 24px;
+  &__field {
     width: 100%;
+    font-size: 14px;
 
-    @include s-up {
-      font-size: 14px;
-      height: 45px;
-    }
-
-    &::placeholder {
-      color: $lightGray;
-      font-weight: normal;
-    }
-  }
-
-  &__loupe {
-    width: 20px;
-    height: auto;
-    position: absolute;
-    right: 25px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-  &__dropdown {
-    background: #ffffff;
-    border-radius: 5px;
-    box-shadow: 4px 57px 67px 0 rgba(75, 82, 113, .09);
-    margin-left: 20px;
-    width: 200px;
-    display: none;
-
-    @include s-up {
-      display: block;
-      width: 220px;
+    &:not(:last-child) {
+      margin-bottom: 12px;
     }
 
     @include m-up {
-      width: 250px;
+      margin: 0;
     }
 
-    @include l-up {
-      margin-left: 40px;
+    &.select {
+      .Select-control {
+        display: flex;
+        align-items: center;
+      }
+
+      .Select-arrow {
+        right: $field-hor-padding;
+      }
     }
 
-    .Dropdown-control {
-      background: #ffffff;
-      height: 100%;
+    &--query {
+      @include m-up {
+        max-width: 625px;
+      }
     }
 
-    .Dropdown-option {
-      color: $lightGray;
-      font-weight: 500;
-      padding-left: 24px;
-    }
-
-    .Dropdown-placeholder {
-      color: $lightGray;
-      padding-left: 24px;
-    }
-
-    &--selected {
-      .Dropdown-placeholder {
-        color: $text;
+    &--category {
+      @include m-up {
+        max-width: 295px;
+        flex-basis: 52%;
       }
     }
   }
-}
 
-.search-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin: 40px 0;
-
-  @include m-up {
-    flex-wrap: nowrap;
+  input#{$module}__field,
+  &__field.select .Select-control,
+  &__action-btn {
+    box-shadow: 3px 43px 51px 0 rgba(75, 82, 113, 0.09);
   }
 
-  @include l-up {
-    margin: 60px 0;
-  }
-
-  @include xxl-up {
-    margin: 80px 0;
-  }
-
-  .button {
-    margin-top: 40px;
-    min-width: 150px;
-    font-size: 16px;
-
-    @include s-up {
-      font-size: 13px;
-      padding: 0 30px;
-    }
+  input#{$module}__field,
+  &__field.select .Select-control {
+    background-color: $white;
+    border-radius: 5px;
+    height: $field-height;
+    padding: 0 $field-hor-padding;
 
     @include m-up {
-      margin-top: 0;
-      margin-left: 20px;
+      height: $field-height;
+    }
+  }
+
+  input#{$module}__field {
+    border: none;
+    display: block;
+
+    &--query {
+      $icon-size: 22px;
+
+      padding-right: $field-hor-padding * 2 + $icon-size;
+      background-image: url(/images/search.svg);
+      background-repeat: no-repeat;
+      background-size: $icon-size $icon-size;
+      background-position: calc(100% - #{$field-hor-padding}) 50%;
+    }
+  }
+
+  &__action-btn {
+    margin-top: 14px;
+    height: 46px;
+    font-size: 15px;
+    padding: 0 40px;
+
+    @include m-up {
+      height: $field-height;
+      margin: 0;
     }
 
-    @include l-up {
-      margin-left: 40px;
-      margin-top: 0;
+    &-inner {
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+
+    img {
+      margin-right: 0.7em;
+      width: 0.88em;
+      height: 0.88em;
     }
   }
 }

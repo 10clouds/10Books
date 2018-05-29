@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent, Fragment } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import socket from 'socket'
@@ -74,10 +74,8 @@ class Library extends PureComponent {
 
   render() {
     return (
-      <div>
-        <div className="search-container">
-          <SearchContainer categories={this.props.categories} />
-        </div>
+      <Fragment>
+        <SearchContainer categories={this.props.categories} />
 
         <RateProductModal
           show={this.state.rateProductWithId !== null}
@@ -93,7 +91,7 @@ class Library extends PureComponent {
           appendColumns={this.appendColumns}
           getRowProps={this.getTableRowProps}
         />
-      </div>
+      </Fragment>
     )
   }
 }

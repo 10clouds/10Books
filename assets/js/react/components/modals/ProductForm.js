@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react'
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import Dropdown from 'react-dropdown'
 import Modal from './Modal'
 import { READABLE_PRODUCT_STATUS } from '~/constants'
 
@@ -151,18 +150,19 @@ class ProductForm extends PureComponent {
             label: 'Status',
             name: 'status',
             inputComponent: (
-              <Dropdown
-                options={dropdownStatuses}
-                className={classnames('form__select', {
-                  'is-invalid': this.state.errors['status']
-                })}
-                onChange={selectedOption => {
-                  this.handleFieldChange('status', selectedOption.value)
-                }}
-                value={
-                  dropdownStatuses.find(s => s.value == this.state.fields.status)
-                }
-              />
+              <div>TODO</div>
+              // <Selectin
+              //   options={dropdownStatuses}
+              //   className={classnames('form__select', {
+              //     'is-invalid': this.state.errors['status']
+              //   })}
+              //   onChange={selectedOption => {
+              //     this.handleFieldChange('status', selectedOption.value)
+              //   }}
+              //   value={
+              //     dropdownStatuses.find(s => s.value == this.state.fields.status)
+              //   }
+              // />
             )
           }) }
 
@@ -170,21 +170,22 @@ class ProductForm extends PureComponent {
             label: 'Category',
             name: 'category_id',
             inputComponent: (
-              <Dropdown
-                options={dropdownCategories}
-                className={classnames('form__select', {
-                  'is-invalid': this.state.errors['category_id']
-                })}
-                menuClassName='form__select-menu--short'
-                onChange={selectedOption => {
-                  this.handleFieldChange('category_id',
-                    parseInt(selectedOption.value, 10) || null
-                  )
-                }}
-                value={
-                  dropdownCategories.find(c => c.value == this.state.fields.category_id)
-                }
-              />
+              <div>TODO</div>
+              // <Dropdown
+              //   options={dropdownCategories}
+              //   className={classnames('form__select', {
+              //     'is-invalid': this.state.errors['category_id']
+              //   })}
+              //   menuClassName='form__select-menu--short'
+              //   onChange={selectedOption => {
+              //     this.handleFieldChange('category_id',
+              //       parseInt(selectedOption.value, 10) || null
+              //     )
+              //   }}
+              //   value={
+              //     dropdownCategories.find(c => c.value == this.state.fields.category_id)
+              //   }
+              // />
             )
           }) }
 

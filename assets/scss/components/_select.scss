@@ -1,12 +1,19 @@
 .select {
   position: relative;
 
+  .Select-control {
+    cursor: pointer;
+  }
+
   .Select-input {
     position: absolute;
     display: block !important;
     top: 0;
     left: 0;
     opacity: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
   }
 
   .Select-arrow {
@@ -43,8 +50,14 @@
     cursor: pointer;
   }
 
-  &.is-disabled .Select-arrow {
-    display: none;
+  &.is-disabled {
+    .Select-control {
+      cursor: default;
+    }
+
+    .Select-arrow {
+      display: none;
+    }
   }
 
   &.is-open .Select-arrow {

@@ -3,11 +3,12 @@ import PropTypes from 'prop-types'
 import Select from '~/components/Select'
 import CategoryLabel from '~/components/CategoryLabel'
 
-export default class CategoryFilter extends PureComponent {
+export default class CategorySelect extends PureComponent {
   static propTypes = {
     categories: PropTypes.array.isRequired,
     onChange: PropTypes.func.isRequired,
-    value: PropTypes.number
+    value: PropTypes.number,
+    className: PropTypes.string
   }
 
   renderOption = option => {
@@ -38,6 +39,7 @@ export default class CategoryFilter extends PureComponent {
 
     return (
       <Select
+        className={this.props.className}
         value={this.props.value}
         onChange={this.props.onChange}
         options={options}

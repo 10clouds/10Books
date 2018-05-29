@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import cn from 'classnames'
-import Select from 'react-select'
+import Select from '~/components/Select'
 import { READABLE_PRODUCT_STATUS } from '~/constants'
 
 const selectStatuses = Object
@@ -81,14 +81,10 @@ export default class ProductActions extends PureComponent {
     )
   }
 
-  renderOption(option) {
+  renderOption = option => {
     return option.divider
       ? <div className="product-actions__option-divider" />
-      : (
-        <div className="product-actions__option">
-          {option.label}
-        </div>
-      )
+      : option.label
   }
 
   render() {
@@ -112,8 +108,6 @@ export default class ProductActions extends PureComponent {
         className={cn('product-actions', {
           [`product-actions--${btnColor}`]: true
         })}
-        clearable={false}
-        searchable={false}
         value={status}
         disabled={isDisabled}
         onChange={this.handleChange}

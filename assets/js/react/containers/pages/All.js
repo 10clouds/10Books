@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent, Fragment } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import socket from 'socket'
@@ -60,20 +60,22 @@ class All extends PureComponent {
   render() {
     return (
       <div>
-        <div className="search-container">
-          <SearchContainer categories={this.props.categories} />
-
-          <button
-            className="button button--dark button--narrow"
-            onClick={() => (
+        <SearchContainer
+          categories={this.props.categories}
+          action={{
+            onClick: () => {
               this.setState({
                 modalProduct: MODAL_PRODUCT_NEW
               })
-            )}
-          >
-            <span>+</span> Add
-          </button>
-        </div>
+            },
+            children: (
+              <Fragment>
+                <img src="/images/icon-plus-white.svg" />
+                Add
+              </Fragment>
+            )
+          }}
+        />
 
         <ProductFormModal
           forAdmin
