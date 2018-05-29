@@ -64,8 +64,8 @@ class Library extends PureComponent {
       && product.used_by.user.id === this.props.currentUser.id
   })
 
-  openRateProduct = productId => {
-    this.setState({ rateProductWithId: productId })
+  openRateProduct = product => {
+    this.setState({ rateProductWithId: product.id })
   }
 
   hideRateProduct = () => {
