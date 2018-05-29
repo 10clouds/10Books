@@ -1,6 +1,7 @@
 .search {
   $module: &;
   $field-hor-padding: 15px;
+  $field-hor-padding-m: 20px;
   $field-height: 52px;
 
   padding: 30px 0 37px 0;
@@ -39,6 +40,14 @@
       .Select-arrow {
         right: $field-hor-padding;
       }
+
+      .Select-placeholder .category-label__text {
+        color: $gray;
+      }
+
+      .Select-value .category-label__text {
+        color: $text;
+      }
     }
 
     &--query {
@@ -67,15 +76,17 @@
     border-radius: 5px;
     height: $field-height;
     padding: 0 $field-hor-padding;
-
-    @include m-up {
-      height: $field-height;
-    }
   }
 
   input#{$module}__field {
+    @include input-placeholder-color($gray);
+
     border: none;
     display: block;
+
+    @include m-up {
+      padding: 0 $field-hor-padding-m;
+    }
 
     &--query {
       $icon-size: 22px;
@@ -85,6 +96,11 @@
       background-repeat: no-repeat;
       background-size: $icon-size $icon-size;
       background-position: calc(100% - #{$field-hor-padding}) 50%;
+
+      @include m-up {
+        padding-right: $field-hor-padding-m * 2 + $icon-size;
+        background-position: calc(100% - #{$field-hor-padding-m}) 50%;
+      }
     }
   }
 
