@@ -65,11 +65,10 @@
     }
 
     a {
-      color: $accent;
       transition: color 0.2s;
 
       &:hover {
-        color: lighten($accent, 10%);
+        color: $accent;
       }
     }
 
@@ -213,6 +212,7 @@
 
     &--author {
       @include with-line-limit;
+      color: $lightGray;
     }
 
     #{$module}__row--header & {
