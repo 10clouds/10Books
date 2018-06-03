@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import Modal from './Modal'
+import cn from 'classnames'
 
 export default class RateProduct extends PureComponent {
   static propTypes = {
@@ -8,11 +9,15 @@ export default class RateProduct extends PureComponent {
   }
 
   state = {
-    rating: null
+    rating: null,
+    ratingTouched: false,
   }
 
   handleRatingChange = e => {
-    this.setState({ rating: parseInt(e.target.value, 10) })
+    this.setState({
+      rating: parseInt(e.target.value, 10),
+      ratingTouched: true,
+    })
   }
 
   handleRejectRating = () => {
@@ -22,6 +27,14 @@ export default class RateProduct extends PureComponent {
   render() {
     const { onSubmit, ...modalProps } = this.props
     const radioInputs = Array.from({ length: 5 }, (element, index) => index + 1)
+    const { ratingTouched } = this.state
+    const saveButtonClassNames = cn(
+      'button',
+      {
+        'button--dark': ratingTouched,
+        'button--disabled': !ratingTouched
+      }
+    )
 
     return (
       <Modal {...modalProps}>
@@ -57,7 +70,13 @@ export default class RateProduct extends PureComponent {
           </div>
           <div className="rating__buttons-wrapper">
             <button className="button button--transparent" onClick={this.handleRejectRating}>Cancel</button>
-            <button className="button button--dark" type="submit">Save</button>
+            <button
+              className={saveButtonClassNames}
+              type="submit"
+              disabled={!ratingTouched}
+            >
+              Save
+            </button>
           </div>
         </form>
       </Modal>
