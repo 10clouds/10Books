@@ -111,6 +111,13 @@
       color: $accentLight;
     }
   }
+
+  &--disabled {
+    background-color: rgba($lightGray, .1);
+    border: 1px solid rgba($lightGray, .3);
+    color: rgba($lightGray, .75);
+    cursor: auto;
+  }
 }
 
 // Forms

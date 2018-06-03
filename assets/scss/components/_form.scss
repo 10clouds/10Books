@@ -159,4 +159,36 @@
       background-size: cover;
     }
   }
+
+  &__buttons-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    @include s-up {
+      flex-direction: row;
+      justify-content: flex-end;
+    }
+
+    .button {
+      display: inline-block;
+      height: 45px;
+      width: 100%;
+
+      @include s-up {
+        margin: 0;
+        width: 150px;
+      }
+
+      &:first-of-type {
+        margin: 30px 0 0;
+        order: 2;
+
+        @include s-up {
+          margin: 0 20px 0 0;
+          order: 0;
+        }
+      }
+    }
+  }
 }
