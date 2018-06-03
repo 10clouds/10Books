@@ -5,7 +5,8 @@ import cn from 'classnames'
 
 export default class RateProduct extends PureComponent {
   static propTypes = {
-    onSubmit: PropTypes.func.isRequired
+    onSubmit: PropTypes.func.isRequired,
+    onHide: PropTypes.func.isRequired
   }
 
   state = {
@@ -22,6 +23,7 @@ export default class RateProduct extends PureComponent {
 
   handleRejectRating = () => {
     this.setState({ rating: null })
+    this.props.onHide()
   }
 
   render() {
