@@ -9,15 +9,6 @@
   z-index: $z-index-modal;
   overflow: auto;
 
-
-  img {
-    position: absolute;
-    right: 30px;
-    top: 30px;
-    height: 22px;
-    width: 22px;
-  }
-
   &,
   &:before {
     position: fixed;
@@ -37,6 +28,14 @@
   &--visible:before {
     background: $black;
     opacity: 0.4;
+  }
+
+  &__close-icon {
+    height: 22px;
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    width: 22px;
   }
 
   &__content {
