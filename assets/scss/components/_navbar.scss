@@ -116,6 +116,10 @@
       > #{$module}__item-label {
         padding: 0 15px;
       }
+
+      &:last-child > #{$module}__item-label {
+        padding-right: 0;
+      }
     }
   }
 

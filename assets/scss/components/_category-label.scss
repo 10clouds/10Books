@@ -8,10 +8,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    line-height: 1;
     width: 2em;
     height: 2em;
     font-weight: bold;
     margin-right: 0.8125em;
+    background: $lightGray;
+    color: #fff;
   }
 
   &__text {

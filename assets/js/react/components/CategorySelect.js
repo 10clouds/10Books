@@ -12,15 +12,14 @@ export default class CategorySelect extends PureComponent {
   }
 
   renderOption = option => {
-    const { text_color, background_color } = option.value
+    const colorProps = option.value
       ? this.props.categories.find(c => c.id === option.value)
-      : { text_color: "#fff", background_color: "#000" } // TODO
+      : null
 
     return (
       <CategoryLabel
         name={option.label}
-        text_color={text_color}
-        background_color={background_color}
+        {...colorProps}
       />
     )
   }

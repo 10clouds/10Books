@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { Fragment, PureComponent } from 'react'
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -47,7 +47,7 @@ class ProductForm extends PureComponent {
       author: product.author || '',
       url: product.url || '',
       status: product.status || '',
-      category_id: product.category_id || null
+      category_id: product.category_id || ''
     }
   }
 
@@ -74,46 +74,55 @@ class ProductForm extends PureComponent {
   }
 
   renderFormGroup(props = { type: 'text' }) {
-    const { label, name, inputComponent, ...inputProps } = props
+    const { label, name, options, ...inputProps } = props
+    const fieldProps = {
+      className: classnames('form__input', {
+        'form__input--invalid': this.state.errors[name]
+      }),
+      name,
+      onChange: this.handleInputChange,
+      value: this.state.fields[name],
+      ...inputProps
+    }
 
     return (
       <div className="form__group">
         <label className="form__label">
           { label }
         </label>
-        { inputComponent ? inputComponent : (
-          <input
-            className={classnames('form__input', {
-              'is-invalid': this.state.errors[name]
-            })}
-            {...inputProps}
-            name={name}
-            onChange={this.handleInputChange}
-            value={this.state.fields[name]}
-          />
-        ) }
-        <span className="form__bar"/>
-        { this.state.errors[name] && (
+        {options ? (
+          <div className="form__select-container">
+            <select
+              {...fieldProps}
+              className={classnames(fieldProps.className, {
+                'form__input--empty': !fieldProps.value
+              })}
+            >
+              <option>{inputProps.placeholder}</option>
+              {options.map(o => (
+                <option key={o.value} value={o.value} children={o.text} />
+              ))}
+            </select>
+            <span className="form__bar"/>
+          </div>
+        ) : (
+          <Fragment>
+            <input {...fieldProps} />
+            <span className="form__bar"/>
+          </Fragment>
+        )}
+
+        {this.state.errors[name] && (
           <div className="invalid-feedback">
             { this.state.errors[name] }
           </div>
-        ) }
+        )}
       </div>
     )
   }
 
   render() {
     const { onSubmit, ...modalProps } = this.props
-
-    const dropdownCategories = this.props.categories.map(option => ({
-      value: option.id,
-      label: option.name
-    }))
-
-    const dropdownStatuses = Object.keys(READABLE_PRODUCT_STATUS).map(key => ({
-      value: key,
-      label: READABLE_PRODUCT_STATUS[key]
-    }))
 
     return (
       <Modal popupModifier="form" {...modalProps}>
@@ -128,65 +137,42 @@ class ProductForm extends PureComponent {
               })
           }}
         >
-          { this.renderFormGroup({
+          {this.renderFormGroup({
             label: 'Title',
             placeholder: 'Title',
             name: 'title'
-          }) }
-          { this.renderFormGroup({
+          })}
+          {this.renderFormGroup({
             label: 'Author',
             placeholder: 'Author',
             name: 'author'
-          }) }
-          { this.renderFormGroup({
+          })}
+          {this.renderFormGroup({
             label: 'Url',
             placeholder: 'Url',
             name: 'url',
             type: 'url'
-          }) }
+          })}
 
-          { this.props.forAdmin && this.renderFormGroup({
+          {this.props.forAdmin && this.renderFormGroup({
             label: 'Status',
+            placeholder: 'Select status',
             name: 'status',
-            inputComponent: (
-              <div>TODO</div>
-              // <Selectin
-              //   options={dropdownStatuses}
-              //   className={classnames('form__select', {
-              //     'is-invalid': this.state.errors['status']
-              //   })}
-              //   onChange={selectedOption => {
-              //     this.handleFieldChange('status', selectedOption.value)
-              //   }}
-              //   value={
-              //     dropdownStatuses.find(s => s.value == this.state.fields.status)
-              //   }
-              // />
-            )
-          }) }
+            options: Object.keys(READABLE_PRODUCT_STATUS).map(key => ({
+              value: key,
+              text: READABLE_PRODUCT_STATUS[key]
+            }))
+          })}
 
-          { this.renderFormGroup({
+          {this.renderFormGroup({
             label: 'Category',
+            placeholder: 'Select category',
             name: 'category_id',
-            inputComponent: (
-              <div>TODO</div>
-              // <Dropdown
-              //   options={dropdownCategories}
-              //   className={classnames('form__select', {
-              //     'is-invalid': this.state.errors['category_id']
-              //   })}
-              //   menuClassName='form__select-menu--short'
-              //   onChange={selectedOption => {
-              //     this.handleFieldChange('category_id',
-              //       parseInt(selectedOption.value, 10) || null
-              //     )
-              //   }}
-              //   value={
-              //     dropdownCategories.find(c => c.value == this.state.fields.category_id)
-              //   }
-              // />
-            )
-          }) }
+            options: this.props.categories.map(option => ({
+              value: option.id,
+              text: option.name
+            }))
+          })}
           <div className="form__buttons-wrapper">
             <button
               className="button button--transparent form__button"

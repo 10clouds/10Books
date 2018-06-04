@@ -64,13 +64,21 @@ document.addEventListener('DOMContentLoaded', () => {
   )
   .map(node => node.parentNode)
   .forEach(node => {
+    let isHovered = false
+
     node.addEventListener('click', () => {
-      if (navbarMenuToggler.style.display === 'none') return
+      if (isHovered || navbarMenuToggler.style.display === 'none') return
       toggleNavbarSubgroup(node)
     })
 
-    node.addEventListener('mouseenter', () => toggleNavbarSubgroup(node))
-    node.addEventListener('mouseleave', () => toggleNavbarSubgroup(node, false))
+    node.addEventListener('mouseenter', () => {
+      isHovered = true
+      toggleNavbarSubgroup(node)
+    })
+    node.addEventListener('mouseleave', () => {
+      isHovered = false
+      toggleNavbarSubgroup(node, false)
+    })
   })
 })
 

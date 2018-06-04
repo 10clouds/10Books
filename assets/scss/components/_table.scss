@@ -173,7 +173,7 @@
       }
 
       &--requested-by {
-        @include col-width(120px);
+        @include col-width(150px);
         text-align: center;
 
         .product-requested-by__label {

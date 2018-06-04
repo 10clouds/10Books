@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 export default class CategoryLabel extends PureComponent {
   static propTypes = {
     name: PropTypes.string.isRequired,
-    text_color: PropTypes.string.isRequired,
-    background_color: PropTypes.string.isRequired
+    text_color: PropTypes.string,
+    background_color: PropTypes.string
   }
 
   render() {
