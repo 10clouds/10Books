@@ -22,14 +22,7 @@ defmodule LibTen.Mixfile do
       mod: {LibTen.Application, []},
       extra_applications: [
         :logger,
-        :runtime_tools,
-        :ueberauth_google,
-        :bamboo,
-        :bamboo_smtp,
-        :edeliver,
-        :timex,
-        # TODO: remove 👇 after prod release
-        :mongodb
+        :runtime_tools
       ],
     ]
   end

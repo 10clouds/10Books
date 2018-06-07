@@ -60,10 +60,6 @@
     }
   }
 
-  &.is-open .Select-arrow {
-    transform: translateY(-50%) rotate(180deg);
-  }
-
   &__option {
     padding: 8px 16px;
   }
