@@ -54,14 +54,18 @@ class ProductsTableContainer extends PureComponent {
         )
       ))
 
-    return filteredProducts.length > 0 ? (
-      <Table
-        {...componentProps}
-        {...this.state}
-        products={filteredProducts}
-        categories={categories.byId}
-      />
-    ) : <NoResults />
+    if (products.isReady) {
+      return filteredProducts.length > 0 ? (
+        <Table
+          {...componentProps}
+          {...this.state}
+          products={filteredProducts}
+          categories={categories.byId}
+        />
+      ) : <NoResults />
+    } else {
+      return null
+    }
   }
 }
 

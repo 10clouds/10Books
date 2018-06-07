@@ -4,7 +4,7 @@ const NoResults = () => (
   <div className="no-results">
     <h1 className="no-results__heading">No matching results</h1>
     <p className="no-results__text">
-      Check if you typed correctly or go to <a href="./library" className="no-results__link">home page</a>
+      Check if you typed correctly or go to <a href="/" className="no-results__link">home page</a>
     </p>
   </div>
 )

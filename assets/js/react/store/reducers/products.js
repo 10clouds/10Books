@@ -3,6 +3,7 @@ import { makeReducer } from '../utils'
 
 const defaultState = {
   channel: null,
+  isReady: false,
   idsByInsertedAt: [],
   byId: {}
 }
@@ -16,7 +17,8 @@ function getSortedIds(items) {
 const reducers = {
   [actionTypes.JOIN_CHANNEL_SUCCESS]: (state, { channel }) => ({
     ...state,
-    channel
+    channel,
+    isReady: true
   }),
 
   [actionTypes.ALL_UPDATED]: (state, { items }) => ({
