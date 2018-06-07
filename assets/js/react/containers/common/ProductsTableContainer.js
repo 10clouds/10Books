@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import debounce from 'lodash.debounce'
-import { Table } from '~/components/productsTable'
+import { Table, NoResults } from '~/components/productsTable'
 
 function canToggleDetails() {
   return window.innerWidth < 900
@@ -35,7 +35,6 @@ class ProductsTableContainer extends PureComponent {
       search,
       products,
       categories,
-      renderNoResults,
       ...componentProps
     } = this.props
 
@@ -55,14 +54,18 @@ class ProductsTableContainer extends PureComponent {
         )
       ))
 
-    return filteredProducts.length > 0 ? (
-      <Table
-        {...componentProps}
-        {...this.state}
-        products={filteredProducts}
-        categories={categories.byId}
-      />
-    ) : renderNoResults ? renderNoResults() : null
+    if (products.isReady) {
+      return filteredProducts.length > 0 ? (
+        <Table
+          {...componentProps}
+          {...this.state}
+          products={filteredProducts}
+          categories={categories.byId}
+        />
+      ) : <NoResults />
+    } else {
+      return null
+    }
   }
 }
 
