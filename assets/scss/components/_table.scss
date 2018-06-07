@@ -156,6 +156,8 @@
       &--category {
         @include col-width(80px);
         overflow: hidden;
+        display: flex;
+        justify-content: center;
 
         .category-label__text {
           display: none;
@@ -200,6 +202,7 @@
 
         &--category {
           flex-basis: 25%;
+          display: block;
           min-width: auto;
           max-width: none;
 
