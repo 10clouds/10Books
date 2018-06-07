@@ -13,7 +13,7 @@ defmodule LibTen.Products.Emails do
     new_email()
     |> to(user.email)
     |> from(@default_from)
-    |> subject("📚 #{product.title} is now available")
+    |> subject("📚 \"#{product.title}\" is now available")
     |> render("product_has_been_returned.html", %{
       product: product,
       conn: @default_endpoint
@@ -24,7 +24,7 @@ defmodule LibTen.Products.Emails do
     new_email()
     |> to(product.used_by.user.email)
     |> from(@default_from)
-    |> subject("🚨🚨 Please return #{product.title} 🚨🚨")
+    |> subject("🚨🚨 Please return \"#{product.title}\" 🚨🚨")
     |> render("request_product_return.html", %{
       product: product,
       return_subscribers_count: length(product.used_by.return_subscribers)
