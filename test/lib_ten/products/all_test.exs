@@ -17,7 +17,7 @@ defmodule LibTen.Products.AllTest do
   end
 
   test "get/1 returns product" do
-    product = insert(:product)
+    product = insert(:product, requested_by_user: nil)
     assert All.get(product.id) == product
   end
 

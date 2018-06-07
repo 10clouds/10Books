@@ -7,7 +7,7 @@ defmodule LibTenWeb.Admin.CategoryControllerTest do
   alias LibTen.Categories
 
   @create_attrs %{name: "some name"}
-  @update_attrs %{name: "some updated name"}
+  @update_attrs %{name: "Some updated name"}
   @invalid_attrs %{name: nil}
 
   def fixture(:category) do
@@ -114,7 +114,7 @@ defmodule LibTenWeb.Admin.CategoryControllerTest do
       assert redirected_to(conn) == admin_category_path(conn, :index)
 
       conn = get conn, admin_category_path(conn, :index)
-      assert html_response(conn, 200) =~ "some updated name"
+      assert html_response(conn, 200) =~ Regex.compile!(@update_attrs.name)
     end
 
     test "renders errors when data is invalid", %{conn: conn, category: category} do

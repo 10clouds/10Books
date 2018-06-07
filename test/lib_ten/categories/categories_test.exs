@@ -8,7 +8,7 @@ defmodule LibTen.CategoriesTest do
   describe "categories" do
     alias LibTen.Categories.Category
 
-    @update_attrs %{name: "some updated name"}
+    @update_attrs %{name: "Some updated name"}
     @invalid_attrs %{name: nil}
 
     test "list_categories/0 returns all categories with assigned colors" do
@@ -21,10 +21,10 @@ defmodule LibTen.CategoriesTest do
       assert Categories.get_category!(category.id) == category
     end
 
-    test "create_category/1 with valid data creates a category" do
-      params = params_for(:category)
+    test "create_category/1 with valid data creates a category with capitalized name" do
+      params = params_for(:category, name: "test")
       assert {:ok, %Category{} = category} = Categories.create_category(params)
-      assert category.name == params.name
+      assert category.name == "Test"
     end
 
     test "create_category/1 with invalid data returns error changeset" do
@@ -35,7 +35,7 @@ defmodule LibTen.CategoriesTest do
       category = insert(:category)
       assert {:ok, category} = Categories.update_category(category, @update_attrs)
       assert %Category{} = category
-      assert category.name == "some updated name"
+      assert category.name == @update_attrs.name
     end
 
     test "update_category/2 with invalid data returns error changeset" do

@@ -39,6 +39,7 @@ defmodule LibTen.Categories.Category do
     |> validate_required([:name])
     |> unique_constraint(:name)
     |> set_color()
+    |> capitalize_name()
   end
 
   def get_available_color_for_category() do
@@ -69,6 +70,17 @@ defmodule LibTen.Categories.Category do
       changeset
       |> put_change(:text_color, text_color)
       |> put_change(:background_color, background_color)
+    end
+  end
+
+  defp capitalize_name(changeset) do
+    if changeset.valid? do
+      name = get_field(changeset, :name) |> String.capitalize()
+
+      changeset
+      |> put_change(:name, name)
+    else
+      changeset
     end
   end
 end
