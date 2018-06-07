@@ -70,6 +70,12 @@ export default class Modal extends PureComponent {
               [`modal__content--${this.props.popupModifier}`]: this.props.popupModifier
             })}
           >
+            <button
+              className="modal__close"
+              onClick={this.props.onHide}
+            >
+              Close
+            </button>
             {this.props.children}
           </div>
         </div>

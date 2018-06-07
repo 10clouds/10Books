@@ -40,11 +40,6 @@ export default class RateProduct extends PureComponent {
 
     return (
       <Modal {...modalProps}>
-        <img
-          className="modal__close-icon"
-          src="/images/close.svg"
-          onClick={this.props.onHide}
-        />
         <h2 className="modal__heading">Rate the book</h2>
         <form
           className="rating"

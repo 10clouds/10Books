@@ -175,13 +175,6 @@ class ProductForm extends PureComponent {
           })}
           <div className="form__buttons-wrapper">
             <button
-              className="button button--transparent form__button"
-              type="button"
-              onClick={this.props.onHide}
-            >
-              Cancel
-            </button>
-            <button
               className="button button--dark form__button"
               type="submit"
             >
