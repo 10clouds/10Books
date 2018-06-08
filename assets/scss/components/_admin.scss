@@ -1,116 +1,90 @@
-.admin {
-  $module: &;
-
-  margin: 70px 0 40px;
-  width: 100%;
-
-  @include s-up {
-    padding: 0 10px;
-  }
+.admin-page {
+  padding: 28px 0 0 0;
+  max-width: $adminContainerWidth;
 
   @include m-up {
     padding-left: 40px;
   }
 
-  &__wrapper {
-    max-width: $adminContainerWidth;
-
-    .table {
-      &__row {
-        &:first-child {
-          padding-top: 0;
-        }
-      }
-    }
-  }
-
-  &__subheading {
-    display: none;
-    color: $gray;
-    font-size: 14px;
+  &__title {
     font-weight: bold;
-    margin-bottom: 15px;
-    padding-left: 12px;
+    font-size: 20px;
+    margin: 30px 0 27px 0;
+  }
+}
 
-    @include s-up {
-      display: block;
-      padding-left: 22px;
-    }
+.admin-resource-listing {
+  font-size: 15px;
+
+  &__title {
+    font-size: inherit;
+    color: $lightGray;
+    font-weight: bold;
+    margin: 0 0 12px 0;
   }
 
-  &__row {
-    background-color: $white;
+  &__item {
+    background: $white;
     border-radius: 5px;
-    margin-bottom: 10px;
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    padding: 14px 14px;
+    border-left: 4px solid $white;
+    margin-bottom: 6px;
 
     @include s-up {
+      flex-direction: row;
       align-items: center;
-      display: flex;
-      justify-content: space-between;
-      padding: 12px 12px 12px 22px;
+    }
+
+    &--highlighted {
+      border-color: $accent;
     }
   }
 
-  &__category {
-    align-items: center;
-    color: $gray;
-    display: flex;
-    font-weight: bold;
-    font-size: 13px;
-  }
+  &__item-actions {
+    $btn-size: 40px;
 
-  &__actions {
-    align-items: center;
     display: flex;
     justify-content: space-between;
-    margin-top: 20px;
+    margin-top: 18px;
 
     @include s-up {
-      margin: 0;
-      padding: 0;
+      margin-top: 0;
+      margin-left: auto;
+      padding-left: 15px;
     }
 
-    .button {
-      height: 40px;
-      line-height: 40px;
-      width: 100px;
-    }
-  }
+    .button,
+    .button-with-icon {
+      height: $btn-size;
+      line-height: $btn-size;
+      font-weight: bold;
 
-  &__edit {
-    @include s-up {
-      margin: 0 10px 0 0;
-    }
-
-    @include m-up {
-      margin: 0 30px 0 0;
-    }
-  }
-
-  &__edit-img {
-    height: 40px;
-  }
-
-  > .button {
-    margin-top: 40px;
-    width: 180px;
-
-    a {
-      color: $accentLight;
-    }
-  }
-
-  &__edit-page {
-    .button {
-      @include s-up {
-        width: 150px;
+      &:not(:first-child) {
+        margin-left: 12px;
       }
     }
 
-    #{$module}__subheading {
-      display: block;
-      margin-top: 40px;
+    .button {
+      width: auto;
+      padding: 0 20px;
     }
+
+    .button-with-icon {
+      width: $btn-size;
+
+      img {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+
+  &__action-btn {
+    margin-top: 40px;
+    padding: 0 25px;
+    width: auto;
+    display: inline-block;
   }
 }

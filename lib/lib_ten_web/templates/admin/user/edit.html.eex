@@ -1,8 +1,7 @@
-<div class="admin admin__edit-page">
+<h1 class="admin-page__title">
+  Edit User
+</h1>
 
-  <h1>Edit User</h1>
-
-  <%= render "form.html",
+<%= render "form.html",
   Map.put(assigns, :action, admin_user_path(@conn, :update, @user))
-  %>
-</div>
+%>

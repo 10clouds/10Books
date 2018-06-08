@@ -1,4 +1,5 @@
-<div class="admin admin__edit-page">
-  <h1>Edit Category</h1>
-  <%= render "form.html", Map.put(assigns, :action, admin_category_path(@conn, :update, @category)) %>
-</div>
+<h1 class="admin-page__title">
+  Edit Category
+</h1>
+
+<%= render "form.html", Map.put(assigns, :action, admin_category_path(@conn, :update, @category)) %>

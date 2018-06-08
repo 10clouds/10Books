@@ -108,12 +108,14 @@
 
   <main>
     <div class="container">
-      <%= for {key, val} <- get_flash(@conn) do %>
-        <div class="alert alert--<%= key %>">
-           <%= val %>
-        </div>
-      <% end %>
-      <%= render @view_module, @view_template, assigns %>
+      <div class="<%= if admin_section?(@conn), do: "admin-page", else: "" %>">
+        <%= for {key, val} <- get_flash(@conn) do %>
+          <div class="alert alert--<%= key %>">
+             <%= val %>
+          </div>
+        <% end %>
+        <%= render @view_module, @view_template, assigns %>
+      </div>
     </div>
   </main>
 </body>

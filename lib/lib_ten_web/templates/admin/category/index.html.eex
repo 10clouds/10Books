@@ -1,43 +1,43 @@
-<div class="admin">
-  <h1>Listing Categories</h1>
+<h1 class="admin-page__title">Listing Categories</h1>
 
-  <div class="admin__wrapper">
-  <%# IDEA: i don't think this h3 is neccessary at all - it shoud be removed %>
-    <h3 class="admin__subheading">Name</h3>
-    <%= for category <- @categories do %>
-      <div class="admin__row">
-        <div class="admin__category">
-          <div class="admin__name">
+<div class="admin-resource-listing">
+  <h2 class="admin-resource-listing__title">Name</h2>
 
-            <div class="category-label">
-              <div
-                class="category-label__icon"
-                style="color: <%= category.text_color%>; background: <%= category.background_color %>;"
-              >
-                <%= String.at(category.name, 0) %>
-              </div>
-              <div class="category-label__text">
-                <%= category.name %>
-              </div>
-            </div>
-
-          </div>
+  <%= for category <- @categories do %>
+  <div class="admin-resource-listing__item">
+    <div class="admin-resource-listing__item-name">
+      <div class="category-label">
+        <div
+          class="category-label__icon"
+          style="color: <%= category.text_color%>; background: <%= category.background_color %>;"
+        >
+          <%= String.at(category.name, 0) %>
         </div>
-        <div class="admin__actions">
-          <%= link to: admin_category_path(@conn, :edit, category),
-            class: "admin__edit"
-          do %>
-            <%= img_tag static_path(@conn, "/images/edit.svg"),
-              alt: "edit",
-              class: "admin__edit-img"
-            %>
-          <% end %>
-          <%= link to: admin_category_path(@conn, :delete, category), method: :delete, data: [confirm: "Are you sure?"] do %>
-            <button class="button button--delete">Delete</button>
-          <% end %>
+        <div class="category-label__text">
+          <%= category.name %>
         </div>
       </div>
-  <% end %>
+    </div>
+
+    <div class="admin-resource-listing__item-actions">
+      <%= link to: admin_category_path(@conn, :edit, category) do %>
+        <button class="button-with-icon">
+          <div class="button-with-icon__inner">
+            <%= img_tag static_path(@conn, "/images/icon-pencil.svg") %>
+          </div>
+        </button>
+      <% end %>
+
+      <%= link(
+        "Delete",
+        to: admin_category_path(@conn, :delete, category),
+        method: :delete,
+        data: [confirm: "Are you sure?"],
+        class: "button button--red"
+      ) %>
+    </div>
   </div>
-  <%= link "+ New Category", to: admin_category_path(@conn, :new), class: "button button--dark"  %>
+  <% end %>
+
+  <%= link "New Category", to: admin_category_path(@conn, :new), class: "button button--dark admin-resource-listing__action-btn"  %>
 </div>

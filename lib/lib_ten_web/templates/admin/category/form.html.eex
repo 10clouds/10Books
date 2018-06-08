@@ -1,18 +1,18 @@
-<%= form_for @changeset, @action, fn f -> %>
-  <%= if @changeset.action do %>
-    <div class="alert alert--error">
-      Invalid form! Please check the errors below.
-    </div>
-  <% end %>
-
-  <div class="form__group form__group--category">
-    <%= label f, :name, class: "form__label form__label--admin" %>
-    <%= text_input f, :name, class: "form__input form__input--admin" %>
-    <%= error_tag f, :name %>
+<%= form_for @changeset, @action, [class: "form form--for-admin"], fn f -> %>
+  <div class="form__group">
+    <%= label f, :name, class: "form__label" %>
+    <%=
+      text_input(f, :name,
+        class:
+          "form__input" <>
+            if(Keyword.has_key?(f.errors, :name), do: " form__input--invalid", else: "")
+      )
+    %>
+    <span class="form__bar"></span>
   </div>
 
-  <div class="form__group form__group--buttons">
-    <%= submit "Submit", class: "button button--dark" %>
+  <div class="form__buttons">
     <%= link "Cancel", to: admin_category_path(@conn, :index), class: "button button--transparent" %>
+    <%= submit "Submit", class: "button button--dark" %>
   </div>
 <% end %>

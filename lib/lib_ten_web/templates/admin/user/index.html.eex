@@ -1,32 +1,26 @@
-<div class="admin">
-  <h1>Listing Users</h1>
+<h1 class="admin-page__title">Listing Users</h1>
 
-    <div class="table table--users">
-      <div class="table__row table__row--header">
-        <div class="table__col table__col--name">Name</div>
-        <div class="table__col table__col--email">E-mail</div>
-        <div class="table__col table__col--role">User type</div>
-        <div class="table__col table__col--actions"></div>
+<div class="admin-resource-listing">
+  <h2 class="admin-resource-listing__title">Name</h2>
+
+  <%= for user <- @users do %>
+    <%= content_tag(:div,
+      class:
+        "admin-resource-listing__item" <>
+          if(user.is_admin, do: " admin-resource-listing__item--highlighted", else: "")
+    ) do %>
+      <div class="admin-resource-listing__item-name">
+        <%= user.name %> <span class="text-gray"><%= "<#{user.email}>" %></span>
       </div>
-      <%= for user <- @users do %>
-        <%= content_tag(:div,
-          class: "table__row"
-            <> (if user.is_admin, do: " table__row--highlighted", else: "")
-        ) do %>
-          <div class="table__col table__col--name">
-            <%= user.name %>
-          </div>
-          <div class="table__col table__col--email">
-            <%= user.email %>
-          </div>
-          <div class="table__col table__col--role">
-            <%= if user.is_admin, do: "Admin", else: "User" %>
-          </div>
-          <div class="table__col table__col--actions">
-            <%= link "Edit", to: admin_user_path(@conn, :edit, user), class: 'edit' %>
-          </div>
+      <div class="admin-resource-listing__item-actions">
+        <%= link to: admin_user_path(@conn, :edit, user) do %>
+          <button class="button-with-icon">
+            <div class="button-with-icon__inner">
+              <%= img_tag static_path(@conn, "/images/icon-pencil.svg") %>
+            </div>
+          </button>
         <% end %>
-      <% end %>
-    </div>
-
+      </div>
+    <% end %>
+  <% end %>
 </div>
