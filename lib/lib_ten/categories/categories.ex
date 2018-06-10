@@ -6,6 +6,7 @@ defmodule LibTen.Categories do
 
   def list_categories do
     Category
+    |> order_by(:inserted_at)
     |> Repo.all()
   end
 
