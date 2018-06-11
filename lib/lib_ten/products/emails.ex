@@ -6,7 +6,7 @@ defmodule LibTen.Products.Emails do
   alias LibTen.Products.Product
   alias LibTen.Accounts.User
 
-  @default_from "10Books <noreply@books.10clouds.com>"
+  @default_from "10Books <no-reply@10clouds.com>"
   @default_endpoint LibTenWeb.Endpoint
 
   def product_has_been_returned(%Product{} = product, %User{} = user) do
