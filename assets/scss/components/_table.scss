@@ -88,10 +88,6 @@
         display: grid;
         padding-left: 20px - $row-border-size;
       }
-
-      @include no-toggler {
-        display: contents;
-      }
     }
 
     &-header {

@@ -1,8 +1,19 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import cn from 'classnames'
 
 import CategoryLabel from '~/components/CategoryLabel'
+
+function SectionWrapper({ enabled, children, ...elProps }) {
+  return enabled
+    ? <div {...elProps} children={children} />
+    : <Fragment children={children} />
+}
+
+SectionWrapper.propTypes = {
+  enabled: PropTypes.bool.isRequired,
+  children: PropTypes.node.isRequired
+}
 
 export default class TableRow extends PureComponent {
   static propTypes = {
@@ -73,7 +84,7 @@ export default class TableRow extends PureComponent {
           'table__row--highlighted': isHighlighted,
         })}
       >
-        <div className="table__row-header">
+        <SectionWrapper enabled={canToggleDetails} className="table__row-header">
           <div className="table__col table__col--title">
             <a href={product.url} target="_blank">{product.title}</a>
 
@@ -95,15 +106,15 @@ export default class TableRow extends PureComponent {
           <div className="table__col table__col--author">
             {product.author}
           </div>
-        </div>
+        </SectionWrapper>
 
         {(!canToggleDetails || detailsVisible) && (
-          <div className="table__row-details">
+          <SectionWrapper enabled={canToggleDetails} className="table__row-details">
             <div className="table__col table__col--category">
               <CategoryLabel {...category} />
             </div>
             {appendColumns.map((col, i) => this.renderAppendColumn(col, i))}
-          </div>
+          </SectionWrapper>
         )}
       </div>
     )
