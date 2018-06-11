@@ -15,7 +15,7 @@ use Mix.Config
 # which you typically run after static files are built.
 config :lib_ten, LibTenWeb.Endpoint,
   load_from_system_env: true,
-  url: [host: "books.10clouds.com", port: 4000],
+  url: [host: "books.10clouds.com"],
   cache_static_manifest: "priv/static/cache_manifest.json",
   server: true,
   code_reloader: false
