@@ -144,7 +144,7 @@ defmodule Mix.Tasks.MigrateDb do
         status:               product_statuses_map[product["status"]],
         title:                product["name"],
         url:                  product["url"],
-        category_id:          (if category, do: category.ecto.id, else: nil),
+        category_id:          (if category, do: category.ecto.id, else: raise "fail"),
         requested_by_user_id: user_id
       }
 
