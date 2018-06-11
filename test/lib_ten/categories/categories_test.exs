@@ -22,9 +22,9 @@ defmodule LibTen.CategoriesTest do
     end
 
     test "create_category/1 with valid data creates a category with capitalized name" do
-      params = params_for(:category, name: "test")
+      params = params_for(:category, name: "this is Test")
       assert {:ok, %Category{} = category} = Categories.create_category(params)
-      assert category.name == "Test"
+      assert category.name == "This is Test"
     end
 
     test "create_category/1 with invalid data returns error changeset" do

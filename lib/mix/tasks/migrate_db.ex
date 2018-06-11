@@ -112,7 +112,7 @@ defmodule Mix.Tasks.MigrateDb do
       end
 
       category = Enum.find(categories, fn (category) ->
-        category.ecto.name == product["category"]
+        String.downcase(category.ecto.name) == String.downcase(product["category"])
       end)
 
       used_by = if product["taken_by"] do

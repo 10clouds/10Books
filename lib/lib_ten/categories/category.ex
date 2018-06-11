@@ -75,7 +75,8 @@ defmodule LibTen.Categories.Category do
 
   defp capitalize_name(changeset) do
     if changeset.valid? do
-      name = get_field(changeset, :name) |> String.capitalize()
+      {first_char, rest} = get_field(changeset, :name) |> String.split_at(1)
+      name = String.capitalize(first_char) <> rest
 
       changeset
       |> put_change(:name, name)
