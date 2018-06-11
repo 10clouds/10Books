@@ -25,14 +25,9 @@ config :lib_ten, LibTenWeb.Endpoint,
 config :lib_ten, LibTen.Mailer,
   adapter: Bamboo.SMTPAdapter,
   server: {:system, "LIBTEN_SMTP_SERVER"},
-  hostname: {:system, "LIBTEN_SMTP_HOST"},
   port: 587,
   username: {:system, "LIBTEN_SMTP_USERNAME"},
-  password: {:system, "LIBTEN_SMTP_PASSWORD"},
-  tls: :if_available,
-  allowed_tls_versions: [:"tlsv1.2"],
-  ssl: true,
-  retries: 1
+  password: {:system, "LIBTEN_SMTP_PASSWORD"}
 
 config :lib_ten, LibTen.Scheduler,
   jobs: [
