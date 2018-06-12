@@ -206,8 +206,12 @@
 }
 
 .navbar-logout {
+  cursor: default;
+
   &,
-  &:hover {
+  &:hover,
+  a,
+  a:hover {
     color: inherit;
   }
 
@@ -226,17 +230,23 @@
     }
   }
 
-  &__avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 100%;
-    box-shadow: 0 8px 13px 0 rgba(0, 0, 0, 0.10);
-    margin-right: 16px;
+  &__label-icon {
+    margin-left: 10px;
+    padding: 12px;
+    margin-right: -12px;
+
+    img {
+      display: block;
+      width: 16px;
+    }
   }
 
-  &__action-icon {
-    margin-left: 25px;
-    width: 16px;
+  &__avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    box-shadow: 0 8px 13px 0 rgba(0, 0, 0, 0.10);
+    margin-right: 14px;
   }
 }
 

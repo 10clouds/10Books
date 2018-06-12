@@ -81,24 +81,29 @@
         </ul>
         <ul class="navbar-menu__group">
           <li class="navbar-menu__item">
-            <%= link(
-              to: auth_path(@conn, :sign_out),
-              class: "navbar-menu__item-label navbar-logout"
-            ) do %>
-              <span class="navbar-logout__burger-label">Log Out</span>
+            <span class="navbar-menu__item-label navbar-logout">
+              <%= link("Log Out",
+                to: auth_path(@conn, :sign_out),
+                class: "navbar-logout__burger-label"
+              ) %>
               <span class="navbar-logout__label">
                 <%= img_tag(
                   @conn.assigns.current_user.avatar_url <> "?sz=50",
                   class: "navbar-logout__avatar"
                 ) %>
                 <%= @conn.assigns.current_user.name %>
-                <%= img_tag(
-                  static_path(@conn, "/images/logout.svg"),
-                  alt: "Log Out",
-                  class: "navbar-logout__action-icon"
-                ) %>
+                <%= link(
+                  to: auth_path(@conn, :sign_out),
+                  class: "navbar-logout__label-icon",
+                  title: "Log Out"
+                ) do %>
+                  <%= img_tag(
+                    static_path(@conn, "/images/logout.svg"),
+                    alt: "Log Out"
+                  ) %>
+                <% end %>
               </span>
-            <% end %>
+            </span>
           </li>
         </ul>
       </div>
