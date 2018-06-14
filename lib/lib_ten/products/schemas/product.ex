@@ -63,9 +63,9 @@ defmodule LibTen.Products.Product do
 
   defp validate_url(changeset) do
     validate_change(changeset, :url, fn _, url ->
-      case url |> String.to_charlist() |> :http_uri.parse() do
-        {:ok, _} -> []
-        {:error, _} -> [{:url, %{message: "Invalid url"}}]
+      case URI.parse(url) do
+        %{host: nil} -> [{:url, %{message: "Invalid url"}}]
+        _ -> []
       end
     end)
   end

@@ -8,7 +8,7 @@ defmodule LibTen.Accounts.User do
     field :email, :string
     field :name, :string
     field :avatar_url, :string
-    field :is_admin, :boolean
+    field :is_admin, :boolean, default: false
 
     timestamps()
   end
