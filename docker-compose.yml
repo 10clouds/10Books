@@ -1,0 +1,17 @@
+version: '3'
+services:
+  db:
+   image: postgres:10.4
+   volumes:
+     - /var/lib/postgresql/data
+  web:
+   build: .
+   command: bash -c "mix ecto.setup && mix phx.server"
+   volumes:
+     - .:/app
+   ports:
+     - "4000:4000"
+   depends_on:
+     - db
+   environment:
+     - MIX_ENV=docker
