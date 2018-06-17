@@ -1,6 +1,6 @@
 .rate-product-modal {
   $module: &;
-  $radioSize: 24px;
+  $radio-size: 24px;
 
   display: flex;
   flex-direction: column;
@@ -42,10 +42,10 @@
     }
 
     #{$module}__radio-input {
-      height: $radioSize;
+      height: $radio-size;
       margin: 20px 0 10px;
       opacity: 0;
-      width: $radioSize;
+      width: $radio-size;
       z-index: 3;
 
       + #{$module}__radiobutton {
@@ -54,10 +54,11 @@
         border: 1px solid darken($white, 30%);
         bottom: 10px;
         cursor: pointer;
-        height: $radioSize;
+        height: $radio-size;
         position: absolute;
-        transition: all 250ms ease;
-        width: $radioSize;
+        transition-property: background, box-shadow;
+        transition-duration: 0.25s;
+        width: $radio-size;
       }
 
       &:checked {
@@ -70,7 +71,6 @@
       &:focus {
         + #{$module}__radiobutton {
           border-color: $accent;
-          outline: none;
         }
       }
     }

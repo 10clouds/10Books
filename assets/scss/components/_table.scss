@@ -221,7 +221,7 @@
 
     &--author {
       @include with-line-limit;
-      color: $lightGray;
+      color: $light-gray;
     }
 
     #{$module}__row--header & {
@@ -265,7 +265,7 @@
     }
   }
 
-  @include with-toggler("#{$module}--library") {
+  @include with-toggler('#{$module}--library') {
     &__row-details #{$module}__col {
       justify-self: normal;
 

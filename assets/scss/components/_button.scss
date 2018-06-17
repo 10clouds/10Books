@@ -39,23 +39,23 @@
   }
 
   &--light-gray {
-    background-color: rgba($lightGray, .1);
-    color: rgba($lightGray, .75);
+    background-color: rgba($light-gray, .1);
+    color: rgba($light-gray, .75);
   }
 
   &--bright {
-    background-color: $accentLight;
+    background-color: $accent-light;
     color: $accent;
 
     &-active,
     &:hover {
-      background-color: darken($accentLight, 3%);
+      background-color: darken($accent-light, 3%);
     }
   }
 
   &--dark {
     background-image: $accent-gradient;
-    color: $accentLight;
+    color: $accent-light;
 
     &:after {
       background-image: $accent-gradient-hover;
@@ -103,7 +103,7 @@
 
     &:hover {
       background-color: $accent;
-      color: $accentLight;
+      color: $accent-light;
     }
   }
 }

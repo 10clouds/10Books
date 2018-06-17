@@ -12,7 +12,7 @@
 
   &__info {
     @include with-line-limit;
-    color: $lightGray;
+    color: $light-gray;
     margin: 0 15px;
   }
 

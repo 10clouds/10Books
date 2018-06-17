@@ -13,6 +13,8 @@
   user-select: none;
 
   &__vote-btn {
+    // sass-lint:disable no-ids, no-qualifying-elements
+
     @include btn-reset;
     font-size: 1em;
     width: 1em;
@@ -45,7 +47,7 @@
     }
 
     &:not(&--active):hover {
-      background-color: $accentLight;
+      background-color: $accent-light;
 
       path#arrow {
         fill: $accent;

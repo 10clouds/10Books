@@ -1,18 +1,18 @@
 $font-family: 'LatoLatinWeb', 'Arial', sans-serif;
 $line-height: 1.5;
 
-$adminContainerWidth: 700px;
+$admin-container-width: 700px;
 
 $z-index-navbar: 99;
 $z-index-modal: 99999;
 
-$small: "screen and (min-width: 480px)";
-$small-down: "screen and (max-width: 479px)";
-$medium: "screen and (min-width: 839px)";
-$medium-down: "screen and (max-width: 838px)";
-$large: "screen and (min-width: 1024px)";
-$xlarge: "screen and (min-width: 1199px)";
-$xxlarge: "screen and (min-width: 1800px)";
+$small: 'screen and (min-width: 480px)';
+$small-down: 'screen and (max-width: 479px)';
+$medium: 'screen and (min-width: 839px)';
+$medium-down: 'screen and (max-width: 838px)';
+$large: 'screen and (min-width: 1024px)';
+$xlarge: 'screen and (min-width: 1199px)';
+$xxlarge: 'screen and (min-width: 1800px)';
 
 $accent-gradient: linear-gradient(to right, #865ee8, #6536e2);
 $accent-gradient-hover: linear-gradient(to right, darken(#865ee8, 5%), darken(#6536e2, 5%));
@@ -22,8 +22,8 @@ $white: #fff;
 $gray: #86899e;
 $accent: #7142eb;
 $text: #3d3b48;
-$accentLight: #f4f0fe;
-$lightGray: #9da0b7;
+$accent-light: #f4f0fe;
+$light-gray: #9da0b7;
 $black: #000;
 $success: #1ecfae;
 $success-background: transparentize($success, 0.89);
