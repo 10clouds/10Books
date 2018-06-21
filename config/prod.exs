@@ -34,5 +34,6 @@ postgres_credentials = [
 
 config :lib_ten, LibTen.Repo,
   postgres_credentials ++ [adapter: Ecto.Adapters.Postgres]
+]
 
 config :lib_ten, LibTenWeb.PostgresListener, postgres_credentials

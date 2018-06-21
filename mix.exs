@@ -22,7 +22,8 @@ defmodule LibTen.Mixfile do
       mod: {LibTen.Application, []},
       extra_applications: [
         :logger,
-        :runtime_tools
+        :runtime_tools,
+        :parse_trans
       ],
     ]
   end
@@ -52,7 +53,7 @@ defmodule LibTen.Mixfile do
       {:bamboo_smtp, "~> 1.4.0"},
       {:boltun, "~> 1.0.2"},
       {:edeliver, "~> 1.4.5"},
-      {:distillery, "~> 1.0.0", warn_missing: false},
+      {:distillery, "~> 1.5", warn_missing: false},
       {:timex, "~> 3.1"},
       {:quantum, "~> 2.2.7"},
       {:mix_test_watch, "~> 0.6", only: :dev, runtime: false},

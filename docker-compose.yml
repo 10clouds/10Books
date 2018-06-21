@@ -1,0 +1,20 @@
+version: '3.6'
+services:
+  db:
+    image: postgres:10.4
+    volumes:
+      - /var/lib/postgresql/data
+  web:
+    build: .
+    command: sh -c "/app/bin/lib_ten foreground"
+    ports:
+      - "4000:4000"
+    environment:
+      LIB_TEN_SECRET_KEY: URcRB5K4b52oYVcIJv/eT6tm1hyrBJXZTvkHWTuER1aoFeJtdFNXaLjgRzD6BstL
+      LIB_TEN_HOSTNAME: localhost
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: postgres
+      DB_HOST: db
+    depends_on:
+      - db
