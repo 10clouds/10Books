@@ -1,6 +1,6 @@
 import React, { PureComponent, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import moment from 'moment'
+import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 import cn from 'classnames'
 
 export default class UsageCell extends PureComponent {
@@ -55,6 +55,10 @@ export default class UsageCell extends PureComponent {
     const isSubscribed =
       product.used_by.return_subscribers.includes(currentUser.id)
 
+    const takenStr = distanceInWordsToNow(product.used_by.started_at, {
+      addSuffix: 'ago'
+    })
+
     return product.used_by.user.id !== currentUser.id && (
       <div className="used-by">
         <img
@@ -62,7 +66,7 @@ export default class UsageCell extends PureComponent {
           className="used-by__user-avatar"
         />
         <div className="used-by__info">
-          Taken {moment(product.used_by.started_at).fromNow()} <br />
+          Taken {takenStr} <br />
           by
           {' '}
           <b className="used-by__user-name">{product.used_by.user.name}</b>

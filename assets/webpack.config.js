@@ -3,7 +3,11 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+const isProd = process.env.NODE_ENV === "production";
+
 module.exports = {
+  mode: isProd ? 'production' : 'development',
+  devtool: 'source-map',
   entry: {
     '/js/app.js': './js/app.js',
     '/css/app.css': './scss/app.scss'
@@ -43,7 +47,13 @@ module.exports = {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract({
           use: [
-            'css-loader?sourceMap',
+            {
+              loader: "css-loader",
+              options: {
+                sourceMap: true,
+                minimize: isProd
+              }
+            },
             'postcss-loader?sourceMap',
             'sass-loader?sourceMap'
           ]

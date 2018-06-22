@@ -2,16 +2,16 @@
   "repository": {},
   "license": "MIT",
   "scripts": {
-    "build": "webpack --progress --config webpack.prod.js",
-    "start": "webpack --watch-stdin --progress --config webpack.dev.js",
+    "build": "NODE_ENV=production webpack --progress",
+    "start": "webpack --watch-stdin --progress",
     "eslint": "eslint js/.",
     "sass-lint": "sass-lint 'scss/**/*.scss' -v -q --format stylish --max-warnings 0",
     "precommit": "yarn sass-lint"
   },
   "dependencies": {
     "classnames": "^2.2.5",
+    "date-fns": "^1.29.0",
     "lodash.debounce": "^4.0.8",
-    "moment": "^2.19.4",
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",
     "prop-types": "^15.6.0",
@@ -44,7 +44,6 @@
     "sass-lint": "^1.12.1",
     "sass-loader": "^6.0.6",
     "webpack": "^4.0.1",
-    "webpack-cli": "^2.0.9",
-    "webpack-merge": "^4.1.2"
+    "webpack-cli": "^2.0.9"
   }
 }
