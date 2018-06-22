@@ -50,6 +50,14 @@ defmodule LibTen.CategoriesTest do
       assert_raise Ecto.NoResultsError, fn -> Categories.get_category!(category.id) end
     end
 
+    test "delete_category/1 returns an error when has products assigned" do
+      category = insert(:category)
+      insert(:product, category_id: category.id)
+
+      {:error, changeset} = Categories.delete_category(category)
+      assert {"Can't delete a category with assigned products", _} = changeset.errors[:id]
+    end
+
     test "change_category/1 returns a category changeset" do
       category = insert(:category)
       assert %Ecto.Changeset{} = Categories.change_category(category)

@@ -27,7 +27,7 @@ defmodule LibTen.Categories.Category do
     field :name, :string
     field :text_color, :string, null: false
     field :background_color, :string, null: false
-    has_many :products, LibTen.Products.Product, on_delete: :nilify_all
+    has_many :products, LibTen.Products.Product
 
     timestamps()
   end
@@ -38,8 +38,21 @@ defmodule LibTen.Categories.Category do
     |> cast(attrs, [:name])
     |> validate_required([:name])
     |> unique_constraint(:name)
+    |> foreign_key_constraint(:posts,
+      name: :products_category_id_fkey,
+      message: "Can not delete a category with assigned products"
+    )
     |> set_color()
     |> capitalize_name()
+  end
+
+  def delete_changeset(%Category{} = category) do
+    category
+    |> change()
+    |> foreign_key_constraint(:id,
+      name: :products_category_id_fkey,
+      message: "Can't delete a category with assigned products"
+    )
   end
 
   def get_available_color() do

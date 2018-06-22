@@ -46,10 +46,17 @@ defmodule LibTenWeb.Admin.CategoryController do
 
   def delete(conn, %{"id" => id}) do
     category = Categories.get_category!(id)
-    {:ok, _category} = Categories.delete_category(category)
 
-    conn
-    |> put_flash(:info, "Category deleted successfully.")
-    |> redirect(to: admin_category_path(conn, :index))
+    case Categories.delete_category(category) do
+      {:ok, _category} ->
+        conn
+        |> put_flash(:info, "Category deleted successfully.")
+        |> redirect(to: admin_category_path(conn, :index))
+
+      {:error, %{errors: [id: {msg, _}]}} ->
+        conn
+        |> put_flash(:error, msg)
+        |> redirect(to: admin_category_path(conn, :index))
+    end
   end
 end

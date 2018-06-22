@@ -25,7 +25,9 @@ defmodule LibTen.Categories do
   end
 
   def delete_category(%Category{} = category) do
-    Repo.delete(category)
+    category
+    |> Category.delete_changeset()
+    |> Repo.delete()
   end
 
   def change_category(%Category{} = category) do
