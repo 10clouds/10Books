@@ -16,9 +16,10 @@ defmodule LibTen.AccountsTest do
   end
 
   describe "accounts -> find_or_create_user/1" do
-    test "returns an error if email is not @10clouds.com" do
-      user = %{email: "test@test.com"}
-      assert {:error, :invalid_email_domain} = Accounts.find_or_create_user(user)
+    test "returns an error if email is not in allowed_google_auth_domains" do
+      user = %{email: "test@invalid.com", name: "Test user"}
+      {:error, msg} = Accounts.find_or_create_user(user)
+      assert msg =~ "Only accounts with"
     end
 
     test "creates user if it is not present" do

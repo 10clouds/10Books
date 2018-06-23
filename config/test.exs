@@ -6,6 +6,9 @@ config :lib_ten, LibTenWeb.Endpoint,
   http: [port: 4001],
   server: false
 
+config :lib_ten,
+  allowed_google_auth_domains: "test.com, 10clouds.com"
+
 # Print only warnings and errors during test
 config :logger, level: :warn
 

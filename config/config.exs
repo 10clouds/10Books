@@ -7,12 +7,11 @@ use Mix.Config
 
 # General application configuration
 config :lib_ten,
-  ecto_repos: [LibTen.Repo]
+  ecto_repos: [LibTen.Repo],
+  smtp_sender_email: "books@10clouds.com",
+  title: "10Books",
+  allowed_google_auth_domains: "Set in config.secret.exs"
 
-# TODO: Ideally we want to have separate i18n overwrites for different apps
-config :lib_ten,
-  allowed_google_auth_domains: ["10clouds.com"],
-  title: "10Books"
 
 # Configures the endpoint
 config :lib_ten, LibTenWeb.Endpoint,
@@ -21,13 +20,6 @@ config :lib_ten, LibTenWeb.Endpoint,
   render_errors: [view: LibTenWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: LibTen.PubSub,
            adapter: Phoenix.PubSub.PG2]
-
-config :lib_ten, LibTen.Mailer,
-  adapter: Bamboo.SMTPAdapter,
-  server: {:system, "LIBTEN_SMTP_SERVER"},
-  port: 587,
-  username: {:system, "LIBTEN_SMTP_USERNAME"},
-  password: {:system, "LIBTEN_SMTP_PASSWORD"}
 
 config :lib_ten, LibTen.Scheduler,
   jobs: [
@@ -47,8 +39,13 @@ config :ueberauth, Ueberauth,
   ]
 
 config :ueberauth, Ueberauth.Strategy.Google.OAuth,
-  client_id: "471584135384-574afafjms570m3v6t1sekijh1lptral.apps.googleusercontent.com",
-  client_secret: "W9napBOnGFb9FcPz2Tud6fqE"
+  client_id: "Set in config.secret.exs",
+  client_secret: "Set in config.secret.exs"
+
+# Import config for local development
+if File.exists?("config/config.secret.exs") do
+  import_config "config.secret.exs"
+end
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

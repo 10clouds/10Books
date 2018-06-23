@@ -1,5 +1,13 @@
 use Mix.Config
 
+if !File.exists?("config/config.secret.exs") do
+  raise IO.ANSI.red_background() <> IO.ANSI.white() <> "\n" <> """
+    Dev env will not work correctly without config.secret.exs
+
+    Check config/config.secret.example.exs
+  """ <> IO.ANSI.reset
+end
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #

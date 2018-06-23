@@ -11,15 +11,6 @@ PRODUCTION_HOSTS="94.130.226.14"
 PRODUCTION_USER="root"
 DELIVER_TO="/root/lib_ten/release"
 
-pre_erlang_get_and_update_deps() {
-  local _prod_secret_path="/root/lib_ten/prod.secret.exs"
-  if [ "$TARGET_MIX_ENV" = "prod" ]; then
-    __sync_remote "
-      ln -sfn '$_prod_secret_path' '$BUILD_AT/config/prod.secret.exs'
-    "
-  fi
-}
-
 pre_erlang_clean_compile() {
   status "Running phoenix.digest"
   __sync_remote "

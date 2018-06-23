@@ -24,6 +24,8 @@ defmodule LibTen.Accounts do
   def find_or_create_user(attrs \\ %{}) do
     allowed_domains =
       Application.fetch_env!(:lib_ten, :allowed_google_auth_domains)
+      |> String.split(",")
+      |> Enum.map(&String.trim/1)
       |> Enum.map(fn str -> "@" <> str end)
 
     if String.ends_with?(attrs.email, allowed_domains) do
@@ -37,7 +39,11 @@ defmodule LibTen.Accounts do
         create_user(attrs)
       end
     else
-      {:error, :invalid_email_domain}
+      msg =
+        "Only accounts with #{Enum.join(allowed_domains, ", ")} domain" <>
+          (if length(allowed_domains) > 1, do: "s", else: "") <> " allowed"
+
+      {:error, msg}
     end
   end
 end
