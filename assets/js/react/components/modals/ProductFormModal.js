@@ -34,7 +34,7 @@ class ProductFormModal extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.product !== this.props.product) {
+    if (nextProps.show && !this.props.show) {
       this.setState({
         fields: this.getProductFields(nextProps.product)
       })
