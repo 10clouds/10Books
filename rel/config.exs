@@ -16,13 +16,11 @@ use Mix.Releases.Config,
 environment :dev do
   set dev_mode: true
   set include_erts: false
-  set cookie: :"W^`qJjEHc/4xg0{5/3eO$Lx,.cx/`aQ>jjIcX&I84Cq6f9u!:7;x.u&u^j2pDH&}" # TODO: Shouldn't be public
 end
 
 environment :prod do
   set include_erts: true
   set include_src: false
-  set cookie: :"Mp%J5WW?8.weBZIo!C@0Q2.cNb<=:$aO`PE5uu@?iiyEPz.K(Y2;vx!OEA*2.OZ~" # TODO: Shouldn't be public!!!!
 end
 
 # You may define one or more releases in this file.
@@ -31,6 +29,20 @@ end
 # will be used by default
 
 release :lib_ten do
+  random_cookie_length = 128
+  random_cookie =
+    :crypto.strong_rand_bytes(random_cookie_length)
+    |> Base.encode64
+    |> binary_part(0, random_cookie_length)
+
+  # NOTE:
+  # Ideally we don't want to have any cookie here, so one will
+  # be created automatically for every lib_ten instance.
+  #
+  # Be we can't do that because of
+  # https://github.com/bitwalker/distillery/issues/428
+  #
+  # 😢
+  set cookie: random_cookie
   set version: current_version(:lib_ten)
 end
-

@@ -42,6 +42,11 @@ config :ueberauth, Ueberauth.Strategy.Google.OAuth,
   client_id: "Set in config.secret.exs",
   client_secret: "Set in config.secret.exs"
 
+# Prevent distributed erlang to be accessible outside of local network
+# https://elixirforum.com/t/distillery-node-defaults-should-i-be-concerned-about-security/14836/2
+config :kernel,
+  inet_dist_use_interface: {127, 0, 0, 1}
+
 # Import config for local development
 if File.exists?("config/config.secret.exs") do
   import_config "config.secret.exs"
