@@ -23,6 +23,8 @@ config :lib_ten, LibTenWeb.Endpoint,
     npm: ["start", cd: Path.expand("../assets", __DIR__)]
   ]
 
+config :mix_test_watch, clear: true
+
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed

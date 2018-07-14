@@ -55,6 +55,7 @@ defmodule LibTen.Mixfile do
       {:distillery, "~> 1.0.0", warn_missing: false},
       {:timex, "~> 3.1"},
       {:quantum, "~> 2.2.7"},
+      {:mix_test_watch, "~> 0.6", only: :dev, runtime: false},
       # TODO: Doesn't work with elixir 1.5.2, check later
       #{:credo, "~> 0.8", only: [:dev, :test], runtime: false}
       #
@@ -73,7 +74,8 @@ defmodule LibTen.Mixfile do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      "test": ["ecto.create --quiet", "ecto.migrate", "test"]
+      "test": ["ecto.create --quiet", "ecto.migrate", "test"],
+      "test.watch": ["test.watch --stale"]
     ]
   end
 end
