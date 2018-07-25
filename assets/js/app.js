@@ -43,6 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const navbarMenu = document.getElementById('js-navbar-menu')
   const navbarMenuSubgroupSelector = '.navbar-menu__subgroup'
 
+  if (!navbarMenu) return;
+
   function toggleNavbarSubgroup(menuItem, isVisible = true) {
     menuItem.classList.toggle('navbar-menu__item--active', isVisible)
     toggleHeight(
