@@ -36,7 +36,7 @@ RUN MIX_ENV=prod mix do phx.digest, release --verbose --no-tar
 
 
 ################################################
-FROM alpine as server
+FROM alpine
 
 RUN apk add --no-cache ncurses-libs openssl bash
 
@@ -45,4 +45,8 @@ COPY --from=release /app/_build/prod/rel/lib_ten/ /app
 ENV REPLACE_OS_VARS=true
 ENV APP_NAME=lib_ten
 ENV APP_VERSION=0.0.1
-ENV PORT=4000
+
+ENV PORT ${PORT:-4000}
+EXPOSE $PORT
+
+CMD /app/bin/lib_ten foreground
