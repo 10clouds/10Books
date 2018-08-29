@@ -1,7 +1,6 @@
 defmodule LibTen.ReleaseTasks do
   # Based on
-  # https://github.com/bitwalker/distillery/blob/24678a91e1df889e350b7a94ce306257fdb81c6b/docs/Running%20Migrations.md
-
+  # https://hexdocs.pm/distillery/guides/running_migrations.html
   @start_apps [
     :crypto,
     :ssl,
@@ -9,25 +8,30 @@ defmodule LibTen.ReleaseTasks do
     :ecto
   ]
 
-  @otp_app :lib_ten
+  @app :lib_ten
+  @repos Application.get_env(@app, :ecto_repos, [])
 
   def migrate do
-    prepare()
-    Enum.each(repos(), &run_migrations_for/1)
+    start_services()
+    Enum.each(@repos, &run_migrations_for/1)
+    stop_services()
   end
 
-  defp prepare do
-    IO.puts "Loading #{@otp_app}.."
-    :ok = Application.load(@otp_app)
+  defp start_services do
+    IO.puts("Loading #{@app}..")
+    Application.load(@app)
 
-    IO.puts "Starting dependencies.."
+    IO.puts("Starting dependencies..")
     Enum.each(@start_apps, &Application.ensure_all_started/1)
 
-    IO.puts "Starting repos.."
-    Enum.each(repos(), &(&1.start_link(pool_size: 1)))
+    IO.puts("Starting repos..")
+    Enum.each(@repos, & &1.start_link(pool_size: 1))
   end
 
-  defp repos, do: Application.get_env(@otp_app, :ecto_repos, [])
+  defp stop_services do
+    IO.puts("Success!")
+    :init.stop()
+  end
 
   defp run_migrations_for(repo) do
     app = Keyword.get(repo.config, :otp_app)

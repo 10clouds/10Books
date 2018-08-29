@@ -52,16 +52,12 @@ defmodule LibTen.Mixfile do
       {:bamboo, "~> 0.8"},
       {:bamboo_smtp, "~> 1.4.0"},
       {:boltun, "~> 1.0.2"},
-      {:edeliver, "~> 1.4.5"},
-      {:distillery, "~> 1.5", warn_missing: false},
+      {:distillery, "~> 2.0"},
       {:timex, "~> 3.1"},
       {:quantum, "~> 2.2.7"},
       {:mix_test_watch, "~> 0.6", only: :dev, runtime: false},
       # TODO: Doesn't work with elixir 1.5.2, check later
       #{:credo, "~> 0.8", only: [:dev, :test], runtime: false}
-      #
-      # TODO: remove 👇 after prod release
-      {:mongodb, ">= 0.0.0"}
     ]
   end
 
