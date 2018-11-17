@@ -39,7 +39,8 @@ defmodule LibTen.Mixfile do
     [
       {:phoenix, "~> 1.3.4"},
       {:phoenix_pubsub, "~> 1.0"},
-      {:phoenix_ecto, "~> 3.2"},
+      {:phoenix_ecto, "~> 4.0.0"},
+      {:ecto_sql, "~> 3.0"},
       {:phoenix_active_link, "~> 0.1.1"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.10"},

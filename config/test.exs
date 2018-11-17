@@ -23,8 +23,5 @@ postgres_credentials = [
   hostname: "localhost",
 ]
 config :lib_ten, LibTen.Repo,
-  postgres_credentials ++ [
-    adapter: Ecto.Adapters.Postgres,
-    pool: Ecto.Adapters.SQL.Sandbox
-  ]
+  postgres_credentials ++ [pool: Ecto.Adapters.SQL.Sandbox]
 config :lib_ten, LibTenWeb.PostgresListener, postgres_credentials

@@ -5,7 +5,8 @@ defmodule LibTen.ReleaseTasks do
     :crypto,
     :ssl,
     :postgrex,
-    :ecto
+    :ecto,
+    :ecto_sql
   ]
 
   @app :lib_ten
@@ -25,7 +26,7 @@ defmodule LibTen.ReleaseTasks do
     Enum.each(@start_apps, &Application.ensure_all_started/1)
 
     IO.puts("Starting repos..")
-    Enum.each(@repos, & &1.start_link(pool_size: 1))
+    Enum.each(@repos, & &1.start_link(pool_size: 2))
   end
 
   defp stop_services do
