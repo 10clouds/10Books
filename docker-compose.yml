@@ -1,0 +1,31 @@
+version: '3.6'
+services:
+  db:
+    image: postgres:10.4
+    volumes:
+      - /var/lib/postgresql/data
+  web:
+    build: .
+    ports:
+      - "4000:80"
+    environment:
+      GOOGLE_OAUTH_ALLOWED_DOMAINS: "gmail.com"
+      GOOGLE_OAUTH_CLIENT_ID: "1042788706751-9blqj83j8r127qc0hlecf23is1erkhpc.apps.googleusercontent.com"
+      GOOGLE_OAUTH_CLIENT_SECRET: "UZUeRQHF6CljecqlQGOHECVO"
+
+      SECRET_KEY: 90TPoGdryieabz86ETtAfdDGRoPEiQS5hUwPPjW6knnwiyy6IOy84SSqdD6zhmiP
+      HOSTNAME: localhost
+
+      SMTP_FROM_EMAIL: "books@10clouds.com"
+      SMTP_SERVER: localhost
+      SMTP_PORT: 25
+      SMTP_USERNAME: test
+      SMTP_PASSWORD: test
+
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: postgres
+      DB_HOST: db
+
+    depends_on:
+      - db

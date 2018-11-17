@@ -99,15 +99,16 @@ defmodule LibTen.Products.LibraryTest do
         used_by: %{user: user, return_subscribers: [subscribe_user.id]}
       )
 
-      with_mock DateTime, [utc_now: fn -> date_now end] do
-        assert {:ok, _} = Library.return(product.id, user.id)
-        product = Library.get(product.id)
-        product_use = Repo.get_by(ProductUse, product_id: product.id)
-        assert_delivered_email LibTen.Products.Emails.product_has_been_returned(product, subscribe_user)
-        assert product.used_by == nil
-        assert product_use.user_id == user.id
-        assert product_use.ended_at == naive_date_now
-      end
+      product_use = Repo.get_by(ProductUse, product_id: product.id)
+      assert product_use.ended_at == nil
+
+      assert {:ok, _} = Library.return(product.id, user.id)
+      product = Library.get(product.id)
+      product_use = Repo.get_by(ProductUse, product_id: product.id)
+      assert_delivered_email LibTen.Products.Emails.product_has_been_returned(product, subscribe_user)
+      assert product.used_by == nil
+      assert product_use.user_id == user.id
+      assert product_use.ended_at != nil
     end
 
     test "send product_has_been_returned email to return subscribers" do

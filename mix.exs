@@ -22,7 +22,8 @@ defmodule LibTen.Mixfile do
       mod: {LibTen.Application, []},
       extra_applications: [
         :logger,
-        :runtime_tools
+        :runtime_tools,
+        :parse_trans
       ],
     ]
   end
@@ -36,31 +37,28 @@ defmodule LibTen.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.3.0-rc"},
+      {:phoenix, "~> 1.3.4"},
       {:phoenix_pubsub, "~> 1.0"},
-      {:phoenix_ecto, "~> 3.2"},
+      {:phoenix_ecto, "~> 4.0.0"},
+      {:ecto_sql, "~> 3.0"},
       {:phoenix_active_link, "~> 0.1.1"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.10"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
-      {:cowboy, "~> 1.0"},
+      {:plug_cowboy, "~> 1.0"},
       {:ueberauth_google, "~> 0.5"},
       {:ex_machina, "~> 2.1", only: :test},
       {:mock, "~> 0.2.0", only: :test},
       {:bamboo, "~> 0.8"},
       {:bamboo_smtp, "~> 1.4.0"},
       {:boltun, "~> 1.0.2"},
-      {:edeliver, "~> 1.4.5"},
-      {:distillery, "~> 1.0.0", warn_missing: false},
+      {:distillery, "~> 2.0"},
       {:timex, "~> 3.1"},
       {:quantum, "~> 2.2.7"},
       {:mix_test_watch, "~> 0.6", only: :dev, runtime: false},
       # TODO: Doesn't work with elixir 1.5.2, check later
       #{:credo, "~> 0.8", only: [:dev, :test], runtime: false}
-      #
-      # TODO: remove 👇 after prod release
-      {:mongodb, ">= 0.0.0"}
     ]
   end
 

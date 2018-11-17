@@ -1,5 +1,7 @@
 defmodule LibTen.Repo do
-  use Ecto.Repo, otp_app: :lib_ten
+  use Ecto.Repo,
+    otp_app: :lib_ten,
+    adapter: Ecto.Adapters.Postgres
 
   @doc """
   Dynamically loads the repository url from the
