@@ -10,7 +10,7 @@ config :lib_ten,
   ecto_repos: [LibTen.Repo],
   smtp_sender_email: "books@10clouds.com",
   title: "10Books",
-  allowed_google_auth_domains: "Set in config.secret.exs"
+  allowed_google_auth_domains: "gmail.com"
 
 
 # Configures the endpoint
@@ -38,19 +38,16 @@ config :ueberauth, Ueberauth,
     google: {Ueberauth.Strategy.Google, [default_scope: "email profile"]}
   ]
 
+# NOTE:
+# This credentials will only work for localhost:4000
 config :ueberauth, Ueberauth.Strategy.Google.OAuth,
-  client_id: "Set in config.secret.exs",
-  client_secret: "Set in config.secret.exs"
+  client_id: "1042788706751-9blqj83j8r127qc0hlecf23is1erkhpc.apps.googleusercontent.com",
+  client_secret: "UZUeRQHF6CljecqlQGOHECVO"
 
 # Prevent distributed erlang to be accessible outside of local network
 # https://elixirforum.com/t/distillery-node-defaults-should-i-be-concerned-about-security/14836/2
 config :kernel,
   inet_dist_use_interface: {127, 0, 0, 1}
-
-# Import config for local development
-if File.exists?("config/config.secret.exs") do
-  import_config "config.secret.exs"
-end
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
