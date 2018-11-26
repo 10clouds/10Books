@@ -17,6 +17,8 @@ RUN MIX_ENV=prod mix do local.hex --force, deps.get
 ################################################
 FROM node:alpine as assets-build
 
+RUN apk --no-cache add python make g++
+
 RUN mkdir /app
 WORKDIR /app
 
