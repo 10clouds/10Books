@@ -1,16 +1,6 @@
-import * as actionTypes from '../actionTypes/user'
+import config from '~config';
 import { makeReducer } from '../utils'
 
-const defaultState = {
-  id: null,
-  is_admin: false
-}
+const defaultState = config.get('currentUser');
 
-const reducers = {
-  [actionTypes.SET_USER]: (state, { user }) => ({
-    ...state,
-    ...user
-  })
-}
-
-export default makeReducer(reducers, defaultState)
+export default makeReducer({}, defaultState)

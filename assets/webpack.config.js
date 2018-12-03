@@ -22,6 +22,7 @@ module.exports = {
       'node_modules'
     ],
     alias: {
+      '~config': path.resolve(__dirname, 'js/config.js'),
       '~': path.resolve(__dirname, 'js/react'),
       '/static': path.resolve(__dirname, 'static')
     }

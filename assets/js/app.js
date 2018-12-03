@@ -3,7 +3,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import store from 'react/store'
 import { Provider } from 'react-redux'
-import { setUser } from '~/store/actions/user'
+
 import { Library, Orders, All } from '~/containers/pages'
 
 const componentFromPage = {
@@ -12,12 +12,10 @@ const componentFromPage = {
   all: All
 }
 
-window.LibTen = {
+window.LibTen = Object.assign(window.LibTen, {
   ReactComponents: {
     render(page, domNode, currentUser) {
       const Component = componentFromPage[page]
-
-      store.dispatch(setUser(currentUser))
 
       ReactDOM.render(
         <Provider store={store} children={<Component />} />,
@@ -25,7 +23,7 @@ window.LibTen = {
       )
     }
   }
-}
+});
 
 
 function toggleHeight(el, isVisible = true) {

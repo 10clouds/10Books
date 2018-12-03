@@ -1,13 +1,7 @@
 <div id="products-table"></div>
 
 <script>
-  window.LibTen.ReactComponents.render(
-    'orders',
-    document.getElementById('products-table'),
-    <%=
-      {:safe, Poison.encode_to_iodata!(
-        Map.take(@conn.assigns[:current_user], [:id, :is_admin])
-      )}
-    %>
+  window.LibTen.ReactComponents.render('orders',
+    document.getElementById('products-table')
   );
 </script>
