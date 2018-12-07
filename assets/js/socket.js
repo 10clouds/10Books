@@ -1,5 +1,5 @@
 import { Socket } from 'phoenix'
-import config from '~config';
+import config from '~config'
 
 export default new Socket('/socket', {
   params: {
