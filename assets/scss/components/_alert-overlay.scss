@@ -1,0 +1,10 @@
+.alert-overlay {
+  position: fixed;
+  z-index: $z-index-alert-overlay;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #000;
+}

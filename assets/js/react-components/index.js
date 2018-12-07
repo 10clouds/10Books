@@ -5,13 +5,15 @@ import get from 'lodash/get'
 
 import store from './store'
 import { Library, Orders, All } from '~/containers/pages'
+import NewVersionAvailable from '~/containers/NewVersionAvailable'
 
 const componentsIndex = {
   products: {
     library: Library,
     orders: Orders,
     all: All
-  }
+  },
+  newVersionAvailable: NewVersionAvailable
 }
 
 export const renderReactComponent = (componentId, domNode) => {
