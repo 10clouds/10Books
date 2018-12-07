@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import debounce from 'lodash.debounce'
+import debounce from 'lodash/debounce'
 import cn from 'classnames'
 import * as searchActions from '~/store/actions/search'
 import CategorySelect from '~/components/CategorySelect'
@@ -29,11 +29,7 @@ class SearchContainer extends Component {
     return (
       <button
         {...otherProps}
-        className={cn(
-          'search__action-btn',
-          'button button--dark',
-          className
-        )}
+        className={cn('search__action-btn', 'button button--dark', className)}
       >
         <div className="button-inner-centering" children={children} />
       </button>
@@ -66,6 +62,10 @@ class SearchContainer extends Component {
 }
 
 const mapStateToProps = state => state.search
-const mapDispatchToProps = dispatch => bindActionCreators(searchActions, dispatch)
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(searchActions, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchContainer)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SearchContainer)

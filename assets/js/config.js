@@ -1,3 +1,5 @@
+import get from 'lodash/get'
+
 export default {
-  get: key => window.LibTen.config[key]
+  get: key => get(window.LibTen.config, key)
 }

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import debounce from 'lodash.debounce'
+import debounce from 'lodash/debounce'
 import { Table, NoResults } from '~/components/productsTable'
 
 function canToggleDetails() {
@@ -9,9 +9,11 @@ function canToggleDetails() {
 
 class ProductsTableContainer extends PureComponent {
   static getDerivedStateFromProps(nextProps, prevState) {
-    return prevState.canToggleDetails === null ? {
-      canToggleDetails: canToggleDetails()
-    } : null
+    return prevState.canToggleDetails === null
+      ? {
+          canToggleDetails: canToggleDetails()
+        }
+      : null
   }
 
   state = {
@@ -31,28 +33,22 @@ class ProductsTableContainer extends PureComponent {
   }, 400)
 
   render() {
-    const {
-      search,
-      products,
-      categories,
-      ...componentProps
-    } = this.props
+    const { search, products, categories, ...componentProps } = this.props
 
     const searchString = search.queryString.toLowerCase()
     const filterByCategoryId = search.filterByCategoryId
 
-    const filteredProducts = Object
-      .values(products.idsByInsertedAt)
+    const filteredProducts = Object.values(products.idsByInsertedAt)
       .map(({ id }) => products.byId[id])
-      .filter(product => (
+      .filter(product =>
         filterByCategoryId ? product.category_id === filterByCategoryId : true
-      ))
-      .filter(product => (
-        product.title.toLowerCase().includes(searchString) || (
-          product.author &&
-          product.author.toLowerCase().includes(searchString)
-        )
-      ))
+      )
+      .filter(
+        product =>
+          product.title.toLowerCase().includes(searchString) ||
+          (product.author &&
+            product.author.toLowerCase().includes(searchString))
+      )
 
     if (products.isReady) {
       return filteredProducts.length > 0 ? (
@@ -62,7 +58,9 @@ class ProductsTableContainer extends PureComponent {
           products={filteredProducts}
           categories={categories.byId}
         />
-      ) : <NoResults />
+      ) : (
+        <NoResults />
+      )
     } else {
       return null
     }
