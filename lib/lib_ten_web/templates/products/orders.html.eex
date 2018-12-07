@@ -1,7 +1,7 @@
 <div id="products-table"></div>
 
 <script>
-  window.LibTen.ReactComponents.render('orders',
+  window.LibTen.renderReactComponent('products.orders',
     document.getElementById('products-table')
   );
 </script>

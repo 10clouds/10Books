@@ -1,29 +1,7 @@
 import 'phoenix_html'
-import React from 'react'
-import ReactDOM from 'react-dom'
-import store from 'react/store'
-import { Provider } from 'react-redux'
+import { renderReactComponent } from './react-components'
 
-import { Library, Orders, All } from '~/containers/pages'
-
-const componentFromPage = {
-  library: Library,
-  orders: Orders,
-  all: All
-}
-
-window.LibTen = Object.assign(window.LibTen, {
-  ReactComponents: {
-    render(page, domNode) {
-      const Component = componentFromPage[page]
-
-      ReactDOM.render(
-        <Provider store={store} children={<Component />} />,
-        domNode
-      )
-    }
-  }
-})
+window.LibTen.renderReactComponent = renderReactComponent
 
 function toggleHeight(el, isVisible = true) {
   if (el.clientHeight === 0 && isVisible) {

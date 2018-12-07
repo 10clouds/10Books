@@ -19,7 +19,7 @@ module.exports = {
   resolve: {
     modules: [path.resolve(__dirname, 'js'), 'node_modules'],
     alias: {
-      '~': path.resolve(__dirname, 'js/react'),
+      '~': path.resolve(__dirname, 'js/react-components'),
       '/static': path.resolve(__dirname, 'static')
     }
   },
