@@ -4,6 +4,7 @@ $line-height: 1.5;
 $admin-container-width: 700px;
 
 $z-index-navbar: 99;
+$z-index-message-overlay: 99998;
 $z-index-modal: 99999;
 
 $small: 'screen and (min-width: 480px)';
@@ -15,7 +16,11 @@ $xlarge: 'screen and (min-width: 1199px)';
 $xxlarge: 'screen and (min-width: 1800px)';
 
 $accent-gradient: linear-gradient(to right, #865ee8, #6536e2);
-$accent-gradient-hover: linear-gradient(to right, darken(#865ee8, 5%), darken(#6536e2, 5%));
+$accent-gradient-hover: linear-gradient(
+  to right,
+  darken(#865ee8, 5%),
+  darken(#6536e2, 5%)
+);
 
 $background: #f3f3f7;
 $white: #fff;

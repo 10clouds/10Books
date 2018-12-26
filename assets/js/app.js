@@ -1,32 +1,7 @@
 import 'phoenix_html'
-import React from 'react'
-import ReactDOM from 'react-dom'
-import store from 'react/store'
-import { Provider } from 'react-redux'
-import { setUser } from '~/store/actions/user'
-import { Library, Orders, All } from '~/containers/pages'
+import { renderReactComponent } from './react-components'
 
-const componentFromPage = {
-  library: Library,
-  orders: Orders,
-  all: All
-}
-
-window.LibTen = {
-  ReactComponents: {
-    render(page, domNode, currentUser) {
-      const Component = componentFromPage[page]
-
-      store.dispatch(setUser(currentUser))
-
-      ReactDOM.render(
-        <Provider store={store} children={<Component />} />,
-        domNode
-      )
-    }
-  }
-}
-
+window.LibTen.renderReactComponent = renderReactComponent
 
 function toggleHeight(el, isVisible = true) {
   if (el.clientHeight === 0 && isVisible) {
@@ -37,20 +12,16 @@ function toggleHeight(el, isVisible = true) {
   }
 }
 
-
 document.addEventListener('DOMContentLoaded', () => {
   const navbarMenuToggler = document.getElementById('js-navbar-menu-toggle-btn')
   const navbarMenu = document.getElementById('js-navbar-menu')
   const navbarMenuSubgroupSelector = '.navbar-menu__subgroup'
 
-  if (!navbarMenu) return;
+  if (!navbarMenu) return
 
   function toggleNavbarSubgroup(menuItem, isVisible = true) {
     menuItem.classList.toggle('navbar-menu__item--active', isVisible)
-    toggleHeight(
-      menuItem.querySelector(navbarMenuSubgroupSelector),
-      isVisible
-    )
+    toggleHeight(menuItem.querySelector(navbarMenuSubgroupSelector), isVisible)
   }
 
   navbarMenuToggler.addEventListener('click', () => {
@@ -58,25 +29,23 @@ document.addEventListener('DOMContentLoaded', () => {
     navbarMenu.classList.toggle('navbar-menu--visible')
   })
 
-  Array.from(
-    document.querySelectorAll(navbarMenuSubgroupSelector)
-  )
-  .map(node => node.parentNode)
-  .forEach(node => {
-    let isHovered = false
+  Array.from(document.querySelectorAll(navbarMenuSubgroupSelector))
+    .map(node => node.parentNode)
+    .forEach(node => {
+      let isHovered = false
 
-    node.addEventListener('click', () => {
-      if (isHovered || navbarMenuToggler.style.display === 'none') return
-      toggleNavbarSubgroup(node)
-    })
+      node.addEventListener('click', () => {
+        if (isHovered || navbarMenuToggler.style.display === 'none') return
+        toggleNavbarSubgroup(node)
+      })
 
-    node.addEventListener('mouseenter', () => {
-      isHovered = true
-      toggleNavbarSubgroup(node)
+      node.addEventListener('mouseenter', () => {
+        isHovered = true
+        toggleNavbarSubgroup(node)
+      })
+      node.addEventListener('mouseleave', () => {
+        isHovered = false
+        toggleNavbarSubgroup(node, false)
+      })
     })
-    node.addEventListener('mouseleave', () => {
-      isHovered = false
-      toggleNavbarSubgroup(node, false)
-    })
-  })
 })

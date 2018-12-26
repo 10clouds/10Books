@@ -6,7 +6,16 @@
   <title><%= Application.get_env(:lib_ten, :title) %></title>
   <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   <script>
-    window.currentUserToken = "<%= @conn.assigns[:current_user_token] %>";
+    window.LibTen = {
+      config: {
+        currentUser: {
+          id: <%= @conn.assigns[:current_user].id %>,
+          is_admin: <%= @conn.assigns[:current_user].is_admin %>,
+        },
+        socketToken: "<%= @conn.assigns[:current_user_token] %>",
+        appVersion: "<%= Application.spec(:lib_ten, :vsn) %>"
+      }
+    };
   </script>
   <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
 </head>
@@ -110,6 +119,13 @@
     </div>
   </nav>
   <div class="navbar__height-compensator"></div>
+
+  <div id="new-version-banner"></div>
+  <script>
+    window.LibTen.renderReactComponent('newVersionAvailable',
+      document.getElementById('new-version-banner')
+    );
+  </script>
 
   <main>
     <div class="container">

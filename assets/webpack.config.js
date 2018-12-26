@@ -1,9 +1,9 @@
-const path = require('path');
-const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require('path')
+const webpack = require('webpack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
-const isProd = process.env.NODE_ENV === "production";
+const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
   mode: isProd ? 'production' : 'development',
@@ -14,15 +14,12 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, '../priv/static'),
-    filename: "[name]"
+    filename: '[name]'
   },
   resolve: {
-    modules: [
-      path.resolve(__dirname, 'js'),
-      'node_modules'
-    ],
+    modules: [path.resolve(__dirname, 'js'), 'node_modules'],
     alias: {
-      '~': path.resolve(__dirname, 'js/react'),
+      '~': path.resolve(__dirname, 'js/react-components'),
       '/static': path.resolve(__dirname, 'static')
     }
   },
@@ -31,24 +28,26 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: [/node_modules/],
-        use: [{
-          loader: 'babel-loader',
-          options: {
-            babelrc: false,
-            presets: [
-              "@babel/preset-env",
-              "@babel/preset-stage-2",
-              "@babel/preset-react"
-            ]
-          },
-        }],
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              babelrc: false,
+              presets: [
+                '@babel/preset-env',
+                '@babel/preset-stage-2',
+                '@babel/preset-react'
+              ]
+            }
+          }
+        ]
       },
       {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract({
           use: [
             {
-              loader: "css-loader",
+              loader: 'css-loader',
               options: {
                 sourceMap: true,
                 minimize: isProd
@@ -67,9 +66,11 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin('css/app.css'),
-    new CopyWebpackPlugin([{
-      from: "./static",
-      to: path.resolve(__dirname, "../priv/static")
-    }])
+    new CopyWebpackPlugin([
+      {
+        from: './static',
+        to: path.resolve(__dirname, '../priv/static')
+      }
+    ])
   ]
-};
+}

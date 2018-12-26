@@ -1,7 +1,8 @@
 import { Socket } from 'phoenix'
+import config from 'config'
 
 export default new Socket('/socket', {
   params: {
-    token: window.currentUserToken
+    token: config.get('socketToken')
   }
 })
