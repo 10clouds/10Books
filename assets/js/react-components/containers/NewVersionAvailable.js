@@ -2,7 +2,12 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import config from 'config'
-import AlertOverlay from '../components/AlertOverlay'
+import MessageOverlay from '../components/MessageOverlay'
+import cacheStorage from 'lib/cacheStorage'
+
+const CANCELED_TODAY_STORAGE_KEY = 'new-version-banner:canceled-today'
+const LATEST_VERSION_STORAGE_KEY = 'new-version-banner:latest-repo-version'
+const ONE_DAY = 1000 * 60 * 60 * 24
 
 class NewVersionAvailableBanner extends Component {
   static propTypes = {
@@ -10,33 +15,50 @@ class NewVersionAvailableBanner extends Component {
   }
 
   state = {
-    isReady: false,
+    isVisible: false,
     latestRepoVersion: null
   }
 
   componentDidMount() {
-    if (!this.props.isAdmin) return
+    const isCanceledToday = cacheStorage.getItem(CANCELED_TODAY_STORAGE_KEY)
+    const cachedAppVersion = cacheStorage.getItem(LATEST_VERSION_STORAGE_KEY)
 
-    fetch(config.get('repo.mixFileUrl'))
-      .then(res => res.json())
-      .then(data => {
-        const fileContent = atob(data.content)
-        const fileVersion = /version: "([\d.]+)"/.exec(fileContent)[1]
+    if (!this.props.isAdmin || isCanceledToday) return
 
-        this.setState({
-          isReady: true,
-          latestRepoVersion: fileVersion
+    if (cachedAppVersion) {
+      this.handleReady(cachedAppVersion)
+    } else {
+      fetch(config.get('repo.mixFileUrl'))
+        .then(res => res.json())
+        .then(data => {
+          const fileContent = atob(data.content)
+          const fileVersion = /version: "([\d.]+)"/.exec(fileContent)[1]
+
+          cacheStorage.setItem(LATEST_VERSION_STORAGE_KEY, fileVersion, ONE_DAY)
+          this.handleReady(fileVersion)
         })
-      })
+    }
+  }
+
+  handleReady = appVersion => {
+    this.setState({
+      isVisible: true,
+      latestRepoVersion: appVersion
+    })
+  }
+
+  handleCancel = () => {
+    cacheStorage.setItem(CANCELED_TODAY_STORAGE_KEY, true, ONE_DAY)
+    this.setState({ isVisible: false })
   }
 
   render() {
     const appVersion = config.get('appVersion')
-    const { isReady, latestRepoVersion } = this.state
+    const { isVisible, latestRepoVersion } = this.state
 
-    return isReady ? (
-      <AlertOverlay>
-        New version is available! <br />
+    return isVisible ? (
+      <MessageOverlay onCancel={this.handleCancel}>
+        <h2>New version is available!</h2>
         You're using version <b>{appVersion}</b>, while the newest one is{' '}
         <b>{latestRepoVersion}</b> Check out our{' '}
         <a href={config.get('repo.changelogUrl')} target="_blank">
@@ -47,7 +69,7 @@ class NewVersionAvailableBanner extends Component {
           this guide
         </a>{' '}
         to update.
-      </AlertOverlay>
+      </MessageOverlay>
     ) : (
       false
     )

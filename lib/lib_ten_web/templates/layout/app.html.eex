@@ -20,13 +20,6 @@
   <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
 </head>
 <body>
-  <div id="new-version-banner"></div>
-  <script>
-    window.LibTen.renderReactComponent('newVersionAvailable',
-      document.getElementById('new-version-banner')
-    );
-  </script>
-
   <nav id="js-page-header" class="navbar">
     <div class="container">
       <%= link(
@@ -126,6 +119,13 @@
     </div>
   </nav>
   <div class="navbar__height-compensator"></div>
+
+  <div id="new-version-banner"></div>
+  <script>
+    window.LibTen.renderReactComponent('newVersionAvailable',
+      document.getElementById('new-version-banner')
+    );
+  </script>
 
   <main>
     <div class="container">
