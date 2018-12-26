@@ -7,7 +7,7 @@
     height: 24px;
     position: relative;
     transform: rotate(0deg);
-    transition: .5s ease-in-out;
+    transition: 0.5s ease-in-out;
     width: 25px;
   }
 
@@ -21,7 +21,7 @@
     position: absolute;
     transform-origin: left center;
     transform: rotate(0deg);
-    transition: .25s ease-in-out;
+    transition: 0.25s ease-in-out;
     width: 100%;
 
     &:nth-child(1) {
@@ -184,7 +184,7 @@
       position: absolute;
       z-index: 1;
       left: -10px;
-      box-shadow: 0 36px 54px 0 rgba(75, 82, 113, .13);
+      box-shadow: 0 36px 54px 0 rgba(75, 82, 113, 0.13);
       border-bottom-left-radius: 3px;
       border-bottom-right-radius: 3px;
 
@@ -245,7 +245,7 @@
     width: 30px;
     height: 30px;
     border-radius: 100%;
-    box-shadow: 0 8px 13px 0 rgba(0, 0, 0, 0.10);
+    box-shadow: 0 8px 13px 0 rgba(0, 0, 0, 0.1);
     margin-right: 14px;
   }
 }
@@ -260,9 +260,10 @@
   height: $height;
   position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
   z-index: $z-index-navbar;
-  box-shadow: 0 2px 69px 0 rgba(13, 13, 30, .08);
+  box-shadow: 0 2px 69px 0 rgba(13, 13, 30, 0.08);
 
   @include m-up {
     font-size: 15px;
