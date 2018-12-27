@@ -23,8 +23,8 @@ config :lib_ten, LibTenWeb.Endpoint,
 
 config :lib_ten, LibTen.Scheduler,
   jobs: [
-    {"0 10 * * *", {
-      LibTen.Products.Library, :remind_users_to_return_products, []
+    {"0 * * * *", {
+      LibTen.Products.RefreshDb, :perform, []
     }}
   ]
 
