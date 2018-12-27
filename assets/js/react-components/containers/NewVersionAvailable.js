@@ -28,7 +28,11 @@ class NewVersionAvailableBanner extends Component {
     if (cachedAppVersion) {
       this.handleReady(cachedAppVersion)
     } else {
-      fetch(config.get('repo.mixFileUrl'))
+      fetch(
+        `https://api.github.com/repos/${config.get(
+          'repo.name'
+        )}/contents/mix.exs`
+      )
         .then(res => res.json())
         .then(data => {
           const fileContent = atob(data.content)
@@ -56,16 +60,19 @@ class NewVersionAvailableBanner extends Component {
     const appVersion = config.get('appVersion')
     const { isVisible, latestRepoVersion } = this.state
 
-    return isVisible ? (
+    return isVisible && latestRepoVersion !== appVersion ? (
       <MessageOverlay onCancel={this.handleCancel}>
         <h2>New version is available!</h2>
         You're using version <b>{appVersion}</b>, while the newest one is{' '}
         <b>{latestRepoVersion}</b> Check out our{' '}
-        <a href={config.get('repo.changelogUrl')} target="_blank">
+        <a
+          href={config.get('repo.url') + '/blob/master/CHANGELOG.md'}
+          target="_blank"
+        >
           changelog
         </a>{' '}
         and follow{' '}
-        <a href={config.get('repo.updateGuideUrl')} target="_blank">
+        <a href={config.get('repo.url') + 'wiki/Update-guide'} target="_blank">
           this guide
         </a>{' '}
         to update.
