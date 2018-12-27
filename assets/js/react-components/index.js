@@ -6,6 +6,7 @@ import get from 'lodash/get'
 import store from './store'
 import { Library, Orders, All } from '~/containers/pages'
 import NewVersionAvailable from '~/containers/NewVersionAvailable'
+import LiveDemoMessage from '~/containers/LiveDemoMessage'
 
 const componentsIndex = {
   products: {
@@ -13,6 +14,7 @@ const componentsIndex = {
     orders: Orders,
     all: All
   },
+  LiveDemoMessage,
   newVersionAvailable: NewVersionAvailable
 }
 
