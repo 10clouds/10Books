@@ -1,5 +1,24 @@
 # 10Books
 
-**10Books** is a workplace library managment software built on top of [Phoenix Framework](https://phoenixframework.org/).
+[10Books](http://live-demo-url.com) is a workplace library managment software built on top of [Phoenix Framework](https://phoenixframework.org/).
 
 ![10Books screenshot](https://dl.dropboxusercontent.com/s/xakzy76pg8crudu/app-screenshot.png)
+
+## Features
+* Track who borrowed books
+* Get notified when books are returned
+* Rate books you read
+* Remind people to return books if they hold them too long
+* Suggest a book to order
+* Vote for books to order
+[... this needs to be better]
+
+## Getting started
+* Try the [Live demo](http://live-demo-url.com).
+* Follow [Installation guide](https://github.com/10clouds/10Books/wiki/Installation-guide)
+
+## Want to contributes
+Check out our roadmap and development guide...
+
+## Acknowledgements
+Developed at 10clouds, etc....
