@@ -4,7 +4,7 @@
 
 <p align="center">
   <img src="https://dl.dropboxusercontent.com/s/xakzy76pg8crudu/app-screenshot.png" />
-  Try the <a href="http://live-demo-url.com" target="_blank">Live Demo</a>
+  Try the <a href="http://live-demo-url.com">Live Demo</a>
 </p>
 
 ## Features
