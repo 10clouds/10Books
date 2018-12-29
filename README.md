@@ -16,7 +16,7 @@
 * Know which books to order with vote based whishlist
 * Automatic email reminders if book is not returned on time
 * Edit book information
-* Set books status: "In Libray", "In Voting", "Ordered", "Lost"
+* Manage book status: "In Libray", "In Voting", "Ordered", "Lost"
 
 ## Getting started
 * Try the [Live demo](http://live-demo-url.com).
