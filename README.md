@@ -5,13 +5,18 @@
 ![10Books screenshot](https://dl.dropboxusercontent.com/s/xakzy76pg8crudu/app-screenshot.png)
 
 ## Features
-* Track who borrowed books
+#### For reader:
+* Search for books by title, category or author
+* See which books are available
 * Get notified when books are returned
-* Rate books you read
-* Remind people to return books if they hold them too long
 * Suggest a book to order
-* Vote for books to order
-[... this needs to be better]
+* Vote for other people order suggestions
+#### For administrator:
+* See who and when borrowed book
+* Know which books to order with vote based whishlist
+* Automatic email reminders if book is not returned on time
+* Edit book information
+* Set books status: "In Libray", "In Voting", "Ordered", "Lost"
 
 ## Getting started
 * Try the [Live demo](http://live-demo-url.com).
