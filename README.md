@@ -5,13 +5,13 @@
 ![10Books screenshot](https://dl.dropboxusercontent.com/s/xakzy76pg8crudu/app-screenshot.png)
 
 ## Features
-#### For reader:
+##### For reader:
 * Search for books by title, category or author
 * See which books are available
 * Get notified when books are returned
 * Suggest a book to order
 * Vote for other people order suggestions
-#### For administrator:
+##### For administrator:
 * See who and when borrowed book
 * Know which books to order with vote based whishlist
 * Automatic email reminders if book is not returned on time
