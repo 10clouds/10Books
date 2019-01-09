@@ -24,6 +24,7 @@
 ## Getting started
 * Try the [Live demo](http://live-demo-url.com)
 * Follow [Installation guide](https://github.com/10clouds/10Books/wiki/Installation-guide)
+* [Documentation](https://github.com/10clouds/10Books/wiki)
 
 ## Want to contribute?
 Roadmap coming soon...
