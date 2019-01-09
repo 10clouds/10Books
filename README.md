@@ -13,13 +13,13 @@
 * See which books are available
 * Get notified when books are returned
 * Suggest a book to order
-* Vote for other people order suggestions
+* Vote for other people’s order suggestions
 ##### For administrator:
-* See who and when borrowed book
-* Know which books to order with vote based whishlist
+* See who borrowed which book, and when
+* Know which books to order with vote-based wish list
 * Automatic email reminders if book is not returned on time
 * Edit book information
-* Manage book status: "In Libray", "In Voting", "Ordered", "Lost"
+* Manage book status: "In Library", "In Voting", "Ordered", "Lost"
 
 ## Getting started
 * Try the [Live demo](http://live-demo-url.com)
