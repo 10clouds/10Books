@@ -9,7 +9,7 @@
 
 ## Features
 ##### For reader:
-* Search for books by title, category or author
+* Search books by title, category or author
 * See which books are available
 * Get notified when books are returned
 * Suggest a book to order
@@ -25,8 +25,8 @@
 * Try the [Live demo](http://live-demo-url.com).
 * Follow [Installation guide](https://github.com/10clouds/10Books/wiki/Installation-guide)
 
-## Want to contributes
-Check out our roadmap and development guide...
+## Want to contribute?
+Roadmap coming soon...
 
-## Acknowledgements
-Developed at 10clouds, etc....
+### Built with ❤️ at 10Clouds
+https://10clouds.slack.com/archives/CAV93NQFM/p1547059932001100 in progress
