@@ -22,7 +22,7 @@
 * Manage book status: "In Libray", "In Voting", "Ordered", "Lost"
 
 ## Getting started
-* Try the [Live demo](http://live-demo-url.com).
+* Try the [Live demo](http://live-demo-url.com)
 * Follow [Installation guide](https://github.com/10clouds/10Books/wiki/Installation-guide)
 
 ## Want to contribute?
