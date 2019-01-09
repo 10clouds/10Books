@@ -3,7 +3,7 @@
 10Books is a workplace library managment software built on top of [Phoenix Framework](https://phoenixframework.org/).
 
 <p align="center">
-  <img src="https://dl.dropboxusercontent.com/s/nr5mgdvy1xcz1t9/app-screenshot.jpg" />
+  <img src="https://dl.dropboxusercontent.com/s/zbgbstlddnd892b/app-screenshot-min.png" />
   Try the <a href="http://live-demo-url.com">Live Demo</a>
 </p>
 
