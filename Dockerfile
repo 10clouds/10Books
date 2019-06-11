@@ -15,7 +15,7 @@ RUN MIX_ENV=prod mix do local.hex --force, deps.get
 # Install yarn dependencies and build
 # production js
 ################################################
-FROM node:alpine as assets-build
+FROM node:11.15.0-alpine as assets-build
 
 RUN apk --no-cache add python make g++
 
