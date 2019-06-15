@@ -27,4 +27,8 @@ defmodule LibTen.Factory do
       background_color: background_color
     }
   end
+
+  def settings_factory do
+    %LibTen.Admin.Settings{logo: "test.png"}
+  end
 end

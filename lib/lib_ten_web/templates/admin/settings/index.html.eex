@@ -1,0 +1,17 @@
+<%= form_for @changeset, admin_settings_path(@conn, :update), [class: "form form--for-admin", multipart: true], fn f -> %>
+  <div class="form__group">
+    <%= label f, "Logo url", class: "form__label" %>
+    <%=
+      text_input(f, :logo,
+        class:
+          "form__input" <>
+            if(Keyword.has_key?(f.errors, :name), do: " form__input--invalid", else: "")
+      )
+    %>
+    <span class="form__bar"></span>
+  </div>
+
+  <div class="form__buttons">
+    <%= submit "Update", class: "button button--dark" %>
+  </div>
+<% end %>
