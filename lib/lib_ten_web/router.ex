@@ -24,12 +24,14 @@ defmodule LibTenWeb.Router do
       get "/orders", ProductsController, :orders
 
       scope "/" do
-        pipe_through :is_admin
+        pipe_through :validate_admin
         get "/all", ProductsController, :all
 
         scope "/admin", as: :admin do
           resources "/users", Admin.UserController, only: [:index, :edit, :update]
           resources "/categories", Admin.CategoryController, except: [:show]
+          get "/settings", Admin.SettingsController, :index
+          put "/settings", Admin.SettingsController, :update
         end
       end
     end
@@ -56,10 +58,11 @@ defmodule LibTenWeb.Router do
         conn
         |> assign(:current_user_token, token)
         |> assign(:current_user, user)
+        |> assign(:settings, LibTen.Admin.get_settings())
     end
   end
 
-  defp is_admin(conn, _) do
+  defp validate_admin(conn, _) do
     if conn.assigns[:current_user].is_admin do
       conn
     else

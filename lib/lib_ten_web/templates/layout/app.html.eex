@@ -25,10 +25,7 @@
       <%= link(
         to: products_path(@conn, :library)
       ) do %>
-        <%= img_tag static_path(@conn, "/images/logo-10books.svg"),
-          alt: "10books",
-          class: "navbar__logo"
-        %>
+        <%= img_tag(logo_path(@conn), class: "navbar__logo") %>
       <% end %>
 
       <button
@@ -80,6 +77,12 @@
                   <li class="navbar-menu__item">
                     <%= link "Users",
                       to: admin_user_path(@conn, :index),
+                      class: "navbar-menu__item-label"
+                    %>
+                  </li>
+                  <li class="navbar-menu__item">
+                    <%= link "Settings",
+                      to: admin_settings_path(@conn, :index),
                       class: "navbar-menu__item-label"
                     %>
                   </li>
