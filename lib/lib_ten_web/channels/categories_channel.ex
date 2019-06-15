@@ -15,12 +15,10 @@ defmodule LibTenWeb.CategoriesChannel do
     end
   end
 
-
   def join("categories", _message, socket) do
     categories = Categories.list_categories() |> to_json_map
     {:ok, %{payload: categories}, socket}
   end
-
 
   defp to_json_map(%Category{} = category) do
     Map.take(category, [:id, :name, :text_color, :background_color])

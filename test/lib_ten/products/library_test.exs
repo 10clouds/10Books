@@ -8,24 +8,26 @@ defmodule LibTen.Products.LibraryTest do
   alias LibTen.Products.ProductUse
   alias LibTen.Products.Library
 
-
   test "list/0 returns only products with library status sorted by inserted_at" do
-    product1 = insert(:product,
-      status: "IN_LIBRARY",
-      inserted_at: ~N[2000-01-01 00:00:00.000000],
-      used_by: %{user: insert(:user)},
-      ratings: [%{user: insert(:user), value: 2.5}]
-    )
-    product2 = insert(:product,
-      status: "IN_LIBRARY",
-      inserted_at: ~N[2000-01-01 00:01:00.000000],
-      used_by: %{user: insert(:user)},
-      ratings: [%{user: insert(:user), value: 4.5}]
-    )
+    product1 =
+      insert(:product,
+        status: "IN_LIBRARY",
+        inserted_at: ~N[2000-01-01 00:00:00.000000],
+        used_by: %{user: insert(:user)},
+        ratings: [%{user: insert(:user), value: 2.5}]
+      )
+
+    product2 =
+      insert(:product,
+        status: "IN_LIBRARY",
+        inserted_at: ~N[2000-01-01 00:01:00.000000],
+        used_by: %{user: insert(:user)},
+        ratings: [%{user: insert(:user), value: 4.5}]
+      )
+
     insert(:product)
     assert Library.list() == [product2, product1]
   end
-
 
   test "get/1 returns product if it has library status" do
     product1 = insert(:product, status: "IN_LIBRARY", used_by: nil, ratings: [])
@@ -33,7 +35,6 @@ defmodule LibTen.Products.LibraryTest do
     assert Library.get(product1.id) == product1
     assert Library.get(product2.id) == nil
   end
-
 
   test "get/1 returns last used_by if multiple are in db" do
     user1 = insert(:user)
@@ -46,7 +47,6 @@ defmodule LibTen.Products.LibraryTest do
     assert product.used_by.user == user2
     assert product.used_by.ended_at == nil
   end
-
 
   describe "update/2" do
     test "returns nil if no such product in library" do
@@ -61,7 +61,6 @@ defmodule LibTen.Products.LibraryTest do
       assert updated_product.category_id == category.id
     end
   end
-
 
   describe "take/2" do
     test "returns nil if no such product in library" do
@@ -81,7 +80,6 @@ defmodule LibTen.Products.LibraryTest do
     end
   end
 
-
   describe "return/2" do
     test "returns nil if no such product in library" do
       product = insert(:product)
@@ -90,14 +88,16 @@ defmodule LibTen.Products.LibraryTest do
     end
 
     test "updates existing used_by.ended_at if it's present" do
-      date_now = DateTime.utc_now
+      date_now = DateTime.utc_now()
       naive_date_now = DateTime.to_naive(date_now)
       user = insert(:user)
       subscribe_user = insert(:user)
-      product = insert(:product,
-        status: "IN_LIBRARY",
-        used_by: %{user: user, return_subscribers: [subscribe_user.id]}
-      )
+
+      product =
+        insert(:product,
+          status: "IN_LIBRARY",
+          used_by: %{user: user, return_subscribers: [subscribe_user.id]}
+        )
 
       product_use = Repo.get_by(ProductUse, product_id: product.id)
       assert product_use.ended_at == nil
@@ -105,7 +105,11 @@ defmodule LibTen.Products.LibraryTest do
       assert {:ok, _} = Library.return(product.id, user.id)
       product = Library.get(product.id)
       product_use = Repo.get_by(ProductUse, product_id: product.id)
-      assert_delivered_email LibTen.Products.Emails.product_has_been_returned(product, subscribe_user)
+
+      assert_delivered_email(
+        LibTen.Products.Emails.product_has_been_returned(product, subscribe_user)
+      )
+
       assert product.used_by == nil
       assert product_use.user_id == user.id
       assert product_use.ended_at != nil
@@ -113,19 +117,27 @@ defmodule LibTen.Products.LibraryTest do
 
     test "send product_has_been_returned email to return subscribers" do
       [user, subscriber1, subscriber2] = insert_list(3, :user)
-      product = insert(:product,
-        status: "IN_LIBRARY",
-        used_by: %{
-          user: user,
-          return_subscribers: [subscriber1.id, subscriber2.id]
-        }
-      )
+
+      product =
+        insert(:product,
+          status: "IN_LIBRARY",
+          used_by: %{
+            user: user,
+            return_subscribers: [subscriber1.id, subscriber2.id]
+          }
+        )
+
       Library.return(product.id, user.id)
-      assert_delivered_email LibTen.Products.Emails.product_has_been_returned(product, subscriber1)
-      assert_delivered_email LibTen.Products.Emails.product_has_been_returned(product, subscriber2)
+
+      assert_delivered_email(
+        LibTen.Products.Emails.product_has_been_returned(product, subscriber1)
+      )
+
+      assert_delivered_email(
+        LibTen.Products.Emails.product_has_been_returned(product, subscriber2)
+      )
     end
   end
-
 
   describe "rate/3" do
     test "returns nil if no such product in library" do
@@ -174,7 +186,6 @@ defmodule LibTen.Products.LibraryTest do
     end
   end
 
-
   describe "subscribe_user_to_return_notification/2" do
     test "returns nil if no such product in library" do
       product = insert(:product)
@@ -183,36 +194,43 @@ defmodule LibTen.Products.LibraryTest do
     end
 
     test "returns nil if no active product use" do
-      product = insert(:product,
-        status: "IN_LIBRARY",
-        used_by: %{user: insert(:user), ended_at: DateTime.utc_now}
-      )
+      product =
+        insert(:product,
+          status: "IN_LIBRARY",
+          used_by: %{user: insert(:user), ended_at: DateTime.utc_now()}
+        )
+
       user = insert(:user)
       assert Library.subscribe_user_to_return_notification(product.id, user.id) == nil
     end
 
     test "returns nil if user already subscibed" do
       user = insert(:user)
-      product = insert(:product,
-        status: "IN_LIBRARY",
-        used_by: %{user: insert(:user), return_subscribers: [user.id]}
-      )
+
+      product =
+        insert(:product,
+          status: "IN_LIBRARY",
+          used_by: %{user: insert(:user), return_subscribers: [user.id]}
+        )
+
       assert Library.subscribe_user_to_return_notification(product.id, user.id) == nil
     end
 
     test "adds user to return_subscribers only once" do
       user = insert(:user)
-      product = insert(:product,
-        status: "IN_LIBRARY",
-        used_by: %{user: insert(:user)}
-      )
+
+      product =
+        insert(:product,
+          status: "IN_LIBRARY",
+          used_by: %{user: insert(:user)}
+        )
+
       assert {:ok, _} = Library.subscribe_user_to_return_notification(product.id, user.id)
       product = Library.get(product.id)
       assert product.used_by.return_subscribers == [user.id]
       assert Library.subscribe_user_to_return_notification(product.id, user.id) == nil
     end
   end
-
 
   describe "unsubscribe_user_from_return_notification/2" do
     test "returns nil if no such product in library" do
@@ -222,54 +240,65 @@ defmodule LibTen.Products.LibraryTest do
     end
 
     test "returns nil if no active product use" do
-      product = insert(:product,
-        status: "IN_LIBRARY",
-        used_by: %{user: insert(:user), ended_at: DateTime.utc_now}
-      )
+      product =
+        insert(:product,
+          status: "IN_LIBRARY",
+          used_by: %{user: insert(:user), ended_at: DateTime.utc_now()}
+        )
+
       user = insert(:user)
       assert Library.unsubscribe_user_from_return_notification(product.id, user.id) == nil
     end
 
     test "returns nil if user is not subscibed" do
       user = insert(:user)
-      product = insert(:product,
-        status: "IN_LIBRARY",
-        used_by: %{user: insert(:user), return_subscribers: []}
-      )
+
+      product =
+        insert(:product,
+          status: "IN_LIBRARY",
+          used_by: %{user: insert(:user), return_subscribers: []}
+        )
+
       assert Library.unsubscribe_user_from_return_notification(product.id, user.id) == nil
     end
 
     test "removes user from return_subscribers" do
       user = insert(:user)
-      product = insert(:product,
-        status: "IN_LIBRARY",
-        used_by: %{user: insert(:user), return_subscribers: [user.id]}
-      )
+
+      product =
+        insert(:product,
+          status: "IN_LIBRARY",
+          used_by: %{user: insert(:user), return_subscribers: [user.id]}
+        )
+
       assert {:ok, _} = Library.unsubscribe_user_from_return_notification(product.id, user.id)
       product = Library.get(product.id)
       assert product.used_by.return_subscribers == []
     end
   end
 
-
   describe "remind_users_to_return_products" do
     test "sends email to use if product was taken > 60 days ago" do
-      product1 = insert(:product,
-        status: "IN_LIBRARY",
-        used_by: %{
-          user: insert(:user),
-          inserted_at: ~N[2000-01-01 00:00:00.000000]
-        }
-      )
-      product2 = insert(:product,
-        status: "IN_LIBRARY",
-        used_by: %{
-          user: insert(:user)
-        }
-      )
+      product1 =
+        insert(:product,
+          status: "IN_LIBRARY",
+          used_by: %{
+            user: insert(:user),
+            inserted_at: ~N[2000-01-01 00:00:00.000000]
+          }
+        )
+
+      product2 =
+        insert(:product,
+          status: "IN_LIBRARY",
+          used_by: %{
+            user: insert(:user)
+          }
+        )
+
       Library.remind_users_to_return_products()
-      assert_delivered_email LibTen.Products.Emails.request_product_return(product1)
-      refute_delivered_email LibTen.Products.Emails.request_product_return(product2)
+      assert_delivered_email(LibTen.Products.Emails.request_product_return(product1))
+      refute_delivered_email(LibTen.Products.Emails.request_product_return(product2))
     end
   end
 end

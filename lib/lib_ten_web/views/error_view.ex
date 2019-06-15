@@ -19,13 +19,14 @@ defmodule LibTenWeb.ErrorView do
   end
 
   def render("error.json", %Ecto.Changeset{} = assigns) do
-    errors = Enum.map(assigns.errors, fn {field, detail} ->
-      %{
-        source: %{ pointer: "/data/attributes/#{field}" },
-        title: "Invalid Attribute",
-        detail: render_detail(detail)
-      }
-    end)
+    errors =
+      Enum.map(assigns.errors, fn {field, detail} ->
+        %{
+          source: %{pointer: "/data/attributes/#{field}"},
+          title: "Invalid Attribute",
+          detail: render_detail(detail)
+        }
+      end)
 
     %{type: @error_types.record_invalid, errors: errors}
   end
@@ -33,14 +34,13 @@ defmodule LibTenWeb.ErrorView do
   # In case no render clause matches or no
   # template is found, let's render it as 500
   def template_not_found(_template, assigns) do
-    render "500.html", assigns
+    render("500.html", assigns)
   end
 
-
   defp render_detail({message, values}) do
-    Enum.reduce values, message, fn {k, v}, acc ->
+    Enum.reduce(values, message, fn {k, v}, acc ->
       String.replace(acc, "%{#{k}}", to_string(v))
-    end
+    end)
   end
 
   defp render_detail(message) do

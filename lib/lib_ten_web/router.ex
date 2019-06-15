@@ -9,12 +9,13 @@ defmodule LibTenWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  if Mix.env == :dev do
+  if Mix.env() == :dev do
     forward "/sent_emails", Bamboo.EmailPreviewPlug
   end
 
   scope "/", LibTenWeb do
-    pipe_through :browser # Use the default browser stack
+    # Use the default browser stack
+    pipe_through :browser
 
     get "/", AuthController, :index
 
@@ -49,12 +50,16 @@ defmodule LibTenWeb.Router do
         conn
         |> Phoenix.Controller.redirect(to: "/")
         |> halt()
+
       user_id ->
         user = LibTen.Accounts.get_by!(%{id: user_id})
-        token = Phoenix.Token.sign(conn, "current_user_token", %{
-          id: user_id,
-          is_admin: user.is_admin
-        })
+
+        token =
+          Phoenix.Token.sign(conn, "current_user_token", %{
+            id: user_id,
+            is_admin: user.is_admin
+          })
+
         conn
         |> assign(:current_user_token, token)
         |> assign(:current_user, user)

@@ -13,6 +13,7 @@ defmodule LibTen.Accounts.UsersTest do
       attrs
       |> Enum.into(@valid_attrs)
       |> Users.create()
+
     user
   end
 

@@ -26,21 +26,21 @@ defmodule LibTenWeb.ConnCase do
 
       def sign_in(conn, user) do
         conn
-          |> bypass_through(LibTenWeb.Router, :browser)
-          |> get("/")
-          |> put_session(:user_id, user.id)
-          |> send_resp(:ok, "")
+        |> bypass_through(LibTenWeb.Router, :browser)
+        |> get("/")
+        |> put_session(:user_id, user.id)
+        |> send_resp(:ok, "")
       end
     end
   end
 
-
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(LibTen.Repo)
+
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(LibTen.Repo, {:shared, self()})
     end
+
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
-
 end

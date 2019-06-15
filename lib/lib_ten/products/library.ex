@@ -50,16 +50,17 @@ defmodule LibTen.Products.Library do
         |> where([p], is_nil(p.ended_at))
         |> Repo.one()
 
-      curr_use = if curr_use do
-        curr_use
-        |> ProductUse.changeset(%{ended_at: DateTime.utc_now()})
-        |> Repo.update()
-      end
+      curr_use =
+        if curr_use do
+          curr_use
+          |> ProductUse.changeset(%{ended_at: DateTime.utc_now()})
+          |> Repo.update()
+        end
 
       with {:ok, curr_use} <- curr_use do
         for user <- Accounts.list_users(curr_use.return_subscribers) do
           Emails.product_has_been_returned(product, user)
-          |> LibTen.Mailer.deliver_later
+          |> LibTen.Mailer.deliver_later()
         end
       end
 
@@ -125,9 +126,9 @@ defmodule LibTen.Products.Library do
 
   def remind_users_to_return_products do
     max_date =
-      Timex.today
+      Timex.today()
       |> Timex.shift(days: -60)
-      |> Timex.to_naive_datetime
+      |> Timex.to_naive_datetime()
 
     products =
       library_query()
@@ -136,7 +137,7 @@ defmodule LibTen.Products.Library do
 
     for product <- products do
       Emails.request_product_return(product)
-      |> LibTen.Mailer.deliver_later
+      |> LibTen.Mailer.deliver_later()
     end
   end
 
@@ -146,7 +147,7 @@ defmodule LibTen.Products.Library do
     case with_preloads do
       true ->
         query
-        |> join(:left, [p], used_by in assoc(p, :used_by), is_nil(used_by.ended_at))
+        |> join(:left, [p], used_by in assoc(p, :used_by), on: is_nil(used_by.ended_at))
         |> preload(
           [_, used_by],
           used_by: {used_by, :user},

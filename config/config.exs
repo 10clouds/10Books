@@ -12,21 +12,24 @@ config :lib_ten,
   title: "10Books",
   allowed_google_auth_domains: "gmail.com"
 
-
 # Configures the endpoint
 config :lib_ten, LibTenWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "TmB2X43BwwgU4K5Hkq9f/lVaQmtFGobmRsxJ5ZDhAlogzSenkVR5tfvRRNuFDDIL",
   render_errors: [view: LibTenWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: LibTen.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: LibTen.PubSub, adapter: Phoenix.PubSub.PG2]
 
 config :lib_ten, LibTen.Scheduler,
   jobs: [
-    {"0 10 * * *", {
-      LibTen.Products.Library, :remind_users_to_return_products, []
-    }}
+    {"0 10 * * *",
+     {
+       LibTen.Products.Library,
+       :remind_users_to_return_products,
+       []
+     }}
   ]
+
+config :phoenix, :json_library, Jason
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -51,4 +54,4 @@ config :kernel,
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{Mix.env}.exs"
+import_config "#{Mix.env()}.exs"

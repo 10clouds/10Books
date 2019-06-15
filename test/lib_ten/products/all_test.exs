@@ -5,14 +5,19 @@ defmodule LibTen.Products.AllTest do
 
   test "list/0 returns products sorted by inserted_at" do
     user = insert(:user)
-    product1 = insert(:product,
-      inserted_at: ~N[2000-01-01 00:00:00.000000],
-      requested_by_user: user
-    )
-    product2 = insert(:product,
-      inserted_at: ~N[2000-01-01 00:01:00.000000],
-      requested_by_user: user
-    )
+
+    product1 =
+      insert(:product,
+        inserted_at: ~N[2000-01-01 00:00:00.000000],
+        requested_by_user: user
+      )
+
+    product2 =
+      insert(:product,
+        inserted_at: ~N[2000-01-01 00:01:00.000000],
+        requested_by_user: user
+      )
+
     assert All.list() == [product2, product1]
   end
 
@@ -20,7 +25,6 @@ defmodule LibTen.Products.AllTest do
     product = insert(:product, requested_by_user: nil)
     assert All.get(product.id) == product
   end
-
 
   test "create/2 creates record" do
     user = insert(:user)
@@ -33,7 +37,6 @@ defmodule LibTen.Products.AllTest do
     assert product.url == attrs.url
     assert product.status == attrs.status
   end
-
 
   describe "update" do
     test "update/3 returns nil in no product with given id" do

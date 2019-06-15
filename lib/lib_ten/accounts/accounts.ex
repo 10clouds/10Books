@@ -41,7 +41,7 @@ defmodule LibTen.Accounts do
     else
       msg =
         "Only accounts with #{Enum.join(allowed_domains, ", ")} domain" <>
-          (if length(allowed_domains) > 1, do: "s", else: "") <> " allowed"
+          if(length(allowed_domains) > 1, do: "s", else: "") <> " allowed"
 
       {:error, msg}
     end

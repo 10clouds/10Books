@@ -18,8 +18,7 @@ defmodule LibTen.Factory do
   end
 
   def category_factory do
-    {text_color, background_color} =
-      LibTen.Categories.Category.get_available_color()
+    {text_color, background_color} = LibTen.Categories.Category.get_available_color()
 
     %LibTen.Categories.Category{
       name: sequence(:name, &"category-#{&1}"),

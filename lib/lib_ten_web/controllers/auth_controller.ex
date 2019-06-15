@@ -32,6 +32,7 @@ defmodule LibTenWeb.AuthController do
         conn
         |> put_session(:user_id, user.id)
         |> redirect(to: products_path(conn, :library))
+
       {:error, reason} ->
         conn
         |> put_flash(:error, reason)

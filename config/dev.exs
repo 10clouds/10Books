@@ -51,8 +51,7 @@ config :logger, :console, format: "[$level] $message\n"
 # in production as building large stacktraces may be expensive.
 config :phoenix, :stacktrace_depth, 20
 
-config :lib_ten, LibTen.Mailer,
-  adapter: Bamboo.LocalAdapter
+config :lib_ten, LibTen.Mailer, adapter: Bamboo.LocalAdapter
 
 # Configure your database
 postgres_credentials = [
@@ -61,9 +60,13 @@ postgres_credentials = [
   database: "lib_ten_dev",
   hostname: "localhost"
 ]
-config :lib_ten, LibTen.Repo,
-  postgres_credentials ++ [
-    adapter: Ecto.Adapters.Postgres,
-    pool_size: 10
-  ]
+
+config :lib_ten,
+       LibTen.Repo,
+       postgres_credentials ++
+         [
+           adapter: Ecto.Adapters.Postgres,
+           pool_size: 10
+         ]
+
 config :lib_ten, LibTenWeb.PostgresListener, postgres_credentials

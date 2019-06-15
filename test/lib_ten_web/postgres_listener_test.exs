@@ -10,5 +10,4 @@ defmodule LibTenWeb.PostgresListenerTest do
   test "notifies category channel on category_updated" do
     PostgresListener.on_record_change("category_updated", "1")
   end
-
 end

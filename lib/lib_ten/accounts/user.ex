@@ -3,7 +3,6 @@ defmodule LibTen.Accounts.User do
   import Ecto.Changeset
   alias LibTen.Accounts.User
 
-
   schema "users" do
     field :email, :string
     field :name, :string

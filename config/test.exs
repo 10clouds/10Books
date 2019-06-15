@@ -12,16 +12,15 @@ config :lib_ten,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
-config :lib_ten, LibTen.Mailer,
-  adapter: Bamboo.TestAdapter
+config :lib_ten, LibTen.Mailer, adapter: Bamboo.TestAdapter
 
 # Configure your database
 postgres_credentials = [
   username: "postgres",
   password: "postgres",
   database: "lib_ten_test",
-  hostname: "localhost",
+  hostname: "localhost"
 ]
-config :lib_ten, LibTen.Repo,
-  postgres_credentials ++ [pool: Ecto.Adapters.SQL.Sandbox]
+
+config :lib_ten, LibTen.Repo, postgres_credentials ++ [pool: Ecto.Adapters.SQL.Sandbox]
 config :lib_ten, LibTenWeb.PostgresListener, postgres_credentials

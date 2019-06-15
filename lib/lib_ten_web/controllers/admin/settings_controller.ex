@@ -12,7 +12,8 @@ defmodule LibTenWeb.Admin.SettingsController do
       {:ok, _} ->
         conn
         |> put_flash(:info, "Settings updated successfully.")
-        |> redirect(  to: admin_settings_path(conn, :index))
+        |> redirect(to: admin_settings_path(conn, :index))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "index.html", changeset: changeset)
     end

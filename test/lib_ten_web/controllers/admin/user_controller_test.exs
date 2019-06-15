@@ -10,57 +10,52 @@ defmodule LibTenWeb.UserControllerTest do
 
   setup %{conn: conn} do
     user = insert(:user, is_admin: true)
-    {:ok, %{
-      conn: sign_in(conn, user),
-      current_user: user
-    }}
-  end
 
+    {:ok,
+     %{
+       conn: sign_in(conn, user),
+       current_user: user
+     }}
+  end
 
   describe "index" do
     test "renders 404 unless admin",
-      %{conn: conn, current_user: current_user}
-    do
+         %{conn: conn, current_user: current_user} do
       Users.update(current_user, %{is_admin: false})
-      conn = get conn, admin_user_path(conn, :index)
+      conn = get(conn, admin_user_path(conn, :index))
       assert html_response(conn, 404) =~ "not found"
     end
 
     test "lists all users only for admins", %{conn: conn} do
-      conn = get conn, admin_user_path(conn, :index)
+      conn = get(conn, admin_user_path(conn, :index))
       assert html_response(conn, 200) =~ "Listing Users"
     end
   end
-
 
   describe "edit user" do
     setup [:create_user]
 
     test "renders 404 unless admin",
-      %{conn: conn, current_user: current_user, user: user}
-    do
+         %{conn: conn, current_user: current_user, user: user} do
       Users.update(current_user, %{is_admin: false})
-      conn = get conn, admin_user_path(conn, :edit, user)
+      conn = get(conn, admin_user_path(conn, :edit, user))
       assert html_response(conn, 404) =~ "not found"
     end
 
     test "renders form for editing chosen user only for admins",
-      %{conn: conn, user: user}
-    do
-      conn = get conn, admin_user_path(conn, :edit, user)
+         %{conn: conn, user: user} do
+      conn = get(conn, admin_user_path(conn, :edit, user))
       assert html_response(conn, 200) =~ "Edit User"
     end
   end
-
 
   describe "update user" do
     setup [:create_user]
 
     test "renders 404 unless admin",
-      %{conn: conn, current_user: current_user, user: user}
-    do
+         %{conn: conn, current_user: current_user, user: user} do
       Users.update(current_user, %{is_admin: false})
-      conn = put conn, admin_user_path(conn, :update, user)
+      conn = put(conn, admin_user_path(conn, :update, user))
       assert html_response(conn, 404) =~ "not found"
     end
 
@@ -77,7 +72,6 @@ defmodule LibTenWeb.UserControllerTest do
       assert html_response(conn, 200) =~ "Edit User"
     end
   end
-
 
   defp create_user(_) do
     user = insert(:user)

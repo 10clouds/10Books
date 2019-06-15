@@ -8,8 +8,10 @@ defmodule LibTen.Admin do
       nil ->
         %Settings{}
         |> change_settings()
-        |> Repo.insert!
-      settings -> settings
+        |> Repo.insert!()
+
+      settings ->
+        settings
     end
   end
 

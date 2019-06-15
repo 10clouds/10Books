@@ -60,16 +60,17 @@ defmodule LibTen.Categories.Category do
       @available_colors
       |> Enum.map(fn {text_color, _} -> {text_color, 0} end)
       |> Enum.into(%{})
+
     colors_count =
       Category
       |> Repo.all()
-      |> Enum.reduce(initial_count, fn(%{text_color: key}, acc) ->
+      |> Enum.reduce(initial_count, fn %{text_color: key}, acc ->
         val = Map.get(acc, key)
         if val, do: Map.put(acc, key, val + 1), else: acc
       end)
 
     @available_colors
-    |> Enum.sort(fn ({a_text_color, _}, {b_text_color, _}) ->
+    |> Enum.sort(fn {a_text_color, _}, {b_text_color, _} ->
       colors_count[a_text_color] <= colors_count[b_text_color]
     end)
     |> Enum.at(0)
@@ -80,6 +81,7 @@ defmodule LibTen.Categories.Category do
       changeset
     else
       {text_color, background_color} = get_available_color()
+
       changeset
       |> put_change(:text_color, text_color)
       |> put_change(:background_color, background_color)

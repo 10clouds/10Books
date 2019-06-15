@@ -27,7 +27,7 @@ defmodule LibTenWeb.ProductsView do
         end,
       ratings:
         if is_list(product.ratings) do
-          Enum.map product.ratings, fn rating ->
+          Enum.map(product.ratings, fn rating ->
             %{
               user: %{
                 id: rating.user.id,
@@ -35,13 +35,13 @@ defmodule LibTenWeb.ProductsView do
               },
               value: rating.value
             }
-          end
+          end)
         else
           []
         end,
       votes:
         if is_list(product.votes) do
-          Enum.map product.votes, fn vote ->
+          Enum.map(product.votes, fn vote ->
             %{
               user: %{
                 id: vote.user.id,
@@ -49,7 +49,7 @@ defmodule LibTenWeb.ProductsView do
               },
               is_upvote: vote.is_upvote
             }
-          end
+          end)
         else
           []
         end,
@@ -65,7 +65,9 @@ defmodule LibTenWeb.ProductsView do
               },
               return_subscribers: used_by.return_subscribers
             }
-          _ -> nil
+
+          _ ->
+            nil
         end
     }
   end

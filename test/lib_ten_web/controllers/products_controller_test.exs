@@ -11,21 +11,20 @@ defmodule LibTenWeb.ProductsControllerTest do
     end
 
     test "GET /library", %{conn: conn} do
-      conn = get conn, "/library"
+      conn = get(conn, "/library")
       assert html_response(conn, 200) =~ "products-table"
     end
 
     test "GET /orders", %{conn: conn} do
-      conn = get conn, "/orders"
+      conn = get(conn, "/orders")
       assert html_response(conn, 200) =~ "products-table"
     end
 
     test "GET /all", %{conn: conn} do
-      conn = get conn, "/all"
+      conn = get(conn, "/all")
       assert html_response(conn, 404)
     end
   end
-
 
   describe "Admin only" do
     setup %{conn: conn} do
@@ -35,7 +34,7 @@ defmodule LibTenWeb.ProductsControllerTest do
     end
 
     test "GET /all", %{conn: conn} do
-      conn = get conn, "/all"
+      conn = get(conn, "/all")
       assert html_response(conn, 200) =~ "products-table"
     end
   end

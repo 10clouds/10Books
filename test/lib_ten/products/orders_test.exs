@@ -5,35 +5,41 @@ defmodule LibTen.Products.OrdersTest do
 
   test "list/0 returns only products with order status sorted by inserted_at" do
     user = insert(:user)
-    product1 = insert(:product,
-      status: "ORDERED",
-      inserted_at: ~N[2000-01-01 00:00:00.000000],
-      requested_by_user: user,
-      votes: [%{user: user, is_upvote: true}]
-    )
-    product2 = insert(:product,
-      status: "ORDERED",
-      inserted_at: ~N[2000-01-01 00:01:00.000000],
-      requested_by_user: user,
-      votes: [%{user: user, is_upvote: true}]
-    )
+
+    product1 =
+      insert(:product,
+        status: "ORDERED",
+        inserted_at: ~N[2000-01-01 00:00:00.000000],
+        requested_by_user: user,
+        votes: [%{user: user, is_upvote: true}]
+      )
+
+    product2 =
+      insert(:product,
+        status: "ORDERED",
+        inserted_at: ~N[2000-01-01 00:01:00.000000],
+        requested_by_user: user,
+        votes: [%{user: user, is_upvote: true}]
+      )
+
     insert(:product)
     assert Orders.list() == [product2, product1]
   end
 
-
   test "get/1 returns product if it has order status" do
     user = insert(:user)
-    product1 = insert(:product,
-      status: "ORDERED",
-      requested_by_user: user,
-      votes: []
-    )
+
+    product1 =
+      insert(:product,
+        status: "ORDERED",
+        requested_by_user: user,
+        votes: []
+      )
+
     product2 = insert(:product)
     assert Orders.get(product1.id) == product1
     assert Orders.get(product2.id) == nil
   end
-
 
   test "create/2 creates record with REQUESTED status" do
     user = insert(:user)
@@ -46,7 +52,6 @@ defmodule LibTen.Products.OrdersTest do
     assert product.url == attrs.url
     assert product.status == "REQUESTED"
   end
-
 
   describe "update/4" do
     test "returns nil in no order with given id" do
@@ -78,17 +83,27 @@ defmodule LibTen.Products.OrdersTest do
       user = insert(:user)
       category = insert(:category)
       product = insert(:product, status: "ORDERED", category: category)
-      product2 = insert(:product,
-        status: "ORDERED",
-        requested_by_user_id: user.id,
-        category: category
-      )
 
-      {:ok, updated_product} = Orders.update(product.id, %{"status" => "REQUESTED"}, "user", user.id)
+      product2 =
+        insert(:product,
+          status: "ORDERED",
+          requested_by_user_id: user.id,
+          category: category
+        )
+
+      {:ok, updated_product} =
+        Orders.update(product.id, %{"status" => "REQUESTED"}, "user", user.id)
+
       assert updated_product.status == "ORDERED"
-      {:ok, updated_product} = Orders.update(product2.id, %{"status" => "REQUESTED"}, "user", user.id)
+
+      {:ok, updated_product} =
+        Orders.update(product2.id, %{"status" => "REQUESTED"}, "user", user.id)
+
       assert updated_product.status == "ORDERED"
-      {:ok, updated_product} = Orders.update(product2.id, %{"status" => "DELETED"}, "user", user.id)
+
+      {:ok, updated_product} =
+        Orders.update(product2.id, %{"status" => "DELETED"}, "user", user.id)
+
       assert updated_product.status == "DELETED"
     end
 
@@ -105,7 +120,6 @@ defmodule LibTen.Products.OrdersTest do
       assert updated_product.status == "ORDERED"
     end
   end
-
 
   describe "votes" do
     test "returns nil if order doesnt exist" do

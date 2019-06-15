@@ -10,7 +10,6 @@ defmodule LibTenWeb.Products.LibraryChannelTest do
     {:ok, socket: socket}
   end
 
-
   test "returns list of products on join", %{socket: socket} do
     [p1, p2] = insert_pair(:product, status: "IN_LIBRARY")
     {:ok, reply, _} = join(socket, LibraryChannel, "products:library")
@@ -20,12 +19,11 @@ defmodule LibTenWeb.Products.LibraryChannelTest do
     assert %{payload: [^p2_json, ^p1_json]} = reply
   end
 
-
   describe "handle_in/update" do
     test "replies with :error if no such record in library", %{socket: socket} do
       {:ok, _, socket} = join(socket, LibraryChannel, "products:library")
       product = insert(:product)
-      ref = push socket, "update", %{"id" => product.id, "attrs" => %{"category_id": 1}}
+      ref = push(socket, "update", %{"id" => product.id, "attrs" => %{category_id: 1}})
       reply = assert_reply ref, :error
       assert reply.payload == %{type: "NOT_FOUND"}
     end
@@ -34,41 +32,41 @@ defmodule LibTenWeb.Products.LibraryChannelTest do
       {:ok, _, socket} = join(socket, LibraryChannel, "products:library")
       product = insert(:product, status: "IN_LIBRARY")
       category = insert(:category)
-      ref = push socket, "update", %{"id" => product.id, "attrs" => %{"category_id": category.id}}
+      ref = push(socket, "update", %{"id" => product.id, "attrs" => %{category_id: category.id}})
       assert_reply ref, :ok
       assert LibTen.Products.Library.get(product.id).category_id == category.id
     end
   end
 
-
   test "handle_in/take", %{socket: socket} do
     {:ok, _, socket} = join(socket, LibraryChannel, "products:library")
     product = insert(:product, status: "IN_LIBRARY")
-    ref = push socket, "take", %{"id" => product.id}
+    ref = push(socket, "take", %{"id" => product.id})
     assert_reply ref, :ok
     product = Library.get(product.id)
     assert product.used_by.user == socket.assigns.user
     assert product.used_by.ended_at == nil
   end
 
-
   test "handle_in/return", %{socket: socket} do
     {:ok, _, socket} = join(socket, LibraryChannel, "products:library")
-    product = insert(:product,
-      status: "IN_LIBRARY",
-      used_by: %{user: socket.assigns.user}
-    )
-    ref = push socket, "return", %{"id" => product.id}
+
+    product =
+      insert(:product,
+        status: "IN_LIBRARY",
+        used_by: %{user: socket.assigns.user}
+      )
+
+    ref = push(socket, "return", %{"id" => product.id})
     assert_reply ref, :ok
     product = Library.get(product.id)
     assert product.used_by == nil
   end
 
-
   test "handle_in/rate", %{socket: socket} do
     {:ok, _, socket} = join(socket, LibraryChannel, "products:library")
     product = insert(:product, status: "IN_LIBRARY")
-    ref = push socket, "rate", %{"id" => product.id, "value" => 2.5}
+    ref = push(socket, "rate", %{"id" => product.id, "value" => 2.5})
     assert_reply ref, :ok
     product = Library.get(product.id)
     rating = Enum.at(product.ratings, 0)
@@ -76,30 +74,34 @@ defmodule LibTenWeb.Products.LibraryChannelTest do
     assert rating.value == 2.5
   end
 
-
   test "handle_in/subscribe_to_return_notification", %{socket: socket} do
     {:ok, _, socket} = join(socket, LibraryChannel, "products:library")
-    product = insert(:product,
-      status: "IN_LIBRARY",
-      used_by: %{user: insert(:user)}
-    )
-    ref = push socket, "subscribe_to_return_notification", %{"id" => product.id}
+
+    product =
+      insert(:product,
+        status: "IN_LIBRARY",
+        used_by: %{user: insert(:user)}
+      )
+
+    ref = push(socket, "subscribe_to_return_notification", %{"id" => product.id})
     assert_reply ref, :ok
     product = Library.get(product.id)
     assert product.used_by.return_subscribers == [socket.assigns.user.id]
   end
 
-
   test "handle_in/unsubscribe_from_return_notification", %{socket: socket} do
     {:ok, _, socket} = join(socket, LibraryChannel, "products:library")
-    product = insert(:product,
-      status: "IN_LIBRARY",
-      used_by: %{
-        user: insert(:user),
-        return_subscribers: [socket.assigns.user.id]
-      }
-    )
-    ref = push socket, "unsubscribe_from_return_notification", %{"id" => product.id}
+
+    product =
+      insert(:product,
+        status: "IN_LIBRARY",
+        used_by: %{
+          user: insert(:user),
+          return_subscribers: [socket.assigns.user.id]
+        }
+      )
+
+    ref = push(socket, "unsubscribe_from_return_notification", %{"id" => product.id})
     assert_reply ref, :ok
     product = Library.get(product.id)
     assert product.used_by.return_subscribers == []

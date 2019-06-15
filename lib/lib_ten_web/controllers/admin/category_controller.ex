@@ -20,6 +20,7 @@ defmodule LibTenWeb.Admin.CategoryController do
         conn
         |> put_flash(:info, "Category created successfully.")
         |> redirect(to: admin_category_path(conn, :index))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -39,6 +40,7 @@ defmodule LibTenWeb.Admin.CategoryController do
         conn
         |> put_flash(:info, "Category updated successfully.")
         |> redirect(to: admin_category_path(conn, :index))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", category: category, changeset: changeset)
     end

@@ -12,5 +12,3 @@ defmodule LibTen.Admin.Settings do
     |> cast(attrs, [:logo])
   end
 end
-
-

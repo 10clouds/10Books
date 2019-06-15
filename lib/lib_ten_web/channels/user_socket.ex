@@ -5,7 +5,6 @@ defmodule LibTenWeb.UserSocket do
   channel "products:orders", LibTenWeb.Products.OrdersChannel
   channel "products:all", LibTenWeb.Products.AllChannel
   channel "categories", LibTenWeb.CategoriesChannel
-  transport :websocket, Phoenix.Transports.WebSocket
 
   def connect(%{"token" => token}, socket) do
     case Phoenix.Token.verify(socket, "current_user_token", token, max_age: 1_209_600) do

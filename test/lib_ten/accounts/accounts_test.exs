@@ -10,7 +10,8 @@ defmodule LibTen.AccountsTest do
 
   test "get_by!/1 returns user with given email or Ecto.NoResultsError" do
     assert_raise Ecto.NoResultsError,
-      fn -> Accounts.get_by!(%{email: params_for(:user)[:email]}) end
+                 fn -> Accounts.get_by!(%{email: params_for(:user)[:email]}) end
+
     user = insert(:user)
     assert user == Accounts.get_by!(%{email: user.email})
   end
@@ -24,7 +25,8 @@ defmodule LibTen.AccountsTest do
 
     test "creates user if it is not present" do
       assert_raise Ecto.NoResultsError,
-        fn -> Accounts.get_by!(%{email: "test@test.com"}) end
+                   fn -> Accounts.get_by!(%{email: "test@test.com"}) end
+
       user_params = params_for(:user)
       assert {:ok, user} = Accounts.find_or_create_user(user_params)
       assert user.email == user_params.email

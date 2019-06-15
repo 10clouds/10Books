@@ -18,7 +18,9 @@ defmodule LibTen.AdminTest do
 
     test "update_settings/2 updates settings" do
       settings = insert(:settings)
-      assert {:ok, %Settings{logo: "test2.png"}} = Admin.update_settings(settings, %{logo: "test2.png"})
+
+      assert {:ok, %Settings{logo: "test2.png"}} =
+               Admin.update_settings(settings, %{logo: "test2.png"})
     end
   end
 end

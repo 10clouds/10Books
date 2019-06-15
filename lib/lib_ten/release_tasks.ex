@@ -36,7 +36,7 @@ defmodule LibTen.ReleaseTasks do
 
   defp run_migrations_for(repo) do
     app = Keyword.get(repo.config, :otp_app)
-    IO.puts "Running migrations for #{app}"
+    IO.puts("Running migrations for #{app}")
     Ecto.Migrator.run(repo, migrations_path(repo), :up, all: true)
   end
 
@@ -44,7 +44,7 @@ defmodule LibTen.ReleaseTasks do
 
   defp priv_path_for(repo, filename) do
     app = Keyword.get(repo.config, :otp_app)
-    repo_underscore = repo |> Module.split |> List.last |> Macro.underscore
+    repo_underscore = repo |> Module.split() |> List.last() |> Macro.underscore()
     Path.join([priv_dir(app), repo_underscore, filename])
   end
 
