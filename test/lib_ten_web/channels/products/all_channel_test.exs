@@ -9,7 +9,7 @@ defmodule LibTenWeb.Products.AllChannelTest do
       user = insert(:user)
 
       socket_status =
-        socket("user_socket", %{user: user})
+        socket(LibTenWeb.UserSocket, "user_socket", %{user: user})
         |> join(AllChannel, "products:all")
 
       assert {:error, %{reason: :unauthorized}} = socket_status
@@ -22,7 +22,7 @@ defmodule LibTenWeb.Products.AllChannelTest do
       insert_pair(:product, status: "ORDERED")
 
       {:ok, reply, socket} =
-        socket("user_socket", %{user: user})
+        socket(LibTenWeb.UserSocket, "user_socket", %{user: user})
         |> subscribe_and_join(AllChannel, "products:all")
 
       {:ok, socket_reply: reply, socket: socket, socket_user: user}

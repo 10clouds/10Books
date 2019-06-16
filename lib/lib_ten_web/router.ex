@@ -10,7 +10,7 @@ defmodule LibTenWeb.Router do
   end
 
   if Mix.env() == :dev do
-    forward "/sent_emails", Bamboo.EmailPreviewPlug
+    forward "/sent_emails", Bamboo.SentEmailViewerPlug
   end
 
   scope "/", LibTenWeb do
@@ -73,7 +73,8 @@ defmodule LibTenWeb.Router do
     else
       conn
       |> put_status(:not_found)
-      |> Phoenix.Controller.render(LibTenWeb.ErrorView, :"404")
+      |> put_view(LibTenWeb.ErrorView)
+      |> Phoenix.Controller.render("404.html")
       |> halt()
     end
   end

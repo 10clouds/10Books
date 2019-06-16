@@ -3,7 +3,6 @@ defmodule LibTen.Products.LibraryTest do
   use Bamboo.Test
 
   import LibTen.Factory
-  import Mock
 
   alias LibTen.Products.ProductUse
   alias LibTen.Products.Library
@@ -88,8 +87,6 @@ defmodule LibTen.Products.LibraryTest do
     end
 
     test "updates existing used_by.ended_at if it's present" do
-      date_now = DateTime.utc_now()
-      naive_date_now = DateTime.to_naive(date_now)
       user = insert(:user)
       subscribe_user = insert(:user)
 

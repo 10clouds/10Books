@@ -1,7 +1,7 @@
 defmodule LibTenWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :lib_ten
 
-  socket "/socket", LibTenWeb.UserSocket, 
+  socket "/socket", LibTenWeb.UserSocket,
     websocket: true,
     longpoll: false
 
@@ -14,6 +14,9 @@ defmodule LibTenWeb.Endpoint do
     from: :lib_ten,
     gzip: true,
     only: ~w(css fonts images js favicon.ico robots.txt)
+
+  plug Plug.Static,
+    at: "/uploads", from: "uploads", gzip: false
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
@@ -29,7 +32,7 @@ defmodule LibTenWeb.Endpoint do
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],
-    json_decoder: Poison
+    json_decoder: Phoenix.json_library()
 
   plug Plug.MethodOverride
   plug Plug.Head

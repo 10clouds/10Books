@@ -9,7 +9,7 @@ defmodule LibTenWeb.Products.OrdersChannelTest do
     insert_pair(:product, status: "ORDERED")
 
     {:ok, reply, socket} =
-      socket("user_socket", %{user: user})
+      socket(LibTenWeb.UserSocket, "user_socket", %{user: user})
       |> subscribe_and_join(OrdersChannel, "products:orders")
 
     {:ok, socket_reply: reply, socket: socket, socket_user: user}

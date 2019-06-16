@@ -6,7 +6,7 @@ defmodule LibTenWeb.Products.LibraryChannelTest do
 
   setup do
     user = insert(:user)
-    socket = socket("user_socket", %{user: user})
+    socket = socket(LibTenWeb.UserSocket, "user_socket", %{user: user})
     {:ok, socket: socket}
   end
 

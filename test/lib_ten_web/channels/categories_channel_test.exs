@@ -5,7 +5,7 @@ defmodule LibTenWeb.CategoriesChannelTest do
 
   setup do
     user = insert(:user)
-    {:ok, socket: socket("user_socket", %{user_id: user.id})}
+    {:ok, socket: socket(LibTenWeb.UserSocket, "user_socket", %{user_id: user.id})}
   end
 
   test "replies with categories on join", %{socket: socket} do
