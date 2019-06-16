@@ -25,7 +25,7 @@
       <%= link(
         to: products_path(@conn, :library)
       ) do %>
-        <%= img_tag(logo_path(@conn), class: "navbar__logo") %>
+        <%= img_tag(site_logo_url(@conn), class: "navbar__logo") %>
       <% end %>
 
       <button

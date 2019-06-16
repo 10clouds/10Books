@@ -1,6 +1,7 @@
 defmodule LibTenWeb.Admin.SettingsControlledTest do
   use LibTenWeb.ConnCase
   import LibTen.Factory
+  alias LibTen.Admin
   alias LibTen.Accounts.Users
 
   setup %{conn: conn} do
@@ -36,11 +37,22 @@ defmodule LibTenWeb.Admin.SettingsControlledTest do
     end
 
     test "handles valid update", %{conn: conn} do
-      conn = put(conn, admin_settings_path(conn, :update, %{settings: %{logo: "test2.png"}}))
+      conn =
+        put(
+          conn,
+          admin_settings_path(conn, :update),
+          %{
+            settings: %{
+              logo: %Plug.Upload{path: "test/support/blank.png", filename: "test2.png"}
+            }
+          }
+        )
+
       assert redirected_to(conn) == admin_settings_path(conn, :index)
 
       conn = get(conn, admin_settings_path(conn, :index))
-      assert html_response(conn, 200) =~ "test2.png"
+      settings = Admin.get_settings()
+      assert html_response(conn, 200) =~ Admin.SiteLogo.url({settings.logo, settings})
     end
   end
 end
