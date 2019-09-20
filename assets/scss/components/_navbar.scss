@@ -272,7 +272,8 @@
   &__logo {
     margin-left: 4px;
     display: block;
-    height: 16px;
+    min-height: 16px;
+    max-height: 35px;
 
     @include m-up {
       margin-right: 30px;

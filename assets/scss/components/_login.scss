@@ -21,6 +21,11 @@
   &__logo {
     display: flex;
     justify-content: center;
+
+    img {
+      min-height: 16px;
+      max-height: 36px;
+    }
   }
 
   .button {

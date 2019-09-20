@@ -6,11 +6,13 @@
       file_input(f, :logo,
         class:
           "form__input" <>
-            if(Keyword.has_key?(f.errors, :name), do: " form__input--invalid", else: "")
+            if(Keyword.has_key?(f.errors, :logo), do: " form__input--invalid", else: "")
       )
     %>
     <span class="form__bar"></span>
   </div>
+  <%= error_tag f, :logo %>
+  TODO: add delete option
 
   <div class="form__buttons">
     <%= submit "Update", class: "button button--dark" %>
