@@ -1,5 +1,5 @@
 defmodule LibTen.Categories.Category do
-  use Ecto.Schema
+  use LibTen.Schema
 
   import Ecto.Changeset
 

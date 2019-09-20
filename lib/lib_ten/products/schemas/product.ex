@@ -1,5 +1,5 @@
 defmodule LibTen.Products.Product do
-  use Ecto.Schema
+  use LibTen.Schema
   import Ecto.Changeset
   alias LibTen.Accounts.User
   alias LibTen.Products.{Product, ProductUse, ProductVote, ProductRating}
