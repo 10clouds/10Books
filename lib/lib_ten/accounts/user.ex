@@ -8,6 +8,7 @@ defmodule LibTen.Accounts.User do
     field :name, :string
     field :avatar_url, :string
     field :is_admin, :boolean, default: false
+    field :google_uid, :string
 
     timestamps()
   end
@@ -15,7 +16,7 @@ defmodule LibTen.Accounts.User do
   @doc false
   def changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:name, :avatar_url, :email, :is_admin])
+    |> cast(attrs, [:name, :avatar_url, :email, :is_admin, :google_uid])
     |> validate_required([:name, :email])
     |> unique_constraint(:email)
   end

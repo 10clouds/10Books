@@ -29,11 +29,13 @@ defmodule LibTen.Accounts do
       |> Enum.map(fn str -> "@" <> str end)
 
     if String.ends_with?(attrs.email, allowed_domains) do
-      user = Repo.get_by(User, %{email: attrs.email})
+      user =
+        Repo.get_by(User, %{google_uid: attrs.google_uid}) ||
+          find_and_update_legacy_google_user(attrs)
 
       if user do
         user
-        |> Changeset.cast(attrs, [:name, :avatar_url])
+        |> Changeset.cast(attrs, [:email, :name, :avatar_url])
         |> Repo.update()
       else
         create_user(attrs)
@@ -44,6 +46,25 @@ defmodule LibTen.Accounts do
           if(length(allowed_domains) > 1, do: "s", else: "") <> " allowed"
 
       {:error, msg}
+    end
+  end
+
+  # NOTE:
+  # We used to identify users by email for google auth
+  defp find_and_update_legacy_google_user(%{email: email, google_uid: google_uid}) do
+    user =
+      from(u in User, where: u.email == ^email and is_nil(u.google_uid))
+      |> Repo.one()
+
+    if user do
+      {:ok, updated_user} =
+        user
+        |> User.changeset(%{google_uid: google_uid})
+        |> Repo.update()
+
+      updated_user
+    else
+      nil
     end
   end
 end
