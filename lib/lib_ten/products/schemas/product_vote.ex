@@ -1,5 +1,5 @@
 defmodule LibTen.Products.ProductVote do
-  use Ecto.Schema
+  use LibTen.Schema
 
   import Ecto.Changeset
 

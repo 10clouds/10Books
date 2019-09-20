@@ -1,5 +1,5 @@
 defmodule LibTen.Admin.Settings do
-  use Ecto.Schema
+  use LibTen.Schema
   import Ecto.Changeset
 
   schema "settings" do
