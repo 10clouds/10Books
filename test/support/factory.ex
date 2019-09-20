@@ -5,7 +5,8 @@ defmodule LibTen.Factory do
     %LibTen.Accounts.User{
       name: "Ruslan Savenok",
       avatar_url: "http://google.com/test_avatar_url.png",
-      email: sequence(:email, &"email-#{&1}@10clouds.com")
+      email: sequence(:email, &"email-#{&1}@10clouds.com"),
+      google_uid: "12345"
     }
   end
 

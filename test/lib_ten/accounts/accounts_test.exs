@@ -33,11 +33,40 @@ defmodule LibTen.AccountsTest do
       assert user.name == user_params.name
     end
 
+    test "updates user info if user present" do
+      user = insert(:user)
+
+      new_params = %{
+        google_uid: user.google_uid,
+        email: "new" <> user.email,
+        name: user.name <> "new",
+        avatar_url: user.avatar_url <> "new"
+      }
+
+      assert {:ok, updated_user} = Accounts.find_or_create_user(new_params)
+      assert updated_user.id == user.id
+      assert updated_user.google_uid == new_params.google_uid
+      assert updated_user.email == new_params.email
+      assert updated_user.name == new_params.name
+      assert updated_user.avatar_url == new_params.avatar_url
+    end
+
     test "returns exising user if it is present" do
       exising_user_params = params_for(:user)
       exising_user = insert(:user, exising_user_params)
       assert {:ok, user} = Accounts.find_or_create_user(exising_user_params)
       assert user == exising_user
+    end
+
+    test "finds and updates legacy google user" do
+      user_params = params_for(:user)
+      user = insert(:user, Map.merge(user_params, %{google_uid: nil}))
+      assert user.google_uid == nil
+
+      {:ok, updated_user} = Accounts.find_or_create_user(user_params)
+      assert updated_user.id == user.id
+      assert updated_user.email == user.email
+      assert updated_user.google_uid == user_params.google_uid
     end
   end
 end

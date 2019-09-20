@@ -22,6 +22,7 @@ defmodule LibTenWeb.AuthController do
 
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
     user_params = %{
+      google_uid: auth.uid,
       email: auth.info.email,
       name: auth.info.name,
       avatar_url: auth.info.image

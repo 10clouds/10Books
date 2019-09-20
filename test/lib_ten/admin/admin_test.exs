@@ -12,7 +12,7 @@ defmodule LibTen.AdminTest do
     end
 
     test "get_settings/1 returns previously created settings" do
-      settings = insert(:settings)
+      insert(:settings)
       assert %Settings{logo: "test.png"} = Admin.get_settings()
     end
 
