@@ -8,12 +8,10 @@ defmodule LibTen.AccountsTest do
     assert Accounts.list_users([user2.id, user1.id]) == [user1, user2]
   end
 
-  test "get_by!/1 returns user with given email or Ecto.NoResultsError" do
-    assert_raise Ecto.NoResultsError,
-                 fn -> Accounts.get_by!(%{email: params_for(:user)[:email]}) end
-
+  test "get_b!/1 returns user with given email or nil" do
+    assert Accounts.get_by(%{email: params_for(:user)[:email]}) == nil
     user = insert(:user)
-    assert user == Accounts.get_by!(%{email: user.email})
+    assert user == Accounts.get_by(%{email: user.email})
   end
 
   describe "accounts -> find_or_create_user/1" do
@@ -24,9 +22,7 @@ defmodule LibTen.AccountsTest do
     end
 
     test "creates user if it is not present" do
-      assert_raise Ecto.NoResultsError,
-                   fn -> Accounts.get_by!(%{email: "test@test.com"}) end
-
+      assert Accounts.get_by(%{email: "test@test.com"}) == nil
       user_params = params_for(:user)
       assert {:ok, user} = Accounts.find_or_create_user(user_params)
       assert user.email == user_params.email

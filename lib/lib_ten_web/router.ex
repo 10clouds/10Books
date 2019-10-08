@@ -45,25 +45,24 @@ defmodule LibTenWeb.Router do
   end
 
   defp authenticate_user(conn, _) do
-    case get_session(conn, :user_id) do
-      nil ->
+    with user_id when not is_nil(user_id) <- get_session(conn, :user_id),
+         user when not is_nil(user) <- LibTen.Accounts.get_by(%{id: user_id}) do
+      token =
+        Phoenix.Token.sign(conn, "current_user_token", %{
+          id: user_id,
+          is_admin: user.is_admin
+        })
+
+      conn
+      |> assign(:current_user_token, token)
+      |> assign(:current_user, user)
+      |> assign(:settings, LibTen.Admin.get_settings())
+    else
+      _ ->
         conn
+        |> delete_session(:user_id)
         |> Phoenix.Controller.redirect(to: "/")
         |> halt()
-
-      user_id ->
-        user = LibTen.Accounts.get_by!(%{id: user_id})
-
-        token =
-          Phoenix.Token.sign(conn, "current_user_token", %{
-            id: user_id,
-            is_admin: user.is_admin
-          })
-
-        conn
-        |> assign(:current_user_token, token)
-        |> assign(:current_user, user)
-        |> assign(:settings, LibTen.Admin.get_settings())
     end
   end
 

@@ -10,10 +10,7 @@ defmodule LibTen.Accounts do
     |> Repo.all()
   end
 
-  def get_by!(attrs \\ %{}) do
-    User
-    |> Repo.get_by!(attrs)
-  end
+  def get_by(attrs), do: Repo.get_by(User, attrs)
 
   def create_user(attrs \\ %{}) do
     %User{}
