@@ -18,6 +18,18 @@ defmodule LibTen.ReleaseTasks do
     stop_services()
   end
 
+  def gen_random_key(key_length) do
+    :crypto.strong_rand_bytes(key_length)
+    |> Base.encode64
+    |> binary_part(0, key_length)
+  end
+
+  def print_random_key(length) do
+    {key_length, _} = Integer.parse(length)
+    gen_random_key(key_length)
+    |> IO.puts
+  end
+
   defp start_services do
     IO.puts("Loading #{@app}..")
     Application.load(@app)

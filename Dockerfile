@@ -58,4 +58,7 @@ ENV APP_NAME=lib_ten
 ENV APP_VERSION=0.0.1
 ENV PORT 80
 
-CMD /app/bin/lib_ten foreground
+VOLUME /app/uploads
+
+ENTRYPOINT ["/app/bin/lib_ten"]
+CMD ["foreground"]

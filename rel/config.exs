@@ -25,11 +25,9 @@ environment :prod do
 end
 
 release :lib_ten do
-  random_cookie_length = 128
-  random_cookie =
-    :crypto.strong_rand_bytes(random_cookie_length)
-    |> Base.encode64
-    |> binary_part(0, random_cookie_length)
+  set commands: [
+    gen_session_key: "rel/commands/gen_session_key.sh"
+  ]
 
   # NOTE:
   # Ideally we don't want to have any cookie here, so one will
@@ -39,6 +37,6 @@ release :lib_ten do
   # https://github.com/bitwalker/distillery/issues/428
   #
   # 😢
-  set cookie: random_cookie
+  set cookie: LibTen.ReleaseTasks.gen_random_key(128)
   set version: current_version(:lib_ten)
 end
