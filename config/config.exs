@@ -10,7 +10,7 @@ config :lib_ten,
   ecto_repos: [LibTen.Repo],
   smtp_sender_email: "books@10clouds.com",
   title: "10Books",
-  allowed_google_auth_domains: "gmail.com,10clouds.com"
+  allowed_google_auth_domains: "gmail.com"
 
 # Configures the endpoint
 config :lib_ten, LibTenWeb.Endpoint,
