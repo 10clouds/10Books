@@ -16,7 +16,7 @@ defmodule LibTen.DataCase do
 
   using do
     quote do
-      use Phoenix.ChannelTest
+      import Phoenix.ChannelTest
 
       alias LibTen.Repo
 

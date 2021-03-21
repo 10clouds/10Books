@@ -58,6 +58,22 @@ defmodule LibTenWeb.Products.AllChannelTest do
       assert product.status == attrs["status"]
     end
 
+    test "handle_in/force_return removes used_by from a product", %{socket: socket} do
+      product = insert(:product)
+      user = insert(:user)
+
+      product_use =
+        insert(:product_use,
+          product_id: product.id,
+          user_id: user.id
+        )
+
+      assert All.get(product.id).used_by.id == product_use.id
+      ref = push(socket, "force_return", %{"id" => product.id})
+      assert_reply ref, :ok
+      assert All.get(product.id).used_by == nil
+    end
+
     test "handle_in/update replies with :error if no such record", %{socket: socket} do
       ref = push(socket, "update", %{"id" => -1, "attrs" => %{category_id: 1}})
       reply = assert_reply ref, :error

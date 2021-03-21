@@ -2,6 +2,7 @@ import React, { PureComponent, Fragment } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import socket from 'socket'
+import round from 'lodash/round'
 import { joinChannel as joinCategoriesChannel } from '~/store/actions/categories'
 import { joinChannel as joinProductsChannel } from '~/store/actions/products'
 import * as libraryActions from '~/store/actions/products/library'
@@ -40,7 +41,7 @@ class Library extends PureComponent {
 
         return rating ? (
           <div className="product-rating">
-            <span className="product-rating__value">{rating}</span>
+            <span className="product-rating__value">{round(rating, 1)}</span>
             <span className="product-rating__label">/5</span>
           </div>
         ) : (

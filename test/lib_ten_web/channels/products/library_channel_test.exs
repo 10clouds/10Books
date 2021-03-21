@@ -11,7 +11,8 @@ defmodule LibTenWeb.Products.LibraryChannelTest do
   end
 
   test "returns list of products on join", %{socket: socket} do
-    [p1, p2] = insert_pair(:product, status: "IN_LIBRARY")
+    p1 = insert(:product, status: "IN_LIBRARY", inserted_at: ~N[2000-01-01 09:00:00])
+    p2 = insert(:product, status: "IN_LIBRARY")
     {:ok, reply, _} = join(socket, LibraryChannel, "products:library")
     # TODO: json schema
     p1_json = LibTenWeb.ProductsView.render("show.json", product: p1)
