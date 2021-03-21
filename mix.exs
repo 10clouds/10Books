@@ -56,7 +56,7 @@ defmodule LibTen.Mixfile do
       {:bamboo, "~> 1.2.0"},
       {:bamboo_smtp, "~> 1.7.0"},
       {:boltun, "~> 1.0.2"},
-      {:distillery, "~> 2.0"},
+      {:distillery, "~> 2.1"},
       {:timex, "~> 3.1"},
       {:quantum, "~> 2.2.7"},
       {:mix_test_watch, "~> 0.6", only: :dev, runtime: false},

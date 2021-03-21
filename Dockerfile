@@ -42,7 +42,7 @@ COPY . .
 RUN MIX_ENV=prod mix do local.hex --force, \
                         local.rebar --force, \
                         phx.digest, \
-                        release --verbose --no-tar
+                        distillery.release --verbose --no-tar
 
 #
 # RUN distillery release on minial alpine

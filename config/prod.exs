@@ -10,7 +10,8 @@ config :lib_ten, LibTenWeb.Endpoint,
   server: true,
   code_reloader: false,
   secret_key_base: "${SECRET_KEY}",
-  url: [host: "${HOSTNAME}"]
+  url: [host: "${HOSTNAME}"],
+  version: Application.spec(:phoenix_distillery, :vsn)
 
 config :lib_ten, LibTen.Mailer,
   adapter: Bamboo.SMTPAdapter,
