@@ -13,12 +13,14 @@ const selectStatuses = Object.keys(READABLE_PRODUCT_STATUS)
 
 const ACTION_EDIT = 'ACTION_EDIT'
 const ACTION_DELETE = 'ACTION_DELETE'
+const ACTION_RETURN = 'ACTION_RETURN'
 
 export default class ProductActions extends PureComponent {
   static propTypes = {
     status: PropTypes.string.isRequired,
     canChangeStatus: PropTypes.bool,
     onStatusChange: PropTypes.func,
+    canForceReturn: PropTypes.bool,
     canEdit: PropTypes.bool,
     onEdit: PropTypes.func,
     canDelete: PropTypes.bool
@@ -45,6 +47,15 @@ export default class ProductActions extends PureComponent {
       if (onEdit) onEdit()
     } else if (option.value === ACTION_DELETE) {
       if (onStatusChange && confirm('Are you sure?')) onStatusChange('DELETED')
+    } else if (option.value === ACTION_RETURN) {
+      if (
+        onStatusChange &&
+        confirm(
+          'Warning! This will mark book as returned, you wont be able to revert this action.'
+        )
+      ) {
+        onStatusChange('FORCE_RETURN')
+      }
     } else {
       if (onStatusChange) onStatusChange(option.value)
     }
@@ -85,7 +96,13 @@ export default class ProductActions extends PureComponent {
   }
 
   render() {
-    const { canChangeStatus, canEdit, canDelete, status } = this.props
+    const {
+      canChangeStatus,
+      canEdit,
+      canForceReturn,
+      canDelete,
+      status
+    } = this.props
     const isDisabled = !canChangeStatus && !canEdit && !canDelete
     const btnColor = this.getBtnColor()
 
@@ -93,8 +110,14 @@ export default class ProductActions extends PureComponent {
     if (canChangeStatus) options = options.concat(selectStatuses)
     if (canChangeStatus && (canEdit || canDelete))
       options.push({ divider: true })
-    if (canEdit) options.push({ value: 'ACTION_EDIT', label: 'Edit' })
-    if (canDelete) options.push({ value: 'ACTION_DELETE', label: 'Delete' })
+
+    if (canForceReturn) {
+      options.push({ value: ACTION_RETURN, label: 'Force Return' })
+      options.push({ divider: true })
+    }
+
+    if (canEdit) options.push({ value: ACTION_EDIT, label: 'Edit' })
+    if (canDelete) options.push({ value: ACTION_DELETE, label: 'Delete' })
 
     return (
       <Select

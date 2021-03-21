@@ -2,8 +2,10 @@ import React, { PureComponent, Fragment } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import socket from 'socket'
+import get from 'lodash/get'
 import { joinChannel as joinCategoriesChannel } from '~/store/actions/categories'
 import * as productActions from '~/store/actions/products'
+import * as adminActions from '~/store/actions/products/admin'
 import { ProductFormModal } from '~/components/modals'
 import SearchContainer from '~/containers/common/SearchContainer'
 import ProductsTableContainer from '~/containers/common/ProductsTableContainer'
@@ -36,6 +38,15 @@ class All extends PureComponent {
       )
     },
     {
+      title: 'Taken By',
+      elProps: {
+        modifiers: ['requested-by']
+      },
+      render: product => (
+        <ProductRequestedBy name={get(product, 'used_by.user.name', '')} />
+      )
+    },
+    {
       title: 'Status',
       elProps: {
         modifiers: ['status']
@@ -44,10 +55,15 @@ class All extends PureComponent {
         <ProductStatus
           status={product.status}
           canChangeStatus
+          canForceReturn={product.used_by !== null}
           canEdit
           canDelete
           onStatusChange={status => {
-            this.props.productActions.update(product.id, { status })
+            if (status === 'FORCE_RETURN') {
+              this.props.adminActions.forceReturnProduct(product.id)
+            } else {
+              this.props.productActions.update(product.id, { status })
+            }
           }}
           onEdit={() => this.handleEdit(product)}
         />
@@ -117,7 +133,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     ...bindActionCreators({ joinCategoriesChannel }, dispatch),
-    productActions: bindActionCreators(productActions, dispatch)
+    productActions: bindActionCreators(productActions, dispatch),
+    adminActions: bindActionCreators(adminActions, dispatch)
   }
 }
 

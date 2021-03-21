@@ -1,0 +1,1 @@
+export const FORCE_RETURN = 'FORCE_RETURN'

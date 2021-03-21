@@ -37,21 +37,21 @@ defmodule LibTen.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.4.7"},
-      {:phoenix_pubsub, "~> 1.1"},
+      {:phoenix, "~> 1.5.0"},
+      {:phoenix_pubsub, "~> 2.0"},
       {:phoenix_ecto, "~> 4.0"},
       {:jason, "~> 1.0"},
       {:ecto_sql, "~> 3.0"},
       {:phoenix_active_link, "~> 0.1.1"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_html, "~> 2.10"},
+      {:phoenix_html, "~> 2.13"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:gettext, "~> 0.11"},
-      {:plug_cowboy, "~> 2.0"},
-      {:ueberauth_google, "~> 0.8.0"},
+      {:plug_cowboy, "~> 2.1"},
+      {:ueberauth_google, "~> 0.10"},
       # TODO: Remove this one ueberauth will be fixed. Related issue -> https://github.com/ueberauth/ueberauth_github/issues/43
       {:poison, "~> 3.1"},
-      {:ex_machina, "~> 2.1", only: :test},
+      {:ex_machina, "~> 2.7.0", only: :test},
       {:mock, "~> 0.2.0", only: :test},
       {:bamboo, "~> 1.2.0"},
       {:bamboo_smtp, "~> 1.7.0"},

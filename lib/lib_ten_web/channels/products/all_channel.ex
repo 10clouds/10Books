@@ -17,6 +17,11 @@ defmodule LibTenWeb.Products.AllChannel do
     |> make_reply(socket)
   end
 
+  def handle_in("force_return", %{"id" => product_id}, socket) do
+    All.force_return(product_id)
+    |> make_reply(socket)
+  end
+
   def handle_in("update", %{"id" => product_id, "attrs" => attrs}, socket) do
     All.update(product_id, attrs)
     |> make_reply(socket)

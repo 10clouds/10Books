@@ -18,6 +18,10 @@ defmodule LibTen.Factory do
     }
   end
 
+  def product_use_factory do
+    %LibTen.Products.ProductUse{}
+  end
+
   def category_factory do
     {text_color, background_color} = LibTen.Categories.Category.get_available_color()
 
