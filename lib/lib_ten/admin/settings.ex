@@ -1,14 +1,14 @@
 defmodule LibTen.Admin.Settings do
   use LibTen.Schema
-  import Ecto.Changeset
+  use Arc.Ecto.Schema
 
   schema "settings" do
-    field :logo, :string
+    field :logo, LibTen.Admin.SiteLogo.Type
     timestamps()
   end
 
   def changeset(settings, attrs) do
     settings
-    |> cast(attrs, [:logo])
+    |> cast_attachments(attrs, [:logo])
   end
 end

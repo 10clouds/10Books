@@ -33,6 +33,8 @@ defmodule LibTen.Factory do
   end
 
   def settings_factory do
-    %LibTen.Admin.Settings{logo: "test.png"}
+    %LibTen.Admin.Settings{
+      logo: %Plug.Upload{path: "test/support/blank.png", filename: "test.png"}
+    }
   end
 end

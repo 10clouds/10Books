@@ -43,6 +43,10 @@ defmodule LibTenWeb do
       import LibTenWeb.ErrorHelpers
       import LibTenWeb.Gettext
       import PhoenixActiveLink
+
+      def site_logo_url(conn) do
+        LibTen.Admin.SiteLogo.url({conn.assigns.settings.logo, conn.assigns.settings})
+      end
     end
   end
 

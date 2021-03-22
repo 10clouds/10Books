@@ -16,6 +16,7 @@ defmodule LibTenWeb.Router do
   scope "/", LibTenWeb do
     # Use the default browser stack
     pipe_through :browser
+    pipe_through :settings
 
     get "/", AuthController, :index
 
@@ -44,6 +45,11 @@ defmodule LibTenWeb.Router do
     end
   end
 
+  defp settings(conn, _) do
+    conn
+    |> assign(:settings, LibTen.Admin.get_settings())
+  end
+
   defp authenticate_user(conn, _) do
     with user_id when not is_nil(user_id) <- get_session(conn, :user_id),
          user when not is_nil(user) <- LibTen.Accounts.get_by(%{id: user_id}) do
@@ -63,6 +69,22 @@ defmodule LibTenWeb.Router do
         |> delete_session(:user_id)
         |> Phoenix.Controller.redirect(to: "/")
         |> halt()
+<<<<<<< HEAD
+=======
+
+      user_id ->
+        user = LibTen.Accounts.get_by!(%{id: user_id})
+
+        token =
+          Phoenix.Token.sign(conn, "current_user_token", %{
+            id: user_id,
+            is_admin: user.is_admin
+          })
+
+        conn
+        |> assign(:current_user_token, token)
+        |> assign(:current_user, user)
+>>>>>>> Experimenting with logo sizes
     end
   end
 
